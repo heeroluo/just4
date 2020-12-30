@@ -95,6 +95,15 @@ export default class AJAXRequest {
       );
     }
 
+    if (mergeModes.afterResponse === 'append' &&
+      this.baseOptions.afterResponse &&
+      options.afterResponse
+    ) {
+      finalOptions.afterResponse = this.baseOptions.afterResponse.concat(
+        options.afterResponse
+      );
+    }
+
     if (mergeModes.receiveCancelId &&
       this.baseOptions.receiveCancelId &&
       options.receiveCancelId

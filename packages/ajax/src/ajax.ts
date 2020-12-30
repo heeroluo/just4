@@ -6,20 +6,18 @@
 import { assignProps, isEmpty } from '@just4/util/object';
 import { isObject } from '@just4/util/type';
 import { stringify, appendToURL } from '@just4/querystring/index';
-import {
-  isOldIE,
-  isCrossDomain,
-  parseMIMEType,
-  isErrorStatus,
-  createTimeoutError
-} from './internal/util';
-import { AJAXError } from './ajax-error';
+import { isOldIE, isCrossDomain } from './internal/util';
 import {
   createAJAXRecord,
   deleteAJAXRecord,
   cancelRequest
 } from './internal/ajax-record';
-import { BodyType, DataType, IAJAXOptions } from './interfaces';
+import {
+  BodyType,
+  DataType,
+  AfterResponse,
+  IAJAXOptions
+} from './interfaces';
 
 
 // IE 9 不支持 XMLHttpRequest 的跨域请求，符合条件时，使用 XDomainRequest
@@ -79,6 +77,29 @@ function setRequestHeaders(
   }
 }
 
+// 处理响应完成后的操作
+function handleResponse(
+  promise: Promise<unknown>,
+  xhrId: number,
+  afterResponse?: AfterResponse
+): Promise<unknown> {
+  promise = promise.then(function(res) {
+    deleteAJAXRecord(xhrId);
+    return res;
+  }, function(error) {
+    deleteAJAXRecord(xhrId);
+    throw error;
+  });
+
+  if (afterResponse) {
+    afterResponse.forEach(function(fns) {
+      promise = promise.then(fns[0], fns[1]);
+    });
+  }
+
+  return promise;
+}
+
 /**
  * 发送 AJAX 请求。
  * @param url 请求 URL。
@@ -136,13 +157,8 @@ export function send(url: string, options?: IAJAXOptions): Promise<unknown> {
     }
   });
 
-  return promise.then(function(res) {
-    deleteAJAXRecord(xhrId);
-    return res;
-  }, function(error) {
-    deleteAJAXRecord(xhrId);
-    throw error;
-  });
+  return handleResponse(promise, xhrId, options?.afterResponse);
 }
+
 
 export { cancelRequest as cancel };

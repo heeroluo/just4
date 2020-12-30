@@ -46,7 +46,20 @@ export type DataType = { [key: string]: unknown } | BodyType;
  */
 export type URLParams = string | { [key: string]: unknown };
 
+/**
+ * 响应格式。
+ */
 export type ResponseType = 'json' | 'xml' | 'text';
+
+/**
+ * 完成响应格式的解析后执行的操作。
+ */
+export type AfterResponse = (((arg?: any) => void)[])[];
+
+/**
+ * AJAX 请求选项的合并策略。
+ */
+export type MergeMode = 'replace' | 'append';
 
 
 /**
@@ -98,14 +111,15 @@ export interface IAJAXOptions {
    */
   password?: string,
   /**
-   * 发送请求前执行的函数。
+   * 发送请求前执行的操作。
    */
-  beforeSend?: (xhr: XMLHttpRequest) => void
+  beforeSend?: (xhr: XMLHttpRequest) => void,
+  /**
+   * 完成响应格式的解析后执行的操作。
+   */
+  afterResponse?: AfterResponse,
   /**
    * 提供一个编号，可用于中断请求。
    */
   receiveCancelId?: (id: number) => void
 }
-
-
-export type MergeMode = 'replace' | 'append';
