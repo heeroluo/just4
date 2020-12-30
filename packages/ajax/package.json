@@ -1,0 +1,19 @@
+{
+  "name": "@just4/ajax",
+  "version": "0.1.0",
+  "description": "Ajax utilities.",
+  "scripts": {
+    "link-deps": "ln -s ../../node_modules ./node_modules",
+    "link-to-node-modules": "node ../../build/link-to-node-modules ajax",
+    "dev": "cross-env NODE_ENV=development webpack-dev-server --config build/webpack.dev.config.js",
+    "lint": "eslint ./src/*.ts",
+    "prebuild": "rimraf ./dist/*",
+    "build": "npm run lint && tsc && node ../../build/copy-others ajax",
+    "pregen-doc": "rimraf ../../docs/ajax",
+    "gen-doc": "typedoc --out ../../docs/ajax"
+  },
+  "dependencies": {
+    "@just4/util": "^0.1.0",
+    "@just4/querystring": "^0.1.0"
+  }
+}
