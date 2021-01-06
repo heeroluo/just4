@@ -61,8 +61,9 @@ export class DataSpace {
    * @param obj 指定对象。
    * @returns 指定对象的数据空间。
    */
-  protected findSpace(obj: unknown): { [key: string]: unknown } {
-    return this._space[getId(obj, true)];
+  protected findSpace(obj: unknown): { [key: string]: unknown } | undefined {
+    const id = getId(obj, true);
+    if (id) { return this._space[id]; }
   }
 
   /**
@@ -105,7 +106,8 @@ export class DataSpace {
    * @param obj 指定对象。
    */
   public clearData(obj: unknown): void {
-    delete this._space[getId(obj, true)];
+    const id = getId(obj, true);
+    if (id) { delete this._space[id]; }
   }
 
   /**
@@ -133,7 +135,9 @@ export class DataSpace {
     const sourceSpace = this.findSpace(source);
     if (sourceSpace) {
       const targetId = getId(target);
-      const targetSpace = this._space[targetId] = this._space[targetId] || Object.create(null);
+      if (!targetId) { return; }
+      const targetSpace = this._space[targetId] =
+        this._space[targetId] || Object.create(null);
 
       for (const i in sourceSpace) {
         targetSpace[i] = sourceSpace[i];
