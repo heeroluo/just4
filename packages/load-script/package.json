@@ -1,16 +1,16 @@
 {
-  "name": "@just4/ajax",
+  "name": "@just4/load-script",
   "version": "0.1.0",
-  "description": "Ajax utilities.",
+  "description": "Script requesting utilities.",
   "scripts": {
     "link-deps": "ln -s ../../node_modules ./node_modules",
-    "link-to-node-modules": "node ../../build/link-to-node-modules ajax",
+    "link-to-node-modules": "node ../../build/link-to-node-modules load-script",
     "dev": "cross-env NODE_ENV=development webpack-dev-server --config build/webpack.dev.config.js",
     "lint": "eslint ./src/*.ts",
     "prebuild": "rimraf ./dist/*",
-    "build": "npm run lint && tsc && node ../../build/copy-others ajax",
-    "pregen-doc": "rimraf ../../docs/ajax",
-    "gen-doc": "typedoc --out ../../docs/ajax"
+    "build": "npm run lint && tsc && node ../../build/copy-others load-script",
+    "pregen-doc": "rimraf ../../docs/load-script",
+    "gen-doc": "typedoc ./src --out ../../docs/load-script"
   },
   "dependencies": {
     "@just4/util": "^0.1.0",

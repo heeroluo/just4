@@ -7,7 +7,6 @@ module.exports = merge(
   }), {
     devServer: {
       before: function(app) {
-        require('./server-another');
         require('./server-main')(app);
       }
     }

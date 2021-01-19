@@ -2,6 +2,9 @@
   "name": "just4",
   "version": "1.0.0",
   "description": "A JavaScript library to make things just easier.",
+  "scripts": {
+    "link-internal-deps": "node ./build/link-to-node-modules util && node ./build/link-to-node-modules querystring"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/heeroluo/just4"
@@ -20,8 +23,8 @@
     "node": ">=10.0.0"
   },
   "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "^4.11.0",
-    "@typescript-eslint/parser": "^4.11.0",
+    "@typescript-eslint/eslint-plugin": "^4.14.0",
+    "@typescript-eslint/parser": "^4.14.0",
     "copy-webpack-plugin": "^6.4.1",
     "core-js": "^3.8.1",
     "cross-env": "^7.0.3",
@@ -30,8 +33,8 @@
     "eslint-plugin-sonarjs": "^0.5.0",
     "html-webpack-plugin": "^4.5.0",
     "rimraf": "^3.0.2",
-    "ts-loader": "^8.0.12",
-    "typedoc": "^0.19.2",
+    "ts-loader": "^8.0.14",
+    "typedoc": "^0.20.16",
     "typescript": "^4.1.3",
     "webpack": "^5.11.0",
     "webpack-cli": "^3.3.12",
