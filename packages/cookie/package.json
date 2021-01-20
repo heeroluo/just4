@@ -1,16 +1,15 @@
 {
   "name": "@just4/cookie",
   "version": "0.1.0",
-  "description": "A library for cookie manipulation in browser.",
+  "description": "Just for cookie manipulation in browser.",
   "scripts": {
     "link-deps": "ln -s ../../node_modules ./node_modules",
-    "link-to-node-modules": "node ../../build/link-to-node-modules cookie",
     "dev": "cross-env NODE_ENV=development webpack-dev-server --config build/webpack.dev.config.js",
     "lint": "eslint ./src/*.ts",
     "prebuild": "rimraf ./dist/*",
     "build": "npm run lint && tsc && node ../../build/copy-others cookie",
     "pregen-doc": "rimraf ../../docs/cookie",
-    "gen-doc": "typedoc --out ../../docs/cookie"
+    "gen-doc": "typedoc --tsconfig ./src/tsconfig.json"
   },
   "dependencies": {
     "@just4/util": "^1.0.0"

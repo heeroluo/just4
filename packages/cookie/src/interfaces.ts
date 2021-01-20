@@ -33,7 +33,7 @@ export interface ICookieSetterOptions {
   /**
    * 过期时间：
    * - 为日期类型时表示绝对时间；
-   * - 为数字或字符串时表示相对时间（当前时间+相对值），支持格式同 {@link "src/time-unit".parse} 的 `timespan` 参数。
+   * - 为数字或字符串时表示相对时间（当前时间+相对值），支持格式同 [[time-unit.parse]] 的 `timespan` 参数。
    */
   expires?: Date | number | string,
   /**
