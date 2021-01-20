@@ -30,12 +30,11 @@ const TimeUnits: Readonly<Record<string, number>> = {
 export function parse(timespan: number | string): number {
   // timespan 为数字，直接返回
   if (typeof timespan === 'number') { return timespan; }
-  if (!isNaN(<number><unknown>timespan)) { return Number(timespan); }
+  // 数字字符串，转成数字返回
+  if (!isNaN(Number(timespan))) { return Number(timespan); }
 
   const num = parseFloat(timespan);
-  if (isNaN(num)) {
-    throw new Error('Invalid timespan string');
-  }
+  if (isNaN(num)) { throw new Error('Invalid timespan string'); }
 
   const unit = timespan.split(num.toString())[1]
     .trim()
