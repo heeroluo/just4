@@ -68,7 +68,7 @@ const shouldSetEmptyBeforeRemove: boolean = (function() {
   // 兼容 Node 端引入（主要针对同构应用）
   if (typeof document === 'undefined') { return false; }
 
-  const TEST_KEY = '__jraiser__test__cookie__';
+  const TEST_KEY = '__just4__test__cookie__';
   document.cookie = TEST_KEY + '=1';
   document.cookie = TEST_KEY + '=;expires=Thu, 01 Jan 1970 00:00:00 GMT';
   return !!getCookie(TEST_KEY);
@@ -76,14 +76,14 @@ const shouldSetEmptyBeforeRemove: boolean = (function() {
 
 /**
  * 移除 cookie。
- * @param name cookie 名。
+ * @param key cookie 名。
  * @param options 选项。
  */
-export function removeCookie(name: string, options?: ICookieSetterOptions): void {
-  if (shouldSetEmptyBeforeRemove) { setCookie(name, '', options); }
+export function removeCookie(key: string, options?: ICookieSetterOptions): void {
+  if (shouldSetEmptyBeforeRemove) { setCookie(key, '', options); }
 
   options = options || { };
   // 让其过期即为删除
   options.expires = new Date(0);
-  setCookie(name, '', options);
+  setCookie(key, '', options);
 }
