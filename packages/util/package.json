@@ -4,12 +4,10 @@
   "description": "Utility functions for other packages.",
   "scripts": {
     "link-deps": "ln -s ../../node_modules ./node_modules",
-    "link-to-node-modules": "node ../../build/link-to-node-modules util",
     "dev": "cross-env NODE_ENV=development webpack-dev-server --config build/webpack.dev.config.js",
     "lint": "eslint ./src/*.ts",
     "prebuild": "rimraf ./dist/*",
-    "build": "npm run lint && tsc && node ../../build/copy-others util",
-    "pregen-doc": "rimraf ../../docs/util",
-    "gen-doc": "typedoc --out ../../docs/util"
+    "build": "npm run lint && tsc -p ./src/tsconfig.json && node ../../build/copy-others util",
+    "gen-doc": "typedoc --tsconfig ./src/tsconfig.json"
   }
 }
