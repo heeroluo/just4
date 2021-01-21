@@ -5,7 +5,7 @@
 
 
 // 临时的 id 属性值，用于匹配 querySelectorAll 的上下文
-const TEMP_ID = 'jraiser__query__context';
+const TEMP_ID = 'just4__query__context';
 const TEMP_ID_SELECTOR = '#' + TEMP_ID + ' ';
 
 /**
