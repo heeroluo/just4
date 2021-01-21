@@ -20,7 +20,7 @@ export function parse(
     throw new Error('The str argument must be a string type');
   }
 
-  options = <IQSParseOptions>assignProps({ }, options);
+  options = assignProps({ }, options);
   options.decode = options.decode || decodeURIComponent;
 
   const result: { [key: string]: string | string[] } = Object.create(null);
@@ -57,7 +57,7 @@ export function parse(
 export function stringify(
   data: { [key: string]: unknown }, options?: IQSStringifyOptions
 ): string {
-  options = <IQSStringifyOptions>assignProps({
+  options = assignProps({
     encode: encodeURIComponent,
     allowEmpty: true
   }, options);
