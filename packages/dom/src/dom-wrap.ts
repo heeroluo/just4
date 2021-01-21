@@ -67,9 +67,9 @@ import { onEvent, offEvent, triggerEvent } from './internal/dom-event';
 
 
 /**
- * forEach/some/every/filter 的 callback。
+ * DOMWrap 类型 forEach/some/every/filter 的 callback。
  */
-interface IArrayCallback {
+export interface IDOMWrapIterator {
   (value: DOMWrapMember, index: number, list: DOMWrap): unknown
 }
 
@@ -115,28 +115,28 @@ export class DOMWrap implements ArrayLike<DOMWrapMember> {
   /**
    * 即数组的 forEach。
    */
-  forEach(callback: IArrayCallback): void {
+  forEach(callback: IDOMWrapIterator): void {
     return Array.prototype.forEach.call(this, callback);
   }
 
   /**
    * 即于数组的 some。
    */
-  some(callback: IArrayCallback): boolean {
+  some(callback: IDOMWrapIterator): boolean {
     return Array.prototype.some.call(this, callback);
   }
 
   /**
    * 即数组的 every。
    */
-  every(callback: IArrayCallback): boolean {
+  every(callback: IDOMWrapIterator): boolean {
     return Array.prototype.every.call(this, callback);
   }
 
   /**
    * 作用同数组的 filter，但返回值是 DOMWrap 对象。
    */
-  filter(callback: IArrayCallback): DOMWrap {
+  filter(callback: IDOMWrapIterator): DOMWrap {
     return new DOMWrap(
       Array.prototype.filter.call(this, callback)
     );
