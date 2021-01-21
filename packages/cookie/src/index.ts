@@ -43,7 +43,7 @@ export function getCookie(key: string, options?: ICookieGetterOptions): string {
 export function setCookie(
   key: string, value: unknown, options?: ICookieSetterOptions
 ): void {
-  options = <ICookieSetterOptions>assignProps({ }, options);
+  options = assignProps<ICookieSetterOptions>({}, options);
   options.encode = options.encode || encodeURIComponent;
 
   let content = options.encode(key) + '=' + options.encode(value);
