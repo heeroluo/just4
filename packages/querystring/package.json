@@ -1,18 +1,16 @@
 {
   "name": "@just4/querystring",
   "version": "0.1.0",
-  "description": "Utility functions for querystring manipulation.",
+  "description": "Just for querystring manipulation.",
   "scripts": {
     "link-deps": "ln -s ../../node_modules ./node_modules",
-    "link-to-node-modules": "node ../../build/link-to-node-modules querystring",
     "dev": "cross-env NODE_ENV=development webpack-dev-server --config build/webpack.dev.config.js",
     "lint": "eslint ./src/*.ts",
     "prebuild": "rimraf ./dist/*",
-    "build": "npm run lint && tsc && node ../../build/copy-others querystring",
-    "pregen-doc": "rimraf ../../docs/querystring",
-    "gen-doc": "typedoc --out ../../docs/querystring"
+    "build": "npm run lint && tsc -p ./src/tsconfig.json && node ../../build/copy-others querystring",
+    "gen-doc": "typedoc --tsconfig ./src/tsconfig.json"
   },
   "dependencies": {
-    "@just4/util": "^1.0.0"
+    "@just4/util": "^0.1.0"
   }
 }
