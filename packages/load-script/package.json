@@ -1,16 +1,14 @@
 {
   "name": "@just4/load-script",
   "version": "0.1.0",
-  "description": "Script requesting utilities.",
+  "description": "Just for script requesting in browser.",
   "scripts": {
     "link-deps": "ln -s ../../node_modules ./node_modules",
-    "link-to-node-modules": "node ../../build/link-to-node-modules load-script",
     "dev": "cross-env NODE_ENV=development webpack-dev-server --config build/webpack.dev.config.js",
     "lint": "eslint ./src/*.ts",
     "prebuild": "rimraf ./dist/*",
-    "build": "npm run lint && tsc && node ../../build/copy-others load-script",
-    "pregen-doc": "rimraf ../../docs/load-script",
-    "gen-doc": "typedoc ./src --out ../../docs/load-script"
+    "build": "npm run lint && tsc -p ./src/tsconfig.json && node ../../build/copy-others load-script",
+    "gen-doc": "typedoc --tsconfig ./src/tsconfig.json"
   },
   "dependencies": {
     "@just4/util": "^0.1.0",

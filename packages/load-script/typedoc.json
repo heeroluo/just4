@@ -1,0 +1,6 @@
+{
+  "entryPoints": ["./src/"],
+  "out": "../../docs/load-script",
+  "excludeInternal": true,
+  "listInvalidSymbolLinks": true
+}
