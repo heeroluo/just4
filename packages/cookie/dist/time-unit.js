@@ -28,7 +28,8 @@ export function parse(timespan) {
     if (typeof timespan === 'number') {
         return timespan;
     }
-    if (!isNaN(timespan)) {
+    // 数字字符串，转成数字返回
+    if (!isNaN(Number(timespan))) {
         return Number(timespan);
     }
     const num = parseFloat(timespan);

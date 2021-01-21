@@ -16,7 +16,7 @@ import { ICookieGetterOptions, ICookieSetterOptions } from './interfaces';
  * @returns cookie 值（cookie 不存在时返回空字符串）。
  */
 export function getCookie(key: string, options?: ICookieGetterOptions): string {
-  options = <ICookieGetterOptions>assignProps({}, options);
+  options = assignProps({}, options);
   options.encode = options.encode || encodeURIComponent;
   options.decode = options.decode || decodeURIComponent;
 
@@ -43,7 +43,7 @@ export function getCookie(key: string, options?: ICookieGetterOptions): string {
 export function setCookie(
   key: string, value: unknown, options?: ICookieSetterOptions
 ): void {
-  options = assignProps<ICookieSetterOptions>({}, options);
+  options = assignProps({}, options);
   options.encode = options.encode || encodeURIComponent;
 
   let content = options.encode(key) + '=' + options.encode(value);

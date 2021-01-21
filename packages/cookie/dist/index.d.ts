@@ -19,7 +19,7 @@ export declare function getCookie(key: string, options?: ICookieGetterOptions): 
 export declare function setCookie(key: string, value: unknown, options?: ICookieSetterOptions): void;
 /**
  * 移除 cookie。
- * @param name cookie 名。
+ * @param key cookie 名。
  * @param options 选项。
  */
-export declare function removeCookie(name: string, options?: ICookieSetterOptions): void;
+export declare function removeCookie(key: string, options?: ICookieSetterOptions): void;

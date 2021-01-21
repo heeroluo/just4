@@ -12,10 +12,9 @@ import { addToDate } from './time-unit';
  * @returns cookie 值（cookie 不存在时返回空字符串）。
  */
 export function getCookie(key, options) {
-    var _a, _b;
     options = assignProps({}, options);
-    options.encode = (_a = options.encode) !== null && _a !== void 0 ? _a : encodeURIComponent;
-    options.decode = (_b = options.decode) !== null && _b !== void 0 ? _b : decodeURIComponent;
+    options.encode = options.encode || encodeURIComponent;
+    options.decode = options.decode || decodeURIComponent;
     key = '; ' + options.encode(key) + '=';
     const cookie = '; ' + document.cookie;
     let beginPos = cookie.indexOf(key);
@@ -36,9 +35,8 @@ export function getCookie(key, options) {
  * @param options 选项。
  */
 export function setCookie(key, value, options) {
-    var _a;
     options = assignProps({}, options);
-    options.encode = (_a = options.encode) !== null && _a !== void 0 ? _a : encodeURIComponent;
+    options.encode = options.encode || encodeURIComponent;
     let content = options.encode(key) + '=' + options.encode(value);
     if (options.expires != null) {
         content += '; expires=' + (isDate(options.expires) ?
@@ -65,22 +63,22 @@ const shouldSetEmptyBeforeRemove = (function () {
     if (typeof document === 'undefined') {
         return false;
     }
-    const TEST_KEY = '__jraiser__test__cookie__';
+    const TEST_KEY = '__just4__test__cookie__';
     document.cookie = TEST_KEY + '=1';
     document.cookie = TEST_KEY + '=;expires=Thu, 01 Jan 1970 00:00:00 GMT';
     return !!getCookie(TEST_KEY);
 })();
 /**
  * 移除 cookie。
- * @param name cookie 名。
+ * @param key cookie 名。
  * @param options 选项。
  */
-export function removeCookie(name, options) {
+export function removeCookie(key, options) {
     if (shouldSetEmptyBeforeRemove) {
-        setCookie(name, '', options);
+        setCookie(key, '', options);
     }
-    options = options !== null && options !== void 0 ? options : {};
+    options = options || {};
     // 让其过期即为删除
     options.expires = new Date(0);
-    setCookie(name, '', options);
+    setCookie(key, '', options);
 }
