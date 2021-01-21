@@ -1,0 +1,5 @@
+/docs/
+/qunit/
+**/dist/
+**/test/
+**/node_modules/
