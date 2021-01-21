@@ -21,11 +21,7 @@ export function hasOwnProp(obj: any, key: string): boolean {
  * @param sources 源对象。如果有多个源对象存在相同属性，则后者覆盖前者。
  * @returns 目标对象。
  */
-export function assignProps(target: any, ...sources: any[]): any {
-  if (Object.assign) {
-    return Object.assign(target, ...sources);
-  }
-
+export function assignProps<T>(target: T, ...sources: T[]): T {
   if (target == null) {
     throw new TypeError('Cannot convert undefined or null to object');
   }
