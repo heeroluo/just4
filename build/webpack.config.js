@@ -1,6 +1,4 @@
-const path = require('path');
-
-module.exports = function(options) {
+module.exports = function() {
   return {
     resolve: {
       extensions: ['.js', '.ts']
