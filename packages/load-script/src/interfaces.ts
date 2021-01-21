@@ -18,19 +18,19 @@ export interface IGetScriptOptions {
    */
   data?: string | { [key: string]: unknown },
   /**
-   * 是否把请求的 promise 保存下来，以便请求相同的 URL 时重用。
+   * 是否把请求的 promise 保存下来，以便请求相同的 URL 时重用。默认为 false。
    */
   reusable?: boolean,
   /**
-   * 是否不使用相同 URL 的请求结果。
+   * 是否不使用相同 URL 的请求结果。默认为 true。
    */
   preventReusing?: boolean,
   /**
-   * 是否防止缓存（在 URL 的查询字符串中增加时间戳）。
+   * 是否防止缓存（在 URL 的查询字符串中增加时间戳）。默认为 false。
    */
   preventCaching?: boolean,
   /**
-   * Script 标签的其他特性。
+   * Script 标签的其他特性。默认为 `{ async: true }`。
    */
   props?: ScriptProps,
   /**
