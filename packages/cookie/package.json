@@ -7,11 +7,10 @@
     "dev": "cross-env NODE_ENV=development webpack-dev-server --config build/webpack.dev.config.js",
     "lint": "eslint ./src/*.ts",
     "prebuild": "rimraf ./dist/*",
-    "build": "npm run lint && tsc && node ../../build/copy-others cookie",
-    "pregen-doc": "rimraf ../../docs/cookie",
+    "build": "npm run lint && tsc -p ./src/tsconfig.json && node ../../build/copy-others cookie",
     "gen-doc": "typedoc --tsconfig ./src/tsconfig.json"
   },
   "dependencies": {
-    "@just4/util": "^1.0.0"
+    "@just4/util": "^0.1.0"
   }
 }
