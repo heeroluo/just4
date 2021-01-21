@@ -19,9 +19,6 @@ export function hasOwnProp(obj, key) {
  * @returns 目标对象。
  */
 export function assignProps(target, ...sources) {
-    if (Object.assign) {
-        return Object.assign(target, ...sources);
-    }
     if (target == null) {
         throw new TypeError('Cannot convert undefined or null to object');
     }

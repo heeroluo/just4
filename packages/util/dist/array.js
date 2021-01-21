@@ -40,9 +40,9 @@ export function mergeArray(target, source) {
     return target;
 }
 /**
- * 检查指定对象是否伪数组。
+ * 检查指定对象是否为类数组结构。
  * @param obj 指定对象。
- * @returns 指定对象是否伪数组。
+ * @returns 指定对象是否为类数组结构。
  */
 export function isArrayLike(obj) {
     return obj != null &&

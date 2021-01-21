@@ -16,8 +16,8 @@ export declare function toArray<T>(obj: ArrayLike<T>): Array<T>;
  */
 export declare function mergeArray<T>(target: Array<T>, source?: ArrayLike<T>): Array<T>;
 /**
- * 检查指定对象是否伪数组。
+ * 检查指定对象是否为类数组结构。
  * @param obj 指定对象。
- * @returns 指定对象是否伪数组。
+ * @returns 指定对象是否为类数组结构。
  */
 export declare function isArrayLike(obj: any): boolean;
