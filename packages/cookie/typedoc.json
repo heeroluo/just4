@@ -1,7 +1,6 @@
 {
   "entryPoints": ["./src/"],
   "out": "../../docs/cookie",
-  "json": "./doc.json",
   "excludeInternal": true,
   "listInvalidSymbolLinks": true
 }
