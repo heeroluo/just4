@@ -1,7 +1,6 @@
 /**
  * 提供外部脚本文件加载接口。
  * @packageDocumentation
- * @internal
  */
 
 import { appendToURL } from '@just4/querystring/index';
@@ -9,7 +8,7 @@ import { ScriptProps, IGetScriptOptions } from './interfaces';
 
 
 /**
- * 创建 script 节点，并设置指定特性
+ * 创建 script 节点，并设置指定特性。
  * @ignore
  */
 function createScript(props?: ScriptProps) {

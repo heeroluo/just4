@@ -1,7 +1,6 @@
 /**
  * 提供 jsonp 请求接口。
  * @packageDocumentation
- * @internal
  */
 
 import { appendToURL } from '@just4/querystring/index';
