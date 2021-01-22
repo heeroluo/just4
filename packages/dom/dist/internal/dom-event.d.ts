@@ -3,7 +3,8 @@
  * @packageDocumentation
  * @internal
  */
-import { DOMWrapMember, IEventHandler } from '../types';
+import { DOMWrapMember } from '../types';
+import { IEventHandler } from '../interfaces';
 /**
  * 给指定节点的指定事件注册监听函数。
  * @param nodes 指定节点。

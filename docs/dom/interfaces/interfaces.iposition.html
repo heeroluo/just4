@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>IDOMWrapIterator | @just4/dom</title>
+	<title>IPosition | @just4/dom</title>
 	<meta name="description" content="Documentation for @just4/dom">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -55,13 +55,13 @@
 					<a href="../modules.html">@just4/dom</a>
 				</li>
 				<li>
-					<a href="../modules/dom_wrap.html">dom-wrap</a>
+					<a href="../modules/interfaces.html">interfaces</a>
 				</li>
 				<li>
-					<a href="dom_wrap.idomwrapiterator.html">IDOMWrapIterator</a>
+					<a href="interfaces.iposition.html">IPosition</a>
 				</li>
 			</ul>
-			<h1>Interface IDOMWrapIterator</h1>
+			<h1>Interface IPosition</h1>
 		</div>
 	</div>
 </header>
@@ -71,7 +71,7 @@
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>DOMWrap 类型 forEach/some/every/filter 的 callback。</p>
+						<p>表示页面中的位置。</p>
 					</div>
 				</div>
 			</section>
@@ -79,42 +79,56 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">IDOMWrapIterator</span>
+						<span class="target">IPosition</span>
 					</li>
 				</ul>
 			</section>
-			<section class="tsd-panel">
-				<h3 class="tsd-before-signature">Callable</h3>
-				<ul class="tsd-signatures tsd-kind-interface tsd-parent-kind-module">
-					<li class="tsd-signature tsd-kind-icon">IDOMWrap<wbr>Iterator<span class="tsd-signature-symbol">(</span>value<span class="tsd-signature-symbol">: </span><a href="../modules/types.html#domwrapmember" class="tsd-signature-type" data-tsd-kind="Type alias">DOMWrapMember</a>, index<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, list<span class="tsd-signature-symbol">: </span><a href="../classes/dom_wrap.domwrap.html" class="tsd-signature-type" data-tsd-kind="Class">DOMWrap</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">unknown</span></li>
-				</ul>
-				<ul class="tsd-descriptions">
-					<li class="tsd-description">
-						<aside class="tsd-sources">
-							<ul>
-								<li>Defined in <a href="https://github.com/heeroluo/just4/blob/0fbf31c/packages/dom/src/dom-wrap.ts#L72">dom-wrap.ts:72</a></li>
+			<section class="tsd-panel-group tsd-index-group">
+				<h2>Index</h2>
+				<section class="tsd-panel tsd-index-panel">
+					<div class="tsd-index-content">
+						<section class="tsd-index-section ">
+							<h3>Properties</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="interfaces.iposition.html#left" class="tsd-kind-icon">left</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="interfaces.iposition.html#top" class="tsd-kind-icon">top</a></li>
 							</ul>
-						</aside>
-						<div class="tsd-comment tsd-typography">
-							<div class="lead">
-								<p>DOMWrap 类型 forEach/some/every/filter 的 callback。</p>
-							</div>
-						</div>
-						<h4 class="tsd-parameters-title">Parameters</h4>
-						<ul class="tsd-parameters">
-							<li>
-								<h5>value: <a href="../modules/types.html#domwrapmember" class="tsd-signature-type" data-tsd-kind="Type alias">DOMWrapMember</a></h5>
-							</li>
-							<li>
-								<h5>index: <span class="tsd-signature-type">number</span></h5>
-							</li>
-							<li>
-								<h5>list: <a href="../classes/dom_wrap.domwrap.html" class="tsd-signature-type" data-tsd-kind="Class">DOMWrap</a></h5>
-							</li>
+						</section>
+					</div>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Properties</h2>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="left" class="tsd-anchor"></a>
+					<h3>left</h3>
+					<div class="tsd-signature tsd-kind-icon">left<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/heeroluo/just4/blob/0fbf31c/packages/dom/src/interfaces.ts#L35">interfaces.ts:35</a></li>
 						</ul>
-						<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">unknown</span></h4>
-					</li>
-				</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>与页面左边界的距离。</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="top" class="tsd-anchor"></a>
+					<h3>top</h3>
+					<div class="tsd-signature tsd-kind-icon">top<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/heeroluo/just4/blob/0fbf31c/packages/dom/src/interfaces.ts#L31">interfaces.ts:31</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>与页面上边界的距离。</p>
+						</div>
+					</div>
+				</section>
 			</section>
 		</div>
 		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
@@ -123,7 +137,7 @@
 					<li class=" ">
 						<a href="../modules.html">Exports</a>
 					</li>
-					<li class="current tsd-kind-module">
+					<li class=" tsd-kind-module">
 						<a href="../modules/dom_wrap.html">dom-<wbr>wrap</a>
 					</li>
 					<li class=" tsd-kind-module">
@@ -132,7 +146,7 @@
 					<li class=" tsd-kind-module">
 						<a href="../modules/index.html">index</a>
 					</li>
-					<li class=" tsd-kind-module">
+					<li class="current tsd-kind-module">
 						<a href="../modules/interfaces.html">interfaces</a>
 					</li>
 					<li class=" tsd-kind-module">
@@ -145,16 +159,27 @@
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
-					<li class=" tsd-kind-class tsd-parent-kind-module">
-						<a href="../classes/dom_wrap.domwrap.html" class="tsd-kind-icon">DOMWrap</a>
+					<li class=" tsd-kind-interface tsd-parent-kind-module">
+						<a href="interfaces.ieventhandler.html" class="tsd-kind-icon">IEvent<wbr>Handler</a>
 					</li>
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-interface tsd-parent-kind-module">
-						<a href="dom_wrap.idomwrapiterator.html" class="tsd-kind-icon">IDOMWrap<wbr>Iterator</a>
+						<a href="interfaces.iposition.html" class="tsd-kind-icon">IPosition</a>
+						<ul>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="interfaces.iposition.html#left" class="tsd-kind-icon">left</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="interfaces.iposition.html#top" class="tsd-kind-icon">top</a>
+							</li>
+						</ul>
 					</li>
 				</ul>
 				<ul class="after-current">
+					<li class=" tsd-kind-interface tsd-parent-kind-module">
+						<a href="interfaces.ivaluefunction.html" class="tsd-kind-icon">IValue<wbr>Function</a>
+					</li>
 				</ul>
 			</nav>
 		</div>
@@ -170,6 +195,7 @@
 			</ul>
 			<ul class="tsd-legend">
 				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
 			</ul>
 			<ul class="tsd-legend">
 				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>

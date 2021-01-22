@@ -1,7 +1,6 @@
 /**
  * 为事件监听提供事件对象包装。
  * @packageDocumentation
- * @internal
  */
 // 匹配鼠标事件名
 const reMouseEvent = /^(?:mouse|contextmenu)|click/;
@@ -12,7 +11,7 @@ const rePointerEvent = /^pointer/;
 /**
  * 事件对象包装类。
  */
-export default class EventWrap {
+export class EventWrap {
     /**
      * 构造函数。
      * @param evt 原事件对象。

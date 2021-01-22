@@ -1,5 +1,5 @@
 /**
- * 类型声明。
+ * 接口声明。
  * @packageDocumentation
  */
 export {};

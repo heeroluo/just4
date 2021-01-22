@@ -2,13 +2,14 @@
  * 提供 DOM 包装类。
  * @packageDocumentation
  */
-import { DOMWrapMember, IValueFunction, IEventHandler, IPosition } from './types';
+import { DOMWrapMember } from './types';
+import { IValueFunction, IEventHandler, IPosition } from './interfaces';
 import { TraversalUntil } from './internal/dom-traversal';
 import { InsertTarget } from './internal/dom-insertion';
 /**
- * forEach/some/every/filter 的 callback。
+ * DOMWrap 类型 forEach/some/every/filter 的 callback。
  */
-interface IArrayCallback {
+export interface IDOMWrapIterator {
     (value: DOMWrapMember, index: number, list: DOMWrap): unknown;
 }
 /**
@@ -39,19 +40,19 @@ export declare class DOMWrap implements ArrayLike<DOMWrapMember> {
     /**
      * 即数组的 forEach。
      */
-    forEach(callback: IArrayCallback): void;
+    forEach(callback: IDOMWrapIterator): void;
     /**
      * 即于数组的 some。
      */
-    some(callback: IArrayCallback): boolean;
+    some(callback: IDOMWrapIterator): boolean;
     /**
      * 即数组的 every。
      */
-    every(callback: IArrayCallback): boolean;
+    every(callback: IDOMWrapIterator): boolean;
     /**
      * 作用同数组的 filter，但返回值是 DOMWrap 对象。
      */
-    filter(callback: IArrayCallback): DOMWrap;
+    filter(callback: IDOMWrapIterator): DOMWrap;
     /**
      * 获取指定索引的节点。
      * @param i 索引。
@@ -516,4 +517,3 @@ export declare class DOMWrap implements ArrayLike<DOMWrapMember> {
      */
     submit(): DOMWrap;
 }
-export {};

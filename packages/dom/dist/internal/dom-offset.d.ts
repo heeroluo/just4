@@ -3,7 +3,8 @@
  * @packageDocumentation
  * @internal
  */
-import { DOMWrapMember, IPosition } from '../types';
+import { DOMWrapMember } from '../types';
+import { IPosition } from '../interfaces';
 /**
  * 获取指定节点相对于 document 的位置。
  * @param node 指定节点。

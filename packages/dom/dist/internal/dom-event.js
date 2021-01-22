@@ -8,7 +8,7 @@ import { isArrayLike } from '@just4/util/array';
 import { isNode, isWindow, splitBySpace } from './dom-base';
 import { matchesSelector } from '../selector';
 import { createDataSpace } from './dom-data';
-import EventWrap from './event-wrap';
+import { EventWrap } from '../event-wrap';
 // 不支持标准事件名时，返回带浏览器厂商前缀的事件名
 const fixEventType = (function () {
     // 事件名前缀
