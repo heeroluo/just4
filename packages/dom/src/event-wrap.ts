@@ -1,7 +1,6 @@
 /**
  * 为事件监听提供事件对象包装。
  * @packageDocumentation
- * @internal
  */
 
 // 匹配鼠标事件名
@@ -14,7 +13,7 @@ const rePointerEvent = /^pointer/;
 /**
  * 事件对象包装类。
  */
-export default class EventWrap {
+export class EventWrap {
   /**
    * 原事件对象。
    */

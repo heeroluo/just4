@@ -4,12 +4,12 @@
  */
 
 import { toArray, mergeArray, isArrayLike } from '@just4/util/array';
+import { DOMWrapMember } from './types';
 import {
-  DOMWrapMember,
   IValueFunction,
   IEventHandler,
   IPosition
-} from './types';
+} from './interfaces';
 import { querySelectorAll } from './selector';
 import { isNode, access, uniqueSort } from './internal/dom-base';
 import {

@@ -4,7 +4,8 @@
  * @internal
  */
 
-import { DOMWrapMember, IPosition } from '../types';
+import { DOMWrapMember } from '../types';
+import { IPosition } from '../interfaces';
 import { ifIsHTMLElement } from './dom-base';
 import { getScroll } from './dom-scroll';
 

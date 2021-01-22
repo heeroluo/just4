@@ -6,7 +6,8 @@
 
 import { hasOwnProp } from '@just4/util/object';
 import { isArrayLike } from '@just4/util/array';
-import { DOMWrapMember, IValueFunction } from '../types';
+import { DOMWrapMember } from '../types';
+import { IValueFunction } from '../interfaces';
 
 
 /**

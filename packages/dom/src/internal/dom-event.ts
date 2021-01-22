@@ -9,8 +9,9 @@ import { isArrayLike } from '@just4/util/array';
 import { isNode, isWindow, splitBySpace } from './dom-base';
 import { matchesSelector } from '../selector';
 import { createDataSpace } from './dom-data';
-import EventWrap from './event-wrap';
-import { DOMWrapMember, IEventHandler } from '../types';
+import { EventWrap } from '../event-wrap';
+import { DOMWrapMember } from '../types';
+import { IEventHandler } from '../interfaces';
 
 
 // 事件监听器
