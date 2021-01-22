@@ -4,14 +4,14 @@
  */
 
 import { appendToURL } from '@just4/querystring/index';
-import { ScriptProps, IGetScriptOptions } from './interfaces';
+import { IGetScriptOptions } from './interfaces';
 
 
 /**
  * 创建 script 节点，并设置指定特性。
  * @ignore
  */
-function createScript(props?: ScriptProps) {
+function createScript(props?: Partial<HTMLScriptElement>) {
   const script = document.createElement('script');
   if (props) {
     Object.keys(props).forEach(function(key: keyof HTMLScriptElement) {
