@@ -3,12 +3,6 @@
  * @packageDocumentation
  */
 /**
- * Script 元素的特性。
- */
-export declare type ScriptProps = {
-    [key in keyof HTMLScriptElement]?: unknown;
-};
-/**
  * 加载脚本文件的选项。
  */
 export interface IGetScriptOptions {
@@ -33,7 +27,7 @@ export interface IGetScriptOptions {
     /**
      * Script 标签的其他特性。默认为 `{ async: true }`。
      */
-    props?: ScriptProps;
+    props?: Partial<HTMLScriptElement>;
     /**
      * 超时时间（毫秒）。
      */
