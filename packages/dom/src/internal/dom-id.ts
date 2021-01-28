@@ -40,7 +40,7 @@ function getExpandoWay(obj: any): 0 | 1 | 2 {
 
 
 // 唯一 id 属性名
-const expandoName = '_jraiser_nodeid_' + (+new Date) + '_';
+const expandoName = '_just4_nodeid_' + (+new Date) + '_';
 
 // 唯一 id 计数器（自增 id）
 let autoId = 0;

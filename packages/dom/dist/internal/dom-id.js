@@ -35,7 +35,7 @@ function getExpandoWay(obj) {
     }
 }
 // 唯一 id 属性名
-const expandoName = '_jraiser_nodeid_' + (+new Date) + '_';
+const expandoName = '_just4_nodeid_' + (+new Date) + '_';
 // 唯一 id 计数器（自增 id）
 let autoId = 0;
 // Chrome 57+ 在某些情况下会回收节点的自定义特性；
