@@ -71,14 +71,14 @@ export function stringify(
 ): string {
   options = assignProps({
     encode: encodeURIComponent,
-    allowEmpty: true
+    ignoreEmpty: false
   }, options);
 
   const result: string[] = [];
   function addToResult(key: string, value: unknown) {
     if (value == null) { value = ''; }
     // 忽略空值的情况
-    if (value === '' && !options?.allowEmpty) { return; }
+    if (value === '' && options?.ignoreEmpty) { return; }
     if (typeof options?.encode === 'function') {
       key = options.encode(key);
       value = options.encode(String(value));
@@ -145,5 +145,7 @@ export function appendToURL(
     data = data.replace(/^[?&]/, '');
   }
 
-  return url + (url.indexOf('?') !== -1 ? '&' : '?') + data + hash;
+  return url + (
+    data ? ((url.indexOf('?') !== -1 ? '&' : '?') + data) : ''
+  ) + hash;
 }

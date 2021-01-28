@@ -16,7 +16,7 @@ const obj2 = {
 const str1 = 'id=0&str=hello';
 const str2 = 'id=0&str=hello&empty=';
 const options = {
-  allowEmpty: false
+  ignoreEmpty: true
 };
 
 
@@ -49,5 +49,17 @@ QUnit.test('append', function(assert: any) {
     appendToURL(url2, obj1),
     url2 + '&id=0&str=hello',
     '带参数URL'
+  );
+
+  assert.strictEqual(
+    appendToURL(url1, { a: null, b: undefined }, { ignoreEmpty: true }),
+    url1,
+    '忽略空'
+  );
+
+  assert.strictEqual(
+    appendToURL(url2, { a: null, b: '' }, { ignoreEmpty: true }),
+    url2,
+    '忽略空'
   );
 });

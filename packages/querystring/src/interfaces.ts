@@ -23,7 +23,7 @@ export interface IQSStringifyOptions {
    */
   encode?: (content: string) => string,
   /**
-   * 是否允许包含空值，默认为 true。
+   * 序列化参数时是否忽略空值（null、undefined、空字符串）参数，默认为 false。
    */
-  allowEmpty?: boolean
+  ignoreEmpty?: boolean
 }
