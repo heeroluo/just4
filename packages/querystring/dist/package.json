@@ -1,9 +1,9 @@
 {
   "name": "@just4/querystring",
   "version": "0.1.0",
-  "description": "Utility functions for querystring manipulation.",
+  "description": "Just for querystring manipulation.",
   "dependencies": {
-    "@just4/util": "^1.0.0"
+    "@just4/util": "^0.1.0"
   },
   "repository": {
     "type": "git",

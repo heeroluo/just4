@@ -5,17 +5,22 @@
 import { hasOwnProp, assignProps } from '@just4/util/object';
 /**
  * 把查询字符串解析为键值对集合。
+ * @example
+ * ```typescript
+ * import { parse } from '@just4/querystring/index';
+ * parse('id=0&str=hello'); // { id: '0', str: 'hello' }
+ * parse('id=0&id=1'); // { id: ['0', '1'] }
+ * ```
  * @param str 查询字符串。
  * @param options 解析选项。
  * @returns 键值对集合。
  */
 export function parse(str, options) {
-    var _a;
     if (typeof str !== 'string') {
         throw new Error('The str argument must be a string type');
     }
     options = assignProps({}, options);
-    options.decode = (_a = options.decode) !== null && _a !== void 0 ? _a : decodeURIComponent;
+    options.decode = options.decode || decodeURIComponent;
     const result = Object.create(null);
     str.split('&').forEach(function (pair) {
         if (!pair) {
@@ -43,6 +48,12 @@ export function parse(str, options) {
 }
 /**
  * 把键值对序列化为查询字符串。
+ * @example
+ * ```typescript
+ * import { stringify } from '@just4/querystring/index';
+ * stringify({ id: '0', str: 'hello' }); // 'id=0&str=hello'
+ * stringify({ id: ['0', '1'] }); // 'id=0&id=1'
+ * ```
  * @param data 键值对。
  * @param options 序列化选项。
  * @returns 序列化结果。
@@ -50,7 +61,7 @@ export function parse(str, options) {
 export function stringify(data, options) {
     options = assignProps({
         encode: encodeURIComponent,
-        allowEmpty: true
+        ignoreEmpty: false
     }, options);
     const result = [];
     function addToResult(key, value) {
@@ -58,7 +69,7 @@ export function stringify(data, options) {
             value = '';
         }
         // 忽略空值的情况
-        if (value === '' && !(options === null || options === void 0 ? void 0 : options.allowEmpty)) {
+        if (value === '' && (options === null || options === void 0 ? void 0 : options.ignoreEmpty)) {
             return;
         }
         if (typeof (options === null || options === void 0 ? void 0 : options.encode) === 'function') {
@@ -85,6 +96,14 @@ export function stringify(data, options) {
 }
 /**
  * 把键值对序列化为查询字符串后拼接到指定 URL。
+ * @example
+ * ```typescript
+ * import { appendToURL } from '@just4/querystring/index';
+ * appendToURL('https://abc.com/?a=1#hash', {
+ *   b: 2,
+ *   c: 3
+ * }); // https://abc.com/?a=1&b=2&c=3#hash
+ * ```
  * @param url 指定URL。
  * @param data 键值对。
  * @param options 序列化选项。
@@ -111,5 +130,5 @@ export function appendToURL(url, data, options) {
         // 移除位于开头的 ? 和 &，方便拼接
         data = data.replace(/^[?&]/, '');
     }
-    return url + (url.indexOf('?') !== -1 ? '&' : '?') + data + hash;
+    return url + (data ? ((url.indexOf('?') !== -1 ? '&' : '?') + data) : '') + hash;
 }
