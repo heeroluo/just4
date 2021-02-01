@@ -26,18 +26,26 @@ const scriptLoaders: { [key: string]: Promise<void> } = Object.create(null);
 
 /**
  * 加载脚本文件。
+ * ```typescript
+ * import { loadScript } from '@just4/load-script';
+ * loadScript('https://code.jquery.com/jquery-1.12.4.min.js', {
+ *   reusable: true,
+ *   props: {
+ *     crossOrigin: 'anonymous'
+ *   }
+ * });
+ * ```
  * @param url 文件 URL。
  * @param options 加载选项。
  * @returns 加载脚本文件的 promise 实例。
  */
 export function loadScript(url: string, options: IGetScriptOptions = {
   reusable: false,
-  preventReusing: true,
   preventCaching: false,
   props: { async: true }
 }): Promise<void> {
   if (options.data) { url = appendToURL(url, options.data); }
-  if (!options.preventReusing && !options.preventCaching && scriptLoaders[url]) {
+  if (options.preventReusing !== false && !options.preventCaching && scriptLoaders[url]) {
     return scriptLoaders[url];
   }
 
