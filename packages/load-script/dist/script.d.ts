@@ -5,6 +5,15 @@
 import { IGetScriptOptions } from './interfaces';
 /**
  * 加载脚本文件。
+ * ```typescript
+ * import { loadScript } from '@just4/load-script';
+ * loadScript('https://code.jquery.com/jquery-1.12.4.min.js', {
+ *   reusable: true,
+ *   props: {
+ *     crossOrigin: 'anonymous'
+ *   }
+ * });
+ * ```
  * @param url 文件 URL。
  * @param options 加载选项。
  * @returns 加载脚本文件的 promise 实例。
