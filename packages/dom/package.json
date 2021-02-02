@@ -7,7 +7,7 @@
     "dev": "cross-env NODE_ENV=development webpack-dev-server --config build/webpack.dev.config.js",
     "lint": "eslint ./src/*.ts",
     "prebuild": "rimraf ./dist/*",
-    "build": "npm run lint && tsc -p ./src/tsconfig.json && node ../../build/copy-others dom",
+    "build": "npm run lint && tsc -p ./src/tsconfig.json && node ../../build/compress dom && node ../../build/copy-others dom",
     "gen-doc": "typedoc --tsconfig ./src/tsconfig.json"
   },
   "dependencies": {
