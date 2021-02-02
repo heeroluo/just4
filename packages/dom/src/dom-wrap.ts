@@ -70,7 +70,7 @@ import { onEvent, offEvent, triggerEvent } from './internal/dom-event';
  * DOMWrap 类型 forEach/some/every/filter 的 callback。
  */
 export interface IDOMWrapIterator {
-  (value: DOMWrapMember, index: number, list: DOMWrap): unknown
+  (member: DOMWrapMember, index: number, list: DOMWrap): unknown
 }
 
 /**
@@ -98,13 +98,13 @@ export class DOMWrap implements ArrayLike<DOMWrapMember> {
   }
 
   /**
-   * 把当前对象转换为数组。
+   * 返回包含当前所有节点的数组。
    * @returns 包含当前所有节点的数组。
    */
   toArray(): DOMWrapMember[] { return toArray<DOMWrapMember>(this); }
 
   /**
-   * 返回指定节点在当前对象中的序号索引。
+   * 即数组的 indexOf。
    * @param node 指定节点。
    * @returns 序号索引。
    */
@@ -120,7 +120,7 @@ export class DOMWrap implements ArrayLike<DOMWrapMember> {
   }
 
   /**
-   * 即于数组的 some。
+   * 即数组的 some。
    */
   some(callback: IDOMWrapIterator): boolean {
     return Array.prototype.some.call(this, callback);
@@ -134,7 +134,7 @@ export class DOMWrap implements ArrayLike<DOMWrapMember> {
   }
 
   /**
-   * 作用同数组的 filter，但返回值是 DOMWrap 对象。
+   * 功能与数组的 filter 基本一致，但返回值是 DOMWrap 对象。
    */
   filter(callback: IDOMWrapIterator): DOMWrap {
     return new DOMWrap(
@@ -154,11 +154,11 @@ export class DOMWrap implements ArrayLike<DOMWrapMember> {
 
   /**
    * 返回仅包含指定索引节点的 DOMWrap 对象。
-   * @param index 索引。
+   * @param i 索引。
    * @returns 仅包含指定索引节点的 DOMWrap 对象。
    */
-  public eq(index: number): DOMWrap {
-    const node = this.get(index);
+  public eq(i: number): DOMWrap {
+    const node = this.get(i);
     return new DOMWrap(node ? [node] : []);
   }
 
@@ -175,7 +175,13 @@ export class DOMWrap implements ArrayLike<DOMWrapMember> {
   public last(): DOMWrap { return this.eq(this.length - 1); }
 
   /**
-   * 返回包含当前节点及匹配到的新节点的 DOMWrap 对象。
+   * 返回包含当前节点及匹配到的新节点的 DOMWrap 对象（节点顺序与其在文档树中的顺序一致）。
+   * @example
+   * ```typescript
+   * // <p id="p1"></p>
+   * // <div><p id="p2"></p></div>
+   * $('div').add('p'); // [p#p1, div, p#p2]
+   * ```
    * @param selector 选择器。
    * @param context 上下文。
    * @returns 包含上述节点的 DOMWrap 对象。
@@ -183,7 +189,12 @@ export class DOMWrap implements ArrayLike<DOMWrapMember> {
   public add(selector: string, context?: HTMLElement | HTMLDocument): DOMWrap
 
   /**
-   * 返回包含当前节点及指定节点的 DOMWrap 对象。
+   * 返回包含当前节点及指定节点的 DOMWrap 对象（节点顺序与其在文档树中的顺序一致）。
+   * @example
+   * ```typescript
+   * // <div><p id="p2"></p></div>
+   * $('div').add(document.querySelector('#p2')); // [div, p#p2]
+   * ```
    * @param nodes 指定节点。
    * @returns 包含上述节点的 DOMWrap 对象。
    */
@@ -207,11 +218,18 @@ export class DOMWrap implements ArrayLike<DOMWrapMember> {
 
   /**
    * 遍历当前所有节点。
+   * @example
+   * ```typescript
+   * $('div').each(function(i: number, member: DOMWrapMember) {
+   *   console.log(i);
+   *   return i < 10; // 仅遍历前 10 项
+   * });
+   * ```
    * @param callback 对每个节点执行的操作函数，返回值为 false 时中断遍历。
    * @returns 当前对象。
    */
   public each(
-    callback: (this: DOMWrapMember, index?: number, node?: DOMWrapMember) => unknown
+    callback: (this: DOMWrapMember, index?: number, member?: DOMWrapMember) => unknown
   ): DOMWrap {
     for (let i = 0; i < this.length; i++) {
       if (callback.call(this[i], i, this[i]) === false) { break; }
@@ -221,12 +239,21 @@ export class DOMWrap implements ArrayLike<DOMWrapMember> {
 
   /**
    * 获取当前第一个节点的属性值。
+   * @example
+   * ```typescript
+   * // <input readonly="readonly" />
+   * $('input').attr('readonly'); // "readonly"
+   * ```
    * @param name 属性名。
    * @returns 属性值。
    */
   public attr(name: string): string
   /**
    * 设置当前所有节点的属性值。
+   * @example
+   * ```typescript
+   * $('input').attr('readonly', 'readonly');
+   * ```
    * @param name 属性名。
    * @param value 属性值。
    * @returns 当前对象。
@@ -234,6 +261,12 @@ export class DOMWrap implements ArrayLike<DOMWrapMember> {
   public attr(name: string, value: string | boolean | IValueFunction): DOMWrap
   /**
    * 设置当前所有节点的属性值。
+   * @example
+   * ```typescript
+   * $('input').attr({
+   *   readonly: 'readonly'
+   * });
+   * ```
    * @param kvPairs 属性键值对。
    * @returns 当前对象。
    */
@@ -251,6 +284,10 @@ export class DOMWrap implements ArrayLike<DOMWrapMember> {
 
   /**
    * 移除当前所有节点的属性值。
+   * @example
+   * ```typescript
+   * $('div').removeAttr('id');
+   * ```
    * @param names 属性名。多个属性名可用空格隔开，也可以传入数组。
    * @returns 当前对象。
    */
@@ -262,11 +299,20 @@ export class DOMWrap implements ArrayLike<DOMWrapMember> {
   /**
    * 获取当前第一个节点的特性值。
    * @param name 特性名。
+   * @example
+   * ```typescript
+   * // <input readonly="readonly" />
+   * $('input').prop('readOnly'); // true
+   * ```
    * @returns 特性值。
    */
   public prop(name: string): unknown
   /**
    * 设置当前所有节点的特性值。
+   * @example
+   * ```typescript
+   * $('input').prop('readOnly', true);
+   * ```
    * @param name 特性名。
    * @param value 特性值。
    * @returns 当前对象。
@@ -274,6 +320,12 @@ export class DOMWrap implements ArrayLike<DOMWrapMember> {
   public prop(name: string, value: unknown): DOMWrap
   /**
    * 设置当前所有节点的特性值。
+   * @example
+   * ```typescript
+   * $('input').prop({
+   *   readOnly: true
+   * });
+   * ```
    * @param kvPairs 特性键值对。
    * @returns 当前对象。
    */
@@ -291,12 +343,20 @@ export class DOMWrap implements ArrayLike<DOMWrapMember> {
 
   /**
    * 获取当前第一个节点的自定义数据项值。
+   * @example
+   * ```typescript
+   * $('body').data('testData');
+   * ```
    * @param key 数据项键。
    * @returns 数据项值。
    */
   public data(key: string): unknown
   /**
    * 设置当前所有节点的自定义数据项值。
+   * @example
+   * ```typescript
+   * $('body').data('testData', 'my test data');
+   * ```
    * @param key 数据项键。
    * @param value 数据项值。
    * @returns 当前对象。
@@ -304,6 +364,12 @@ export class DOMWrap implements ArrayLike<DOMWrapMember> {
   public data(key: string, value: unknown | IValueFunction): DOMWrap
   /**
    * 设置当前所有节点的自定义数据项值。
+   * @example
+   * ```typescript
+   * $('body').data({
+   *   testData: 'my test data'
+   * });
+   * ```
    * @param kvPairs 数据项键值对。
    * @returns 当前对象。
    */
@@ -321,6 +387,11 @@ export class DOMWrap implements ArrayLike<DOMWrapMember> {
 
   /**
    * 移除当前所有节点的自定义数据项。
+   * @example
+   * ```typescript
+   * $('body').removeData('testData'); // remove single
+   * $('body').removeData(); // remove all
+   * ```
    * @param keys 数据项键。多个键可用空格隔开，也可以传入数组。不传时清理所有自定义数据项。
    * @returns 当前对象。
    */
@@ -335,11 +406,20 @@ export class DOMWrap implements ArrayLike<DOMWrapMember> {
 
   /**
    * 获取当前第一个节点的内部 html 代码。
+   * @example
+   * ```typescript
+   * // <div><p>text</p></div>
+   * $('div').html(); // "<p>text</p>"
+   * ```
    * @returns 当前第一个节点的内部 html 代码。
    */
   html(): string
   /**
    * 设置当前所有节点的内部 html 代码。
+   * @example
+   * ```typescript
+   * $('div').html('<p>text</p>');
+   * ```
    * @param html html 代码。
    * @returns 当前对象。
    */
@@ -371,11 +451,19 @@ export class DOMWrap implements ArrayLike<DOMWrapMember> {
 
   /**
    * 获取当前第一个节点的 value 特性值。
+   * @example
+   * ```typescript
+   * $('input').val();
+   * ```
    * @returns 当前第一个节点的 value 特性值。
    */
   val(): string
   /**
    * 设置当前所有节点的 value 特性值。
+   * @example
+   * ```typescript
+   * $('input').val('value');
+   * ```
    * @param value value 值。
    * @returns 当前对象。
    */
@@ -387,12 +475,20 @@ export class DOMWrap implements ArrayLike<DOMWrapMember> {
 
   /**
    * 获取当前第一个节点的样式属性值。
+   * @example
+   * ```typescript
+   * $('div').css('color');
+   * ```
    * @param name 样式属性名。
    * @returns 样式属性值。
    */
   public css(name: string): string
   /**
    * 设置当前所有节点的样式属性值。
+   * @example
+   * ```typescript
+   * $('div').css('color', 'red');
+   * ```
    * @param name 样式属性名。
    * @param value 样式属性值。
    * @returns 当前对象。
@@ -400,6 +496,13 @@ export class DOMWrap implements ArrayLike<DOMWrapMember> {
   public css(name: string, value: number | string | IValueFunction): DOMWrap
   /**
    * 设置当前所有节点的样式属性值。
+   * @example
+   * ```typescript
+   * $('div').css({
+   *   color: 'red',
+   *   'font-size': '16px'
+   * });
+   * ```
    * @param kvPairs 样式属性键值对。
    * @returns 当前对象。
    */
@@ -435,6 +538,21 @@ export class DOMWrap implements ArrayLike<DOMWrapMember> {
 
   /**
    * 为当前所有节点添加样式类。
+   * @example
+   * ```typescript
+   * // <div></div>
+   * $('div').addClass('visible'); // <div class="visible"></div>
+   * ```
+   * @example
+   * ```typescript
+   * // <div></div>
+   * $('div').addClass('visible bg'); // <div class="visible bg"></div>
+   * ```
+   * @example
+   * ```typescript
+   * // <div></div>
+   * $('div').addClass(['visible', 'bg']); // <div class="visible bg"></div>
+   * ```
    * @param classNames 样式类名。多个样式类名可用空格隔开，也可以传入数组。
    * @returns 当前对象。
    */
@@ -445,6 +563,26 @@ export class DOMWrap implements ArrayLike<DOMWrapMember> {
 
   /**
    * 为当前所有节点移除样式类。
+   * @example
+   * ```typescript
+   * // <div class="visible bg"></div>
+   * $('div').removeClass('bg'); // <div class="visible"></div>
+   * ```
+   * @example
+   * ```typescript
+   * // <div class="visible bg"></div>
+   * $('div').removeClass('visible bg'); // <div></div>
+   * ```
+   * @example
+   * ```typescript
+   * // <div class="visible bg"></div>
+   * $('div').removeClass(['visible', 'bg']); // <div></div>
+   * ```
+   * @example
+   * ```typescript
+   * // <div class="visible bg"></div>
+   * $('div').removeClass(); // <div></div>
+   * ```
    * @param classNames 样式类名。多个样式类名可用空格隔开，也可以传入数组。不传时移除所有样式类。
    * @returns 当前对象。
    */
@@ -455,6 +593,12 @@ export class DOMWrap implements ArrayLike<DOMWrapMember> {
 
   /**
    * 检查当前是否至少有一个节点包含指定样式类。
+   * @example
+   * ```typescript
+   * // <div class="visible"></div>
+   * // <div></div>
+   * $('div').hasClass('visible'); // true
+   * ```
    * @param className 指定样式类。
    * @returns 当前是否至少有一个节点包含指定样式类。
    */
@@ -466,6 +610,30 @@ export class DOMWrap implements ArrayLike<DOMWrapMember> {
 
   /**
    * 对当前每个节点，如果包含指定样式类，则移除；否则添加。
+   * @example
+   * ```typescript
+   * // <div class="visible bg"></div>
+   * // <div></div>
+   * $('div').toggleClass('visible');
+   * // <div class="bg"></div>
+   * // <div class="visible"></div>
+   * ```
+   * @example
+   * ```typescript
+   * // <div class="visible bg"></div>
+   * // <div></div>
+   * $('div').toggleClass('visible bg');
+   * // <div></div>
+   * // <div class="visible bg"></div>
+   * ```
+   * @example
+   * ```typescript
+   * // <div class="visible"></div>
+   * // <div class="bg"></div>
+   * $('div').toggleClass(['visible', 'bg']);
+   * // <div class="bg"></div>
+   * // <div class="visible"></div>
+   * ```
    * @param classNames 样式类名。多个样式类名可用空格隔开，也可以传入数组。
    * @returns 当前对象。
    */
@@ -487,19 +655,19 @@ export class DOMWrap implements ArrayLike<DOMWrapMember> {
   height(): number { return computeSize(this[0], 'Height'); }
 
   /**
-   * 计算当前第一个节点的内部宽度（包括 padding）。
+   * 计算当前第一个节点的内部宽度（包含 padding）。
    * @returns 内部宽度（像素）。
    */
   innerWidth(): number { return computeSize(this[0], 'Width', true); }
 
   /**
-   * 计算当前第一个节点的内部高度（包括 padding）。
+   * 计算当前第一个节点的内部高度（包含 padding）。
    * @returns 内部高度（像素）。
    */
   innerHeight(): number { return computeSize(this[0], 'Height', true); }
 
   /**
-   * 计算当前第一个节点的外部宽度（包括 padding、border，也可以包含 margin）。
+   * 计算当前第一个节点的外部宽度（包含 padding、border，也可以包含 margin）。
    * @param includeMargin 是否包含 margin。
    * @returns 外部宽度（像素）。
    */
@@ -566,12 +734,30 @@ export class DOMWrap implements ArrayLike<DOMWrapMember> {
 
   /**
    * 获取当前第一个节点在同级元素中的位置。
+   * @example
+   * ```typescript
+   * // <ul>
+   * //  <li></li>
+   * //  <li id="item"></li>
+   * // </ul>
+   * $('#item').index(); // 1
+   * ```
    * @returns 位置序号。
    */
   index(): number { return getIndex(this[0]); }
 
   /**
    * 查找当前所有节点的子元素。
+   * @example
+   * ```typescript
+   * // <ul id="list">
+   * //  <li></li>
+   * //  <li class="item"></li>
+   * //  <li class="item"></li>
+   * // </ul>
+   * $('#list').children(); // [li, li.item, li.item]
+   * $('#list').children('.item'); // [li.item, li.item]
+   * ```
    * @param selector 选择器。不为空时仅返回符合选择器规则的元素。
    * @returns 包含查找结果的 DOMWrap 对象。
    */
@@ -581,6 +767,16 @@ export class DOMWrap implements ArrayLike<DOMWrapMember> {
 
   /**
    * 查找当前所有节点的同级元素。
+   * @example
+   * ```typescript
+   * // <ul>
+   * //  <li id="first-item"></li>
+   * //  <li></li>
+   * //  <li class="last-item"></li>
+   * // </ul>
+   * $('#first-item').siblings(); // [li, li.last-item]
+   * $('#first-item').siblings('.last-item'); // [li.last-item]
+   * ```
    * @param selector 选择器。不为空时仅返回符合选择器规则的元素。
    * @returns 包含查找结果的 DOMWrap 对象。
    */
@@ -737,6 +933,10 @@ export class DOMWrap implements ArrayLike<DOMWrapMember> {
 
   /**
    * 在当前所有节点之后插入目标节点（或其副本）。
+   * @example
+   * ```typescript
+   * $('div').after('<p>text</p>'); // 在每个 div 节点后插入 p 节点
+   * ```
    * @param target 目标节点。
    * @returns 当前对象。
    */
@@ -766,6 +966,12 @@ export class DOMWrap implements ArrayLike<DOMWrapMember> {
 
   /**
    * 把目标节点替换为当前节点（或其副本）。
+   * @example
+   * ```typescript
+   * // <div>text</div>
+   * // <div>text</div>
+   * $('<p>text</p>').replaceAll('div'); // 所有 div 都替换成 p
+   * ```
    * @param target 目标节点。
    * @returns 包含替换后节点的 DOMWrap 对象。
    */
@@ -775,6 +981,10 @@ export class DOMWrap implements ArrayLike<DOMWrapMember> {
 
   /**
    * 把当前所有节点从其所属文档中移除，并清除其数据。
+   * @example
+   * ```typescript
+   * $('div').remove(); // 移除所有 div
+   * ```
    * @returns 当前对象。
    */
   remove(): DOMWrap {
@@ -793,6 +1003,12 @@ export class DOMWrap implements ArrayLike<DOMWrapMember> {
 
   /**
    * 克隆当前所有节点。
+   * ```typescript
+   * // <div id="container"></div>
+   * const $container = $('#container').data('testData', 1);
+   * $container.clone().data('testData'); // undefined
+   * $container.clone(true).data('testData'); // 1
+   * ```
    * @param withData 是否克隆节点数据。
    * @param deepWithData 是否克隆后代节点数据。
    * @returns 包含所有节点副本的 DOMWrap 对象。
@@ -809,6 +1025,18 @@ export class DOMWrap implements ArrayLike<DOMWrapMember> {
 
   /**
    * 给当前所有节点的指定事件注册监听函数。
+   * @example
+   * ```typescript
+   * $('body').on('click', 'div', function() {
+   *   console.log('click on div');
+   * });
+   *
+   * $('body').on('click', function(e) {
+   *   if (e.target === e.currentTarget) {
+   *     console.log('click on body');
+   *   }
+   * });
+   * ```
    * @param types 事件类型。多个事件类型用空格隔开，或者以数组传入。
    * @param selector 代理元素选择器。为空时不代理元素，为函数时表示监听函数。
    * @param handler 监听函数。
@@ -831,6 +1059,12 @@ export class DOMWrap implements ArrayLike<DOMWrapMember> {
    * 给当前所有节点的指定事件注销监听函数。
    * 不指定监听函数和代理元素选择器时，注销指定事件类型的所有监听函数；
    * 不指定事件类型时注销所有事件的监听函数。
+   * @example
+   * ```typescript
+   * $('body').off('click', handler); // 移除 click 事件的 handler 监听函数
+   * $('body').off('click'); // 移除 click 事件的所有监听函数
+   * $('body').off(); // 移除所有事件的所有监听函数
+   * ```
    * @param types 事件类型。多个事件类型用空格隔开，或者以数组传入。
    * @param selector 代理元素选择器。不传或为空时不限制代理元素，为函数时表示监听函数。
    * @param handler 监听函数。不传或为空时注销指定事件的所有监听函数。
@@ -851,6 +1085,10 @@ export class DOMWrap implements ArrayLike<DOMWrapMember> {
 
   /**
    * 触发当前所有节点的特定事件。
+   * @example
+   * ```typescript
+   * $('input[type=button]').trigger('click');
+   * ```
    * @param type 事件类型。
    * @returns 当前对象。
    */
