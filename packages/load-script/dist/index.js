@@ -1,1 +1,5 @@
-import{jsonp}from"./jsonp";import{loadScript}from"./script";export{jsonp,loadScript};
+import { jsonp } from "./jsonp";
+
+import { loadScript } from "./script";
+
+export { jsonp, loadScript };

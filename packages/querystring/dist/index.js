@@ -1,1 +1,87 @@
-import{hasOwnProp,assignProps}from"@just4/util/object";export function parse(n,e){if("string"!=typeof n)throw new Error("The str argument must be a string type");(e=assignProps({},e)).decode=e.decode||decodeURIComponent;const o=Object.create(null);return n.split("&").forEach((function(n){if(!n)return;const r=n.split("=");let t=r[0],i=r[1]||"";(null==e?void 0:e.decode)&&(t=e.decode(t),i=e.decode(i)),hasOwnProp(o,t)?(Array.isArray(o[t])||(o[t]=[o[t]]),o[t].push(i)):o[t]=i})),o}export function stringify(n,e){e=assignProps({encode:encodeURIComponent,ignoreEmpty:!1},e);const o=[];function r(n,r){null==r&&(r=""),""===r&&(null==e?void 0:e.ignoreEmpty)||("function"==typeof(null==e?void 0:e.encode)&&(n=e.encode(n),r=e.encode(String(r))),o.push(n+"="+r))}let t,i;function s(n){r(t,n)}for(t in n)hasOwnProp(n,t)&&(i=n[t],Array.isArray(i)?i.forEach(s):r(t,i));return o.join("&")}export function appendToURL(n,e,o){if(null==n||null==e)return n;const r=(n=String(n)).indexOf("#");let t="";return-1!==r&&(t=n.substring(r,n.length),n=n.substring(0,r)),(n=n.replace(/[?&]$/,""))+((e="string"!=typeof e?stringify(e,o):e.replace(/^[?&]/,""))?(-1!==n.indexOf("?")?"&":"?")+e:"")+t}
+import { hasOwnProp, assignProps } from "@just4/util/object";
+
+export function parse(str, options) {
+    if (typeof str !== "string") {
+        throw new Error("The str argument must be a string type");
+    }
+    options = assignProps({}, options);
+    options.decode = options.decode || decodeURIComponent;
+    const result = Object.create(null);
+    str.split("&").forEach((function(pair) {
+        if (!pair) {
+            return;
+        }
+        const pairArr = pair.split("=");
+        let key = pairArr[0];
+        let value = pairArr[1] || "";
+        if (options === null || options === void 0 ? void 0 : options.decode) {
+            key = options.decode(key);
+            value = options.decode(value);
+        }
+        if (hasOwnProp(result, key)) {
+            if (!Array.isArray(result[key])) {
+                result[key] = [ result[key] ];
+            }
+            result[key].push(value);
+        } else {
+            result[key] = value;
+        }
+    }));
+    return result;
+}
+
+export function stringify(data, options) {
+    options = assignProps({
+        encode: encodeURIComponent,
+        ignoreEmpty: false
+    }, options);
+    const result = [];
+    function addToResult(key, value) {
+        if (value == null) {
+            value = "";
+        }
+        if (value === "" && (options === null || options === void 0 ? void 0 : options.ignoreEmpty)) {
+            return;
+        }
+        if (typeof (options === null || options === void 0 ? void 0 : options.encode) === "function") {
+            key = options.encode(key);
+            value = options.encode(String(value));
+        }
+        result.push(key + "=" + value);
+    }
+    let key, value;
+    function loopItem(item) {
+        addToResult(key, item);
+    }
+    for (key in data) {
+        if (hasOwnProp(data, key)) {
+            value = data[key];
+            if (Array.isArray(value)) {
+                value.forEach(loopItem);
+            } else {
+                addToResult(key, value);
+            }
+        }
+    }
+    return result.join("&");
+}
+
+export function appendToURL(url, data, options) {
+    if (url == null || data == null) {
+        return url;
+    }
+    url = String(url);
+    const temp = url.indexOf("#");
+    let hash = "";
+    if (temp !== -1) {
+        hash = url.substring(temp, url.length);
+        url = url.substring(0, temp);
+    }
+    url = url.replace(/[?&]$/, "");
+    if (typeof data !== "string") {
+        data = stringify(data, options);
+    } else {
+        data = data.replace(/^[?&]/, "");
+    }
+    return url + (data ? (url.indexOf("?") !== -1 ? "&" : "?") + data : "") + hash;
+}

@@ -1,1 +1,30 @@
-export function toArray(t){let e;try{e=Array.prototype.slice.call(t)}catch(r){e=[];let n=t.length;for(;n;)e[--n]=t[n]}return e}export function mergeArray(t,e){if(null==e)return t;const r=e.length;let n=t.length,l=0;for(;l<r;)t[n++]=e[l++];return t.length=n,t}export function isArrayLike(t){return null!=t&&t!==t.window&&"function"!=typeof t&&"number"==typeof t.length&&t.length%1==0&&t.length>-1}
+export function toArray(obj) {
+    let result;
+    try {
+        result = Array.prototype.slice.call(obj);
+    } catch (e) {
+        result = [];
+        let i = obj.length;
+        while (i) {
+            result[--i] = obj[i];
+        }
+    }
+    return result;
+}
+
+export function mergeArray(target, source) {
+    if (source == null) {
+        return target;
+    }
+    const len = source.length;
+    let i = target.length, j = 0;
+    while (j < len) {
+        target[i++] = source[j++];
+    }
+    target.length = i;
+    return target;
+}
+
+export function isArrayLike(obj) {
+    return obj != null && obj !== obj.window && typeof obj !== "function" && typeof obj.length === "number" && obj.length % 1 === 0 && obj.length > -1;
+}

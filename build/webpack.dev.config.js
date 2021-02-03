@@ -1,20 +1,28 @@
 const path = require('path');
 const merge = require('webpack-merge').merge;
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
 const getBasicConfig = require('./webpack.config.js');
 
-
 module.exports = function(options) {
   const testDir = path.resolve(options.dirname, '../test/');
+  const tsCfgFile = path.join(testDir, 'tsconfig.json');
 
   return merge(getBasicConfig(options), {
     mode: 'development',
     entry: path.join(testDir, 'index.ts'),
     resolve: {
       alias: {
-        '@': path.resolve(options.dirname, '../src')
-      }
+        // 不知道为什么，tsconfig-paths-webpack-plugin 无法解析下面两个路径
+        '@just4/util': path.resolve(__dirname, '../packages/util/dist'),
+        '@just4/querystring': path.resolve(__dirname, '../packages/querystring/dist')
+      },
+      plugins: [
+        new TsconfigPathsPlugin({
+          configFile: tsCfgFile
+        })
+      ]
     },
 
     module: {
@@ -24,7 +32,7 @@ module.exports = function(options) {
           loader: 'ts-loader',
           exclude: /node_modules/,
           options: {
-            configFile: path.join(testDir, 'tsconfig.json')
+            configFile: tsCfgFile
           }
         }
       ]

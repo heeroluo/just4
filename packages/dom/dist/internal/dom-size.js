@@ -1,1 +1,35 @@
-import{isWindow}from"./dom-base";import{getStyle}from"./dom-style";function correctSize(e,t,o,r){return t+(o?1:-1)*(parseFloat(getStyle(e,r))||0)}export function computeSize(e,t,o=!1,r=!1,n=!1){if(null==e)return 0;if(isWindow(e))return e.document.documentElement["client"+t];if(9===e.nodeType)return e.documentElement["scroll"+t];if(!e.ownerDocument||1!==e.nodeType)return 0;let i=e["offset"+t];return("Width"===t?["Left","Right"]:["Top","Bottom"]).forEach((function(t){o||(i=correctSize(e,i,!1,"padding"+t)),r||"none"===getStyle(e,"border"+t+"Style")||(i=correctSize(e,i,!1,"border"+t+"Width")),n&&(i=correctSize(e,i,!0,"margin"+t))})),i}
+import { isWindow } from "./dom-base";
+
+import { getStyle } from "./dom-style";
+
+function correctSize(elem, size, addOrSubtract, styleName) {
+    return size + (addOrSubtract ? 1 : -1) * (parseFloat(getStyle(elem, styleName)) || 0);
+}
+
+export function computeSize(elem, which, includePadding = false, includeBorder = false, includeMargin = false) {
+    if (elem == null) {
+        return 0;
+    }
+    if (isWindow(elem)) {
+        return elem.document.documentElement["client" + which];
+    }
+    if (elem.nodeType === 9) {
+        return elem.documentElement["scroll" + which];
+    }
+    if (!elem.ownerDocument || elem.nodeType !== 1) {
+        return 0;
+    }
+    let size = elem["offset" + which];
+    (which === "Width" ? [ "Left", "Right" ] : [ "Top", "Bottom" ]).forEach((function(direction) {
+        if (!includePadding) {
+            size = correctSize(elem, size, false, "padding" + direction);
+        }
+        if (!includeBorder && getStyle(elem, "border" + direction + "Style") !== "none") {
+            size = correctSize(elem, size, false, "border" + direction + "Width");
+        }
+        if (includeMargin) {
+            size = correctSize(elem, size, true, "margin" + direction);
+        }
+    }));
+    return size;
+}

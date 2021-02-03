@@ -1,1 +1,33 @@
-import{isWindow,isHTMLElement}from"./dom-base";const scrollMap=Object.create(null);scrollMap.scrollTop="pageYOffset",scrollMap.scrollLeft="pageXOffset";export function getScroll(l,o){let e=0;return isWindow(l)?e=l[scrollMap[o]]:isHTMLElement(l)&&(e=l[o]),e}export function setScroll(l,o,e){if(isWindow(l))switch(o){case"scrollTop":window.scrollTo(getScroll(l,"scrollLeft"),e);break;case"scrollLeft":window.scrollTo(e,getScroll(l,"scrollTop"))}else isHTMLElement(l)&&(l[o]=e)}
+import { isWindow, isHTMLElement } from "./dom-base";
+
+const scrollMap = Object.create(null);
+
+scrollMap.scrollTop = "pageYOffset";
+
+scrollMap.scrollLeft = "pageXOffset";
+
+export function getScroll(node, type) {
+    let result = 0;
+    if (isWindow(node)) {
+        result = node[scrollMap[type]];
+    } else if (isHTMLElement(node)) {
+        result = node[type];
+    }
+    return result;
+}
+
+export function setScroll(node, type, value) {
+    if (isWindow(node)) {
+        switch (type) {
+          case "scrollTop":
+            window.scrollTo(getScroll(node, "scrollLeft"), value);
+            break;
+
+          case "scrollLeft":
+            window.scrollTo(value, getScroll(node, "scrollTop"));
+            break;
+        }
+    } else if (isHTMLElement(node)) {
+        node[type] = value;
+    }
+}

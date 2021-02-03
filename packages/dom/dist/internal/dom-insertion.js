@@ -1,1 +1,196 @@
-import{toArray,mergeArray}from"@just4/util/array";import{isNode,isWindow,uniqueSort}from"./dom-base";import{querySelectorAll}from"../selector";import{selfAndDescendants}from"./dom-traversal";import{cloneAll,clearAll}from"./dom-data";export function htmlToNodes(e,t){let n=(t=t||document).createElement("div");n.innerHTML=e.trim();const o=[];for(;n.firstChild;)o.push(n.removeChild(n.firstChild));return n=null,o}export function cloneNode(e,t=!1,n=!1){const o=e.cloneNode(!0);if(n){const t=selfAndDescendants(e);if(t){const e=selfAndDescendants(o);for(let n=t.length-1;n>=0;n--)cloneAll(e[n],t[n])}}else t&&cloneAll(o,e);return o}function buildFragment(e,t=document){const n=e.length;if(n){const o=t.createDocumentFragment();let r=-1;for(;++r<n;)isNode(e[r])&&o.appendChild(e[r]);return o}}function parseNodes(e,t=document){if(!e||isNode(e))return e;const n="string"==typeof e?htmlToNodes(e,t):e;return 1!==n.length?buildFragment(n,t):isNode(n[0])?n[0]:void 0}export function insertToRefs(e,t,n,o){const r=t.length;if(!r)return;const i=parseNodes(e);if(i){let e=-1;for(;++e<r;)!isNode(t[e])||o&&!1===o(t[e])||n(e===r-1?i:cloneNode(i,!0,!0),t[e])}}function targetToNodes(e){return"string"==typeof e?querySelectorAll(e):isNode(e)?[e]:toArray(e)}export function insertRefsTo(e,t,n,o){const r=[];if(null==e||isWindow(e))return r;const i=targetToNodes(e),l=i.length;if(!l)return r;const d=buildFragment(t);if(d){let e,t=-1;for(;++t<l;)!isNode(i[t])||o&&!1===o(i[t])||(e=t===l-1?d:cloneNode(d,!0,!0),mergeArray(r,e.childNodes),n(e,i[t]))}return uniqueSort(r)}export function hasParent(e){return null!=e.parentNode}export function canHasChild(e){return 1===e.nodeType||11===e.nodeType}export function appendChild(e,t){t.appendChild(e)}export function prependChild(e,t){const n=t.firstChild;n?t.insertBefore(e,n):t.appendChild(e)}export function insertBefore(e,t){t.parentNode&&t.parentNode.insertBefore(e,t)}export function insertAfter(e,t){if(!t.parentNode)return;const n=t.nextSibling;n?t.parentNode.insertBefore(e,n):t.parentNode.appendChild(e)}export function replaceWith(e,t){clearAll(t),t.parentNode&&t.parentNode.replaceChild(e,t)}export function removeNodes(e){let t;for(let n=0;n<e.length;n++){if(!isNode(e[n]))continue;t=e[n];const o=selfAndDescendants(t);if(o){for(let e=o.length-1;e>=0;e--)clearAll(o[e]);t.parentNode&&t.parentNode.removeChild(t)}}}export function removeDescendantNodes(e){let t;for(let n=0;n<e.length;n++){if(!isNode(e[n]))continue;t=e[n];const o=selfAndDescendants(t);if(o){for(let e=o.length-1;e>=1;e--)clearAll(o[e]);for(;t.firstChild;)t.removeChild(t.firstChild)}}}
+import { toArray, mergeArray } from "@just4/util/array";
+
+import { isNode, isWindow, uniqueSort } from "./dom-base";
+
+import { querySelectorAll } from "../selector";
+
+import { selfAndDescendants } from "./dom-traversal";
+
+import { cloneAll, clearAll } from "./dom-data";
+
+export function htmlToNodes(html, ownerDocument) {
+    ownerDocument = ownerDocument || document;
+    let div = ownerDocument.createElement("div");
+    div.innerHTML = html.trim();
+    const result = [];
+    while (div.firstChild) {
+        result.push(div.removeChild(div.firstChild));
+    }
+    div = null;
+    return result;
+}
+
+export function cloneNode(node, withData = false, deepWithData = false) {
+    const result = node.cloneNode(true);
+    if (deepWithData) {
+        const origAll = selfAndDescendants(node);
+        if (origAll) {
+            const newAll = selfAndDescendants(result);
+            for (let i = origAll.length - 1; i >= 0; i--) {
+                cloneAll(newAll[i], origAll[i]);
+            }
+        }
+    } else if (withData) {
+        cloneAll(result, node);
+    }
+    return result;
+}
+
+function buildFragment(nodes, ownerDocument = document) {
+    const len = nodes.length;
+    if (len) {
+        const frag = ownerDocument.createDocumentFragment();
+        let i = -1;
+        while (++i < len) {
+            if (isNode(nodes[i])) {
+                frag.appendChild(nodes[i]);
+            }
+        }
+        return frag;
+    }
+}
+
+function parseNodes(target, ownerDocument = document) {
+    if (!target || isNode(target)) {
+        return target;
+    }
+    const nodes = typeof target === "string" ? htmlToNodes(target, ownerDocument) : target;
+    if (nodes.length === 1) {
+        if (isNode(nodes[0])) {
+            return nodes[0];
+        }
+    } else {
+        return buildFragment(nodes, ownerDocument);
+    }
+}
+
+export function insertToRefs(target, refs, howToInsert, condition) {
+    const len = refs.length;
+    if (!len) {
+        return;
+    }
+    const targetNode = parseNodes(target);
+    if (targetNode) {
+        let i = -1;
+        while (++i < len) {
+            if (isNode(refs[i]) && (!condition || condition(refs[i]) !== false)) {
+                howToInsert(i === len - 1 ? targetNode : cloneNode(targetNode, true, true), refs[i]);
+            }
+        }
+    }
+}
+
+function targetToNodes(target) {
+    if (typeof target === "string") {
+        return querySelectorAll(target);
+    } else if (isNode(target)) {
+        return [ target ];
+    } else {
+        return toArray(target);
+    }
+}
+
+export function insertRefsTo(target, refs, howToInsert, condition) {
+    const result = [];
+    if (target == null || isWindow(target)) {
+        return result;
+    }
+    const nodes = targetToNodes(target);
+    const len = nodes.length;
+    if (!len) {
+        return result;
+    }
+    const refsFrag = buildFragment(refs);
+    if (refsFrag) {
+        let node;
+        let i = -1;
+        while (++i < len) {
+            if (isNode(nodes[i]) && (!condition || condition(nodes[i]) !== false)) {
+                node = i === len - 1 ? refsFrag : cloneNode(refsFrag, true, true);
+                mergeArray(result, node.childNodes);
+                howToInsert(node, nodes[i]);
+            }
+        }
+    }
+    return uniqueSort(result);
+}
+
+export function hasParent(node) {
+    return node.parentNode != null;
+}
+
+export function canHasChild(node) {
+    return node.nodeType === 1 || node.nodeType === 11;
+}
+
+export function appendChild(target, parent) {
+    parent.appendChild(target);
+}
+
+export function prependChild(target, parent) {
+    const firstChild = parent.firstChild;
+    if (firstChild) {
+        parent.insertBefore(target, firstChild);
+    } else {
+        parent.appendChild(target);
+    }
+}
+
+export function insertBefore(target, ref) {
+    ref.parentNode && ref.parentNode.insertBefore(target, ref);
+}
+
+export function insertAfter(target, ref) {
+    if (!ref.parentNode) {
+        return;
+    }
+    const nextSibling = ref.nextSibling;
+    if (nextSibling) {
+        ref.parentNode.insertBefore(target, nextSibling);
+    } else {
+        ref.parentNode.appendChild(target);
+    }
+}
+
+export function replaceWith(target, ref) {
+    clearAll(ref);
+    ref.parentNode && ref.parentNode.replaceChild(target, ref);
+}
+
+export function removeNodes(nodes) {
+    let node;
+    for (let i = 0; i < nodes.length; i++) {
+        if (!isNode(nodes[i])) {
+            continue;
+        }
+        node = nodes[i];
+        const allNodes = selfAndDescendants(node);
+        if (allNodes) {
+            for (let i = allNodes.length - 1; i >= 0; i--) {
+                clearAll(allNodes[i]);
+            }
+            if (node.parentNode) {
+                node.parentNode.removeChild(node);
+            }
+        }
+    }
+}
+
+export function removeDescendantNodes(nodes) {
+    let node;
+    for (let i = 0; i < nodes.length; i++) {
+        if (!isNode(nodes[i])) {
+            continue;
+        }
+        node = nodes[i];
+        const allNodes = selfAndDescendants(node);
+        if (allNodes) {
+            for (let i = allNodes.length - 1; i >= 1; i--) {
+                clearAll(allNodes[i]);
+            }
+            while (node.firstChild) {
+                node.removeChild(node.firstChild);
+            }
+        }
+    }
+}

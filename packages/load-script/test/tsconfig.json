@@ -1,9 +1,11 @@
 {
   "extends": "../../tsconfig.test.json",
   "compilerOptions": {
-    "baseUrl": ".",
+    "baseUrl": "../",
     "paths": {
-      "@/*": ["../src/*"]
+      "@/*": ["src/*"],
+      "@just4/util/*": ["../util/dist/*"],
+      "@just4/querystring/*": ["../querystring/dist/*"]
     }
   }
 }

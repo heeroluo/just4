@@ -1,1 +1,13 @@
-const toString=Object.prototype.toString;export function isFunction(t){return"[object Function]"===toString.call(t)}export function isDate(t){return"[object Date]"===toString.call(t)}export function isObject(t){return"[object Object]"===toString.call(t)}
+const toString = Object.prototype.toString;
+
+export function isFunction(value) {
+    return toString.call(value) === "[object Function]";
+}
+
+export function isDate(value) {
+    return toString.call(value) === "[object Date]";
+}
+
+export function isObject(value) {
+    return toString.call(value) === "[object Object]";
+}

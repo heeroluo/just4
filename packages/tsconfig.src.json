@@ -1,10 +1,8 @@
 {
+  "extends": "./tsconfig.common.json",
   "compilerOptions": {
-    "noImplicitAny": true,
     "module": "es6",
     "target": "es6",
-    "declaration": true,
-    "moduleResolution": "node",
-    "strictNullChecks": true
+    "declaration": true
   }
 }

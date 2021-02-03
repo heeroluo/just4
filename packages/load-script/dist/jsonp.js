@@ -1,1 +1,53 @@
-import{appendToURL}from"@just4/querystring/index";import{loadScript}from"./script";function genCallbackName(n){const e=document.createElement("a");e.href=n;const t=e.pathname.split("/"),o=t[t.length-1]||"index",a="jsonp_cb_"+(e.host.split(".").slice(0,2).join("")+o.replace(/\.\w+$/,"")).replace(/\W+/g,"");let c=a,i=1;for(;void 0!==window[c];){if(i>100){c="jsonp_cb_"+Date.now()+(1e4+(9e4*Math.random()|0));break}c=a+"_"+i++}return c}export function jsonp(n,e={reusable:!1,preventReusing:!0,preventCaching:!1,props:{async:!0}}){return new Promise((function(t,o){const a=e.callbackName||genCallbackName(n);function c(){window[a]=void 0}n=appendToURL(n,{callback:a}),window[a]=function(n){try{t(n)}catch(n){o(n)}finally{c()}},loadScript(n,e).then(null,(function(n){c(),o(n)}))}))}
+import { appendToURL } from "@just4/querystring/index";
+
+import { loadScript } from "./script";
+
+function genCallbackName(src) {
+    const a = document.createElement("a");
+    a.href = src;
+    const pathname = a.pathname.split("/");
+    const filename = pathname[pathname.length - 1] || "index";
+    const callbackName = "jsonp_cb_" + (a.host.split(".").slice(0, 2).join("") + filename.replace(/\.\w+$/, "")).replace(/\W+/g, "");
+    let result = callbackName;
+    let counter = 1;
+    while (window[result] !== undefined) {
+        if (counter > 100) {
+            result = "jsonp_cb_" + Date.now() + (1e4 + (Math.random() * 9e4 | 0));
+            break;
+        }
+        result = callbackName + "_" + counter++;
+    }
+    return result;
+}
+
+export function jsonp(url, options = {
+    reusable: false,
+    preventReusing: true,
+    preventCaching: false,
+    props: {
+        async: true
+    }
+}) {
+    return new Promise((function(resolve, reject) {
+        const callbackName = options.callbackName || genCallbackName(url);
+        url = appendToURL(url, {
+            callback: callbackName
+        });
+        function destroy() {
+            window[callbackName] = undefined;
+        }
+        window[callbackName] = function(data) {
+            try {
+                resolve(data);
+            } catch (e) {
+                reject(e);
+            } finally {
+                destroy();
+            }
+        };
+        loadScript(url, options).then(null, (function(error) {
+            destroy();
+            reject(error);
+        }));
+    }));
+}

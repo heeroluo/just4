@@ -1,1 +1,82 @@
-import{ifIsHTMLElement,splitBySpace}from"./dom-base";function setClassName(e,s){s=s.trim(),e.className!==s&&(e.className=s)}export function hasClass(e,s){return ifIsHTMLElement(e,(function(e){return-1!==(" "+e.className+" ").indexOf(" "+s+" ")}))||!1}export function addClass(e,s){const t=splitBySpace(s),l=t.length;l&&ifIsHTMLElement(e,(function(e){let s=" "+e.className+" ",n=-1;for(;++n<l;)-1===s.indexOf(" "+t[n]+" ")&&(s+=t[n]+" ");setClassName(e,s)}))}export function removeClass(e,s){let t,l;const n=null==s;(n||(t=splitBySpace(s),l=t.length,l))&&ifIsHTMLElement(e,(function(e){const s=e.className;if(s)if(n)e.className="";else{let n=" "+s+" ",a=-1;for(;++a<l;)n=n.replace(" "+t[a]+" "," ");setClassName(e,n)}}))}export function toggleClass(e,s){const t=splitBySpace(s),l=t.length;l&&ifIsHTMLElement(e,(function(e){let s,n=" "+e.className+" ",a=-1;for(;++a<l;)s=" "+t[a]+" ",-1===n.indexOf(s)?n+=t[a]+" ":n=n.replace(s," ");setClassName(e,n)}))}
+import { ifIsHTMLElement, splitBySpace } from "./dom-base";
+
+function setClassName(elem, className) {
+    className = className.trim();
+    if (elem.className !== className) {
+        elem.className = className;
+    }
+}
+
+export function hasClass(node, className) {
+    return ifIsHTMLElement(node, (function(elem) {
+        return (" " + elem.className + " ").indexOf(" " + className + " ") !== -1;
+    })) || false;
+}
+
+export function addClass(nodes, classNames) {
+    const classNameArr = splitBySpace(classNames);
+    const len = classNameArr.length;
+    if (!len) {
+        return;
+    }
+    ifIsHTMLElement(nodes, (function(elem) {
+        let newClassName = " " + elem.className + " ";
+        let i = -1;
+        while (++i < len) {
+            if (newClassName.indexOf(" " + classNameArr[i] + " ") === -1) {
+                newClassName += classNameArr[i] + " ";
+            }
+        }
+        setClassName(elem, newClassName);
+    }));
+}
+
+export function removeClass(nodes, classNames) {
+    let classNameArr;
+    let len;
+    const isRemoveAll = classNames == null;
+    if (!isRemoveAll) {
+        classNameArr = splitBySpace(classNames);
+        len = classNameArr.length;
+        if (!len) {
+            return;
+        }
+    }
+    ifIsHTMLElement(nodes, (function(elem) {
+        const origClassName = elem.className;
+        if (origClassName) {
+            if (isRemoveAll) {
+                elem.className = "";
+            } else {
+                let newClassName = " " + origClassName + " ";
+                let i = -1;
+                while (++i < len) {
+                    newClassName = newClassName.replace(" " + classNameArr[i] + " ", " ");
+                }
+                setClassName(elem, newClassName);
+            }
+        }
+    }));
+}
+
+export function toggleClass(nodes, classNames) {
+    const classNameArr = splitBySpace(classNames);
+    const len = classNameArr.length;
+    if (!len) {
+        return;
+    }
+    ifIsHTMLElement(nodes, (function(elem) {
+        let newClassName = " " + elem.className + " ";
+        let i = -1;
+        let temp;
+        while (++i < len) {
+            temp = " " + classNameArr[i] + " ";
+            if (newClassName.indexOf(temp) === -1) {
+                newClassName += classNameArr[i] + " ";
+            } else {
+                newClassName = newClassName.replace(temp, " ");
+            }
+        }
+        setClassName(elem, newClassName);
+    }));
+}

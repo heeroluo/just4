@@ -53,9 +53,9 @@ QUnit.test('parent', function(assert: any) {
 QUnit.test('parents', function(assert: any) {
   const $dom = $(ID_DOM_TRAVERSAL_INDEX);
   function validate() {
-    let node = <Node>$dom.get(0);
+    let node: Node | null = <Node>$dom.get(0);
     return $dom.parents().every(function(item) {
-      node = node.parentNode;
+      if (node) { node = node.parentNode; }
       return node === item;
     });
   }

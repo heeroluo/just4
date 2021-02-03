@@ -15,7 +15,7 @@ div.innerHTML = HTML;
 div.style.display = 'none';
 document.body.appendChild(div);
 
-const testDiv = document.getElementById('test-div');
+const testDiv = <HTMLElement>document.getElementById('test-div');
 
 QUnit.test('querySelectorAll', (assert: any) => {
   assert.strictEqual(querySelectorAll('#test-div', document).length, 1);

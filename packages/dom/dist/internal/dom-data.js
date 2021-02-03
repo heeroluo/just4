@@ -1,1 +1,63 @@
-import{splitBySpace}from"./dom-base";import{DataSpace}from"./data-space";import{removeId}from"./dom-id";const dataSpaceManger=function(){const a=[];return{add:function(e){return a.push(e)-1},clear:function(e){for(let t=a.length-1;t>=0;t--)a[t].clearData(e)},clone:function(e,t){for(let r=a.length-1;r>=0;r--)a[r].cloneData(e,t)}}}();export function createDataSpace(a){const e=new DataSpace(a);return dataSpaceManger.add(e),e}export function clearAll(a){dataSpaceManger.clear(a),removeId(a)}export function cloneAll(a,e){dataSpaceManger.clone(a,e)}const userDataSpace=createDataSpace();export function getData(a,e){return userDataSpace.getData(a,e)}export function setData(a,e,t){userDataSpace.setData(a,e,t)}export function removeData(a,e){splitBySpace(e).forEach((function(e){for(let t=0;t<a.length;t++)userDataSpace.removeData(a[t],e)}))}export function clearData(a){for(let e=0;e<a.length;e++)userDataSpace.clearData(a[e])}
+import { splitBySpace } from "./dom-base";
+
+import { DataSpace } from "./data-space";
+
+import { removeId } from "./dom-id";
+
+const dataSpaceManger = function() {
+    const spaces = [];
+    return {
+        add: function(space) {
+            return spaces.push(space) - 1;
+        },
+        clear: function(obj) {
+            for (let i = spaces.length - 1; i >= 0; i--) {
+                spaces[i].clearData(obj);
+            }
+        },
+        clone: function(target, source) {
+            for (let i = spaces.length - 1; i >= 0; i--) {
+                spaces[i].cloneData(target, source);
+            }
+        }
+    };
+}();
+
+export function createDataSpace(options) {
+    const space = new DataSpace(options);
+    dataSpaceManger.add(space);
+    return space;
+}
+
+export function clearAll(obj) {
+    dataSpaceManger.clear(obj);
+    removeId(obj);
+}
+
+export function cloneAll(target, source) {
+    dataSpaceManger.clone(target, source);
+}
+
+const userDataSpace = createDataSpace();
+
+export function getData(obj, key) {
+    return userDataSpace.getData(obj, key);
+}
+
+export function setData(obj, key, value) {
+    userDataSpace.setData(obj, key, value);
+}
+
+export function removeData(list, keys) {
+    splitBySpace(keys).forEach((function(key) {
+        for (let i = 0; i < list.length; i++) {
+            userDataSpace.removeData(list[i], key);
+        }
+    }));
+}
+
+export function clearData(list) {
+    for (let i = 0; i < list.length; i++) {
+        userDataSpace.clearData(list[i]);
+    }
+}

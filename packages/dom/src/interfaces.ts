@@ -18,7 +18,7 @@ export interface IValueFunction {
  * 事件监听回调函数。
  */
 export interface IEventHandler {
-  (this: EventTarget, evt?: EventWrap): unknown
+  (this: EventTarget, evt: EventWrap): unknown
 }
 
 /**

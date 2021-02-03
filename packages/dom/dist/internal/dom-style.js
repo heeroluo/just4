@@ -1,1 +1,115 @@
-import{hasOwnProp}from"@just4/util/object";import{ifIsHTMLElement}from"./dom-base";const cssProps=Object.create(null);cssProps.float="cssFloat";const docElem=document.documentElement,cssPrefixes=["O","Moz","ms","Webkit"];function getVendorPropName(e){if(e in docElem.style)return e;const t=e.charAt(0).toUpperCase()+e.slice(1);let n;for(let e=cssPrefixes.length-1;e>=0;e--)if(n=cssPrefixes[e]+t,n in docElem.style)return n;return e}const rDash=/-([a-z])/g;function fixStyleName(e){const t=e.replace(rDash,(function(e,t){return t.toUpperCase()}));return cssProps[t]||(cssProps[t]=getVendorPropName(t)),cssProps[t]}const cssNumber={animationIterationCount:!0,columnCount:!0,fillOpacity:!0,flexGrow:!0,flexShrink:!0,fontWeight:!0,gridArea:!0,gridColumn:!0,gridColumnEnd:!0,gridColumnStart:!0,gridRow:!0,gridRowEnd:!0,gridRowStart:!0,lineHeight:!0,opacity:!0,order:!0,orphans:!0,widows:!0,zIndex:!0,zoom:!0};function fixStyleValue(e,t){return hasOwnProp(cssNumber,e)||""===t||isNaN(Number(t))?t.toString():t+"px"}function getCurrentStyle(e,t){var n;let o="";const r=null===(n=e.ownerDocument)||void 0===n?void 0:n.defaultView;return r&&(o=r.getComputedStyle(e,null)[t]),o}export function getStyle(e,t){return ifIsHTMLElement(e,(function(e){if((t=fixStyleName(t))in e.style)return getCurrentStyle(e,t)}))}export function setStyle(e,t,n){ifIsHTMLElement(e,(function(e){t=fixStyleName(t),n=fixStyleValue(t,n),t in e.style&&(e.style[t]=n)}))}function showElem(e){"none"===e.style.display&&(e.style.display=""),"none"===getCurrentStyle(e,"display")&&(e.style.display="block")}export function show(e){ifIsHTMLElement(e,showElem)}function hideElem(e){e.style.display="none"}export function hide(e){ifIsHTMLElement(e,hideElem)}
+import { hasOwnProp } from "@just4/util/object";
+
+import { ifIsHTMLElement } from "./dom-base";
+
+const cssProps = Object.create(null);
+
+cssProps["float"] = "cssFloat";
+
+const docElem = document.documentElement;
+
+const cssPrefixes = [ "O", "Moz", "ms", "Webkit" ];
+
+function getVendorPropName(name) {
+    if (name in docElem.style) {
+        return name;
+    }
+    const capName = name.charAt(0).toUpperCase() + name.slice(1);
+    let tryName;
+    for (let i = cssPrefixes.length - 1; i >= 0; i--) {
+        tryName = cssPrefixes[i] + capName;
+        if (tryName in docElem.style) {
+            return tryName;
+        }
+    }
+    return name;
+}
+
+const rDash = /-([a-z])/g;
+
+function fixStyleName(name) {
+    const propName = name.replace(rDash, (function(match, $1) {
+        return $1.toUpperCase();
+    }));
+    if (!cssProps[propName]) {
+        cssProps[propName] = getVendorPropName(propName);
+    }
+    return cssProps[propName];
+}
+
+const cssNumber = {
+    animationIterationCount: true,
+    columnCount: true,
+    fillOpacity: true,
+    flexGrow: true,
+    flexShrink: true,
+    fontWeight: true,
+    gridArea: true,
+    gridColumn: true,
+    gridColumnEnd: true,
+    gridColumnStart: true,
+    gridRow: true,
+    gridRowEnd: true,
+    gridRowStart: true,
+    lineHeight: true,
+    opacity: true,
+    order: true,
+    orphans: true,
+    widows: true,
+    zIndex: true,
+    zoom: true
+};
+
+function fixStyleValue(name, val) {
+    return hasOwnProp(cssNumber, name) || val === "" || isNaN(Number(val)) ? val.toString() : val + "px";
+}
+
+function getCurrentStyle(elem, name) {
+    var _a;
+    let value = "";
+    const win = (_a = elem.ownerDocument) === null || _a === void 0 ? void 0 : _a.defaultView;
+    if (win) {
+        value = win.getComputedStyle(elem, null)[name];
+    }
+    return value;
+}
+
+export function getStyle(node, name) {
+    return ifIsHTMLElement(node, (function(elem) {
+        name = fixStyleName(name);
+        if (name in elem.style) {
+            return getCurrentStyle(elem, name);
+        }
+    }));
+}
+
+export function setStyle(node, name, value) {
+    ifIsHTMLElement(node, (function(elem) {
+        name = fixStyleName(name);
+        value = fixStyleValue(name, value);
+        if (name in elem.style) {
+            elem.style[name] = value;
+        }
+    }));
+}
+
+function showElem(elem) {
+    if (elem.style.display === "none") {
+        elem.style.display = "";
+    }
+    if (getCurrentStyle(elem, "display") === "none") {
+        elem.style.display = "block";
+    }
+}
+
+export function show(nodes) {
+    ifIsHTMLElement(nodes, showElem);
+}
+
+function hideElem(elem) {
+    elem.style.display = "none";
+}
+
+export function hide(nodes) {
+    ifIsHTMLElement(nodes, hideElem);
+}

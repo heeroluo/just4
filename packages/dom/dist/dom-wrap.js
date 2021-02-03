@@ -1,1 +1,313 @@
-import{toArray,mergeArray,isArrayLike}from"@just4/util/array";import{querySelectorAll}from"./selector";import{isNode,access,uniqueSort}from"./internal/dom-base";import{getAttr,setAttr,removeAttr,getProp,setProp}from"./internal/dom-attr";import{getData,setData,removeData,clearData}from"./internal/dom-data";import{getStyle,setStyle,show,hide}from"./internal/dom-style";import{addClass,removeClass,hasClass,toggleClass}from"./internal/dom-class";import{computeSize}from"./internal/dom-size";import{getScroll,setScroll}from"./internal/dom-scroll";import{getOffset}from"./internal/dom-offset";import{findElements,findElementsUntil,getChildren,getSiblings,getIndex}from"./internal/dom-traversal";import{insertToRefs,insertRefsTo,hasParent,canHasChild,appendChild,prependChild,insertBefore,insertAfter,replaceWith,removeNodes,removeDescendantNodes,cloneNode}from"./internal/dom-insertion";import{onEvent,offEvent,triggerEvent}from"./internal/dom-event";export class DOMWrap{constructor(e){this.length=0;const t=e?e.length:-1;if(isNaN(t)||t<0)return;let r=-1;for(;++r<t;)this[r]=e[r];this.length=t}toArray(){return toArray(this)}indexOf(e){return Array.prototype.indexOf.call(this,e)}forEach(e){return Array.prototype.forEach.call(this,e)}some(e){return Array.prototype.some.call(this,e)}every(e){return Array.prototype.every.call(this,e)}filter(e){return new DOMWrap(Array.prototype.filter.call(this,e))}get(e){return(e|=0)<0?this[this.length+e]:this[e]}eq(e){const t=this.get(e);return new DOMWrap(t?[t]:[])}first(){return this.eq(0)}last(){return this.eq(this.length-1)}add(e,t=document){return new DOMWrap(uniqueSort(mergeArray(this.toArray(),isArrayLike(e)?e:querySelectorAll(e,t))))}each(e){for(let t=0;t<this.length&&!1!==e.call(this[t],t,this[t]);t++);return this}attr(e,t){return access(this,e,t,!0,{get:getAttr,set:setAttr})}removeAttr(e){return removeAttr(this,e),this}prop(e,t){return access(this,e,t,!0,{get:getProp,set:setProp})}data(e,t){return access(this,e,t,!0,{get:getData,set:setData})}removeData(e){return null!=e?removeData(this,e):clearData(this),this}html(e){return this.prop("innerHTML",e)}text(e){return arguments.length?this.prop("textContent",e):this.prop("textContent")}val(e){return this.prop("value",e)}css(e,t){return access(this,e,t,!0,{get:getStyle,set:setStyle})}show(){return show(this),this}hide(){return hide(this),this}addClass(e){return addClass(this,e),this}removeClass(e){return removeClass(this,e),this}hasClass(e){return this.some((function(t){return hasClass(t,e)}))}toggleClass(e){return toggleClass(this,e),this}width(){return computeSize(this[0],"Width")}height(){return computeSize(this[0],"Height")}innerWidth(){return computeSize(this[0],"Width",!0)}innerHeight(){return computeSize(this[0],"Height",!0)}outerWidth(e){return computeSize(this[0],"Width",!0,!0,e)}outerHeight(e){return computeSize(this[0],"Height",!0,!0,e)}scrollTop(e){return access(this,"scrollTop",e,!0,{get:getScroll,set:setScroll})}scrollLeft(e){return access(this,"scrollLeft",e,!0,{get:getScroll,set:setScroll})}offset(){return getOffset(this[0])}index(){return getIndex(this[0])}children(e){return new DOMWrap(getChildren(this,e))}siblings(e){return new DOMWrap(getSiblings(this,e))}next(e){return new DOMWrap(findElements(this,"nextElementSibling",e,!0))}nextAll(e){return new DOMWrap(findElements(this,"nextElementSibling",e))}prev(e){return new DOMWrap(findElements(this,"previousElementSibling",e,!0))}prevAll(e){return new DOMWrap(findElements(this,"previousElementSibling",e))}parent(e){return new DOMWrap(findElements(this,"parentNode",e,!0))}parents(e){return new DOMWrap(findElements(this,"parentNode",e))}nextUntil(e,t){return new DOMWrap(findElementsUntil(this,"nextElementSibling",e,t))}prevUntil(e,t){return new DOMWrap(findElementsUntil(this,"previousElementSibling",e,t))}parentsUntil(e,t){return new DOMWrap(findElementsUntil(this,"parentNode",e,t))}append(e){return insertToRefs(e,this,appendChild,canHasChild),this}appendTo(e){return new DOMWrap(insertRefsTo(e,this,appendChild,canHasChild))}prepend(e){return insertToRefs(e,this,prependChild,canHasChild),this}prependTo(e){return new DOMWrap(insertRefsTo(e,this,prependChild,canHasChild))}before(e){return insertToRefs(e,this,insertBefore,hasParent),this}insertBefore(e){return new DOMWrap(insertRefsTo(e,this,insertBefore,hasParent))}after(e){return insertToRefs(e,this,insertAfter,hasParent),this}insertAfter(e){return new DOMWrap(insertRefsTo(e,this,insertAfter,hasParent))}replaceWith(e){return insertToRefs(e,this,replaceWith,hasParent),this}replaceAll(e){return new DOMWrap(insertRefsTo(e,this,replaceWith,hasParent))}remove(){return removeNodes(this),this}empty(){return removeDescendantNodes(this),this}clone(e,t){const r=[];return this.forEach((function(n){isNode(n)&&r.push(cloneNode(n,e,t))})),new DOMWrap(r)}on(e,t,r){return"function"==typeof t&&(r=t,t=void 0),onEvent(this,e,t,r),this}off(e,t,r){return"function"==typeof t&&(r=t,t=void 0),offEvent(this,e,t,r),this}trigger(e){return triggerEvent(this,e),this}focus(){return this.trigger("focus")}blur(){return this.trigger("blur")}click(){return this.trigger("click")}reset(){return this.trigger("reset")}submit(){return this.trigger("submit")}}
+import { toArray, mergeArray, isArrayLike } from "@just4/util/array";
+
+import { querySelectorAll } from "./selector";
+
+import { isNode, access, uniqueSort } from "./internal/dom-base";
+
+import { getAttr, setAttr, removeAttr, getProp, setProp } from "./internal/dom-attr";
+
+import { getData, setData, removeData, clearData } from "./internal/dom-data";
+
+import { getStyle, setStyle, show, hide } from "./internal/dom-style";
+
+import { addClass, removeClass, hasClass, toggleClass } from "./internal/dom-class";
+
+import { computeSize } from "./internal/dom-size";
+
+import { getScroll, setScroll } from "./internal/dom-scroll";
+
+import { getOffset } from "./internal/dom-offset";
+
+import { findElements, findElementsUntil, getChildren, getSiblings, getIndex } from "./internal/dom-traversal";
+
+import { insertToRefs, insertRefsTo, hasParent, canHasChild, appendChild, prependChild, insertBefore, insertAfter, replaceWith, removeNodes, removeDescendantNodes, cloneNode } from "./internal/dom-insertion";
+
+import { onEvent, offEvent, triggerEvent } from "./internal/dom-event";
+
+export class DOMWrap {
+    constructor(nodes) {
+        this.length = 0;
+        const len = nodes ? nodes.length : -1;
+        if (isNaN(len) || len < 0) {
+            return;
+        }
+        let i = -1;
+        while (++i < len) {
+            this[i] = nodes[i];
+        }
+        this.length = len;
+    }
+    toArray() {
+        return toArray(this);
+    }
+    indexOf(node) {
+        return Array.prototype.indexOf.call(this, node);
+    }
+    forEach(callback) {
+        return Array.prototype.forEach.call(this, callback);
+    }
+    some(callback) {
+        return Array.prototype.some.call(this, callback);
+    }
+    every(callback) {
+        return Array.prototype.every.call(this, callback);
+    }
+    filter(callback) {
+        return new DOMWrap(Array.prototype.filter.call(this, callback));
+    }
+    get(i) {
+        i = 0 | i;
+        return i < 0 ? this[this.length + i] : this[i];
+    }
+    eq(i) {
+        const node = this.get(i);
+        return new DOMWrap(node ? [ node ] : []);
+    }
+    first() {
+        return this.eq(0);
+    }
+    last() {
+        return this.eq(this.length - 1);
+    }
+    add(selector, context = document) {
+        return new DOMWrap(uniqueSort(mergeArray(this.toArray(), isArrayLike(selector) ? selector : querySelectorAll(selector, context))));
+    }
+    each(callback) {
+        for (let i = 0; i < this.length; i++) {
+            if (callback.call(this[i], i, this[i]) === false) {
+                break;
+            }
+        }
+        return this;
+    }
+    attr(name, value) {
+        return access(this, name, value, true, {
+            get: getAttr,
+            set: setAttr
+        });
+    }
+    removeAttr(names) {
+        removeAttr(this, names);
+        return this;
+    }
+    prop(name, value) {
+        return access(this, name, value, true, {
+            get: getProp,
+            set: setProp
+        });
+    }
+    data(key, value) {
+        return access(this, key, value, true, {
+            get: getData,
+            set: setData
+        });
+    }
+    removeData(keys) {
+        if (keys != null) {
+            removeData(this, keys);
+        } else {
+            clearData(this);
+        }
+        return this;
+    }
+    html(html) {
+        return this.prop("innerHTML", html);
+    }
+    text(text) {
+        if (arguments.length) {
+            return this.prop("textContent", text);
+        } else {
+            return this.prop("textContent");
+        }
+    }
+    val(value) {
+        return this.prop("value", value);
+    }
+    css(name, value) {
+        return access(this, name, value, true, {
+            get: getStyle,
+            set: setStyle
+        });
+    }
+    show() {
+        show(this);
+        return this;
+    }
+    hide() {
+        hide(this);
+        return this;
+    }
+    addClass(classNames) {
+        addClass(this, classNames);
+        return this;
+    }
+    removeClass(classNames) {
+        removeClass(this, classNames);
+        return this;
+    }
+    hasClass(className) {
+        return this.some((function(node) {
+            return hasClass(node, className);
+        }));
+    }
+    toggleClass(classNames) {
+        toggleClass(this, classNames);
+        return this;
+    }
+    width() {
+        return computeSize(this[0], "Width");
+    }
+    height() {
+        return computeSize(this[0], "Height");
+    }
+    innerWidth() {
+        return computeSize(this[0], "Width", true);
+    }
+    innerHeight() {
+        return computeSize(this[0], "Height", true);
+    }
+    outerWidth(includeMargin) {
+        return computeSize(this[0], "Width", true, true, includeMargin);
+    }
+    outerHeight(includeMargin) {
+        return computeSize(this[0], "Height", true, true, includeMargin);
+    }
+    scrollTop(value) {
+        return access(this, "scrollTop", value, true, {
+            get: getScroll,
+            set: setScroll
+        });
+    }
+    scrollLeft(value) {
+        return access(this, "scrollLeft", value, true, {
+            get: getScroll,
+            set: setScroll
+        });
+    }
+    offset() {
+        return getOffset(this[0]);
+    }
+    index() {
+        return getIndex(this[0]);
+    }
+    children(selector) {
+        return new DOMWrap(getChildren(this, selector));
+    }
+    siblings(selector) {
+        return new DOMWrap(getSiblings(this, selector));
+    }
+    next(selector) {
+        return new DOMWrap(findElements(this, "nextElementSibling", selector, true));
+    }
+    nextAll(selector) {
+        return new DOMWrap(findElements(this, "nextElementSibling", selector));
+    }
+    prev(selector) {
+        return new DOMWrap(findElements(this, "previousElementSibling", selector, true));
+    }
+    prevAll(selector) {
+        return new DOMWrap(findElements(this, "previousElementSibling", selector));
+    }
+    parent(selector) {
+        return new DOMWrap(findElements(this, "parentNode", selector, true));
+    }
+    parents(selector) {
+        return new DOMWrap(findElements(this, "parentNode", selector));
+    }
+    nextUntil(until, filter) {
+        return new DOMWrap(findElementsUntil(this, "nextElementSibling", until, filter));
+    }
+    prevUntil(until, filter) {
+        return new DOMWrap(findElementsUntil(this, "previousElementSibling", until, filter));
+    }
+    parentsUntil(until, filter) {
+        return new DOMWrap(findElementsUntil(this, "parentNode", until, filter));
+    }
+    append(target) {
+        insertToRefs(target, this, appendChild, canHasChild);
+        return this;
+    }
+    appendTo(target) {
+        return new DOMWrap(insertRefsTo(target, this, appendChild, canHasChild));
+    }
+    prepend(target) {
+        insertToRefs(target, this, prependChild, canHasChild);
+        return this;
+    }
+    prependTo(target) {
+        return new DOMWrap(insertRefsTo(target, this, prependChild, canHasChild));
+    }
+    before(target) {
+        insertToRefs(target, this, insertBefore, hasParent);
+        return this;
+    }
+    insertBefore(target) {
+        return new DOMWrap(insertRefsTo(target, this, insertBefore, hasParent));
+    }
+    after(target) {
+        insertToRefs(target, this, insertAfter, hasParent);
+        return this;
+    }
+    insertAfter(target) {
+        return new DOMWrap(insertRefsTo(target, this, insertAfter, hasParent));
+    }
+    replaceWith(target) {
+        insertToRefs(target, this, replaceWith, hasParent);
+        return this;
+    }
+    replaceAll(target) {
+        return new DOMWrap(insertRefsTo(target, this, replaceWith, hasParent));
+    }
+    remove() {
+        removeNodes(this);
+        return this;
+    }
+    empty() {
+        removeDescendantNodes(this);
+        return this;
+    }
+    clone(withData, deepWithData) {
+        const copy = [];
+        this.forEach((function(node) {
+            if (isNode(node)) {
+                copy.push(cloneNode(node, withData, deepWithData));
+            }
+        }));
+        return new DOMWrap(copy);
+    }
+    on(types, selector, handler) {
+        if (typeof selector === "function") {
+            handler = selector;
+            selector = undefined;
+        }
+        onEvent(this, types, selector, handler);
+        return this;
+    }
+    off(types, selector, handler) {
+        if (typeof selector === "function") {
+            handler = selector;
+            selector = undefined;
+        }
+        offEvent(this, types, selector, handler);
+        return this;
+    }
+    trigger(type) {
+        triggerEvent(this, type);
+        return this;
+    }
+    focus() {
+        return this.trigger("focus");
+    }
+    blur() {
+        return this.trigger("blur");
+    }
+    click() {
+        return this.trigger("click");
+    }
+    reset() {
+        return this.trigger("reset");
+    }
+    submit() {
+        return this.trigger("submit");
+    }
+}

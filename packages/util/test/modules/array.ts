@@ -20,7 +20,7 @@ QUnit.test('toArray', (assert: any) => {
 
 QUnit.test('mergeArray', (assert: any) => {
   const arr = [1, 2, 3];
-  const merge1 = mergeArray(arr, null);
+  const merge1 = mergeArray(arr, undefined);
   assert.ok(arr === merge1);
   assert.deepEqual(merge1, [1, 2, 3]);
 

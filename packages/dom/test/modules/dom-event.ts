@@ -1,5 +1,5 @@
 import { $ } from '@/index';
-import EventWrap from '@/internal/event-wrap';
+import { EventWrap } from '@/event-wrap';
 const QUnit = (<any>window).QUnit;
 
 
