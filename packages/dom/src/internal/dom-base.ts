@@ -178,8 +178,19 @@ function sortOrder(a: any, b: any) {
   let compare = <any>!a.compareDocumentPosition - <any>!b.compareDocumentPosition;
   if (compare) { return compare; }
 
+  // https://developer.mozilla.org/zh-CN/docs/Web/API/Node/compareDocumentPosition
   compare = a.compareDocumentPosition(b);
-  if (compare >= 32 || compare & 4 || compare & 16) {
+  if (compare & 1) {
+    // 两个节点不在同一个文档中时，不在当前页面文档的节点往后排
+    if (a.compareDocumentPosition(document) & 1) {
+      return 1;
+    } else if (b.compareDocumentPosition(document) & 1) {
+      return -1;
+    } else {
+      return 0;
+    }
+  } else if (compare & 4 || compare & 16) {
+    // 节点 b 在节点 a 之后，或者节点 b 在节点 a 内部时，b 要排到 a 的后面
     return -1;
   } else {
     return 1;

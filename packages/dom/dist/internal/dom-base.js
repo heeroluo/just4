@@ -76,7 +76,15 @@ function sortOrder(a, b) {
         return compare;
     }
     compare = a.compareDocumentPosition(b);
-    if (compare >= 32 || compare & 4 || compare & 16) {
+    if (compare & 1) {
+        if (a.compareDocumentPosition(document) & 1) {
+            return 1;
+        } else if (b.compareDocumentPosition(document) & 1) {
+            return -1;
+        } else {
+            return 0;
+        }
+    } else if (compare & 4 || compare & 16) {
         return -1;
     } else {
         return 1;
