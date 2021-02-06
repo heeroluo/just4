@@ -202,14 +202,14 @@ function sortOrder(a: any, b: any) {
  * @param nodes 指定节点数组。
  * @returns 有序且无重复节点的节点数组。
  */
-export function uniqueSort(nodes: any[]): any[] {
+export function uniqueSort<T>(nodes: T[]): T[] {
   if (nodes.length <= 1) { return nodes; }
 
   hasDuplicate = false;
   nodes.sort(sortOrder);
   if (hasDuplicate) {
     let i = 0, j = 0;
-    let elem: any;
+    let elem: T;
     const duplicates = [];
     while ((elem = nodes[i++])) {
       if (elem === nodes[i]) {

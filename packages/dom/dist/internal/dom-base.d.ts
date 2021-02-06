@@ -71,5 +71,5 @@ export declare function access(nodes: ArrayLike<DOMWrapMember>, key: string | {
  * @param nodes 指定节点数组。
  * @returns 有序且无重复节点的节点数组。
  */
-export declare function uniqueSort(nodes: any[]): any[];
+export declare function uniqueSort<T>(nodes: T[]): T[];
 export {};
