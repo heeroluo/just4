@@ -4,7 +4,7 @@
  * @internal
  */
 
-import { isNode, isWindow } from './dom-base';
+import { isNode } from './dom-base';
 
 
 // 对以下元素设置自定义特性会抛出无法捕获的异常
@@ -18,23 +18,22 @@ const noData: { [key: string]: boolean } = {
 //   0 - 不能写入
 //   1 - 直接写入到节点
 //   2 - 写入到 specialObjData
-function getExpandoWay(obj: any): 0 | 1 | 2 {
+function getExpandoWay(obj: unknown): 0 | 1 | 2 {
   if (obj == null) {
     return 0;
-  } else if (
-    isWindow(obj) ||
-    !isNode(obj) ||
-    noData[obj.nodeName] ||
-    obj.nodeType === 9
-  ) {
-    // window 对象、特殊 HTML 元素、document 节点，写入到 specialObjData
-    return 2;
-  } else if (obj.nodeType !== 1) {
-    // 不对非元素节点写入
-    return 0;
+  } else if (isNode(obj)) {
+    const node = <Node>obj;
+    if (noData[node.nodeName] || node.nodeType === 9) {
+      // 特殊 HTML 元素、document 节点，存储到 specialObjData
+      return 2;
+    } else if (node.nodeType !== 1) {
+      // 不存储非元素节点的数据
+      return 0;
+    } else {
+      return 1;
+    }
   } else {
-    // 剩下的是元素节点
-    return 1;
+    return 2;
   }
 }
 

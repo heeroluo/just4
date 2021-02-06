@@ -1,4 +1,4 @@
-import { isNode, isWindow } from "./dom-base";
+import { isNode } from "./dom-base";
 
 const noData = {
     OBJECT: true,
@@ -9,12 +9,17 @@ const noData = {
 function getExpandoWay(obj) {
     if (obj == null) {
         return 0;
-    } else if (isWindow(obj) || !isNode(obj) || noData[obj.nodeName] || obj.nodeType === 9) {
-        return 2;
-    } else if (obj.nodeType !== 1) {
-        return 0;
+    } else if (isNode(obj)) {
+        const node = obj;
+        if (noData[node.nodeName] || node.nodeType === 9) {
+            return 2;
+        } else if (node.nodeType !== 1) {
+            return 0;
+        } else {
+            return 1;
+        }
     } else {
-        return 1;
+        return 2;
     }
 }
 

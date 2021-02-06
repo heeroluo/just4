@@ -5,7 +5,7 @@
   "scripts": {
     "link-deps": "ln -s ../../node_modules ./node_modules",
     "dev": "cross-env NODE_ENV=development webpack-dev-server --config build/webpack.dev.config.js",
-    "lint": "eslint ./src/*.ts",
+    "lint": "eslint ./src/**/*.ts",
     "prebuild": "rimraf ./dist/*",
     "build": "npm run lint && tsc -p ./src/tsconfig.json && node ../../build/compress dom && node ../../build/copy-others dom",
     "gen-doc": "typedoc --tsconfig ./src/tsconfig.json"

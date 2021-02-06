@@ -83,7 +83,7 @@ function getCurrentStyle(elem: HTMLElement, name: string): string {
   let value = '';
   const win = elem.ownerDocument?.defaultView;
   if (win) { value = (<any>win.getComputedStyle(elem, null))[name]; }
-  return value;
+  return value == null ? '' : String(value);
 }
 
 /**

@@ -71,7 +71,7 @@ function getCurrentStyle(elem, name) {
     if (win) {
         value = win.getComputedStyle(elem, null)[name];
     }
-    return value;
+    return value == null ? "" : String(value);
 }
 
 export function getStyle(node, name) {
