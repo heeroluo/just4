@@ -13,5 +13,6 @@
   "dependencies": {
     "@just4/util": "^0.1.0",
     "@just4/querystring": "^0.1.0"
-  }
+  },
+  "private": true
 }

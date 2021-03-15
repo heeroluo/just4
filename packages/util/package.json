@@ -9,5 +9,6 @@
     "prebuild": "rimraf ./dist/*",
     "build": "npm run lint && tsc -p ./src/tsconfig.json && node ../../build/compress util && node ../../build/copy-others util",
     "gen-doc": "typedoc --tsconfig ./src/tsconfig.json"
-  }
+  },
+  "private": true
 }
