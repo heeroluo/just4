@@ -56,7 +56,7 @@ function genCallbackName(src: string): string {
  */
 export function jsonp(url: string, options: IJSONPOptions = {
   reusable: false,
-  preventReusing: true,
+  allowReusing: false,
   preventCaching: false,
   props: { async: true }
 }): Promise<unknown> {

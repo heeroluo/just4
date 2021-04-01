@@ -95,10 +95,10 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="interfaces.ijsonpoptions.html#allowreusing" class="tsd-kind-icon">allow<wbr>Reusing</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="interfaces.ijsonpoptions.html#callbackname" class="tsd-kind-icon">callback<wbr>Name</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="interfaces.ijsonpoptions.html#data" class="tsd-kind-icon">data</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="interfaces.ijsonpoptions.html#preventcaching" class="tsd-kind-icon">prevent<wbr>Caching</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="interfaces.ijsonpoptions.html#preventreusing" class="tsd-kind-icon">prevent<wbr>Reusing</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="interfaces.ijsonpoptions.html#props" class="tsd-kind-icon">props</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="interfaces.ijsonpoptions.html#reusable" class="tsd-kind-icon">reusable</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="interfaces.ijsonpoptions.html#timeout" class="tsd-kind-icon">timeout</a></li>
@@ -109,13 +109,29 @@
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+					<a name="allowreusing" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> allow<wbr>Reusing</h3>
+					<div class="tsd-signature tsd-kind-icon">allow<wbr>Reusing<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">boolean</span></div>
+					<aside class="tsd-sources">
+						<p>Inherited from <a href="interfaces.igetscriptoptions.html">IGetScriptOptions</a>.<a href="interfaces.igetscriptoptions.html#allowreusing">allowReusing</a></p>
+						<ul>
+							<li>Defined in <a href="https://github.com/heeroluo/just4/blob/6148a59/packages/load-script/src/interfaces.ts#L22">interfaces.ts:22</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>是否不使用相同 URL 的请求结果。默认为 true。</p>
+						</div>
+					</div>
+				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="callbackname" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagOptional">Optional</span> callback<wbr>Name</h3>
 					<div class="tsd-signature tsd-kind-icon">callback<wbr>Name<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/heeroluo/just4/blob/dca3727/packages/load-script/src/interfaces.ts#L44">interfaces.ts:44</a></li>
+							<li>Defined in <a href="https://github.com/heeroluo/just4/blob/6148a59/packages/load-script/src/interfaces.ts#L44">interfaces.ts:44</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -131,7 +147,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="interfaces.igetscriptoptions.html">IGetScriptOptions</a>.<a href="interfaces.igetscriptoptions.html#data">data</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/heeroluo/just4/blob/dca3727/packages/load-script/src/interfaces.ts#L14">interfaces.ts:14</a></li>
+							<li>Defined in <a href="https://github.com/heeroluo/just4/blob/6148a59/packages/load-script/src/interfaces.ts#L14">interfaces.ts:14</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -147,28 +163,12 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="interfaces.igetscriptoptions.html">IGetScriptOptions</a>.<a href="interfaces.igetscriptoptions.html#preventcaching">preventCaching</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/heeroluo/just4/blob/dca3727/packages/load-script/src/interfaces.ts#L26">interfaces.ts:26</a></li>
+							<li>Defined in <a href="https://github.com/heeroluo/just4/blob/6148a59/packages/load-script/src/interfaces.ts#L26">interfaces.ts:26</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
 							<p>是否防止缓存（在 URL 的查询字符串中增加时间戳）。默认为 false。</p>
-						</div>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
-					<a name="preventreusing" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> prevent<wbr>Reusing</h3>
-					<div class="tsd-signature tsd-kind-icon">prevent<wbr>Reusing<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">boolean</span></div>
-					<aside class="tsd-sources">
-						<p>Inherited from <a href="interfaces.igetscriptoptions.html">IGetScriptOptions</a>.<a href="interfaces.igetscriptoptions.html#preventreusing">preventReusing</a></p>
-						<ul>
-							<li>Defined in <a href="https://github.com/heeroluo/just4/blob/dca3727/packages/load-script/src/interfaces.ts#L22">interfaces.ts:22</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>是否不使用相同 URL 的请求结果。默认为 true。</p>
 						</div>
 					</div>
 				</section>
@@ -179,7 +179,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="interfaces.igetscriptoptions.html">IGetScriptOptions</a>.<a href="interfaces.igetscriptoptions.html#props">props</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/heeroluo/just4/blob/dca3727/packages/load-script/src/interfaces.ts#L30">interfaces.ts:30</a></li>
+							<li>Defined in <a href="https://github.com/heeroluo/just4/blob/6148a59/packages/load-script/src/interfaces.ts#L30">interfaces.ts:30</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -195,7 +195,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="interfaces.igetscriptoptions.html">IGetScriptOptions</a>.<a href="interfaces.igetscriptoptions.html#reusable">reusable</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/heeroluo/just4/blob/dca3727/packages/load-script/src/interfaces.ts#L18">interfaces.ts:18</a></li>
+							<li>Defined in <a href="https://github.com/heeroluo/just4/blob/6148a59/packages/load-script/src/interfaces.ts#L18">interfaces.ts:18</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -211,7 +211,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="interfaces.igetscriptoptions.html">IGetScriptOptions</a>.<a href="interfaces.igetscriptoptions.html#timeout">timeout</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/heeroluo/just4/blob/dca3727/packages/load-script/src/interfaces.ts#L34">interfaces.ts:34</a></li>
+							<li>Defined in <a href="https://github.com/heeroluo/just4/blob/6148a59/packages/load-script/src/interfaces.ts#L34">interfaces.ts:34</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -252,6 +252,9 @@
 					<li class="current tsd-kind-interface tsd-parent-kind-module">
 						<a href="interfaces.ijsonpoptions.html" class="tsd-kind-icon">IJSONPOptions</a>
 						<ul>
+							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+								<a href="interfaces.ijsonpoptions.html#allowreusing" class="tsd-kind-icon">allow<wbr>Reusing</a>
+							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
 								<a href="interfaces.ijsonpoptions.html#callbackname" class="tsd-kind-icon">callback<wbr>Name</a>
 							</li>
@@ -260,9 +263,6 @@
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 								<a href="interfaces.ijsonpoptions.html#preventcaching" class="tsd-kind-icon">prevent<wbr>Caching</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
-								<a href="interfaces.ijsonpoptions.html#preventreusing" class="tsd-kind-icon">prevent<wbr>Reusing</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 								<a href="interfaces.ijsonpoptions.html#props" class="tsd-kind-icon">props</a>

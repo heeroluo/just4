@@ -45,7 +45,7 @@ export function loadScript(url: string, options: IGetScriptOptions = {
   props: { async: true }
 }): Promise<void> {
   if (options.data) { url = appendToURL(url, options.data); }
-  if (options.preventReusing !== false && !options.preventCaching && scriptLoaders[url]) {
+  if (options.allowReusing && !options.preventCaching && scriptLoaders[url]) {
     return scriptLoaders[url];
   }
 
