@@ -55,8 +55,6 @@ function genCallbackName(src: string): string {
  * @returns 请求 jsonp 的 promise 实例。
  */
 export function jsonp(url: string, options: IJSONPOptions = {
-  reusable: false,
-  allowReusing: false,
   preventCaching: false,
   props: { async: true }
 }): Promise<unknown> {

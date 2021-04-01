@@ -4,7 +4,7 @@
  */
 
 import { appendToURL } from '@just4/querystring/index';
-import { IGetScriptOptions } from './interfaces';
+import { ILoadScriptOptions } from './interfaces';
 
 
 /**
@@ -21,15 +21,11 @@ function createScript(props?: Partial<HTMLScriptElement>) {
   return script;
 }
 
-// 记录请求脚本的 promise，不重复请求时可重用
-const scriptLoaders: { [key: string]: Promise<void> } = Object.create(null);
-
 /**
  * 加载脚本文件。
  * ```typescript
  * import { loadScript } from '@just4/load-script';
  * loadScript('https://code.jquery.com/jquery-1.12.4.min.js', {
- *   reusable: true,
  *   props: {
  *     crossOrigin: 'anonymous'
  *   }
@@ -39,17 +35,11 @@ const scriptLoaders: { [key: string]: Promise<void> } = Object.create(null);
  * @param options 加载选项。
  * @returns 加载脚本文件的 promise 实例。
  */
-export function loadScript(url: string, options: IGetScriptOptions = {
-  reusable: false,
+export function loadScript(url: string, options: ILoadScriptOptions = {
   preventCaching: false,
   props: { async: true }
 }): Promise<void> {
-  if (options.data) { url = appendToURL(url, options.data); }
-  if (options.allowReusing && !options.preventCaching && scriptLoaders[url]) {
-    return scriptLoaders[url];
-  }
-
-  const promise = new Promise<void>(function(resolve, reject) {
+  return new Promise<void>(function(resolve, reject) {
     let script: HTMLScriptElement | null;
     let timeoutTimer: number;
 
@@ -62,6 +52,7 @@ export function loadScript(url: string, options: IGetScriptOptions = {
       if (timeoutTimer) { window.clearTimeout(timeoutTimer); }
     }
 
+    if (options.data) { url = appendToURL(url, options.data); }
     // 增加时间戳参数防止本地缓存
     if (options.preventCaching) { url = appendToURL(url, { _: Date.now() }); }
 
@@ -86,8 +77,4 @@ export function loadScript(url: string, options: IGetScriptOptions = {
       }, timeout);
     }
   });
-
-  if (options.reusable) { scriptLoaders[url] = promise; }
-
-  return promise;
 }

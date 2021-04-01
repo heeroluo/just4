@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>IGetScriptOptions | @just4/load-script</title>
+	<title>ILoadScriptOptions | @just4/load-script</title>
 	<meta name="description" content="Documentation for @just4/load-script">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -58,10 +58,10 @@
 					<a href="../modules/interfaces.html">interfaces</a>
 				</li>
 				<li>
-					<a href="interfaces.igetscriptoptions.html">IGetScriptOptions</a>
+					<a href="interfaces.iloadscriptoptions.html">ILoadScriptOptions</a>
 				</li>
 			</ul>
-			<h1>Interface IGetScriptOptions</h1>
+			<h1>Interface ILoadScriptOptions</h1>
 		</div>
 	</div>
 </header>
@@ -79,7 +79,7 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">IGetScriptOptions</span>
+						<span class="target">ILoadScriptOptions</span>
 						<ul class="tsd-hierarchy">
 							<li>
 								<a href="interfaces.ijsonpoptions.html" class="tsd-signature-type" data-tsd-kind="Interface">IJSONPOptions</a>
@@ -95,12 +95,10 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="interfaces.igetscriptoptions.html#allowreusing" class="tsd-kind-icon">allow<wbr>Reusing</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="interfaces.igetscriptoptions.html#data" class="tsd-kind-icon">data</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="interfaces.igetscriptoptions.html#preventcaching" class="tsd-kind-icon">prevent<wbr>Caching</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="interfaces.igetscriptoptions.html#props" class="tsd-kind-icon">props</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="interfaces.igetscriptoptions.html#reusable" class="tsd-kind-icon">reusable</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="interfaces.igetscriptoptions.html#timeout" class="tsd-kind-icon">timeout</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="interfaces.iloadscriptoptions.html#data" class="tsd-kind-icon">data</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="interfaces.iloadscriptoptions.html#preventcaching" class="tsd-kind-icon">prevent<wbr>Caching</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="interfaces.iloadscriptoptions.html#props" class="tsd-kind-icon">props</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="interfaces.iloadscriptoptions.html#timeout" class="tsd-kind-icon">timeout</a></li>
 							</ul>
 						</section>
 					</div>
@@ -109,27 +107,12 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="allowreusing" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> allow<wbr>Reusing</h3>
-					<div class="tsd-signature tsd-kind-icon">allow<wbr>Reusing<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">boolean</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/heeroluo/just4/blob/6148a59/packages/load-script/src/interfaces.ts#L22">interfaces.ts:22</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>是否不使用相同 URL 的请求结果。默认为 true。</p>
-						</div>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="data" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagOptional">Optional</span> data</h3>
 					<div class="tsd-signature tsd-kind-icon">data<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-symbol">{}</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/heeroluo/just4/blob/6148a59/packages/load-script/src/interfaces.ts#L14">interfaces.ts:14</a></li>
+							<li>Defined in <a href="https://github.com/heeroluo/just4/blob/603d069/packages/load-script/src/interfaces.ts#L14">interfaces.ts:14</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -144,7 +127,7 @@
 					<div class="tsd-signature tsd-kind-icon">prevent<wbr>Caching<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">boolean</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/heeroluo/just4/blob/6148a59/packages/load-script/src/interfaces.ts#L26">interfaces.ts:26</a></li>
+							<li>Defined in <a href="https://github.com/heeroluo/just4/blob/603d069/packages/load-script/src/interfaces.ts#L18">interfaces.ts:18</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -159,7 +142,7 @@
 					<div class="tsd-signature tsd-kind-icon">props<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Partial</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLScriptElement</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/heeroluo/just4/blob/6148a59/packages/load-script/src/interfaces.ts#L30">interfaces.ts:30</a></li>
+							<li>Defined in <a href="https://github.com/heeroluo/just4/blob/603d069/packages/load-script/src/interfaces.ts#L22">interfaces.ts:22</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -169,27 +152,12 @@
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="reusable" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> reusable</h3>
-					<div class="tsd-signature tsd-kind-icon">reusable<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">boolean</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/heeroluo/just4/blob/6148a59/packages/load-script/src/interfaces.ts#L18">interfaces.ts:18</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>是否把请求的 promise 保存下来，以便请求相同的 URL 时重用。默认为 false。</p>
-						</div>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="timeout" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagOptional">Optional</span> timeout</h3>
 					<div class="tsd-signature tsd-kind-icon">timeout<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/heeroluo/just4/blob/6148a59/packages/load-script/src/interfaces.ts#L34">interfaces.ts:34</a></li>
+							<li>Defined in <a href="https://github.com/heeroluo/just4/blob/603d069/packages/load-script/src/interfaces.ts#L26">interfaces.ts:26</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -222,36 +190,30 @@
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
+					<li class=" tsd-kind-interface tsd-parent-kind-module">
+						<a href="interfaces.ijsonpoptions.html" class="tsd-kind-icon">IJSONPOptions</a>
+					</li>
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-interface tsd-parent-kind-module">
-						<a href="interfaces.igetscriptoptions.html" class="tsd-kind-icon">IGet<wbr>Script<wbr>Options</a>
+						<a href="interfaces.iloadscriptoptions.html" class="tsd-kind-icon">ILoad<wbr>Script<wbr>Options</a>
 						<ul>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="interfaces.igetscriptoptions.html#allowreusing" class="tsd-kind-icon">allow<wbr>Reusing</a>
+								<a href="interfaces.iloadscriptoptions.html#data" class="tsd-kind-icon">data</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="interfaces.igetscriptoptions.html#data" class="tsd-kind-icon">data</a>
+								<a href="interfaces.iloadscriptoptions.html#preventcaching" class="tsd-kind-icon">prevent<wbr>Caching</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="interfaces.igetscriptoptions.html#preventcaching" class="tsd-kind-icon">prevent<wbr>Caching</a>
+								<a href="interfaces.iloadscriptoptions.html#props" class="tsd-kind-icon">props</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="interfaces.igetscriptoptions.html#props" class="tsd-kind-icon">props</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="interfaces.igetscriptoptions.html#reusable" class="tsd-kind-icon">reusable</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="interfaces.igetscriptoptions.html#timeout" class="tsd-kind-icon">timeout</a>
+								<a href="interfaces.iloadscriptoptions.html#timeout" class="tsd-kind-icon">timeout</a>
 							</li>
 						</ul>
 					</li>
 				</ul>
 				<ul class="after-current">
-					<li class=" tsd-kind-interface tsd-parent-kind-module">
-						<a href="interfaces.ijsonpoptions.html" class="tsd-kind-icon">IJSONPOptions</a>
-					</li>
 				</ul>
 			</nav>
 		</div>
