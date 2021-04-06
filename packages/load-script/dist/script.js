@@ -10,22 +10,13 @@ function createScript(props) {
     return script;
 }
 
-const scriptLoaders = Object.create(null);
-
 export function loadScript(url, options = {
-    reusable: false,
     preventCaching: false,
     props: {
         async: true
     }
 }) {
-    if (options.data) {
-        url = appendToURL(url, options.data);
-    }
-    if (options.preventReusing !== false && !options.preventCaching && scriptLoaders[url]) {
-        return scriptLoaders[url];
-    }
-    const promise = new Promise((function(resolve, reject) {
+    return new Promise((function(resolve, reject) {
         let script;
         let timeoutTimer;
         function destroy() {
@@ -38,6 +29,9 @@ export function loadScript(url, options = {
             if (timeoutTimer) {
                 window.clearTimeout(timeoutTimer);
             }
+        }
+        if (options.data) {
+            url = appendToURL(url, options.data);
         }
         if (options.preventCaching) {
             url = appendToURL(url, {
@@ -63,8 +57,4 @@ export function loadScript(url, options = {
             }), timeout);
         }
     }));
-    if (options.reusable) {
-        scriptLoaders[url] = promise;
-    }
-    return promise;
 }

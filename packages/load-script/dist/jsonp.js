@@ -21,8 +21,6 @@ function genCallbackName(src) {
 }
 
 export function jsonp(url, options = {
-    reusable: false,
-    preventReusing: true,
     preventCaching: false,
     props: {
         async: true
