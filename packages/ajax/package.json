@@ -1,0 +1,17 @@
+{
+  "name": "@just4/ajax",
+  "version": "0.1.0",
+  "description": "Just for making XMLHTTPRequest easier in browser.",
+  "scripts": {
+    "link-deps": "ln -s ../../node_modules ./node_modules",
+    "dev": "cross-env NODE_ENV=development webpack-dev-server --config build/webpack.dev.config.js",
+    "lint": "eslint ./src/*.ts",
+    "prebuild": "rimraf ./dist/*",
+    "build": "npm run lint && tsc -p ./src/tsconfig.json && node ../../build/compress ajax && node ../../build/copy-others ajax",
+    "gen-doc": "typedoc --tsconfig ./src/tsconfig.json"
+  },
+  "dependencies": {
+    "@just4/util": "^0.1.0"
+  },
+  "private": true
+}

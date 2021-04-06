@@ -1,0 +1,6 @@
+{
+  "entryPoints": ["./src/"],
+  "out": "../../docs/ajax",
+  "excludeInternal": true,
+  "listInvalidSymbolLinks": true
+}
