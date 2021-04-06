@@ -1,6 +1,6 @@
 {
   "name": "@just4/ajax",
-  "version": "0.1.0-beta.2",
+  "version": "0.1.0-beta.3",
   "description": "Just for making XMLHTTPRequest easier in browser.",
   "scripts": {
     "link-deps": "ln -s ../../node_modules ./node_modules",
