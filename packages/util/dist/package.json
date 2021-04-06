@@ -2,6 +2,13 @@
   "name": "@just4/util",
   "version": "0.1.0-beta.1",
   "description": "Utility functions for other packages.",
+  "keywords": [
+    "utility",
+    "function",
+    "array",
+    "object",
+    "type"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/heeroluo/just4"
