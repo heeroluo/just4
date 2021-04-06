@@ -1,6 +1,6 @@
 {
   "name": "@just4/ajax",
-  "version": "0.1.0",
+  "version": "0.1.0-beta.1",
   "description": "Just for making XMLHTTPRequest easier in browser.",
   "scripts": {
     "link-deps": "ln -s ../../node_modules ./node_modules",
@@ -11,7 +11,7 @@
     "gen-doc": "typedoc --tsconfig ./src/tsconfig.json"
   },
   "dependencies": {
-    "@just4/util": "^0.1.0"
+    "@just4/util": "^0.1.0-beta.1"
   },
   "private": true
 }
