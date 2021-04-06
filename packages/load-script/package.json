@@ -1,7 +1,8 @@
 {
   "name": "@just4/load-script",
   "version": "0.1.0-beta.1",
-  "description": "Just for script requesting in browser.",
+  "description": "Just for script loading in browser.",
+  "keywords": ["script", "load", "jsonp"],
   "scripts": {
     "link-deps": "ln -s ../../node_modules ./node_modules",
     "dev": "cross-env NODE_ENV=development webpack-dev-server --config build/webpack.dev.config.js",
