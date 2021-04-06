@@ -1,6 +1,6 @@
 {
   "name": "@just4/querystring",
-  "version": "0.1.0",
+  "version": "0.1.0-beta.1",
   "description": "Just for querystring manipulation.",
   "dependencies": {
     "@just4/util": "^0.1.0"
