@@ -23,6 +23,7 @@ function createScript(props?: Partial<HTMLScriptElement>) {
 
 /**
  * 加载脚本文件。
+ * @example
  * ```typescript
  * import { loadScript } from '@just4/load-script';
  * loadScript('https://code.jquery.com/jquery-1.12.4.min.js', {
