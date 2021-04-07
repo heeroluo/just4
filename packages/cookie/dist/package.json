@@ -1,9 +1,14 @@
 {
   "name": "@just4/cookie",
-  "version": "0.1.0",
+  "version": "0.1.0-beta.1",
   "description": "Just for cookie manipulation in browser.",
+  "keywords": [
+    "cookie",
+    "expires",
+    "samesite"
+  ],
   "dependencies": {
-    "@just4/util": "^0.1.0"
+    "@just4/util": "^0.1.0-beta.2"
   },
   "repository": {
     "type": "git",
