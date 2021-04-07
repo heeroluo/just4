@@ -1,7 +1,8 @@
 {
   "name": "@just4/ajax",
-  "version": "0.1.0-beta.4",
-  "description": "Just for making XMLHTTPRequest easier in browser.",
+  "version": "0.1.0-beta.5",
+  "description": "Just for making XMLHTTPRequest easier to use in browser.",
+  "keywords": ["ajax", "XMLHttpRequest", "XDomainRequest"],
   "scripts": {
     "link-deps": "ln -s ../../node_modules ./node_modules",
     "dev": "cross-env NODE_ENV=development webpack-dev-server --config build/webpack.dev.config.js",
@@ -11,8 +12,8 @@
     "gen-doc": "typedoc --tsconfig ./src/tsconfig.json"
   },
   "dependencies": {
-    "@just4/util": "^0.1.0-beta.1",
-    "@just4/querystring": "^0.1.0-beta.2"
+    "@just4/util": "^0.1.0-beta.2",
+    "@just4/querystring": "^0.1.0-beta.3"
   },
   "private": true
 }

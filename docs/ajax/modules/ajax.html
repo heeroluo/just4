@@ -97,13 +97,39 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/heeroluo/just4/blob/379cef6/packages/ajax/src/ajax.ts#L120">packages/ajax/src/ajax.ts:120</a></li>
+									<li>Defined in <a href="https://github.com/heeroluo/just4/blob/7d432f0/packages/ajax/src/ajax.ts#L144">packages/ajax/src/ajax.ts:144</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
 									<p>发送 AJAX 请求。</p>
 								</div>
+								<dl class="tsd-comment-tags">
+									<dt>example</dt>
+									<dd><pre><code class="language-typescript"><span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">send</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;@just4/ajax/ajax&#039;</span><span style="color: #000000">;</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> { </span><span style="color: #0070C1">data</span><span style="color: #000000"> } = </span><span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #795E26">send</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;/api/ajax/json&#039;</span><span style="color: #000000">, {</span>
+<span style="color: #000000">  </span><span style="color: #001080">method:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;get&#039;</span><span style="color: #000000">,</span>
+<span style="color: #000000">  </span><span style="color: #001080">params:</span><span style="color: #000000"> { </span><span style="color: #001080">num:</span><span style="color: #000000"> </span><span style="color: #098658">100</span><span style="color: #000000"> }</span>
+<span style="color: #000000">});</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> { </span><span style="color: #0070C1">data</span><span style="color: #000000"> } = </span><span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #795E26">send</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;/api/ajax/json&#039;</span><span style="color: #000000">, {</span>
+<span style="color: #000000">  </span><span style="color: #001080">method:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;post&#039;</span><span style="color: #000000">,</span>
+<span style="color: #000000">  </span><span style="color: #001080">data:</span><span style="color: #000000"> { </span><span style="color: #001080">num:</span><span style="color: #000000"> </span><span style="color: #098658">100</span><span style="color: #000000"> }</span>
+<span style="color: #000000">});</span>
+</code></pre>
+									</dd>
+									<dt>example</dt>
+									<dd><pre><code class="language-typescript"><span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">send</span><span style="color: #000000">, </span><span style="color: #001080">cancel</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;@just4/ajax/ajax&#039;</span><span style="color: #000000">;</span>
+<span style="color: #0000FF">let</span><span style="color: #000000"> </span><span style="color: #001080">ajaxId</span><span style="color: #000000"> = </span><span style="color: #098658">0</span><span style="color: #000000">;</span>
+<span style="color: #795E26">send</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;/api/ajax/timeout&#039;</span><span style="color: #000000">, {</span>
+<span style="color: #000000"> </span><span style="color: #795E26">receiveCancelId</span><span style="color: #001080">:</span><span style="color: #000000"> </span><span style="color: #0000FF">function</span><span style="color: #000000">(</span><span style="color: #001080">id</span><span style="color: #000000">) { </span><span style="color: #001080">ajaxId</span><span style="color: #000000"> = </span><span style="color: #001080">id</span><span style="color: #000000">; }</span>
+<span style="color: #000000">});</span>
+<span style="color: #008000">// 2s 后中断请求</span>
+<span style="color: #795E26">setTimeout</span><span style="color: #000000">(</span><span style="color: #0000FF">function</span><span style="color: #000000">() {</span>
+<span style="color: #000000">  </span><span style="color: #795E26">cancel</span><span style="color: #000000">(</span><span style="color: #001080">ajaxId</span><span style="color: #000000">);</span>
+<span style="color: #000000">}, </span><span style="color: #098658">2000</span><span style="color: #000000">);</span>
+</code></pre>
+									</dd>
+								</dl>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
