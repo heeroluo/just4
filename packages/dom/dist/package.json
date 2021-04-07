@@ -1,9 +1,14 @@
 {
   "name": "@just4/dom",
   "version": "0.1.0",
-  "description": "Just for dom manipulation in browser.",
+  "description": "Just for making dom manipulation much more easier in browser.",
+  "keywords": [
+    "dom",
+    "manipulation",
+    "jquery"
+  ],
   "dependencies": {
-    "@just4/util": "^0.1.0"
+    "@just4/util": "^0.1.0-beta.2"
   },
   "repository": {
     "type": "git",
