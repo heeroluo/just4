@@ -12,11 +12,11 @@ import { IAJAXOptions, IAJAXResponse } from '../interfaces';
 export declare function createAJAXRecord(xhr: XMLHttpRequest, options: IAJAXOptions, resolve: (response: IAJAXResponse) => void, reject: (reason?: Error) => void): number;
 /**
  * 删除 AJAX 记录。
- * @param id 记录 id。
+ * @param id AJAX 请求编号。
  */
 export declare function deleteAJAXRecord(id: number): void;
 /**
- * 取消 AJAX 请求。
- * @param id 记录 id。
+ * 中断 AJAX 请求。
+ * @param id AJAX 请求编号。
  */
 export declare function cancelRequest(id: number): void;

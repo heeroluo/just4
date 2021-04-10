@@ -2,7 +2,6 @@
  * 提供基于 XMLHttpRequest（或 XDomainRequest） 的 AJAX 请求接口。
  * @packageDocumentation
  */
-import { cancelRequest } from './internal/ajax-record';
 import { IAJAXOptions, IAJAXResponse } from './interfaces';
 /**
  * 发送 AJAX 请求。
@@ -18,6 +17,13 @@ import { IAJAXOptions, IAJAXResponse } from './interfaces';
  *   data: { num: 100 }
  * });
  * ```
+ * @param url 请求 URL。
+ * @param options 请求选项。
+ * @returns 发送请求的 promise 实例。
+ */
+export declare function send(url: string, options?: IAJAXOptions): Promise<IAJAXResponse>;
+/**
+ * 中断 AJAX 请求。
  * @example
  * ```typescript
  * import { send, cancel } from '@just4/ajax/ajax';
@@ -30,9 +36,6 @@ import { IAJAXOptions, IAJAXResponse } from './interfaces';
  *   cancel(ajaxId);
  * }, 2000);
  * ```
- * @param url 请求 URL。
- * @param options 请求选项。
- * @returns 发送请求的 promise 实例。
+ * @param id AJAX 请求编号。
  */
-export declare function send(url: string, options?: IAJAXOptions): Promise<IAJAXResponse>;
-export { cancelRequest as cancel };
+export declare function cancel(id: number): void;

@@ -40,7 +40,9 @@ function handleRequestBody(method, headers, data, requestType) {
         body = isObject(data) ? stringify(data, {
             ignoreEmpty: true
         }) : data;
-        contentType = "application/x-www-form-urlencoded; charset=utf-8";
+        if (typeof body === "string") {
+            contentType = "application/x-www-form-urlencoded; charset=utf-8";
+        }
     }
     headers["Content-Type"] = headers["Content-Type"] || contentType;
     return body;
@@ -95,4 +97,6 @@ export function send(url, options) {
     }));
 }
 
-export { cancelRequest as cancel };
+export function cancel(id) {
+    cancelRequest(id);
+}
