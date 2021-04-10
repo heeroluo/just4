@@ -28,9 +28,29 @@ module.exports = function(options) {
     module: {
       rules: [
         {
+          test: /\.js$/,
+          exclude: /node_modules/,
+          loader: 'babel-loader',
+          options: {
+            presets: [
+              ['@babel/preset-env', {
+                useBuiltIns: 'usage',
+                corejs: 3
+              }]
+            ],
+
+            plugins: [
+              '@babel/plugin-proposal-class-properties',
+              '@babel/plugin-proposal-json-strings',
+              '@babel/plugin-syntax-dynamic-import',
+              '@babel/plugin-syntax-import-meta'
+            ]
+          }
+        },
+
+        {
           test: /\.ts$/,
           loader: 'ts-loader',
-          exclude: /node_modules/,
           options: {
             configFile: tsCfgFile
           }
