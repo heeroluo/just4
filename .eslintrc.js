@@ -136,7 +136,6 @@ module.exports = {
       }
     }],
     '@typescript-eslint/no-var-requires': 0,
-    '@typescript-eslint/no-for-in-array': ['error'],
     '@typescript-eslint/no-unused-vars': [devWarnProdError, {
       vars: 'all',
       args: 'after-used'
