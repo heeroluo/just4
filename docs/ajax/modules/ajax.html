@@ -79,6 +79,7 @@
 						<section class="tsd-index-section ">
 							<h3>Functions</h3>
 							<ul class="tsd-index-list">
+								<li class="tsd-kind-function tsd-parent-kind-module"><a href="ajax.html#cancel" class="tsd-kind-icon">cancel</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-module"><a href="ajax.html#send" class="tsd-kind-icon">send</a></li>
 							</ul>
 						</section>
@@ -87,6 +88,51 @@
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Functions</h2>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
+					<a name="cancel" class="tsd-anchor"></a>
+					<h3>cancel</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
+						<li class="tsd-signature tsd-kind-icon">cancel<span class="tsd-signature-symbol">(</span>id<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/heeroluo/just4/blob/263d48d/packages/ajax/src/ajax.ts#L195">packages/ajax/src/ajax.ts:195</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>中断 AJAX 请求。</p>
+								</div>
+								<dl class="tsd-comment-tags">
+									<dt>example</dt>
+									<dd><pre><code class="language-typescript"><span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">send</span><span style="color: #000000">, </span><span style="color: #001080">cancel</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;@just4/ajax/ajax&#039;</span><span style="color: #000000">;</span>
+<span style="color: #0000FF">let</span><span style="color: #000000"> </span><span style="color: #001080">ajaxId</span><span style="color: #000000"> = </span><span style="color: #098658">0</span><span style="color: #000000">;</span>
+<span style="color: #795E26">send</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;/api/ajax/timeout&#039;</span><span style="color: #000000">, {</span>
+<span style="color: #000000"> </span><span style="color: #795E26">receiveCancelId</span><span style="color: #001080">:</span><span style="color: #000000"> </span><span style="color: #0000FF">function</span><span style="color: #000000">(</span><span style="color: #001080">id</span><span style="color: #000000">) { </span><span style="color: #001080">ajaxId</span><span style="color: #000000"> = </span><span style="color: #001080">id</span><span style="color: #000000">; }</span>
+<span style="color: #000000">});</span>
+<span style="color: #008000">// 2s 后中断请求</span>
+<span style="color: #795E26">setTimeout</span><span style="color: #000000">(</span><span style="color: #0000FF">function</span><span style="color: #000000">() {</span>
+<span style="color: #000000">  </span><span style="color: #795E26">cancel</span><span style="color: #000000">(</span><span style="color: #001080">ajaxId</span><span style="color: #000000">);</span>
+<span style="color: #000000">}, </span><span style="color: #098658">2000</span><span style="color: #000000">);</span>
+</code></pre>
+									</dd>
+								</dl>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>id: <span class="tsd-signature-type">number</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>AJAX 请求编号。</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
 				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
 					<a name="send" class="tsd-anchor"></a>
 					<h3>send</h3>
@@ -97,7 +143,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/heeroluo/just4/blob/7d432f0/packages/ajax/src/ajax.ts#L144">packages/ajax/src/ajax.ts:144</a></li>
+									<li>Defined in <a href="https://github.com/heeroluo/just4/blob/263d48d/packages/ajax/src/ajax.ts#L132">packages/ajax/src/ajax.ts:132</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -115,18 +161,6 @@
 <span style="color: #000000">  </span><span style="color: #001080">method:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;post&#039;</span><span style="color: #000000">,</span>
 <span style="color: #000000">  </span><span style="color: #001080">data:</span><span style="color: #000000"> { </span><span style="color: #001080">num:</span><span style="color: #000000"> </span><span style="color: #098658">100</span><span style="color: #000000"> }</span>
 <span style="color: #000000">});</span>
-</code></pre>
-									</dd>
-									<dt>example</dt>
-									<dd><pre><code class="language-typescript"><span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">send</span><span style="color: #000000">, </span><span style="color: #001080">cancel</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;@just4/ajax/ajax&#039;</span><span style="color: #000000">;</span>
-<span style="color: #0000FF">let</span><span style="color: #000000"> </span><span style="color: #001080">ajaxId</span><span style="color: #000000"> = </span><span style="color: #098658">0</span><span style="color: #000000">;</span>
-<span style="color: #795E26">send</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;/api/ajax/timeout&#039;</span><span style="color: #000000">, {</span>
-<span style="color: #000000"> </span><span style="color: #795E26">receiveCancelId</span><span style="color: #001080">:</span><span style="color: #000000"> </span><span style="color: #0000FF">function</span><span style="color: #000000">(</span><span style="color: #001080">id</span><span style="color: #000000">) { </span><span style="color: #001080">ajaxId</span><span style="color: #000000"> = </span><span style="color: #001080">id</span><span style="color: #000000">; }</span>
-<span style="color: #000000">});</span>
-<span style="color: #008000">// 2s 后中断请求</span>
-<span style="color: #795E26">setTimeout</span><span style="color: #000000">(</span><span style="color: #0000FF">function</span><span style="color: #000000">() {</span>
-<span style="color: #000000">  </span><span style="color: #795E26">cancel</span><span style="color: #000000">(</span><span style="color: #001080">ajaxId</span><span style="color: #000000">);</span>
-<span style="color: #000000">}, </span><span style="color: #098658">2000</span><span style="color: #000000">);</span>
 </code></pre>
 									</dd>
 								</dl>
@@ -172,6 +206,9 @@
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
+					<li class=" tsd-kind-function tsd-parent-kind-module">
+						<a href="ajax.html#cancel" class="tsd-kind-icon">cancel</a>
+					</li>
 					<li class=" tsd-kind-function tsd-parent-kind-module">
 						<a href="ajax.html#send" class="tsd-kind-icon">send</a>
 					</li>

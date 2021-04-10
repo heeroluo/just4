@@ -117,15 +117,15 @@ export function createAJAXRecord(
 
 /**
  * 删除 AJAX 记录。
- * @param id 记录 id。
+ * @param id AJAX 请求编号。
  */
 export function deleteAJAXRecord(id: number): void {
   delete ajaxRecords[id];
 }
 
 /**
- * 取消 AJAX 请求。
- * @param id 记录 id。
+ * 中断 AJAX 请求。
+ * @param id AJAX 请求编号。
  */
 export function cancelRequest(id: number): void {
   const record = ajaxRecords[id];

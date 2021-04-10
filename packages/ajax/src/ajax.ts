@@ -125,18 +125,6 @@ function setXhrPropsAndHeaders(
  *   data: { num: 100 }
  * });
  * ```
- * @example
- * ```typescript
- * import { send, cancel } from '@just4/ajax/ajax';
- * let ajaxId = 0;
- * send('/api/ajax/timeout', {
- *  receiveCancelId: function(id) { ajaxId = id; }
- * });
- * // 2s 后中断请求
- * setTimeout(function() {
- *   cancel(ajaxId);
- * }, 2000);
- * ```
  * @param url 请求 URL。
  * @param options 请求选项。
  * @returns 发送请求的 promise 实例。
@@ -188,4 +176,22 @@ export function send(url: string, options?: IAJAXOptions): Promise<IAJAXResponse
 }
 
 
-export { cancelRequest as cancel };
+/**
+ * 中断 AJAX 请求。
+ * @example
+ * ```typescript
+ * import { send, cancel } from '@just4/ajax/ajax';
+ * let ajaxId = 0;
+ * send('/api/ajax/timeout', {
+ *  receiveCancelId: function(id) { ajaxId = id; }
+ * });
+ * // 2s 后中断请求
+ * setTimeout(function() {
+ *   cancel(ajaxId);
+ * }, 2000);
+ * ```
+ * @param id AJAX 请求编号。
+ */
+export function cancel(id: number): void {
+  cancelRequest(id);
+}
