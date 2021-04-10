@@ -16,7 +16,7 @@ const dataSpaceManger = (function() {
 
   return {
     // 增加数据空间
-    add: function(space: DataSpace):number {
+    add: function(space: DataSpace): number {
       return spaces.push(space) - 1;
     },
 
