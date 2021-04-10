@@ -51,7 +51,7 @@ module.exports = {
     'array-bracket-spacing': ['error', 'never'],
     'block-spacing': ['error', 'always'],
     'computed-property-spacing': 'error',
-    'comma-spacing': 'error',
+    'comma-spacing': 0,
     'func-call-spacing': 'error',
     'key-spacing': 'error',
     'keyword-spacing': 'error',
@@ -123,7 +123,20 @@ module.exports = {
     'sonarjs/no-collection-size-mischeck': 0,
 
     // TypeScript
+    '@typescript-eslint/semi': ['error', 'always'],
+    '@typescript-eslint/comma-spacing': ['error'],
+    '@typescript-eslint/type-annotation-spacing': ['error', {
+      after: true,
+      before: false,
+      overrides: {
+        arrow: {
+          before: true,
+          after: true
+        }
+      }
+    }],
     '@typescript-eslint/no-var-requires': 0,
+    '@typescript-eslint/no-for-in-array': ['error'],
     '@typescript-eslint/no-unused-vars': [devWarnProdError, {
       vars: 'all',
       args: 'after-used'
