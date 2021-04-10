@@ -69,7 +69,7 @@ function handleRequestBody(
   if (data == null || method === 'get') { return; }
 
   let body: BodyType;
-  let contentType: string;
+  let contentType: string | undefined;
   if (requestType === 'json') {
     body = JSON.stringify(data);
     contentType = 'application/json; charset=utf-8';
@@ -77,7 +77,9 @@ function handleRequestBody(
     body = isObject(data) ?
       stringify(<UniversalParams>data, { ignoreEmpty: true }) :
       <string | FormData | Blob | ArrayBuffer>data;
-    contentType = 'application/x-www-form-urlencoded; charset=utf-8';
+    if (typeof body === 'string') {
+      contentType = 'application/x-www-form-urlencoded; charset=utf-8';
+    }
   }
   headers['Content-Type'] = headers['Content-Type'] || contentType;
 
