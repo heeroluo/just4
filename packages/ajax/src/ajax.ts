@@ -108,7 +108,9 @@ function setXhrPropsAndHeaders(
 
   // 自定义请求头
   Object.keys(headers).forEach(function(key) {
-    xhr.setRequestHeader(key, String(headers[key]));
+    if (headers[key] != null) {
+      xhr.setRequestHeader(key, String(headers[key]));
+    }
   });
 }
 

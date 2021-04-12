@@ -59,7 +59,9 @@ function setXhrPropsAndHeaders(xhr, options, isCross, headers) {
         headers["X-Request-With"] = "XMLHttpRequest";
     }
     Object.keys(headers).forEach((function(key) {
-        xhr.setRequestHeader(key, String(headers[key]));
+        if (headers[key] != null) {
+            xhr.setRequestHeader(key, String(headers[key]));
+        }
     }));
 }
 
