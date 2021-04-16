@@ -65,6 +65,12 @@ export function createAJAXRecord(xhr, options, resolve, reject) {
     xhr.onerror = function() {
         reject(new AJAXError("Network error"));
     };
+    if (options.onDownloadProgress) {
+        xhr.addEventListener("progress", options.onDownloadProgress);
+    }
+    if (options.onUploadProgress && xhr.upload) {
+        xhr.upload.addEventListener("progress", options.onUploadProgress);
+    }
     if (autoId === Number.MAX_SAFE_INTEGER) {
         autoId = 0;
     }

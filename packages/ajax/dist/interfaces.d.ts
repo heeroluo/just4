@@ -88,6 +88,14 @@ export interface IAJAXOptions {
      * 提供一个编号，可用于中断请求。
      */
     receiveCancelId?: (id: number) => void;
+    /**
+     * 上传进度变化时触发的回调。
+     */
+    onUploadProgress?: (evt: ProgressEvent) => void;
+    /**
+     * 下周进度变化时触发的回调。
+     */
+    onDownloadProgress?: (evt: ProgressEvent) => void;
 }
 /**
  * AJAX 请求响应。
