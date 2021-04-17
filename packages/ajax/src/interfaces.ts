@@ -102,7 +102,7 @@ export interface IAJAXOptions {
    */
   onUploadProgress?: (evt: ProgressEvent) => void,
   /**
-   * 下周进度变化时触发的回调。
+   * 下载进度变化时触发的回调。
    */
   onDownloadProgress?: (evt: ProgressEvent) => void
 }
