@@ -23,7 +23,7 @@ export class AJAXError extends Error implements IAJAXResponse {
    */
   public data?: unknown;
   /**
-   * 请求相关的状态码。
+   * 错误相关的状态码。
    */
   public code: number;
   /**
@@ -41,5 +41,6 @@ export class AJAXError extends Error implements IAJAXResponse {
    */
   constructor(message: string) {
     super(message);
+    this.name = 'AJAXError';
   }
 }
