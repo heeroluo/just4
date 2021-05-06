@@ -52,7 +52,7 @@ function handleURL(
   params?: URLParams,
   preventCaching?: boolean
 ): string {
-  if (params != null) { url = appendToURL(url, params, { ignoreEmpty: true }); }
+  if (params != null) { url = appendToURL(url, params, { ignoreEmpty: false }); }
   // 在 URL 上增加时间戳参数以防止缓存
   if (preventCaching) { url = appendToURL(url, { _: Date.now() }); }
 
@@ -75,7 +75,7 @@ function handleRequestBody(
     contentType = 'application/json; charset=utf-8';
   } else {
     body = isObject(data) ?
-      stringify(<UniversalParams>data, { ignoreEmpty: true }) :
+      stringify(<UniversalParams>data, { ignoreEmpty: false }) :
       <string | FormData | Blob | ArrayBuffer>data;
     if (typeof body === 'string') {
       contentType = 'application/x-www-form-urlencoded; charset=utf-8';
