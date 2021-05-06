@@ -20,7 +20,7 @@ export declare class AJAXError extends Error implements IAJAXResponse {
      */
     data?: unknown;
     /**
-     * 请求相关的状态码。
+     * 错误相关的状态码。
      */
     code: number;
     /**

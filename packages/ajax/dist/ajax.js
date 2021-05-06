@@ -16,7 +16,7 @@ function createXhr(isCross, method, requestType, headers, withCredentials) {
 function handleURL(url, params, preventCaching) {
     if (params != null) {
         url = appendToURL(url, params, {
-            ignoreEmpty: true
+            ignoreEmpty: false
         });
     }
     if (preventCaching) {
@@ -38,7 +38,7 @@ function handleRequestBody(method, headers, data, requestType) {
         contentType = "application/json; charset=utf-8";
     } else {
         body = isObject(data) ? stringify(data, {
-            ignoreEmpty: true
+            ignoreEmpty: false
         }) : data;
         if (typeof body === "string") {
             contentType = "application/x-www-form-urlencoded; charset=utf-8";
