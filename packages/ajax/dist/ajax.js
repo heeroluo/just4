@@ -86,6 +86,9 @@ export function send(url, options) {
             deleteAJAXRecord(xhrId);
             reject(error);
         }));
+        if (options.responseType === "blob" || options.responseType === "arraybuffer") {
+            xhr.responseType = options.responseType;
+        }
         xhr.open(method, url, true, options.username, options.password);
         const body = handleRequestBody(method, headers, options.data, requestType);
         setXhrPropsAndHeaders(xhr, options, isCross, headers);

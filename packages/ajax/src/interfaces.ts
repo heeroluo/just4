@@ -38,7 +38,7 @@ export type BodyType = string | FormData | Blob | ArrayBuffer;
 /**
  * 响应格式。
  */
-export type ResponseType = 'json' | 'xml' | 'text';
+export type ResponseType = 'json' | 'xml' | 'text' | 'blob' | 'arraybuffer';
 
 
 /**
@@ -66,7 +66,7 @@ export interface IAJAXOptions {
    */
   requestType?: RequestType,
   /**
-   * 响应格式，json、xml 或 text，默认为 json。
+   * 响应格式，json、xml、text 或 unknown，默认为 json。unknown 表示不解析响应数据。
    */
   responseType?: ResponseType,
   /**

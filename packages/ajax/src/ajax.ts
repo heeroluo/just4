@@ -161,6 +161,9 @@ export function send(url: string, options?: IAJAXOptions): Promise<IAJAXResponse
         reject(error);
       }
     );
+    if (options.responseType === 'blob' || options.responseType === 'arraybuffer') {
+      xhr.responseType = options.responseType;
+    }
     xhr.open(method, url, true, options.username, options.password);
 
     const body = handleRequestBody(method, headers, options.data, requestType);

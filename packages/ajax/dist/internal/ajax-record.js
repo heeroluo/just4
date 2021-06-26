@@ -8,16 +8,13 @@ function createOnLoad(xhr, options, resolve, reject) {
     return function() {
         let data;
         let errMsg;
-        const resText = (xhr.responseText || "").trim();
         const resType = options.responseType || parseMIMEType(xhr.getResponseHeader("Content-Type"));
         switch (resType) {
           case "json":
-            if (resText) {
-                try {
-                    data = JSON.parse(resText);
-                } catch (e) {
-                    errMsg = "Invalid JSON structure";
-                }
+            try {
+                data = JSON.parse(xhr.responseText);
+            } catch (e) {
+                errMsg = "Invalid JSON structure";
             }
             break;
 
@@ -28,8 +25,12 @@ function createOnLoad(xhr, options, resolve, reject) {
             }
             break;
 
+          case "blob":
+            data = xhr.response;
+            break;
+
           default:
-            data = resText;
+            data = xhr.responseText;
         }
         const response = {
             xhr: xhr,
@@ -37,9 +38,8 @@ function createOnLoad(xhr, options, resolve, reject) {
             data: data
         };
         const status = xhr.status;
-        const isError = isErrorStatus(status);
         let error;
-        if (isError) {
+        if (isErrorStatus(status)) {
             error = new AJAXError("Error (HTTP status code: " + status + ")");
             error.code = status;
         } else if (errMsg) {

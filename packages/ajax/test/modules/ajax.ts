@@ -81,3 +81,20 @@ QUnit.test('请求错误', function(assert: any) {
     }
   );
 });
+
+QUnit.test('请求图片', function(assert: any) {
+  assert.expect(1);
+  const done = assert.async();
+
+  send('//live.polyv.net/kaptcha', {
+    params: {
+      timestamp: Date.now()
+    },
+    responseType: 'blob'
+  }).then(function(res) {
+    const img = new Image();
+    img.src = URL.createObjectURL(res.data);
+    assert.ok(true);
+    done();
+  });
+});
