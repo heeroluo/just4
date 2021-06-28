@@ -1,6 +1,6 @@
 module.exports = function() {
   return {
-    target: ['web', 'es5'],
+    target: 'web',
     resolve: {
       extensions: ['.js', '.ts']
     }
