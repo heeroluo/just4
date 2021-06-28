@@ -42,14 +42,14 @@ QUnit.test('超时', function(assert: any) {
       assert.ok(error.isTimeout);
       done();
     }
-  )
+  );
 });
 
 QUnit.test('取消', function(assert: any) {
   assert.expect(1);
   const done = assert.async();
 
-  let ajaxId: number = 0;
+  let ajaxId = 0;
 
   send('/api/ajax/timeout', {
     receiveCancelId: function(id) { ajaxId = id; }
