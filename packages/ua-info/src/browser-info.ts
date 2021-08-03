@@ -7,6 +7,7 @@ import { execRules } from './internal/ua-detector';
 import { browserRules } from './internal/browser-rules';
 import { Version } from './version';
 
+
 // UA 分析结果与类属性的对应关系
 const propMap: Record<string, Exclude<keyof BrowserInfo, 'version'>> = {
   'chrome': 'isChrome',
@@ -52,7 +53,7 @@ export class BrowserInfo {
 
   /**
    * 浏览器内核信息类构造函数。
-   * @param ua User-Agent 字符串。
+   * @param ua User agent 字符串。
    */
   constructor(ua: string) {
     const result = execRules(ua, browserRules);

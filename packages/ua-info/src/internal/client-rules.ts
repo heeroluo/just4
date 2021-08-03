@@ -4,13 +4,14 @@
  * @internal
  */
 
-import { Rule } from './types';
+import { IRule } from './types';
 import { browserRules } from './browser-rules';
+
 
 /**
  * 客户端匹配规则。
  */
-let clientRules: Rule[] = [
+let clientRules: IRule[] = [
   { name: 'wxwork', regExp: /\bwxwork\/([\d.]+)/ },
   { name: 'wx', regExp: /\bMicroMessenger\/([\d.]+)/ },
   { name: 'ding', regExp: /\bDingTalk\/([\d.]+)/ },
@@ -31,6 +32,7 @@ let clientRules: Rule[] = [
   { name: 'baiduapp', regExp: /\bbaiduboxpad\b/i }
 ];
 
+// 优先匹配客户端或套壳浏览器，其次是原生浏览器
 clientRules = clientRules.concat(browserRules);
 
 export { clientRules };

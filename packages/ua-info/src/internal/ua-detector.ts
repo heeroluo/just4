@@ -4,13 +4,14 @@
  * @internal
  */
 
-import { MatchResult, Rule } from './types';
+import { IMatchResult, IRule } from './types';
+
 
 /**
- * 使用指定关键词列表匹配 User-agent。
- * @param ua User-agent 字符串。
+ * 使用指定关键词列表匹配 user agent 字符串。
+ * @param ua User agent 字符串。
  * @param keywords 关键词列表。
- * @return 是否有其中一个关键词与 user-agent 匹配。
+ * @return 是否有其中一个关键词与 user agent 匹配。
  */
 function canMatchKeywords(ua: string, keywords: string[]): boolean {
   ua = ua.toLowerCase();
@@ -32,31 +33,26 @@ function canMatchKeywords(ua: string, keywords: string[]): boolean {
 }
 
 /**
- * 使用指定机型规则匹配 User-agent。
- * @param ua User-agent 字符串。
+ * 使用指定机型规则匹配 user agent 字符串。
+ * @param ua User agent 字符串。
  * @param modelRule 机型匹配规则。
- * @return 机型规则是否与 user-agent 匹配。
+ * @return 机型规则是否与 user agent 匹配。
  */
 function canMatchModelRule(ua: string, modelRule: RegExp): boolean {
-  // 匹配出 user-agent 中的型号
+  // 匹配出 user agent 中的型号
   const reModelRule = /;\s*([^;]*?)(?:\s+Build\/|\))/;
 
-  if (reModelRule.test(ua)) {
-    return modelRule.test(RegExp.$1);
-  } else {
-    return false;
-  }
+  return reModelRule.test(ua) ? modelRule.test(RegExp.$1) : false;
 }
 
 /**
  * 执行匹配。
- * @param ua User-agent 字符串。
- * @param nav 辅助匹配的浏览器 Navigator 对象。
+ * @param ua User agent 字符串。
  * @param rules 匹配规则。
  * @return 匹配结果。
  */
-export function execRules(ua: string, rules: Rule[]): MatchResult | undefined {
-  let result: MatchResult | undefined;
+export function execRules(ua: string, rules: IRule[]): IMatchResult | undefined {
+  let result: IMatchResult | undefined;
 
   rules.some((r) => {
     let canMatch = false;

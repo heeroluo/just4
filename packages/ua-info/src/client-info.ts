@@ -7,6 +7,7 @@ import { execRules } from './internal/ua-detector';
 import { clientRules } from './internal/client-rules';
 import { Version } from './version';
 
+
 // UA 分析结果与类属性的对应关系
 const propMap: Record<string, Exclude<keyof ClientInfo, 'version'>> = {
   'wxwork': 'isWxWork',
@@ -114,7 +115,7 @@ export class ClientInfo {
 
   /**
    * 客户端信息类构造函数。
-   * @param ua User-Agent 字符串。
+   * @param ua User agent 字符串。
    */
   constructor(ua: string) {
     const result = execRules(ua, clientRules);

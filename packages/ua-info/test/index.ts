@@ -10,41 +10,71 @@ const uaList = [
   'Mozilla/5.0 (Linux; U; Android 4.1.2; en-us; HUAWEI G730-C00 Build/HuaweiG730-C00) AppleWebKit/533.1 (KHTML, like Gecko)Version/4.0 MQQBrowser/4.2 Mobile Safari/533.1',
   'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.114 Safari/537.36 Edg/89.0.774.68'
 ];
-const uaInfoList = uaList.map(function(ua) {
+const UAInfoList = uaList.map(function(ua) {
   return new UAInfo(ua);
 });
 
 QUnit.start();
 
-QUnit.test('os', function(assert: any) {
-  assert.ok(uaInfoList[0].os.isWindows);
-  assert.ok(uaInfoList[0].os.version.eq('6.1'));
-  assert.ok(uaInfoList[0].browser.isIE);
-  assert.ok(uaInfoList[0].browser.version.gte('9.0'));
-  assert.ok(uaInfoList[0].client.isMaxthon);
-  assert.ok(uaInfoList[0].client.version.lt('3.0'));
+QUnit.test('main', function(assert: any) {
+  assert.ok(UAInfoList[0].os.isWindows);
+  assert.ok(UAInfoList[0].os.version.eq('6.1'));
+  assert.ok(UAInfoList[0].browser.isIE);
+  assert.ok(UAInfoList[0].browser.version.gte('9.0'));
+  assert.ok(UAInfoList[0].client.isMaxthon);
+  assert.ok(UAInfoList[0].client.version.lt('3.0'));
+  assert.ok(!UAInfoList[0].isPortable);
 
-  assert.ok(uaInfoList[1].os.isIOS);
-  assert.ok(uaInfoList[1].brand.isApple);
-  assert.ok(uaInfoList[1].browser.isSafari);
-  assert.ok(uaInfoList[1].client.isSafari);
+  assert.ok(UAInfoList[1].os.isIOS);
+  assert.ok(UAInfoList[1].os.version.gt('12.0'));
+  assert.ok(UAInfoList[1].brand.isApple);
+  assert.ok(UAInfoList[1].browser.isSafari);
+  assert.ok(UAInfoList[1].browser.version.eq('12.1'));
+  assert.ok(UAInfoList[1].client.isSafari);
+  assert.ok(UAInfoList[1].client.version.lte('12.2'));
+  assert.ok(UAInfoList[1].isPortable);
 
-  assert.ok(uaInfoList[2].os.isMacOS);
-  assert.ok(uaInfoList[2].brand.isApple);
-  assert.ok(uaInfoList[2].browser.isChrome);
-  assert.ok(uaInfoList[2].client.isChrome);
+  assert.ok(UAInfoList[2].os.isMacOS);
+  assert.ok(UAInfoList[2].os.version.lte('12.0'));
+  assert.ok(UAInfoList[2].brand.isApple);
+  assert.ok(UAInfoList[2].browser.isChrome);
+  assert.ok(UAInfoList[2].browser.version.gt('49.0'));
+  assert.ok(UAInfoList[2].client.isChrome);
+  assert.ok(UAInfoList[2].client.version.lt('49.8'));
+  assert.ok(!UAInfoList[2].isPortable);
 
-  assert.ok(uaInfoList[3].os.isAndroid);
-  assert.ok(uaInfoList[3].brand.isOppo);
-  assert.ok(uaInfoList[3].browser.isChrome);
-  assert.ok(uaInfoList[3].client.isUCBrowser);
+  assert.ok(UAInfoList[3].os.isAndroid);
+  assert.ok(UAInfoList[3].os.version.eq('5.1.1'));
+  assert.ok(UAInfoList[3].brand.isOppo);
+  assert.ok(UAInfoList[3].browser.isChrome);
+  assert.ok(UAInfoList[3].browser.version.gte('40.0'));
+  assert.ok(UAInfoList[3].client.isUCBrowser);
+  assert.ok(UAInfoList[3].client.version.lte('12.0'));
+  assert.ok(UAInfoList[3].isPortable);
 
-  assert.ok(uaInfoList[4].os.isAndroid);
-  assert.ok(uaInfoList[4].brand.isHuawei);
-  assert.ok(uaInfoList[4].browser.isSafari);
-  assert.ok(uaInfoList[4].client.isQQBrowser);
+  assert.ok(UAInfoList[4].os.isAndroid);
+  assert.ok(UAInfoList[4].os.version.gte('4.1.2'));
+  assert.ok(UAInfoList[4].brand.isHuawei);
+  assert.ok(UAInfoList[4].browser.isSafari);
+  assert.ok(UAInfoList[4].browser.version.eq('4.0'));
+  assert.ok(UAInfoList[4].client.isQQBrowser);
+  assert.ok(UAInfoList[4].isPortable);
 
-  assert.ok(uaInfoList[5].os.isWindows);
-  assert.ok(uaInfoList[5].browser.isChrome);
-  assert.ok(uaInfoList[5].client.isEdge);
+  assert.ok(UAInfoList[5].os.isWindows);
+  assert.ok(UAInfoList[5].os.version.eq('10.0'));
+  assert.ok(UAInfoList[5].browser.isChrome);
+  assert.ok(UAInfoList[5].browser.version.gt('89'));
+  assert.ok(UAInfoList[5].client.isEdge);
+  assert.ok(UAInfoList[5].client.version.gt('89'));
+  assert.ok(!UAInfoList[5].isPortable);
+});
+
+QUnit.test('feature-info', function(assert: any) {
+  const uaInfo = new UAInfo(uaList[2], {
+    maxTouchPoints: 5
+  });
+  assert.ok(uaInfo.os.isIOS);
+  assert.ok(uaInfo.brand.isIPad);
+  assert.ok(!uaInfo.brand.isMacBook);
+  assert.ok(uaInfo.isPortable);
 });

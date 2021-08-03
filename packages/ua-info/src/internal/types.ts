@@ -1,7 +1,13 @@
 /**
+ * 内部类型与接口。
+ * @packageDocumentation
+ * @internal
+ */
+
+/**
  * User-Agent 分析结果。
  */
-export interface MatchResult {
+export interface IMatchResult {
   /**
    * 结果的名称。
    */
@@ -15,21 +21,21 @@ export interface MatchResult {
 /**
  * 匹配规则。
  */
-export interface Rule {
+export interface IRule {
   /**
-   * 规则表示的结果名称。
+   * 匹配结果名称。
    */
   name: string;
   /**
-   * 规则的正则表达式。
+   * 正则表达式（优先级最高）。
    */
   regExp?: RegExp;
   /**
-   * 规则的关键词列表。
+   * 关键词列表（优先级中）。
    */
   keywords?: string[];
   /**
-   * 规则的机型正则表达式。
+   * 机型正则表达式（优先级低）。
    */
   modelRegExp?: RegExp;
 }

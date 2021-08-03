@@ -4,12 +4,13 @@
  * @internal
  */
 
-import { Rule } from './types';
+import { IRule } from './types';
+
 
 /**
  * 操作系统匹配规则。
  */
-export const osRules: Rule[] = [
+export const osRules: IRule[] = [
   { name: 'windows', regExp: /\bWindows\s?NT\s?(([\d.]+))\b/ },
   { name: 'ios', regExp: /\bOS(?:\s([\d_.]+))?\slike\sMac\sOS\sX\b/ },
   { name: 'macos', regExp: /\bMac\sOS\sX(?:\s([\d_.]+))?/ },
