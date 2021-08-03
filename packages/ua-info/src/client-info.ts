@@ -107,9 +107,8 @@ export class ClientInfo {
    * 是否 Firefox 浏览器。
    */
   public readonly isFirefox: boolean;
-
   /**
-   * 浏览器内核版本号。
+   * 客户端版本号。
    */
   public readonly version: Version;
 
