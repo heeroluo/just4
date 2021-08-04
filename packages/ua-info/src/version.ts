@@ -108,4 +108,10 @@ export class Version {
   public eq(cmpVer: string): boolean {
     return this._compare(cmpVer, 0);
   }
+
+  /**
+   * 返回版本的字符串表示。
+   * @returns 版本的字符串表示。
+   */
+  public toString(): string { return this._ver; }
 }
