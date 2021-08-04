@@ -44,9 +44,9 @@ export declare class BrandInfo {
      */
     readonly isIPad: boolean;
     /**
-     * 是否苹果 Macbook。
+     * 是否苹果 Mac 电脑。
      */
-    readonly isMacBook: boolean;
+    readonly isMac: boolean;
     /**
      * 是否苹果设备。
      */

@@ -68,79 +68,99 @@
 				<a href="#操作系统" id="操作系统" style="color: inherit; text-decoration: none;">
 					<h3>操作系统</h3>
 				</a>
-				<p>支持以下系统的识别：</p>
-				<ul>
-					<li>Windows（NT 内核，即 Windows 2000 及以上版本）；</li>
-					<li>macOS；</li>
-					<li>iOS；</li>
-					<li>Android。</li>
-				</ul>
+				<pre><code class="language-javascript"><span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">UAInfo</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;@just4/ua-info&#039;</span><span style="color: #000000">;</span>
+
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">uaInfo</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">UAInfo</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;an user agent string, such as navigator.userAgent&#039;</span><span style="color: #000000">);</span>
+<span style="color: #001080">uaInfo</span><span style="color: #000000">.</span><span style="color: #001080">os</span><span style="color: #000000">.</span><span style="color: #001080">isWindows</span><span style="color: #000000">; </span><span style="color: #008000">// 是否 Windows（NT 内核，即 Windows 2000 及以上版本）</span>
+<span style="color: #001080">uaInfo</span><span style="color: #000000">.</span><span style="color: #001080">os</span><span style="color: #000000">.</span><span style="color: #001080">isMacOS</span><span style="color: #000000">; </span><span style="color: #008000">// 是否苹果 macOS 或 OSX</span>
+<span style="color: #001080">uaInfo</span><span style="color: #000000">.</span><span style="color: #001080">os</span><span style="color: #000000">.</span><span style="color: #001080">isIOS</span><span style="color: #000000">; </span><span style="color: #008000">// 是否苹果 iOS</span>
+<span style="color: #001080">uaInfo</span><span style="color: #000000">.</span><span style="color: #001080">os</span><span style="color: #000000">.</span><span style="color: #001080">isAndroid</span><span style="color: #000000">; </span><span style="color: #008000">// 是否安卓</span>
+</code></pre>
 				<a href="#设备品牌" id="设备品牌" style="color: inherit; text-decoration: none;">
 					<h3>设备品牌</h3>
 				</a>
 				<p>主要针对便携设备，支持以下品牌的识别：</p>
-				<ul>
-					<li>苹果设备，包括：<ul>
-							<li>iPod；</li>
-							<li>iPhone；</li>
-							<li>iPad；</li>
-							<li>MacBook（可能是黑苹果）。</li>
-						</ul>
-					</li>
-					<li>安卓设备，包括：<ul>
-							<li>华为。</li>
-							<li>小米。</li>
-							<li>Oppo。</li>
-							<li>Vivo。</li>
-							<li>三星。</li>
-							<li>一加。</li>
-						</ul>
-					</li>
-				</ul>
+				<pre><code class="language-javascript"><span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">UAInfo</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;@just4/ua-info&#039;</span><span style="color: #000000">;</span>
+
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">uaInfo</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">UAInfo</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;an user agent string, such as navigator.userAgent&#039;</span><span style="color: #000000">);</span>
+<span style="color: #001080">uaInfo</span><span style="color: #000000">.</span><span style="color: #001080">brand</span><span style="color: #000000">.</span><span style="color: #001080">isApple</span><span style="color: #000000">; </span><span style="color: #008000">// 是否苹果设备</span>
+<span style="color: #001080">uaInfo</span><span style="color: #000000">.</span><span style="color: #001080">brand</span><span style="color: #000000">.</span><span style="color: #001080">isIPod</span><span style="color: #000000">; </span><span style="color: #008000">// 是否 iPod</span>
+<span style="color: #001080">uaInfo</span><span style="color: #000000">.</span><span style="color: #001080">brand</span><span style="color: #000000">.</span><span style="color: #001080">isIPhone</span><span style="color: #000000">; </span><span style="color: #008000">// 是否 iPhone</span>
+<span style="color: #001080">uaInfo</span><span style="color: #000000">.</span><span style="color: #001080">brand</span><span style="color: #000000">.</span><span style="color: #001080">isIPad</span><span style="color: #000000">; </span><span style="color: #008000">// 是否 iPad</span>
+<span style="color: #001080">uaInfo</span><span style="color: #000000">.</span><span style="color: #001080">brand</span><span style="color: #000000">.</span><span style="color: #001080">isMac</span><span style="color: #000000">; </span><span style="color: #008000">// 是否 Mac 电脑（可能是黑苹果）</span>
+<span style="color: #001080">uaInfo</span><span style="color: #000000">.</span><span style="color: #001080">brand</span><span style="color: #000000">.</span><span style="color: #001080">isHuawei</span><span style="color: #000000">; </span><span style="color: #008000">// 是否华为设备</span>
+<span style="color: #001080">uaInfo</span><span style="color: #000000">.</span><span style="color: #001080">brand</span><span style="color: #000000">.</span><span style="color: #001080">isMi</span><span style="color: #000000">; </span><span style="color: #008000">// 是否小米设备</span>
+<span style="color: #001080">uaInfo</span><span style="color: #000000">.</span><span style="color: #001080">brand</span><span style="color: #000000">.</span><span style="color: #001080">isOppo</span><span style="color: #000000">; </span><span style="color: #008000">// 是否 Oppo 设备</span>
+<span style="color: #001080">uaInfo</span><span style="color: #000000">.</span><span style="color: #001080">brand</span><span style="color: #000000">.</span><span style="color: #001080">isVivo</span><span style="color: #000000">; </span><span style="color: #008000">// 是否 Vivo 设备</span>
+<span style="color: #001080">uaInfo</span><span style="color: #000000">.</span><span style="color: #001080">brand</span><span style="color: #000000">.</span><span style="color: #001080">isSamsung</span><span style="color: #000000">; </span><span style="color: #008000">// 是否三星设备</span>
+<span style="color: #001080">uaInfo</span><span style="color: #000000">.</span><span style="color: #001080">brand</span><span style="color: #000000">.</span><span style="color: #001080">isOnePlus</span><span style="color: #000000">; </span><span style="color: #008000">// 是否一加设备</span>
+</code></pre>
 				<a href="#浏览器内核" id="浏览器内核" style="color: inherit; text-decoration: none;">
 					<h3>浏览器内核</h3>
 				</a>
 				<p>支持以下浏览器内核的识别：</p>
-				<ul>
-					<li>Chrome；</li>
-					<li>Safari；</li>
-					<li>Edge（EdgeHTML）；</li>
-					<li>IE；</li>
-					<li>Firefox；</li>
-					<li>Opera（Presto）。</li>
-				</ul>
+				<pre><code class="language-javascript"><span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">UAInfo</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;@just4/ua-info&#039;</span><span style="color: #000000">;</span>
+
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">uaInfo</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">UAInfo</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;an user agent string, such as navigator.userAgent&#039;</span><span style="color: #000000">);</span>
+<span style="color: #001080">uaInfo</span><span style="color: #000000">.</span><span style="color: #001080">browser</span><span style="color: #000000">.</span><span style="color: #001080">isChrome</span><span style="color: #000000">; </span><span style="color: #008000">// 是否 Chrome 内核</span>
+<span style="color: #001080">uaInfo</span><span style="color: #000000">.</span><span style="color: #001080">browser</span><span style="color: #000000">.</span><span style="color: #001080">isSafari</span><span style="color: #000000">; </span><span style="color: #008000">// 是否 Safari 内核</span>
+<span style="color: #001080">uaInfo</span><span style="color: #000000">.</span><span style="color: #001080">browser</span><span style="color: #000000">.</span><span style="color: #001080">isEdge</span><span style="color: #000000">; </span><span style="color: #008000">// 是否 Edge(EdgeHTML) 内核</span>
+<span style="color: #001080">uaInfo</span><span style="color: #000000">.</span><span style="color: #001080">browser</span><span style="color: #000000">.</span><span style="color: #001080">isFirefox</span><span style="color: #000000">; </span><span style="color: #008000">// 是否 Firefox 内核</span>
+<span style="color: #001080">uaInfo</span><span style="color: #000000">.</span><span style="color: #001080">browser</span><span style="color: #000000">.</span><span style="color: #001080">isPrestoOpera</span><span style="color: #000000">; </span><span style="color: #008000">// 是否 Opera(Presto) 内核</span>
+</code></pre>
 				<a href="#客户端（浏览器）" id="客户端（浏览器）" style="color: inherit; text-decoration: none;">
 					<h3>客户端（浏览器）</h3>
 				</a>
 				<p>支持以下客户端或浏览器的识别：</p>
-				<ul>
-					<li>微信；</li>
-					<li>企业微信；</li>
-					<li>钉钉；</li>
-					<li>QQ；</li>
-					<li>微博；</li>
-					<li>Edge 浏览器；</li>
-					<li>Opera 浏览器（Blink）；</li>
-					<li>Opera 浏览器（Presto）；</li>
-					<li>QQ 浏览器；</li>
-					<li>UC 浏览器；</li>
-					<li>夸克浏览器；</li>
-					<li>傲游浏览器；</li>
-					<li>世界之窗浏览器；</li>
-					<li>百度浏览器；</li>
-					<li>百度 app；</li>
-					<li>Chrome 浏览器；</li>
-					<li>Safari 浏览器；</li>
-					<li>IE 浏览器；</li>
-					<li>Firefox 浏览器。</li>
-				</ul>
-				<a href="#注意点" id="注意点" style="color: inherit; text-decoration: none;">
-					<h2>注意点</h2>
+				<pre><code class="language-javascript"><span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">UAInfo</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;@just4/ua-info&#039;</span><span style="color: #000000">;</span>
+
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">uaInfo</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">UAInfo</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;an user agent string, such as navigator.userAgent&#039;</span><span style="color: #000000">);</span>
+<span style="color: #001080">uaInfo</span><span style="color: #000000">.</span><span style="color: #001080">client</span><span style="color: #000000">.</span><span style="color: #001080">isWxWork</span><span style="color: #000000">; </span><span style="color: #008000">// 是否企业微信</span>
+<span style="color: #001080">uaInfo</span><span style="color: #000000">.</span><span style="color: #001080">client</span><span style="color: #000000">.</span><span style="color: #001080">isWx</span><span style="color: #000000">; </span><span style="color: #008000">// 是否微信</span>
+<span style="color: #001080">uaInfo</span><span style="color: #000000">.</span><span style="color: #001080">client</span><span style="color: #000000">.</span><span style="color: #001080">isDing</span><span style="color: #000000">; </span><span style="color: #008000">// 是否钉钉</span>
+<span style="color: #001080">uaInfo</span><span style="color: #000000">.</span><span style="color: #001080">client</span><span style="color: #000000">.</span><span style="color: #001080">isQQ</span><span style="color: #000000">; </span><span style="color: #008000">// 是否 QQ</span>
+<span style="color: #001080">uaInfo</span><span style="color: #000000">.</span><span style="color: #001080">client</span><span style="color: #000000">.</span><span style="color: #001080">isWeibo</span><span style="color: #000000">; </span><span style="color: #008000">// 是否微博</span>
+<span style="color: #001080">uaInfo</span><span style="color: #000000">.</span><span style="color: #001080">client</span><span style="color: #000000">.</span><span style="color: #001080">isEdge</span><span style="color: #000000">; </span><span style="color: #008000">// 是否 Edge 浏览器</span>
+<span style="color: #001080">uaInfo</span><span style="color: #000000">.</span><span style="color: #001080">client</span><span style="color: #000000">.</span><span style="color: #001080">isOpera</span><span style="color: #000000">; </span><span style="color: #008000">// 是否 Opera 浏览器</span>
+<span style="color: #001080">uaInfo</span><span style="color: #000000">.</span><span style="color: #001080">client</span><span style="color: #000000">.</span><span style="color: #001080">isQQBrowser</span><span style="color: #000000">; </span><span style="color: #008000">// 是否 QQ 浏览器</span>
+<span style="color: #001080">uaInfo</span><span style="color: #000000">.</span><span style="color: #001080">client</span><span style="color: #000000">.</span><span style="color: #001080">isUCBrowser</span><span style="color: #000000">; </span><span style="color: #008000">// 是否 UC 浏览器</span>
+<span style="color: #001080">uaInfo</span><span style="color: #000000">.</span><span style="color: #001080">client</span><span style="color: #000000">.</span><span style="color: #001080">isQuark</span><span style="color: #000000">; </span><span style="color: #008000">// 是否夸克浏览器</span>
+<span style="color: #001080">uaInfo</span><span style="color: #000000">.</span><span style="color: #001080">client</span><span style="color: #000000">.</span><span style="color: #001080">isMaxthon</span><span style="color: #000000">; </span><span style="color: #008000">// 是否傲游浏览器</span>
+<span style="color: #001080">uaInfo</span><span style="color: #000000">.</span><span style="color: #001080">client</span><span style="color: #000000">.</span><span style="color: #001080">isTheWorld</span><span style="color: #000000">; </span><span style="color: #008000">// 是否世界之窗浏览器</span>
+<span style="color: #001080">uaInfo</span><span style="color: #000000">.</span><span style="color: #001080">client</span><span style="color: #000000">.</span><span style="color: #001080">isBaiduBrowser</span><span style="color: #000000">; </span><span style="color: #008000">// 是否百度浏览器</span>
+<span style="color: #001080">uaInfo</span><span style="color: #000000">.</span><span style="color: #001080">client</span><span style="color: #000000">.</span><span style="color: #001080">isBaiduApp</span><span style="color: #000000">; </span><span style="color: #008000">// 是否百度 app</span>
+<span style="color: #001080">uaInfo</span><span style="color: #000000">.</span><span style="color: #001080">client</span><span style="color: #000000">.</span><span style="color: #001080">isChrome</span><span style="color: #000000">; </span><span style="color: #008000">// 是否 Chrome 浏览器</span>
+<span style="color: #001080">uaInfo</span><span style="color: #000000">.</span><span style="color: #001080">client</span><span style="color: #000000">.</span><span style="color: #001080">isSafari</span><span style="color: #000000">; </span><span style="color: #008000">// 是否 Safari 浏览器</span>
+<span style="color: #001080">uaInfo</span><span style="color: #000000">.</span><span style="color: #001080">client</span><span style="color: #000000">.</span><span style="color: #001080">isIE</span><span style="color: #000000">; </span><span style="color: #008000">// 是否 IE 浏览器</span>
+<span style="color: #001080">uaInfo</span><span style="color: #000000">.</span><span style="color: #001080">client</span><span style="color: #000000">.</span><span style="color: #001080">isFirefox</span><span style="color: #000000">; </span><span style="color: #008000">// 是否 Firefox 浏览器</span>
+</code></pre>
+				<a href="#版本号" id="版本号" style="color: inherit; text-decoration: none;">
+					<h3>版本号</h3>
 				</a>
+				<p>部分分析项，包括操作系统、浏览器内核和客户端，都有对应的版本号属性（version）。只要能够识别出结果（任意一个 <code>isXXX</code> 为 <code>true</code>），该属性的值就是一个 <code>Version</code> 对象，否则为 <code>undefined</code>。</p>
+				<p>对于 <code>Version</code> 对象，还可以进行版本号的对比。</p>
+				<pre><code class="language-javascript"><span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">UAInfo</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;@just4/ua-info&#039;</span><span style="color: #000000">;</span>
+
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">uaInfo</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">UAInfo</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;Mozilla/5.0 (Macintosh; Intel Mac OS X 10_6_8) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.112 Safari/537.36&#039;</span><span style="color: #000000">);</span>
+<span style="color: #001080">uaInfo</span><span style="color: #000000">.</span><span style="color: #001080">browser</span><span style="color: #000000">.</span><span style="color: #001080">isChrome</span><span style="color: #000000">; </span><span style="color: #008000">// true</span>
+<span style="color: #001080">uaInfo</span><span style="color: #000000">.</span><span style="color: #001080">browser</span><span style="color: #000000">.</span><span style="color: #001080">version</span><span style="color: #000000">.</span><span style="color: #795E26">toString</span><span style="color: #000000">(); </span><span style="color: #008000">// &quot;49.0.2623.112&quot;</span>
+<span style="color: #001080">uaInfo</span><span style="color: #000000">.</span><span style="color: #001080">browser</span><span style="color: #000000">.</span><span style="color: #001080">version</span><span style="color: #000000">.</span><span style="color: #795E26">gt</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;49&#039;</span><span style="color: #000000">); </span><span style="color: #008000">// true</span>
+<span style="color: #001080">uaInfo</span><span style="color: #000000">.</span><span style="color: #001080">browser</span><span style="color: #000000">.</span><span style="color: #001080">version</span><span style="color: #000000">.</span><span style="color: #795E26">lt</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;40&#039;</span><span style="color: #000000">); </span><span style="color: #008000">// false</span>
+</code></pre>
+				<a href="#其他说明" id="其他说明" style="color: inherit; text-decoration: none;">
+					<h2>其他说明</h2>
+				</a>
+				<a href="#获取当前运行环境的实例" id="获取当前运行环境的实例" style="color: inherit; text-decoration: none;">
+					<h3>获取当前运行环境的实例</h3>
+				</a>
+				<p>通过 <code>getCurrentUAInfo</code> 函数可以获取当前运行环境的 <code>UAInfo</code> 实例。注意，该函数返回的实例经过 <code>Object.freeze</code> 处理。</p>
+				<pre><code class="language-javascript"><span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">getCurrentUAInfo</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;@just4/ua-info&#039;</span><span style="color: #000000">;</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">uaInfo</span><span style="color: #000000"> = </span><span style="color: #795E26">getCurrentUAInfo</span><span style="color: #000000">();</span>
+</code></pre>
 				<a href="#ipad-or-macbook-ios-or-macos" id="ipad-or-macbook-ios-or-macos" style="color: inherit; text-decoration: none;">
 					<h3>iPad or MacBook? iOS or macOS?</h3>
 				</a>
-				<p>在 iOS 13 之后，iPad Air 与 iPad Pro 的用户代理变更为 MacBook 的用户代理。针对这种情况，可以传入特性信息进行修正（当前运行环境的 UAInfo 实例已经做了这个操作）：</p>
+				<p>在 iOS 13 之后，iPad Air 与 iPad Pro 的用户代理变更为 MacBook 的用户代理。针对这种情况，可以传入特性信息进行修正（当前运行环境的 <code>UAInfo</code> 实例已经做了这个操作）：</p>
 				<pre><code class="language-javascript"><span style="color: #008000">// 假设浏览器 user agent 为：</span>
 <span style="color: #008000">// Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_4) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.1.1 Safari/605.1.15</span>
 
@@ -166,8 +186,8 @@
 				<a href="#浏览器内核与客户端" id="浏览器内核与客户端" style="color: inherit; text-decoration: none;">
 					<h3>浏览器内核与客户端</h3>
 				</a>
-				<p>这两个概念是比较容易搞混的，客户端指的是打开当前页面的软件，这个软件可能是个浏览器，也可能是某个桌面客户端或者移动端应用。</p>
-				<p>比如，Edge 浏览器原来使用的是自身的浏览器内核，但后来改成了使用 Chrome 的内核。对于旧版 Edge 浏览器而言，它的浏览器内核以及客户端都是 Edge；对于新版 Edge 浏览器而言，它的浏览器内核是 Chrome，客户端是 Edge。例如：</p>
+				<p>这两个概念比较容易混淆。举个例子，Edge 浏览器原来使用的是自身的浏览器内核，但后来改成了使用 Chrome 的内核。</p>
+				<p>对于旧版 Edge 浏览器而言，它的浏览器内核以及客户端都是 Edge；对于新版 Edge 浏览器而言，它的浏览器内核是 Chrome，客户端是 Edge。例如：</p>
 				<pre><code class="language-javascript"><span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">UAInfo</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;@just4/ua-info&#039;</span><span style="color: #000000">;</span>
 
 <span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">uaOfOldEdge</span><span style="color: #000000"> = </span><span style="color: #A31515">&#039;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.140 Safari/537.36 Edge/18.17763&#039;</span><span style="color: #000000">;</span>
@@ -182,6 +202,11 @@
 <span style="color: #001080">uaInfoOfNewEdge</span><span style="color: #000000">.</span><span style="color: #001080">browser</span><span style="color: #000000">.</span><span style="color: #001080">isEdge</span><span style="color: #000000">; </span><span style="color: #008000">// false</span>
 <span style="color: #001080">uaInfoOfNewEdge</span><span style="color: #000000">.</span><span style="color: #001080">client</span><span style="color: #000000">.</span><span style="color: #001080">isEdge</span><span style="color: #000000">; </span><span style="color: #008000">// true</span>
 </code></pre>
+				<a href="#chrome-与-safari-的识别问题" id="chrome-与-safari-的识别问题" style="color: inherit; text-decoration: none;">
+					<h3>Chrome 与 Safari 的识别问题</h3>
+				</a>
+				<p>由于大量浏览器使用的都是 Chrome 内核，无法一一枚举排除，部分甚至没有在用户代理字符串上增加独立的标识（例如 PC 端的 360 浏览器）。因此，客户端信息的 <code>isChrome</code> 为 <code>true</code> 时，不一定是 Chrome 浏览器。</p>
+				<p>而对于移动端浏览器以及 WebView 而言，它们的用户代理字符串中有可能包含 Safari 浏览器的关键字，所以即使客户端信息的 <code>isSafari</code> 为 <code>true</code>，也不一定是 Safari 浏览器。</p>
 				<a href="#识别范围" id="识别范围" style="color: inherit; text-decoration: none;">
 					<h3>识别范围</h3>
 				</a>

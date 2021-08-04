@@ -41,4 +41,7 @@ export class Version {
     eq(cmpVer) {
         return this._compare(cmpVer, 0);
     }
+    toString() {
+        return this._ver;
+    }
 }

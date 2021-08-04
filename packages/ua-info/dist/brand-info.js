@@ -25,14 +25,14 @@ export class BrandInfo {
         this.isIPod = false;
         this.isIPhone = false;
         this.isIPad = false;
-        this.isMacBook = false;
+        this.isMac = false;
         this.isApple = false;
         let rules;
         if (os.isIOS) {
             rules = appleRules;
             this.isApple = true;
         } else if (os.isMacOS) {
-            this.isMacBook = true;
+            this.isMac = true;
             this.isApple = true;
         } else if (os.isAndroid) {
             rules = androidRules;

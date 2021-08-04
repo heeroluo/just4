@@ -61,4 +61,9 @@ export declare class Version {
      * @returns 当前版本号是否与指定版本号相等。
      */
     eq(cmpVer: string): boolean;
+    /**
+     * 返回版本的字符串表示。
+     * @returns 版本的字符串表示。
+     */
+    toString(): string;
 }
