@@ -25,27 +25,27 @@ export class BrowserInfo {
   /**
    * 是否 Chrome 内核。
    */
-  public readonly isChrome: boolean;
+  public readonly isChrome: boolean = false;
   /**
    * 是否 Safari 内核。
    */
-  public readonly isSafari: boolean;
+  public readonly isSafari: boolean = false;
   /**
    * 是否 Edge(EdgeHTML) 内核。
    */
-  public readonly isEdge: boolean;
+  public readonly isEdge: boolean = false;
   /**
    * 是否 IE 内核。
    */
-  public readonly isIE: boolean;
+  public readonly isIE: boolean = false;
   /**
    * 是否 Firefox 内核。
    */
-  public readonly isFirefox: boolean;
+  public readonly isFirefox: boolean = false;
   /**
    * 是否 Opera(Presto) 内核。
    */
-  public readonly isPrestoOpera: boolean;
+  public readonly isPrestoOpera: boolean = false;
   /**
    * 浏览器内核版本号。
    */

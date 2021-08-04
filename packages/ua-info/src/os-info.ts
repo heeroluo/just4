@@ -24,19 +24,19 @@ export class OSInfo {
   /**
    * 是否苹果 iOS。
    */
-  public readonly isIOS: boolean;
+  public readonly isIOS: boolean = false;
   /**
    * 是否安卓。
    */
-  public readonly isAndroid: boolean;
+  public readonly isAndroid: boolean = false;
   /**
    * 是否微软 Windows。
    */
-  public readonly isWindows: boolean;
+  public readonly isWindows: boolean = false;
   /**
    * 是否苹果 macOS 或 OSX。
    */
-  public readonly isMacOS: boolean;
+  public readonly isMacOS: boolean = false;
   /**
    * 操作系统版本号。
    */

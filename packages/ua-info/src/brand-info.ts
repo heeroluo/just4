@@ -29,47 +29,47 @@ export class BrandInfo {
   /**
    * 是否华为设备。
    */
-  public readonly isHuawei: boolean;
+  public readonly isHuawei: boolean = false;
   /**
    * 是否小米设备。
    */
-  public readonly isMi: boolean;
+  public readonly isMi: boolean = false;
   /**
    * 是否 Oppo 设备。
    */
-  public readonly isOppo: boolean;
+  public readonly isOppo: boolean = false;
   /**
    * 是否 Vivo 设备。
    */
-  public readonly isVivo: boolean;
+  public readonly isVivo: boolean = false;
   /**
    * 是否一加设备。
    */
-  public readonly isOnePlus: boolean;
+  public readonly isOnePlus: boolean = false;
   /**
    * 是否三星设备。
    */
-  public readonly isSamsung: boolean;
+  public readonly isSamsung: boolean = false;
   /**
    * 是否苹果 iPod。
    */
-  public readonly isIPod: boolean;
+  public readonly isIPod: boolean = false;
   /**
    * 是否苹果 iPhone。
    */
-  public readonly isIPhone: boolean;
+  public readonly isIPhone: boolean = false;
   /**
    * 是否苹果 iPad。
    */
-  public readonly isIPad: boolean;
+  public readonly isIPad: boolean = false;
   /**
    * 是否苹果 Macbook。
    */
-  public readonly isMacBook: boolean;
+  public readonly isMacBook: boolean = false;
   /**
    * 是否苹果设备。
    */
-  public readonly isApple: boolean;
+  public readonly isApple: boolean = false;
 
   /**
    * 品牌信息类构造函数。

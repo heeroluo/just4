@@ -38,75 +38,75 @@ export class ClientInfo {
   /**
    * 是否企业微信。
    */
-  public readonly isWxWork: boolean;
+  public readonly isWxWork: boolean = false;
   /**
    * 是否微信。
    */
-  public readonly isWx: boolean;
+  public readonly isWx: boolean = false;
   /**
    * 是否钉钉。
    */
-  public readonly isDing: boolean;
+  public readonly isDing: boolean = false;
   /**
    * 是否 QQ。
    */
-  public readonly isQQ: boolean;
+  public readonly isQQ: boolean = false;
   /**
    * 是否微博。
    */
-  public readonly isWeibo: boolean;
+  public readonly isWeibo: boolean = false;
   /**
    * 是否 Edge 浏览器.
    */
-  public readonly isEdge: boolean;
+  public readonly isEdge: boolean = false;
   /**
    * 是否 Opera 浏览器。
    */
-  public readonly isOpera: boolean;
+  public readonly isOpera: boolean = false;
   /**
    * 是否 QQ 浏览器。
    */
-  public readonly isQQBrowser: boolean;
+  public readonly isQQBrowser: boolean = false;
   /**
    * 是否 UC 浏览器。
    */
-  public readonly isUCBrowser: boolean;
+  public readonly isUCBrowser: boolean = false;
   /**
    * 是否夸克浏览器。
    */
-  public readonly isQuark: boolean;
+  public readonly isQuark: boolean = false;
   /**
    * 是否傲游浏览器。
    */
-  public readonly isMaxthon: boolean;
+  public readonly isMaxthon: boolean = false;
   /**
    * 是否世界之窗浏览器。
    */
-  public readonly isTheWorld: boolean;
+  public readonly isTheWorld: boolean = false;
   /**
    * 是否百度浏览器。
    */
-  public readonly isBaiduBrowser: boolean;
+  public readonly isBaiduBrowser: boolean = false;
   /**
    * 是否百度 app。
    */
-  public readonly isBaiduApp: boolean;
+  public readonly isBaiduApp: boolean = false;
   /**
    * 是否 Chrome 浏览器。
    */
-  public readonly isChrome: boolean;
+  public readonly isChrome: boolean = false;
   /**
    * 是否 Safari 浏览器。
   */
-  public readonly isSafari: boolean;
+  public readonly isSafari: boolean = false;
   /**
    * 是否 IE 浏览器。
    */
-  public readonly isIE: boolean;
+  public readonly isIE: boolean = false;
   /**
    * 是否 Firefox 浏览器。
    */
-  public readonly isFirefox: boolean;
+  public readonly isFirefox: boolean = false;
   /**
    * 客户端版本号。
    */
