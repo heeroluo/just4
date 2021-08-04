@@ -116,3 +116,6 @@ uaInfoOfNewEdge.browser.isChrome; // true
 uaInfoOfNewEdge.browser.isEdge; // false
 uaInfoOfNewEdge.client.isEdge; // true
 ```
+
+## 相关文档
+- [API 文档](https://heeroluo.github.io/just4/ua-info/index.html)
