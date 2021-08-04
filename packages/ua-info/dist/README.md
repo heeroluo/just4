@@ -1,6 +1,6 @@
 # @just4/ua-info
 
-根据**用户代理（user agent）**字符串分析运行环境，支持设备品牌、操作系统、浏览器内核以及客户端的识别。
+根据 **用户代理（user agent）** 字符串分析运行环境，支持设备品牌、操作系统、浏览器内核以及客户端的识别。
 
 ## 分析项
 
@@ -116,3 +116,11 @@ uaInfoOfNewEdge.browser.isChrome; // true
 uaInfoOfNewEdge.browser.isEdge; // false
 uaInfoOfNewEdge.client.isEdge; // true
 ```
+
+### 识别范围
+
+考虑到代码体积和性能，本项目仅支持主流操作系统、浏览器内核、客户端以及常见品牌的识别，如果您需要范围更广的识别，请使用 [uadetector](https://www.npmjs.com/package/uadetector)（本项目的识别规则也来自 uadetector）。
+
+
+## 相关文档
+- [API 文档](https://heeroluo.github.io/just4/ua-info/index.html)
