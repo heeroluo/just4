@@ -8,7 +8,7 @@
     "dev": "cross-env NODE_ENV=development webpack-dev-server --config build/webpack.dev.config.js",
     "lint": "eslint ./src/*.ts",
     "prebuild": "rimraf ./dist/*",
-    "build": "npm run lint && tsc -p ./src/tsconfig.json && node ../../build/compress load-script && node ../../build/copy-others load-script",
+    "build": "npm run lint && tsc -p ./src/tsconfig.json && node ../../build/compress ua-info && node ../../build/copy-others ua-info",
     "gen-doc": "typedoc --tsconfig ./src/tsconfig.json"
   },
   "private": true
