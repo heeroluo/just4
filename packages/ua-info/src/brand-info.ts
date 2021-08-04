@@ -63,9 +63,9 @@ export class BrandInfo {
    */
   public readonly isIPad: boolean = false;
   /**
-   * 是否苹果 Macbook。
+   * 是否苹果 Mac 电脑。
    */
-  public readonly isMacBook: boolean = false;
+  public readonly isMac: boolean = false;
   /**
    * 是否苹果设备。
    */
@@ -84,7 +84,7 @@ export class BrandInfo {
       rules = appleRules;
       this.isApple = true;
     } else if (os.isMacOS) {
-      this.isMacBook = true;
+      this.isMac = true;
       this.isApple = true;
     } else if (os.isAndroid) {
       rules = androidRules;
