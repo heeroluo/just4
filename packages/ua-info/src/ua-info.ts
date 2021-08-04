@@ -10,9 +10,6 @@ import { ClientInfo } from './client-info';
 import { IFeatureInfo } from './types';
 
 
-// 当前运行环境的实例，在 getCurrent 方法中访问
-let currentInstance: UAInfo;
-
 /**
  * User agent 信息类。
  */
@@ -39,28 +36,15 @@ export class UAInfo {
   public readonly isPortable: boolean;
 
   /**
-   * 获取当前运行环境的 user agent 信息实例。
-   * @returns 当前运行环境的 user agent 信息实例。
-   */
-  public static getCurrent(): UAInfo {
-    if (!currentInstance) {
-      currentInstance = typeof window !== 'undefined' ?
-        new UAInfo(window.navigator.userAgent, window.navigator) :
-        new UAInfo('');
-    }
-    return currentInstance;
-  }
-
-  /**
    * 设备信息类构造函数。
    * @param ua User agent 字符串。
    * @param featureInfo 设备特性信息。
    */
   constructor(ua: string, featureInfo?: IFeatureInfo) {
-    this.os = new OSInfo(ua, featureInfo);
-    this.brand = new BrandInfo(ua, this.os);
-    this.browser = new BrowserInfo(ua);
-    this.client = new ClientInfo(ua);
+    this.os = Object.freeze(new OSInfo(ua, featureInfo));
+    this.brand = Object.freeze(new BrandInfo(ua, this.os));
+    this.browser = Object.freeze(new BrowserInfo(ua));
+    this.client = Object.freeze(new ClientInfo(ua));
 
     // 粗略判定是否便携设备
     this.isPortable = /mobile|android/i.test(ua) || !/\b(Windows\sNT|Macintosh|Linux)\b/.test(ua);
