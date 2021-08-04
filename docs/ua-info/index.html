@@ -61,6 +61,127 @@
 				<a href="#just4ua-info" id="just4ua-info" style="color: inherit; text-decoration: none;">
 					<h1>@just4/ua-info</h1>
 				</a>
+				<p>根据<strong>用户代理（user agent）</strong>字符串分析运行环境，支持设备品牌、操作系统、浏览器内核以及客户端的识别。</p>
+				<a href="#分析项" id="分析项" style="color: inherit; text-decoration: none;">
+					<h2>分析项</h2>
+				</a>
+				<a href="#操作系统" id="操作系统" style="color: inherit; text-decoration: none;">
+					<h3>操作系统</h3>
+				</a>
+				<p>支持以下系统的识别：</p>
+				<ul>
+					<li>Windows（NT 内核，即 Windows 2000 及以上版本）；</li>
+					<li>macOS；</li>
+					<li>iOS；</li>
+					<li>Android。</li>
+				</ul>
+				<a href="#设备品牌" id="设备品牌" style="color: inherit; text-decoration: none;">
+					<h3>设备品牌</h3>
+				</a>
+				<p>主要针对便携设备，支持以下品牌的识别：</p>
+				<ul>
+					<li>苹果设备，包括：<ul>
+							<li>iPod；</li>
+							<li>iPhone；</li>
+							<li>iPad；</li>
+							<li>MacBook（可能是黑苹果）。</li>
+						</ul>
+					</li>
+					<li>安卓设备，包括：<ul>
+							<li>华为。</li>
+							<li>小米。</li>
+							<li>Oppo。</li>
+							<li>Vivo。</li>
+							<li>三星。</li>
+							<li>一加。</li>
+						</ul>
+					</li>
+				</ul>
+				<a href="#浏览器内核" id="浏览器内核" style="color: inherit; text-decoration: none;">
+					<h3>浏览器内核</h3>
+				</a>
+				<p>支持以下浏览器内核的识别：</p>
+				<ul>
+					<li>Chrome；</li>
+					<li>Safari；</li>
+					<li>Edge（EdgeHTML）；</li>
+					<li>IE；</li>
+					<li>Firefox；</li>
+					<li>Opera（Presto）。</li>
+				</ul>
+				<a href="#客户端（浏览器）" id="客户端（浏览器）" style="color: inherit; text-decoration: none;">
+					<h3>客户端（浏览器）</h3>
+				</a>
+				<p>支持以下客户端或浏览器的识别：</p>
+				<ul>
+					<li>微信；</li>
+					<li>企业微信；</li>
+					<li>钉钉；</li>
+					<li>QQ；</li>
+					<li>微博；</li>
+					<li>Edge 浏览器；</li>
+					<li>Opera 浏览器（Blink）；</li>
+					<li>Opera 浏览器（Presto）；</li>
+					<li>QQ 浏览器；</li>
+					<li>UC 浏览器；</li>
+					<li>夸克浏览器；</li>
+					<li>傲游浏览器；</li>
+					<li>世界之窗浏览器；</li>
+					<li>百度浏览器；</li>
+					<li>百度 app；</li>
+					<li>Chrome 浏览器；</li>
+					<li>Safari 浏览器；</li>
+					<li>IE 浏览器；</li>
+					<li>Firefox 浏览器。</li>
+				</ul>
+				<a href="#注意点" id="注意点" style="color: inherit; text-decoration: none;">
+					<h2>注意点</h2>
+				</a>
+				<a href="#ipad-or-macbook-ios-or-macos" id="ipad-or-macbook-ios-or-macos" style="color: inherit; text-decoration: none;">
+					<h3>iPad or MacBook? iOS or macOS?</h3>
+				</a>
+				<p>在 iOS 13 之后，iPad Air 与 iPad Pro 的用户代理变更为 MacBook 的用户代理。针对这种情况，可以传入特性信息进行修正（当前运行环境的 UAInfo 实例已经做了这个操作）：</p>
+				<pre><code class="language-javascript"><span style="color: #008000">// 假设浏览器 user agent 为：</span>
+<span style="color: #008000">// Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_4) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.1.1 Safari/605.1.15</span>
+
+<span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">UAInfo</span><span style="color: #000000">, </span><span style="color: #001080">getCurrentUAInfo</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;@just4/ua-info&#039;</span><span style="color: #000000">;</span>
+
+<span style="color: #008000">// 当前运行环境的 UAInfo 实例</span>
+<span style="color: #795E26">getCurrentUAInfo</span><span style="color: #000000">().</span><span style="color: #001080">os</span><span style="color: #000000">.</span><span style="color: #001080">isIOS</span><span style="color: #000000">; </span><span style="color: #008000">// true</span>
+<span style="color: #795E26">getCurrentUAInfo</span><span style="color: #000000">().</span><span style="color: #001080">brand</span><span style="color: #000000">.</span><span style="color: #001080">isIPad</span><span style="color: #000000">; </span><span style="color: #008000">// true</span>
+<span style="color: #795E26">getCurrentUAInfo</span><span style="color: #000000">().</span><span style="color: #001080">brand</span><span style="color: #000000">.</span><span style="color: #001080">isMacBook</span><span style="color: #000000">; </span><span style="color: #008000">// false</span>
+
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">uaInfo1</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">UAInfo</span><span style="color: #000000">(</span><span style="color: #001080">navigator</span><span style="color: #000000">.</span><span style="color: #001080">userAgent</span><span style="color: #000000">, {</span>
+<span style="color: #000000">  </span><span style="color: #001080">maxTouchPoints:</span><span style="color: #000000"> </span><span style="color: #001080">Navigator</span><span style="color: #000000">.</span><span style="color: #001080">maxTouchPoints</span>
+<span style="color: #000000">});</span>
+<span style="color: #001080">uaInfo1</span><span style="color: #000000">.</span><span style="color: #001080">os</span><span style="color: #000000">.</span><span style="color: #001080">isIOS</span><span style="color: #000000">; </span><span style="color: #008000">// true</span>
+<span style="color: #001080">uaInfo1</span><span style="color: #000000">.</span><span style="color: #001080">brand</span><span style="color: #000000">.</span><span style="color: #001080">isIPad</span><span style="color: #000000">; </span><span style="color: #008000">// true</span>
+<span style="color: #001080">uaInfo1</span><span style="color: #000000">.</span><span style="color: #001080">brand</span><span style="color: #000000">.</span><span style="color: #001080">isMacBook</span><span style="color: #000000">; </span><span style="color: #008000">// false</span>
+
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">uaInfo2</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">UAInfo</span><span style="color: #000000">(</span><span style="color: #001080">navigator</span><span style="color: #000000">.</span><span style="color: #001080">userAgent</span><span style="color: #000000">);</span>
+<span style="color: #001080">uaInfo2</span><span style="color: #000000">.</span><span style="color: #001080">os</span><span style="color: #000000">.</span><span style="color: #001080">isIOS</span><span style="color: #000000">; </span><span style="color: #008000">// false</span>
+<span style="color: #001080">uaInfo2</span><span style="color: #000000">.</span><span style="color: #001080">brand</span><span style="color: #000000">.</span><span style="color: #001080">isIPad</span><span style="color: #000000">; </span><span style="color: #008000">// false</span>
+<span style="color: #001080">uaInfo2</span><span style="color: #000000">.</span><span style="color: #001080">brand</span><span style="color: #000000">.</span><span style="color: #001080">isMacBook</span><span style="color: #000000">; </span><span style="color: #008000">// true</span>
+</code></pre>
+				<a href="#浏览器内核与客户端" id="浏览器内核与客户端" style="color: inherit; text-decoration: none;">
+					<h3>浏览器内核与客户端</h3>
+				</a>
+				<p>这两个概念是比较容易搞混的，客户端指的是打开当前页面的软件，这个软件可能是个浏览器，也可能是某个桌面客户端或者移动端应用。</p>
+				<p>比如，Edge 浏览器原来使用的是自身的浏览器内核，但后来改成了使用 Chrome 的内核。对于旧版 Edge 浏览器而言，它的浏览器内核以及客户端都是 Edge；对于新版 Edge 浏览器而言，它的浏览器内核是 Chrome，客户端是 Edge。例如：</p>
+				<pre><code class="language-javascript"><span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">UAInfo</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;@just4/ua-info&#039;</span><span style="color: #000000">;</span>
+
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">uaOfOldEdge</span><span style="color: #000000"> = </span><span style="color: #A31515">&#039;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.140 Safari/537.36 Edge/18.17763&#039;</span><span style="color: #000000">;</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">uaInfoOfOldEdge</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">UAInfo</span><span style="color: #000000">(</span><span style="color: #001080">ua</span><span style="color: #000000">);</span>
+<span style="color: #001080">uaInfoOfOldEdge</span><span style="color: #000000">.</span><span style="color: #001080">browser</span><span style="color: #000000">.</span><span style="color: #001080">isChrome</span><span style="color: #000000">; </span><span style="color: #008000">// false</span>
+<span style="color: #001080">uaInfoOfOldEdge</span><span style="color: #000000">.</span><span style="color: #001080">browser</span><span style="color: #000000">.</span><span style="color: #001080">isEdge</span><span style="color: #000000">; </span><span style="color: #008000">// true</span>
+<span style="color: #001080">uaInfoOfOldEdge</span><span style="color: #000000">.</span><span style="color: #001080">client</span><span style="color: #000000">.</span><span style="color: #001080">isEdge</span><span style="color: #000000">; </span><span style="color: #008000">// true</span>
+
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">uaOfNewEdge</span><span style="color: #000000"> = </span><span style="color: #A31515">&#039;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4501.0 Safari/537.36 Edg/91.0.866.0&#039;</span><span style="color: #000000">;</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">uaInfoOfNewEdge</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">UAInfo</span><span style="color: #000000">(</span><span style="color: #001080">ua</span><span style="color: #000000">);</span>
+<span style="color: #001080">uaInfoOfNewEdge</span><span style="color: #000000">.</span><span style="color: #001080">browser</span><span style="color: #000000">.</span><span style="color: #001080">isChrome</span><span style="color: #000000">; </span><span style="color: #008000">// true</span>
+<span style="color: #001080">uaInfoOfNewEdge</span><span style="color: #000000">.</span><span style="color: #001080">browser</span><span style="color: #000000">.</span><span style="color: #001080">isEdge</span><span style="color: #000000">; </span><span style="color: #008000">// false</span>
+<span style="color: #001080">uaInfoOfNewEdge</span><span style="color: #000000">.</span><span style="color: #001080">client</span><span style="color: #000000">.</span><span style="color: #001080">isEdge</span><span style="color: #000000">; </span><span style="color: #008000">// true</span>
+</code></pre>
 			</div>
 		</div>
 		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
