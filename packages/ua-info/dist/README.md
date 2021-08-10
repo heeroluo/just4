@@ -121,19 +121,19 @@ import { UAInfo, getCurrentUAInfo } from '@just4/ua-info';
 // 当前运行环境的 UAInfo 实例
 getCurrentUAInfo().os.isIOS; // true
 getCurrentUAInfo().brand.isIPad; // true
-getCurrentUAInfo().brand.isMacBook; // false
+getCurrentUAInfo().brand.isMac; // false
 
 const uaInfo1 = new UAInfo(navigator.userAgent, {
   maxTouchPoints: Navigator.maxTouchPoints
 });
 uaInfo1.os.isIOS; // true
 uaInfo1.brand.isIPad; // true
-uaInfo1.brand.isMacBook; // false
+uaInfo1.brand.isMac; // false
 
 const uaInfo2 = new UAInfo(navigator.userAgent);
 uaInfo2.os.isIOS; // false
 uaInfo2.brand.isIPad; // false
-uaInfo2.brand.isMacBook; // true
+uaInfo2.brand.isMac; // true
 ```
 
 ### 浏览器内核与客户端
