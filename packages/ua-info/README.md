@@ -124,7 +124,7 @@ getCurrentUAInfo().brand.isIPad; // true
 getCurrentUAInfo().brand.isMac; // false
 
 const uaInfo1 = new UAInfo(navigator.userAgent, {
-  maxTouchPoints: Navigator.maxTouchPoints
+  maxTouchPoints: navigator.maxTouchPoints
 });
 uaInfo1.os.isIOS; // true
 uaInfo1.brand.isIPad; // true
