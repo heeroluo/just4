@@ -1,0 +1,167 @@
+<!doctype html>
+<html class="default no-js">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>@just4/storage</title>
+	<meta name="description" content="Documentation for @just4/storage">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="assets/css/main.css">
+	<script async src="assets/js/search.js" id="search-script"></script>
+</head>
+<body>
+<header>
+	<div class="tsd-page-toolbar">
+		<div class="container">
+			<div class="table-wrap">
+				<div class="table-cell" id="tsd-search" data-index="assets/js/search.json" data-base=".">
+					<div class="field">
+						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
+						<input id="tsd-search-field" type="text" />
+					</div>
+					<ul class="results">
+						<li class="state loading">Preparing search index...</li>
+						<li class="state failure">The search index is not available</li>
+					</ul>
+					<a href="index.html" class="title">@just4/storage</a>
+				</div>
+				<div class="table-cell" id="tsd-widgets">
+					<div id="tsd-filter">
+						<a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a>
+						<div class="tsd-filter-group">
+							<div class="tsd-select" id="tsd-filter-visibility">
+								<span class="tsd-select-label">All</span>
+								<ul class="tsd-select-list">
+									<li data-value="public">Public</li>
+									<li data-value="protected">Public/Protected</li>
+									<li data-value="private" class="selected">All</li>
+								</ul>
+							</div>
+							<input type="checkbox" id="tsd-filter-inherited" checked />
+							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
+							<input type="checkbox" id="tsd-filter-externals" checked />
+							<label class="tsd-widget" for="tsd-filter-externals">Externals</label>
+						</div>
+					</div>
+					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="tsd-page-title">
+		<div class="container">
+			<h1>@just4/storage</h1>
+		</div>
+	</div>
+</header>
+<div class="container container-main">
+	<div class="row">
+		<div class="col-8 col-content">
+			<div class="tsd-panel tsd-typography">
+				<a href="#just4storage" id="just4storage" style="color: inherit; text-decoration: none;">
+					<h1>@just4/storage</h1>
+				</a>
+				<p>对 Web 存储对象（localStorage、sessionStorage）进行封装，使其接口更易用。封装后提供以下接口：</p>
+				<table>
+					<thead>
+						<tr>
+							<th>接口</th>
+							<th>说明</th>
+						</tr>
+					</thead>
+					<tbody><tr>
+							<td>get(key)</td>
+							<td>即存储对象的 getItem 方法</td>
+						</tr>
+						<tr>
+							<td>getAsJSON(key)</td>
+							<td>对 get 的结果执行 JSON 解析后返回</td>
+						</tr>
+						<tr>
+							<td>set(key, value)</td>
+							<td>调用存储对象的 setItem 方法时做了 try...catch 处理</td>
+						</tr>
+						<tr>
+							<td>setAsJSON(key, value)</td>
+							<td>对 value 执行 JSON 序列化处理后再调用 set</td>
+						</tr>
+						<tr>
+							<td>remove(key)</td>
+							<td>即存储对象的 removeItem 方法</td>
+						</tr>
+				</tbody></table>
+				<a href="#安装" id="安装" style="color: inherit; text-decoration: none;">
+					<h2>安装</h2>
+				</a>
+				<pre><code class="language-bash"><span style="color: #000000">npm i @just4/storage</span>
+</code></pre>
+				<a href="#调用示例" id="调用示例" style="color: inherit; text-decoration: none;">
+					<h2>调用示例</h2>
+				</a>
+				<pre><code class="language-javascript"><span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">local</span><span style="color: #000000">, </span><span style="color: #001080">session</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;@just4/storage&#039;</span><span style="color: #000000">;</span>
+<span style="color: #008000">// local 即 localStorage 的封装</span>
+<span style="color: #008000">// session 即 sessionStorage 的封装</span>
+
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">user</span><span style="color: #000000"> = { </span><span style="color: #001080">name:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;Tom&#039;</span><span style="color: #000000">, </span><span style="color: #001080">pet:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;cat&#039;</span><span style="color: #000000"> };</span>
+
+<span style="color: #001080">session</span><span style="color: #000000">.</span><span style="color: #795E26">setAsJSON</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;user&#039;</span><span style="color: #000000">, </span><span style="color: #001080">user</span><span style="color: #000000">);</span>
+<span style="color: #0000FF">typeof</span><span style="color: #000000"> </span><span style="color: #001080">session</span><span style="color: #000000">.</span><span style="color: #795E26">get</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;user&#039;</span><span style="color: #000000">); </span><span style="color: #008000">// &#039;string&#039;</span>
+<span style="color: #0000FF">typeof</span><span style="color: #000000"> </span><span style="color: #001080">session</span><span style="color: #000000">.</span><span style="color: #795E26">getAsJSON</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;user&#039;</span><span style="color: #000000">); </span><span style="color: #008000">// &#039;object&#039;</span>
+
+<span style="color: #001080">local</span><span style="color: #000000">.</span><span style="color: #795E26">setAsJSON</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;user&#039;</span><span style="color: #000000">, </span><span style="color: #001080">user</span><span style="color: #000000">);</span>
+<span style="color: #001080">local</span><span style="color: #000000">.</span><span style="color: #795E26">getAsJSON</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;user&#039;</span><span style="color: #000000">);</span>
+<span style="color: #0000FF">typeof</span><span style="color: #000000"> </span><span style="color: #001080">local</span><span style="color: #000000">.</span><span style="color: #795E26">get</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;user&#039;</span><span style="color: #000000">); </span><span style="color: #008000">// &#039;string&#039;</span>
+<span style="color: #0000FF">typeof</span><span style="color: #000000"> </span><span style="color: #001080">local</span><span style="color: #000000">.</span><span style="color: #795E26">getAsJSON</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;user&#039;</span><span style="color: #000000">); </span><span style="color: #008000">// &#039;object&#039;</span>
+</code></pre>
+				<a href="#相关文档" id="相关文档" style="color: inherit; text-decoration: none;">
+					<h2>相关文档</h2>
+				</a>
+				<ul>
+					<li><a href="https://heeroluo.github.io/just4/storage/index.html">API 文档</a></li>
+				</ul>
+			</div>
+		</div>
+		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
+			<nav class="tsd-navigation primary">
+				<ul>
+					<li class=" ">
+						<a href="modules.html">Modules</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/index.html">index</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/storage_wrap.html">storage-<wbr>wrap</a>
+					</li>
+				</ul>
+			</nav>
+			<nav class="tsd-navigation secondary menu-sticky">
+				<ul class="before-current">
+				</ul>
+			</nav>
+		</div>
+	</div>
+</div>
+<footer class="with-border-bottom">
+	<div class="container">
+		<h2>Legend</h2>
+		<div class="tsd-legend-group">
+			<ul class="tsd-legend">
+				<li class="tsd-kind-variable"><span class="tsd-kind-icon">Variable</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
+			</ul>
+		</div>
+	</div>
+</footer>
+<div class="container tsd-generator">
+	<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p>
+</div>
+<div class="overlay"></div>
+<script src="assets/js/main.js"></script>
+</body>
+</html>
