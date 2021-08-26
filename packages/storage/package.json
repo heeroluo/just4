@@ -1,0 +1,15 @@
+{
+  "name": "@just4/storage",
+  "version": "0.1.0",
+  "description": "Just for making localStorage and sessionStorage easier to use.",
+  "keywords": ["localStorage", "sessionStorage", "storage"],
+  "scripts": {
+    "link-deps": "ln -s ../../node_modules ./node_modules",
+    "dev": "cross-env NODE_ENV=development webpack-dev-server --config build/webpack.dev.config.js",
+    "lint": "eslint ./src/**/*.ts",
+    "prebuild": "rimraf ./dist/*",
+    "build": "npm run lint && tsc -p ./src/tsconfig.json && node ../../build/compress storage && node ../../build/copy-others storage",
+    "gen-doc": "typedoc --tsconfig ./src/tsconfig.json"
+  },
+  "private": true
+}

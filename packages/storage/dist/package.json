@@ -1,0 +1,28 @@
+{
+  "name": "@just4/storage",
+  "version": "0.1.0",
+  "description": "Just for making localStorage and sessionStorage easier to use.",
+  "keywords": [
+    "localStorage",
+    "sessionStorage",
+    "storage"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/heeroluo/just4"
+  },
+  "author": {
+    "name": "Mr.Luo",
+    "email": "heeroluo@126.com",
+    "url": "https://mrluo.life/"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/heeroluo/just4/issues"
+  },
+  "homepage": "https://github.com/heeroluo/just4#readme",
+  "engines": {
+    "node": ">=10.0.0"
+  },
+  "dependencies": {}
+}

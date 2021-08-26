@@ -1,0 +1,6 @@
+{
+  "entryPoints": ["./src/"],
+  "out": "../../docs/storage",
+  "excludeInternal": true,
+  "listInvalidSymbolLinks": true
+}
