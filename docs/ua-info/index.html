@@ -62,11 +62,16 @@
 					<h1>@just4/ua-info</h1>
 				</a>
 				<p>根据 <strong>用户代理（user agent）</strong> 字符串分析运行环境，支持设备品牌、操作系统、浏览器内核以及客户端的识别。</p>
-				<a href="#分析项" id="分析项" style="color: inherit; text-decoration: none;">
-					<h2>分析项</h2>
+				<a href="#安装" id="安装" style="color: inherit; text-decoration: none;">
+					<h2>安装</h2>
 				</a>
-				<a href="#操作系统" id="操作系统" style="color: inherit; text-decoration: none;">
-					<h3>操作系统</h3>
+				<pre><code class="language-bash"><span style="color: #000000">npm i @just4/ua-info</span>
+</code></pre>
+				<a href="#使用" id="使用" style="color: inherit; text-decoration: none;">
+					<h2>使用</h2>
+				</a>
+				<a href="#操作系统信息" id="操作系统信息" style="color: inherit; text-decoration: none;">
+					<h3>操作系统信息</h3>
 				</a>
 				<pre><code class="language-javascript"><span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">UAInfo</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;@just4/ua-info&#039;</span><span style="color: #000000">;</span>
 
@@ -76,8 +81,8 @@
 <span style="color: #001080">uaInfo</span><span style="color: #000000">.</span><span style="color: #001080">os</span><span style="color: #000000">.</span><span style="color: #001080">isIOS</span><span style="color: #000000">; </span><span style="color: #008000">// 是否苹果 iOS</span>
 <span style="color: #001080">uaInfo</span><span style="color: #000000">.</span><span style="color: #001080">os</span><span style="color: #000000">.</span><span style="color: #001080">isAndroid</span><span style="color: #000000">; </span><span style="color: #008000">// 是否安卓</span>
 </code></pre>
-				<a href="#设备品牌" id="设备品牌" style="color: inherit; text-decoration: none;">
-					<h3>设备品牌</h3>
+				<a href="#设备品牌信息" id="设备品牌信息" style="color: inherit; text-decoration: none;">
+					<h3>设备品牌信息</h3>
 				</a>
 				<p>主要针对便携设备，支持以下品牌的识别：</p>
 				<pre><code class="language-javascript"><span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">UAInfo</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;@just4/ua-info&#039;</span><span style="color: #000000">;</span>
@@ -95,8 +100,8 @@
 <span style="color: #001080">uaInfo</span><span style="color: #000000">.</span><span style="color: #001080">brand</span><span style="color: #000000">.</span><span style="color: #001080">isSamsung</span><span style="color: #000000">; </span><span style="color: #008000">// 是否三星设备</span>
 <span style="color: #001080">uaInfo</span><span style="color: #000000">.</span><span style="color: #001080">brand</span><span style="color: #000000">.</span><span style="color: #001080">isOnePlus</span><span style="color: #000000">; </span><span style="color: #008000">// 是否一加设备</span>
 </code></pre>
-				<a href="#浏览器内核" id="浏览器内核" style="color: inherit; text-decoration: none;">
-					<h3>浏览器内核</h3>
+				<a href="#浏览器内核信息" id="浏览器内核信息" style="color: inherit; text-decoration: none;">
+					<h3>浏览器内核信息</h3>
 				</a>
 				<p>支持以下浏览器内核的识别：</p>
 				<pre><code class="language-javascript"><span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">UAInfo</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;@just4/ua-info&#039;</span><span style="color: #000000">;</span>
@@ -108,8 +113,8 @@
 <span style="color: #001080">uaInfo</span><span style="color: #000000">.</span><span style="color: #001080">browser</span><span style="color: #000000">.</span><span style="color: #001080">isFirefox</span><span style="color: #000000">; </span><span style="color: #008000">// 是否 Firefox 内核</span>
 <span style="color: #001080">uaInfo</span><span style="color: #000000">.</span><span style="color: #001080">browser</span><span style="color: #000000">.</span><span style="color: #001080">isPrestoOpera</span><span style="color: #000000">; </span><span style="color: #008000">// 是否 Opera(Presto) 内核</span>
 </code></pre>
-				<a href="#客户端（浏览器）" id="客户端（浏览器）" style="color: inherit; text-decoration: none;">
-					<h3>客户端（浏览器）</h3>
+				<a href="#客户端（浏览器）信息" id="客户端（浏览器）信息" style="color: inherit; text-decoration: none;">
+					<h3>客户端（浏览器）信息</h3>
 				</a>
 				<p>支持以下客户端或浏览器的识别：</p>
 				<pre><code class="language-javascript"><span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">UAInfo</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;@just4/ua-info&#039;</span><span style="color: #000000">;</span>
@@ -134,8 +139,8 @@
 <span style="color: #001080">uaInfo</span><span style="color: #000000">.</span><span style="color: #001080">client</span><span style="color: #000000">.</span><span style="color: #001080">isIE</span><span style="color: #000000">; </span><span style="color: #008000">// 是否 IE 浏览器</span>
 <span style="color: #001080">uaInfo</span><span style="color: #000000">.</span><span style="color: #001080">client</span><span style="color: #000000">.</span><span style="color: #001080">isFirefox</span><span style="color: #000000">; </span><span style="color: #008000">// 是否 Firefox 浏览器</span>
 </code></pre>
-				<a href="#版本号" id="版本号" style="color: inherit; text-decoration: none;">
-					<h3>版本号</h3>
+				<a href="#版本号属性" id="版本号属性" style="color: inherit; text-decoration: none;">
+					<h3>版本号属性</h3>
 				</a>
 				<p>部分分析项，包括操作系统、浏览器内核和客户端，都有对应的版本号属性（version）。只要能够识别出结果（任意一个 <code>isXXX</code> 为 <code>true</code>），该属性的值就是一个 <code>Version</code> 对象，否则为 <code>undefined</code>。</p>
 				<p>对于 <code>Version</code> 对象，还可以进行版本号的对比。</p>
@@ -191,13 +196,13 @@
 				<pre><code class="language-javascript"><span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">UAInfo</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;@just4/ua-info&#039;</span><span style="color: #000000">;</span>
 
 <span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">uaOfOldEdge</span><span style="color: #000000"> = </span><span style="color: #A31515">&#039;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.140 Safari/537.36 Edge/18.17763&#039;</span><span style="color: #000000">;</span>
-<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">uaInfoOfOldEdge</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">UAInfo</span><span style="color: #000000">(</span><span style="color: #001080">ua</span><span style="color: #000000">);</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">uaInfoOfOldEdge</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">UAInfo</span><span style="color: #000000">(</span><span style="color: #001080">uaOfOldEdge</span><span style="color: #000000">);</span>
 <span style="color: #001080">uaInfoOfOldEdge</span><span style="color: #000000">.</span><span style="color: #001080">browser</span><span style="color: #000000">.</span><span style="color: #001080">isChrome</span><span style="color: #000000">; </span><span style="color: #008000">// false</span>
 <span style="color: #001080">uaInfoOfOldEdge</span><span style="color: #000000">.</span><span style="color: #001080">browser</span><span style="color: #000000">.</span><span style="color: #001080">isEdge</span><span style="color: #000000">; </span><span style="color: #008000">// true</span>
 <span style="color: #001080">uaInfoOfOldEdge</span><span style="color: #000000">.</span><span style="color: #001080">client</span><span style="color: #000000">.</span><span style="color: #001080">isEdge</span><span style="color: #000000">; </span><span style="color: #008000">// true</span>
 
 <span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">uaOfNewEdge</span><span style="color: #000000"> = </span><span style="color: #A31515">&#039;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4501.0 Safari/537.36 Edg/91.0.866.0&#039;</span><span style="color: #000000">;</span>
-<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">uaInfoOfNewEdge</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">UAInfo</span><span style="color: #000000">(</span><span style="color: #001080">ua</span><span style="color: #000000">);</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">uaInfoOfNewEdge</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">UAInfo</span><span style="color: #000000">(</span><span style="color: #001080">uaOfNewEdge</span><span style="color: #000000">);</span>
 <span style="color: #001080">uaInfoOfNewEdge</span><span style="color: #000000">.</span><span style="color: #001080">browser</span><span style="color: #000000">.</span><span style="color: #001080">isChrome</span><span style="color: #000000">; </span><span style="color: #008000">// true</span>
 <span style="color: #001080">uaInfoOfNewEdge</span><span style="color: #000000">.</span><span style="color: #001080">browser</span><span style="color: #000000">.</span><span style="color: #001080">isEdge</span><span style="color: #000000">; </span><span style="color: #008000">// false</span>
 <span style="color: #001080">uaInfoOfNewEdge</span><span style="color: #000000">.</span><span style="color: #001080">client</span><span style="color: #000000">.</span><span style="color: #001080">isEdge</span><span style="color: #000000">; </span><span style="color: #008000">// true</span>
@@ -215,7 +220,7 @@
 					<h2>相关文档</h2>
 				</a>
 				<ul>
-					<li><a href="https://heeroluo.github.io/just4/ua-info/index.html">API 文档</a></li>
+					<li><a href="https://heeroluo.github.io/just4/ua-info/modules/index.html">API 文档</a></li>
 				</ul>
 			</div>
 		</div>
