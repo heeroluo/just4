@@ -28,7 +28,7 @@ export class StorageWrap {
   constructor(storage?: IStorage) {
     this._storage = storage || {
       getItem() { return null; },
-      setItem() { return; },
+      setItem() { throw new Error(''); },
       removeItem() { return; }
     };
   }

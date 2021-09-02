@@ -5,7 +5,7 @@ export class StorageWrap {
                 return null;
             },
             setItem() {
-                return;
+                throw new Error("");
             },
             removeItem() {
                 return;
