@@ -1,4 +1,4 @@
-import { toArray, mergeArray } from '@/array';
+import { toArray, mergeArray } from '@/index';
 const QUnit = (<any>window).QUnit;
 
 

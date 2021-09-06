@@ -1,4 +1,4 @@
-import { isFunction, isDate, isObject } from '@/type';
+import { isFunction, isDate, isObject } from '@/index';
 const QUnit = (<any>window).QUnit;
 
 

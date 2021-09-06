@@ -1,4 +1,4 @@
-import { hasOwnProp, assignProps, isEmpty } from '@/object';
+import { hasOwnProp, assignProps, isEmpty } from '@/index';
 const QUnit = (<any>window).QUnit;
 
 
