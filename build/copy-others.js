@@ -20,7 +20,7 @@ delete pkgJSON.devDependencies;
 delete pkgJSON.scripts;
 delete pkgJSON.private;
 fs.writeFileSync(
-  path.join(pkgDir, 'dist', 'package.json'),
+  path.join(pkgDir, 'dist', 'npm', 'package.json'),
   JSON.stringify(pkgJSON, null, 2),
   'utf-8'
 );
@@ -31,6 +31,6 @@ fs.writeFileSync(
 ].forEach((filePath) => {
   fs.copyFileSync(
     filePath,
-    path.resolve(pkgDir, 'dist', path.basename(filePath))
+    path.resolve(pkgDir, 'dist', 'npm', path.basename(filePath))
   );
 });
