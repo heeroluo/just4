@@ -8,8 +8,8 @@ const hasOwnProperty = Object.prototype.hasOwnProperty;
 /**
  * 检查对象是否有某个自定义属性。
  * @example
- * ```typescript
- * import { hasOwnProp } from '@just4/util/object';
+ * ```javascript
+ * import { hasOwnProp } from '@just4/util';
  * hasOwnProp({ a: false }, 'a'); // true
  * ```
  * @param obj 待测对象。
@@ -23,8 +23,8 @@ export function hasOwnProp(obj: any, key: string): boolean {
 /**
  * 把源对象的属性复制到目标对象。
  * @example
- * ```typescript
- * import { assignProps } from '@just4/util/object';
+ * ```javascript
+ * import { assignProps } from '@just4/util';
  * assignProps(
  *   { a: 1, b: 2 },
  *   { b: 3, c: 4 },
@@ -58,8 +58,8 @@ export function assignProps<T>(
 /**
  * 检查对象是否空对象（空数组、无任何自定义属性的对象，或者为 null、undefined）。
  * @example
- * ```typescript
- * import { isEmpty } from '@just4/util/object';
+ * ```javascript
+ * import { isEmpty } from '@just4/util';
  * isEmpty([]); // true
  * isEmpty({}); // true
  * isEmpty({ a: 0 }); // false

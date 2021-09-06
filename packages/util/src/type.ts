@@ -8,8 +8,8 @@ const toString = Object.prototype.toString;
 /**
  * 检查变量是否 Function 类型。
  * @example
- * ```typescript
- * import { isFunction } from '@just4/util/type';
+ * ```javascript
+ * import { isFunction } from '@just4/util';
  * isFunction(() => { alert('a'); }); // true
  * ```
  * @param value 待测变量。
@@ -22,8 +22,8 @@ export function isFunction(value: unknown): boolean {
 /**
  * 检查变量是否 Date 类型。
  * @example
- * ```typescript
- * import { isDate } from '@just4/util/type';
+ * ```javascript
+ * import { isDate } from '@just4/util';
  * isDate(new Date); // true
  * ```
  * @param value 待测变量。
@@ -36,8 +36,8 @@ export function isDate(value: unknown): boolean {
 /**
  * 检查变量是否 Object 类型。
  * @example
- * ```typescript
- * import { isObject } from '@just4/util/type';
+ * ```javascript
+ * import { isObject } from '@just4/util';
  * isObject({}); // true
  * isObject(new Date); // false
  * ```
