@@ -62,13 +62,44 @@
 					<h1>@just4/querystring</h1>
 				</a>
 				<p>提供 URL 查询字符串操作相关接口。</p>
-				<a href="#特性" id="特性" style="color: inherit; text-decoration: none;">
-					<h2>特性</h2>
+				<a href="#安装" id="安装" style="color: inherit; text-decoration: none;">
+					<h2>安装</h2>
 				</a>
-				<ul>
-					<li>封装了序列化和反序列化查询字符串的接口。</li>
-					<li>支持 PC 和移动端所有主流浏览器（其中 IE 浏览器的最低兼容版本是 9）。</li>
-				</ul>
+				<pre><code class="language-bash"><span style="color: #000000">npm i @just4/querystring</span>
+</code></pre>
+				<a href="#调用" id="调用" style="color: inherit; text-decoration: none;">
+					<h2>调用</h2>
+				</a>
+				<a href="#parse" id="parse" style="color: inherit; text-decoration: none;">
+					<h3>parse</h3>
+				</a>
+				<p>parse 函数可以把一段查询字符串解析为数据对象：</p>
+				<pre><code class="language-javascript"><span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">parse</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;@just4/querystring&#039;</span><span style="color: #000000">;</span>
+<span style="color: #795E26">parse</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;id=0&amp;str=hello&#039;</span><span style="color: #000000">); </span><span style="color: #008000">// { id: &#039;0&#039;, str: &#039;hello&#039; }</span>
+</code></pre>
+				<p>一般情况下，解析结果的 key 和 value 都是字符串，但如果查询字符串中有<strong>重复的 key</strong>，那么解析结果中该 key 对应的 value 就是字符串数组。</p>
+				<pre><code class="language-javascript"><span style="color: #795E26">parse</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;id=0&amp;id=1&#039;</span><span style="color: #000000">); </span><span style="color: #008000">// { id: [&#039;0&#039;, &#039;1&#039;] }</span>
+</code></pre>
+				<a href="#stringify" id="stringify" style="color: inherit; text-decoration: none;">
+					<h3>stringify</h3>
+				</a>
+				<p>stringify 函数可以把数据对象序列化为查询字符串：</p>
+				<pre><code class="language-javascript"><span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">stringify</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;@just4/querystring&#039;</span><span style="color: #000000">;</span>
+<span style="color: #795E26">stringify</span><span style="color: #000000">({ </span><span style="color: #001080">id:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;0&#039;</span><span style="color: #000000">, </span><span style="color: #001080">str:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;hello&#039;</span><span style="color: #000000"> }); </span><span style="color: #008000">// &#039;id=0&amp;str=hello&#039;</span>
+</code></pre>
+				<p>如果 value 是数组，则会遍历数组里面的每一项，均以对应的 key 进行序列化。</p>
+				<pre><code class="language-javascript"><span style="color: #795E26">stringify</span><span style="color: #000000">({ </span><span style="color: #001080">id:</span><span style="color: #000000"> [</span><span style="color: #A31515">&#039;0&#039;</span><span style="color: #000000">, </span><span style="color: #A31515">&#039;1&#039;</span><span style="color: #000000">] }); </span><span style="color: #008000">// &#039;id=0&amp;id=1&#039;</span>
+</code></pre>
+				<a href="#appendtourl" id="appendtourl" style="color: inherit; text-decoration: none;">
+					<h3>appendToURL</h3>
+				</a>
+				<p>appendToURL 主要用于给已有的 url 拼接新的查询字符串。并且，即使 url 中包含锚点，也可以正常拼接：</p>
+				<pre><code class="language-javascript"><span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">appendToURL</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;@just4/querystring/index&#039;</span><span style="color: #000000">;</span>
+<span style="color: #795E26">appendToURL</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;https://abc.com/?a=1#hash&#039;</span><span style="color: #000000">, {</span>
+<span style="color: #000000">  </span><span style="color: #001080">b:</span><span style="color: #000000"> </span><span style="color: #098658">2</span><span style="color: #000000">,</span>
+<span style="color: #000000">  </span><span style="color: #001080">c:</span><span style="color: #000000"> </span><span style="color: #098658">3</span>
+<span style="color: #000000">}); </span><span style="color: #008000">// https://abc.com/?a=1&amp;b=2&amp;c=3#hash</span>
+</code></pre>
 				<a href="#相关文档" id="相关文档" style="color: inherit; text-decoration: none;">
 					<h2>相关文档</h2>
 				</a>
@@ -81,13 +112,22 @@
 			<nav class="tsd-navigation primary">
 				<ul>
 					<li class=" ">
-						<a href="modules.html">Exports</a>
+						<a href="modules.html">Modules</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/append.html">append</a>
 					</li>
 					<li class=" tsd-kind-module">
 						<a href="modules/index.html">index</a>
 					</li>
 					<li class=" tsd-kind-module">
 						<a href="modules/interfaces.html">interfaces</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/parse.html">parse</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/stringify.html">stringify</a>
 					</li>
 				</ul>
 			</nav>
