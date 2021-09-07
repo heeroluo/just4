@@ -17,8 +17,8 @@ module.exports = function(options) {
       alias: {
         '@': path.resolve(options.dirname, '../src'),
         // 不知道为什么，tsconfig-paths-webpack-plugin 无法解析下面两个路径
-        '@just4/util': path.resolve(__dirname, '../packages/util/dist'),
-        '@just4/querystring': path.resolve(__dirname, '../packages/querystring/dist')
+        '@just4/util': path.resolve(__dirname, '../packages/util/dist/npm'),
+        '@just4/querystring': path.resolve(__dirname, '../packages/querystring/dist/npm')
       },
       // plugins: [
       //   new TsconfigPathsPlugin({
