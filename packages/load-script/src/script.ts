@@ -1,15 +1,15 @@
 /**
- * 提供外部脚本文件加载接口。
+ * 提供加载外部脚本文件的接口。
  * @packageDocumentation
  */
 
+import { assignProps } from '@just4/util/index';
 import { appendToURL } from '@just4/querystring/index';
 import { ILoadScriptOptions } from './interfaces';
 
 
 /**
- * 创建 script 节点，并设置指定特性。
- * @ignore
+ * 创建 script 节点，并设置特性。
  */
 function createScript(props?: Partial<HTMLScriptElement>) {
   const script = document.createElement('script');
@@ -24,22 +24,18 @@ function createScript(props?: Partial<HTMLScriptElement>) {
 /**
  * 加载脚本文件。
  * @example
- * ```typescript
+ * ```javascript
  * import { loadScript } from '@just4/load-script';
- * loadScript('https://code.jquery.com/jquery-1.12.4.min.js', {
- *   props: {
- *     crossOrigin: 'anonymous'
- *   }
- * });
+ * await loadScript('https://code.jquery.com/jquery-1.12.4.min.js');
+ * const $ = window.jQuery;
  * ```
  * @param url 文件 URL。
  * @param options 加载选项。
  * @returns 加载脚本文件的 promise 实例。
  */
-export function loadScript(url: string, options: ILoadScriptOptions = {
-  preventCaching: false,
-  props: { async: true }
-}): Promise<void> {
+export function loadScript(
+  url: string, options?: ILoadScriptOptions
+): Promise<void> {
   return new Promise<void>(function(resolve, reject) {
     let script: HTMLScriptElement | null;
     let timeoutTimer: number;
@@ -47,11 +43,18 @@ export function loadScript(url: string, options: ILoadScriptOptions = {
     function destroy() {
       if (script) {
         script.onload = script.onerror = null;
-        script.parentNode?.removeChild(script);
+        if (script.parentNode) {
+          script.parentNode.removeChild(script);
+        }
         script = null;
       }
       if (timeoutTimer) { window.clearTimeout(timeoutTimer); }
     }
+
+    options = assignProps({
+      preventCaching: false,
+      props: { async: true }
+    }, options);
 
     if (options.data) { url = appendToURL(url, options.data); }
     // 增加时间戳参数防止本地缓存

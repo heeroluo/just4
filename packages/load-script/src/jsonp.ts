@@ -9,8 +9,7 @@ import { loadScript } from './script';
 
 
 /**
- * 生成 JSONP 回调函数名
- * @ignore
+ * 生成 JSONP 回调函数名。
  */
 function genCallbackName(src: string): string {
   // 利用a元素获取URL的各部分
@@ -30,20 +29,22 @@ function genCallbackName(src: string): string {
   let counter = 1;
   while ((<any>window)[result] !== undefined) {
     if (counter > 100) {
-      // 如果尝试了 100 次仍然被占用，则按「当前时间戳+五位随机数」规则生成，
+      // 如果尝试了 100 次仍然被占用，
+      // 则按「当前时间戳+五位随机数」规则生成，
       // 防止循环次数过多
       result = 'jsonp_cb_' + Date.now() + (10000 + ((Math.random() * 90000) | 0));
       break;
     }
     result = callbackName + '_' + counter++;
   }
+
   return result;
 }
 
 /**
  * 发送 jsonp 请求。
  * @example
- * ```typescript
+ * ```javascript
  * import { jsonp } from '@just4/load-script';
  * await jsonp('https://abc.com/api/jsonp', {
  *   data: { id: 1 },
@@ -54,12 +55,9 @@ function genCallbackName(src: string): string {
  * @param options 请求选项。
  * @returns 请求 jsonp 的 promise 实例。
  */
-export function jsonp(url: string, options: IJSONPOptions = {
-  preventCaching: false,
-  props: { async: true }
-}): Promise<unknown> {
+export function jsonp(url: string, options?: IJSONPOptions): Promise<unknown> {
   return new Promise<unknown>(function(resolve, reject) {
-    const callbackName = options.callbackName || genCallbackName(url);
+    const callbackName = options?.callbackName || genCallbackName(url);
     url = appendToURL(url, { callback: callbackName });
 
     function destroy() {

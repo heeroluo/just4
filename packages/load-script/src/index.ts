@@ -3,10 +3,6 @@
  * @packageDocumentation
  */
 
-import { jsonp } from './jsonp';
-import { loadScript } from './script';
-
-export {
-  jsonp,
-  loadScript
-};
+export { ILoadScriptOptions, IJSONPOptions } from './interfaces';
+export { loadScript } from './script';
+export { jsonp } from './jsonp';
