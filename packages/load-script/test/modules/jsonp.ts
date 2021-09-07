@@ -1,4 +1,4 @@
-import { jsonp } from '@/jsonp';
+import { jsonp } from '@/index';
 
 const QUnit = (<any>window).QUnit;
 

@@ -1,4 +1,4 @@
-import { loadScript } from '@/script';
+import { loadScript } from '@/index';
 
 const QUnit = (<any>window).QUnit;
 
