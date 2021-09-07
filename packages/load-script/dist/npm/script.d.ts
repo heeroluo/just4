@@ -1,18 +1,15 @@
 /**
- * 提供外部脚本文件加载接口。
+ * 提供加载外部脚本文件的接口。
  * @packageDocumentation
  */
 import { ILoadScriptOptions } from './interfaces';
 /**
  * 加载脚本文件。
  * @example
- * ```typescript
+ * ```javascript
  * import { loadScript } from '@just4/load-script';
- * loadScript('https://code.jquery.com/jquery-1.12.4.min.js', {
- *   props: {
- *     crossOrigin: 'anonymous'
- *   }
- * });
+ * await loadScript('https://code.jquery.com/jquery-1.12.4.min.js');
+ * const $ = window.jQuery;
  * ```
  * @param url 文件 URL。
  * @param options 加载选项。

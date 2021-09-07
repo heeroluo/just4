@@ -6,7 +6,7 @@ import { IJSONPOptions } from './interfaces';
 /**
  * 发送 jsonp 请求。
  * @example
- * ```typescript
+ * ```javascript
  * import { jsonp } from '@just4/load-script';
  * await jsonp('https://abc.com/api/jsonp', {
  *   data: { id: 1 },

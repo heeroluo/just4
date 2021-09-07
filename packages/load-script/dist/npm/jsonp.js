@@ -20,14 +20,9 @@ function genCallbackName(src) {
     return result;
 }
 
-export function jsonp(url, options = {
-    preventCaching: false,
-    props: {
-        async: true
-    }
-}) {
+export function jsonp(url, options) {
     return new Promise((function(resolve, reject) {
-        const callbackName = options.callbackName || genCallbackName(url);
+        const callbackName = (options === null || options === void 0 ? void 0 : options.callbackName) || genCallbackName(url);
         url = appendToURL(url, {
             callback: callbackName
         });

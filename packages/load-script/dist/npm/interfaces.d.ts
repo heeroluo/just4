@@ -7,7 +7,7 @@
  */
 export interface ILoadScriptOptions {
     /**
-     * URL 参数。
+     * URL 参数（查询字符串）。
      */
     data?: string | {
         [key: string]: unknown;

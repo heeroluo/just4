@@ -1,6 +1,6 @@
 {
   "name": "@just4/load-script",
-  "version": "0.1.0-beta.2",
+  "version": "0.1.0-beta.3",
   "description": "Just for script loading in browser.",
   "keywords": [
     "script",
@@ -8,8 +8,8 @@
     "jsonp"
   ],
   "dependencies": {
-    "@just4/util": "^0.1.0-beta.2",
-    "@just4/querystring": "^0.1.0-beta.3"
+    "@just4/util": "^0.1.0-beta.3",
+    "@just4/querystring": "^0.1.0-beta.4"
   },
   "repository": {
     "type": "git",

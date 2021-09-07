@@ -1,3 +1,5 @@
+import { assignProps } from "@just4/util/index";
+
 import { appendToURL } from "@just4/querystring/index";
 
 function createScript(props) {
@@ -10,26 +12,28 @@ function createScript(props) {
     return script;
 }
 
-export function loadScript(url, options = {
-    preventCaching: false,
-    props: {
-        async: true
-    }
-}) {
+export function loadScript(url, options) {
     return new Promise((function(resolve, reject) {
         let script;
         let timeoutTimer;
         function destroy() {
-            var _a;
             if (script) {
                 script.onload = script.onerror = null;
-                (_a = script.parentNode) === null || _a === void 0 ? void 0 : _a.removeChild(script);
+                if (script.parentNode) {
+                    script.parentNode.removeChild(script);
+                }
                 script = null;
             }
             if (timeoutTimer) {
                 window.clearTimeout(timeoutTimer);
             }
         }
+        options = assignProps({
+            preventCaching: false,
+            props: {
+                async: true
+            }
+        }, options);
         if (options.data) {
             url = appendToURL(url, options.data);
         }
