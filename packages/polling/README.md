@@ -93,3 +93,7 @@ setTimeout(() => {
   polling.execImmediately();
 }, 3000);
 ```
+
+## 相关文档
+
+- [API 文档](https://heeroluo.github.io/just4/polling/modules/index.html)
