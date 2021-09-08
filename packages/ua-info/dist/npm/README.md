@@ -2,9 +2,17 @@
 
 根据 **用户代理（user agent）** 字符串分析运行环境，支持设备品牌、操作系统、浏览器内核以及客户端的识别。
 
-## 分析项
 
-### 操作系统
+## 安装
+
+```bash
+npm i @just4/ua-info
+```
+
+
+## 使用
+
+### 操作系统信息
 
 ```javascript
 import { UAInfo } from '@just4/ua-info';
@@ -16,7 +24,7 @@ uaInfo.os.isIOS; // 是否苹果 iOS
 uaInfo.os.isAndroid; // 是否安卓
 ```
 
-### 设备品牌
+### 设备品牌信息
 
 主要针对便携设备，支持以下品牌的识别：
 
@@ -37,7 +45,7 @@ uaInfo.brand.isSamsung; // 是否三星设备
 uaInfo.brand.isOnePlus; // 是否一加设备
 ```
 
-### 浏览器内核
+### 浏览器内核信息
 
 支持以下浏览器内核的识别：
 
@@ -52,7 +60,7 @@ uaInfo.browser.isFirefox; // 是否 Firefox 内核
 uaInfo.browser.isPrestoOpera; // 是否 Opera(Presto) 内核
 ```
 
-### 客户端（浏览器）
+### 客户端（浏览器）信息
 
 支持以下客户端或浏览器的识别：
 
@@ -80,9 +88,9 @@ uaInfo.client.isIE; // 是否 IE 浏览器
 uaInfo.client.isFirefox; // 是否 Firefox 浏览器
 ```
 
-### 版本号
+### 版本号属性
 
-部分分析项，包括操作系统、浏览器内核和客户端，都有对应的版本号属性（version）。只要能够识别出结果（任意一个 `isXXX` 为 `true`），该属性的值就是一个 `Version` 对象，否则为 `undefined`。
+部分信息项，包括操作系统、浏览器内核和客户端，都有对应的版本号属性（version）。只要能够识别出结果（任意一个 `isXXX` 为 `true`），该属性的值就是一个 `Version` 对象，否则为 `undefined`。
 
 对于 `Version` 对象，还可以进行版本号的对比。
 
@@ -146,13 +154,13 @@ uaInfo2.brand.isMac; // true
 import { UAInfo } from '@just4/ua-info';
 
 const uaOfOldEdge = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.140 Safari/537.36 Edge/18.17763';
-const uaInfoOfOldEdge = new UAInfo(ua);
+const uaInfoOfOldEdge = new UAInfo(uaOfOldEdge);
 uaInfoOfOldEdge.browser.isChrome; // false
 uaInfoOfOldEdge.browser.isEdge; // true
 uaInfoOfOldEdge.client.isEdge; // true
 
 const uaOfNewEdge = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4501.0 Safari/537.36 Edg/91.0.866.0';
-const uaInfoOfNewEdge = new UAInfo(ua);
+const uaInfoOfNewEdge = new UAInfo(uaOfNewEdge);
 uaInfoOfNewEdge.browser.isChrome; // true
 uaInfoOfNewEdge.browser.isEdge; // false
 uaInfoOfNewEdge.client.isEdge; // true
@@ -164,11 +172,10 @@ uaInfoOfNewEdge.client.isEdge; // true
 
 而对于移动端浏览器以及 WebView 而言，它们的用户代理字符串中有可能包含 Safari 浏览器的关键字，所以即使客户端信息的 `isSafari` 为 `true`，也不一定是 Safari 浏览器。
 
-
 ### 识别范围
 
 考虑到代码体积和性能，本项目仅支持主流操作系统、浏览器内核、客户端以及常见品牌的识别，如果您需要范围更广的识别，请使用 [uadetector](https://www.npmjs.com/package/uadetector)（本项目的识别规则也来自 uadetector）。
 
 
 ## 相关文档
-- [API 文档](https://heeroluo.github.io/just4/ua-info/index.html)
+- [API 文档](https://heeroluo.github.io/just4/ua-info/modules/index.html)
