@@ -107,6 +107,25 @@
 <span style="color: #000000">});</span>
 <span style="color: #001080">polling</span><span style="color: #000000">.</span><span style="color: #795E26">start</span><span style="color: #000000">();</span>
 </code></pre>
+				<a href="#更新轮询选项" id="更新轮询选项" style="color: inherit; text-decoration: none;">
+					<h3>更新轮询选项</h3>
+				</a>
+				<p>可以调用实例方法 <code>updateOptions</code> 更新轮询选项：</p>
+				<pre><code class="language-javascript"><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">polling</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">Polling</span><span style="color: #000000">(() </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
+<span style="color: #000000">  </span><span style="color: #AF00DB">return</span><span style="color: #000000"> </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #267F99">Promise</span><span style="color: #000000">((</span><span style="color: #001080">resolve</span><span style="color: #000000">) </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
+<span style="color: #000000">    </span><span style="color: #795E26">setTimeout</span><span style="color: #000000">(() </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
+<span style="color: #000000">      </span><span style="color: #001080">polling</span><span style="color: #000000">.</span><span style="color: #795E26">updateOptions</span><span style="color: #000000">({</span>
+<span style="color: #000000">        </span><span style="color: #001080">interval:</span><span style="color: #000000"> </span><span style="color: #267F99">Math</span><span style="color: #000000">.</span><span style="color: #795E26">random</span><span style="color: #000000">() &lt; </span><span style="color: #098658">0.5</span><span style="color: #000000"> ? </span><span style="color: #098658">5000</span><span style="color: #000000"> : </span><span style="color: #098658">2000</span>
+<span style="color: #000000">      });</span>
+<span style="color: #000000">      </span><span style="color: #795E26">resolve</span><span style="color: #000000">();</span>
+<span style="color: #000000">    }, </span><span style="color: #098658">1000</span><span style="color: #000000">);</span>
+<span style="color: #000000">  });</span>
+<span style="color: #000000">}, {</span>
+<span style="color: #000000">  </span><span style="color: #001080">interval:</span><span style="color: #000000"> </span><span style="color: #098658">2000</span><span style="color: #000000">,</span>
+<span style="color: #000000">  </span><span style="color: #001080">breakOnError:</span><span style="color: #000000"> </span><span style="color: #0000FF">true</span>
+<span style="color: #000000">});</span>
+<span style="color: #001080">polling</span><span style="color: #000000">.</span><span style="color: #795E26">start</span><span style="color: #000000">();</span>
+</code></pre>
 				<a href="#轮询过程中立刻执行一次操作函数" id="轮询过程中立刻执行一次操作函数" style="color: inherit; text-decoration: none;">
 					<h3>轮询过程中立刻执行一次操作函数</h3>
 				</a>
@@ -124,8 +143,8 @@
 <span style="color: #001080">polling</span><span style="color: #000000">.</span><span style="color: #795E26">start</span><span style="color: #000000">();</span>
 
 <span style="color: #795E26">setTimeout</span><span style="color: #000000">(() </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
-<span style="color: #000000">  </span><span style="color: #008000">// 注意，如果操作函数是异步的而且当前还在执行中，</span>
-<span style="color: #000000">  </span><span style="color: #008000">// 那么 execImmediately 会等待它执行完之后再执行一次操作函数</span>
+<span style="color: #000000">  </span><span style="color: #008000">// 注意，如果操作函数是异步的而且当前还未执行完，</span>
+<span style="color: #000000">  </span><span style="color: #008000">// 那么 execImmediately 会等待它执行完之后才再次执行操作函数</span>
 <span style="color: #000000">  </span><span style="color: #001080">polling</span><span style="color: #000000">.</span><span style="color: #795E26">execImmediately</span><span style="color: #000000">();</span>
 <span style="color: #000000">}, </span><span style="color: #098658">3000</span><span style="color: #000000">);</span>
 </code></pre>
@@ -165,6 +184,9 @@
 			</ul>
 			<ul class="tsd-legend">
 				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static method</span></li>
 			</ul>
 		</div>
 	</div>
