@@ -53,4 +53,4 @@ appendToURL('https://abc.com/?a=1#hash', {
 ```
 
 ## 相关文档
-- [API 文档](https://heeroluo.github.io/just4/querystring/index.html)
+- [API 文档](https://heeroluo.github.io/just4/querystring/modules/index.html)
