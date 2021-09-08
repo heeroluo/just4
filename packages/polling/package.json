@@ -11,8 +11,5 @@
     "build": "npm run lint && tsc -p ./src/tsconfig.json && node ../../build/compress polling && node ../../build/copy-others polling",
     "gen-doc": "typedoc --tsconfig ./src/tsconfig.json"
   },
-  "dependencies": {
-    "@just4/util": "^0.1.0-beta.2"
-  },
   "private": true
 }
