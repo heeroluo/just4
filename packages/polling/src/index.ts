@@ -3,8 +3,6 @@
  * @packageDocumentation
  */
 
-import { assignProps } from '@just4/util/object';
-
 /**
  * 全局对象。
  */
@@ -14,6 +12,7 @@ if (typeof window !== 'undefined') {
 } else if (typeof global !== undefined) {
   theGlobal = global;
 }
+
 
 /**
  * 轮询选项。
@@ -33,6 +32,13 @@ export interface IPollingOptions {
  * 轮询的执行函数原型。
  */
 export declare type Executor = (() => Promise<unknown>) | (() => unknown);
+
+
+/**
+ * 记录已启动的轮询，便于全部停止。
+ */
+const pollingTasks: Polling[] = [];
+
 
 /**
  * 轮询类。
@@ -59,7 +65,10 @@ export class Polling {
   /**
    * 轮询选项。
    */
-  protected readonly _options: IPollingOptions;
+  protected readonly _options: IPollingOptions = {
+    interval: 1000,
+    breakOnError: false
+  };
   /**
    * 轮询对应的 setTimeout 的计时器。
    */
@@ -78,18 +87,33 @@ export class Polling {
   private _shouldImmediate = false;
 
   /**
+   * 停止所有轮询任务。
+   */
+  public static stopAll(): void {
+    for (let i = pollingTasks.length - 1; i >= 0; i--) {
+      pollingTasks[i].stop();
+    }
+  }
+
+  /**
    * 构造函数。
    * @param executor 执行函数，返回值为 Promise（带有 then 方法）时会进行异步处理。
    * @param options 轮询选项。
    */
-  constructor(executor: Executor, options: IPollingOptions) {
-    // 执行函数
+  constructor(executor: Executor, options?: IPollingOptions) {
     this._executor = executor;
-    // 其他选项
-    this._options = assignProps({
-      interval: 1000,
-      breakOnError: false
-    }, options);
+    this.updateOptions(options);
+  }
+
+  /**
+   * 更新轮询选项。
+   * @param options 轮询选项。
+   */
+  updateOptions(options?: IPollingOptions): void {
+    if (options) {
+      this._options.interval = options.interval ?? this._options.interval;
+      this._options.breakOnError = options.breakOnError ?? this._options.breakOnError;
+    }
   }
 
   /**
@@ -102,7 +126,10 @@ export class Polling {
     } catch (e) {
       if (this._options.breakOnError) {
         this.stop();
+      } else {
+        this._next();
       }
+      throw e;
     }
 
     if (result && typeof result.then === 'function') {
@@ -111,13 +138,14 @@ export class Polling {
       result.then(() => {
         this._isExecuting = false;
         this._next();
-      }, () => {
+      }, (e: unknown) => {
         this._isExecuting = false;
         if (this._options.breakOnError) {
           this.stop();
         } else {
           this._next();
         }
+        throw e;
       });
 
     } else {
@@ -131,7 +159,7 @@ export class Polling {
    */
   protected _next(): void {
     if (this._shouldImmediate) {
-      // 外部调用了 execImmediately，马上执行
+      // 调用过 execImmediately，马上执行
       this._exec();
 
     } else if (this._started) {
@@ -177,7 +205,9 @@ export class Polling {
    * 启动轮询。
    */
   public start(): void {
+    if (this._started) { return; }
     this._started = true;
+    pollingTasks.push(this);
     this._exec();
   }
 
@@ -187,5 +217,11 @@ export class Polling {
   stop(): void {
     this._clearTimeout();
     this._started = false;
+    for (let i = pollingTasks.length - 1; i >= 0; i--) {
+      if (pollingTasks[i] === this) {
+        pollingTasks.splice(i, 1);
+        break;
+      }
+    }
   }
 }
