@@ -1,7 +1,10 @@
 /**
- * 提供轮询功能。
+ * 调用入口。
  * @packageDocumentation
  */
+
+import { IPollingOptions, Executor } from './types';
+
 
 /**
  * 全局对象。
@@ -15,26 +18,6 @@ if (typeof window !== 'undefined') {
 
 
 /**
- * 轮询选项。
- */
-export interface IPollingOptions {
-  /**
-   * 轮询间隔（毫秒），默认为 1000 毫秒。
-   */
-  interval?: number;
-  /**
-   * 出错时是否中断，默认为 false。
-   */
-  breakOnError?: boolean;
-}
-
-/**
- * 轮询的执行函数原型。
- */
-export declare type Executor = (() => Promise<unknown>) | (() => unknown);
-
-
-/**
  * 记录已启动的轮询，便于全部停止。
  */
 const pollingTasks: Polling[] = [];
@@ -44,6 +27,7 @@ const pollingTasks: Polling[] = [];
  * 轮询类。
  * @example
  * ```javascript
+ * import { Polling } from '@just4/polling';
  * const polling = new Polling(() => {
  *   return new Promise((resolve) => {
  *     setTimeout(() => {
