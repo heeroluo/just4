@@ -104,7 +104,7 @@ export class Polling {
    * 执行轮询函数。
    */
   protected _exec(): void {
-    let result;
+    let result: unknown;
     try {
       result = this._executor.call(theGlobal);
     } catch (e) {
@@ -116,10 +116,10 @@ export class Polling {
       throw e;
     }
 
-    if (result && typeof result.then === 'function') {
+    if (result && typeof (result as Promise<unknown>).then === 'function') {
       // 异步情况，在 Promise 回调中继续下一次轮询
       this._isExecuting = true;
-      result.then(() => {
+      (result as Promise<unknown>).then(() => {
         this._isExecuting = false;
         this._next();
       }, (e: unknown) => {

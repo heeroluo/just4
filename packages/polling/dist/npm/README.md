@@ -50,6 +50,27 @@ const polling = new Polling(() => {
 polling.start();
 ```
 
+### 更新轮询选项
+
+可以调用实例方法 `updateOptions` 更新轮询选项：
+
+```javascript
+const polling = new Polling(() => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      polling.updateOptions({
+        interval: Math.random() < 0.5 ? 5000 : 2000
+      });
+      resolve();
+    }, 1000);
+  });
+}, {
+  interval: 2000,
+  breakOnError: true
+});
+polling.start();
+```
+
 ### 轮询过程中立刻执行一次操作函数
 
 ```javascript
@@ -67,8 +88,12 @@ const polling = new Polling(() => {
 polling.start();
 
 setTimeout(() => {
-  // 注意，如果操作函数是异步的而且当前还在执行中，
-  // 那么 execImmediately 会等待它执行完之后再执行一次操作函数
+  // 注意，如果操作函数是异步的而且当前还未执行完，
+  // 那么 execImmediately 会等待它执行完之后才再次执行操作函数
   polling.execImmediately();
 }, 3000);
 ```
+
+## 相关文档
+
+- [API 文档](https://heeroluo.github.io/just4/polling/modules/index.html)
