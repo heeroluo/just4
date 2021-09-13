@@ -5,7 +5,8 @@ import { appendToURL } from "@just4/querystring/index";
 function createScript(props) {
     const script = document.createElement("script");
     if (props) {
-        Object.keys(props).forEach((function(key) {
+        Object.keys(props).forEach((function(value) {
+            const key = value;
             script[key] = props[key];
         }));
     }

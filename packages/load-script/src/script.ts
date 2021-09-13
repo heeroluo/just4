@@ -11,10 +11,11 @@ import { ILoadScriptOptions } from './interfaces';
 /**
  * 创建 script 节点，并设置特性。
  */
-function createScript(props?: Partial<HTMLScriptElement>) {
+function createScript(props?: Partial<HTMLScriptElement>): HTMLScriptElement {
   const script = document.createElement('script');
   if (props) {
-    Object.keys(props).forEach(function(key: keyof HTMLScriptElement) {
+    Object.keys(props).forEach(function(value) {
+      const key = value as keyof HTMLScriptElement;
       (<any>script)[key] = props[key];
     });
   }
