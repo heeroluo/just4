@@ -2,6 +2,7 @@
   "compilerOptions": {
     "noImplicitAny": true,
     "moduleResolution": "node",
-    "strictNullChecks": true
+    "strictNullChecks": true,
+    "strict": true
   }
 }
