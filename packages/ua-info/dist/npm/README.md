@@ -90,9 +90,7 @@ uaInfo.client.isFirefox; // 是否 Firefox 浏览器
 
 ### 版本号属性
 
-部分信息项，包括操作系统、浏览器内核和客户端，都有对应的版本号属性（version）。只要能够识别出结果（任意一个 `isXXX` 为 `true`），该属性的值就是一个 `Version` 对象，否则为 `undefined`。
-
-对于 `Version` 对象，还可以进行版本号的对比。
+部分信息项，包括操作系统、浏览器内核和客户端，都有对应的版本号属性（version），该属性的值是一个 `Version` 对象。该对象可以进行版本号的对比：
 
 ```javascript
 import { UAInfo } from '@just4/ua-info';

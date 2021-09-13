@@ -49,7 +49,10 @@ export class OSInfo {
    */
   constructor(ua: string, featureInfo?: IFeatureInfo) {
     const result = execRules(ua, osRules);
-    if (!result) { return; }
+    if (!result) {
+      this.version = new Version('');
+      return;
+    }
 
     // iOS >= 13 的 iPad Pro 与 iPad Air，
     // User-Agent 会变成 Macbook 的 User-Agent。

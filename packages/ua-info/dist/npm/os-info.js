@@ -19,6 +19,7 @@ export class OSInfo {
         this.isMacOS = false;
         const result = execRules(ua, osRules);
         if (!result) {
+            this.version = new Version("");
             return;
         }
         if (result.name === "macos" && (featureInfo === null || featureInfo === void 0 ? void 0 : featureInfo.maxTouchPoints)) {

@@ -47,10 +47,11 @@ export class ClientInfo {
         this.isIE = false;
         this.isFirefox = false;
         const result = execRules(ua, clientRules);
-        if (!result) {
-            return;
+        if (result) {
+            this[propMap[result.name]] = true;
+            this.version = new Version(result.version);
+        } else {
+            this.version = new Version("");
         }
-        this[propMap[result.name]] = true;
-        this.version = new Version(result.version);
     }
 }

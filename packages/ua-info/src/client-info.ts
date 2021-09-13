@@ -118,9 +118,11 @@ export class ClientInfo {
    */
   constructor(ua: string) {
     const result = execRules(ua, clientRules);
-    if (!result) { return; }
-
-    this[propMap[result.name]] = true;
-    this.version = new Version(result.version);
+    if (result) {
+      this[propMap[result.name]] = true;
+      this.version = new Version(result.version);
+    } else {
+      this.version = new Version('');
+    }
   }
 }

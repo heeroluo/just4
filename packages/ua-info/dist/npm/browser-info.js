@@ -22,10 +22,11 @@ export class BrowserInfo {
         this.isFirefox = false;
         this.isPrestoOpera = false;
         const result = execRules(ua, browserRules);
-        if (!result) {
-            return;
+        if (result) {
+            this[propMap[result.name]] = true;
+            this.version = new Version(result.version);
+        } else {
+            this.version = new Version("");
         }
-        this[propMap[result.name]] = true;
-        this.version = new Version(result.version);
     }
 }
