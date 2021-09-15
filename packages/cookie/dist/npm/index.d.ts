@@ -30,7 +30,7 @@ export declare function getCookie(key: string, options?: ICookieGetterOptions): 
  * @param value cookie 值。
  * @param options 选项。
  */
-export declare function setCookie(key: string, value: unknown, options?: ICookieSetterOptions): void;
+export declare function setCookie(key: string, value: string | number | boolean, options?: ICookieSetterOptions): void;
 /**
  * 移除 cookie。
  * @example

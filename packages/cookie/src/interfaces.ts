@@ -11,7 +11,7 @@ export interface ICookieGetterOptions {
   /**
    *  Cookie 名的编码方式，默认为 encodeURIComponent。
    */
-  encode?: (content: unknown) => string,
+  encode?: (content: string | number | boolean) => string,
   /**
    * Cookie 名和值的解码方式，默认为 decodeURIComponent。
    */
@@ -47,5 +47,5 @@ export interface ICookieSetterOptions {
   /**
    *  Cookie 名和值的编码方式，默认为 encodeURIComponent。
    */
-  encode?: (content: unknown) => string
+  encode?: (content: string | number | boolean) => string
 }

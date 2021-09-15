@@ -55,7 +55,9 @@ export function getCookie(key: string, options?: ICookieGetterOptions): string {
  * @param options 选项。
  */
 export function setCookie(
-  key: string, value: unknown, options?: ICookieSetterOptions
+  key: string,
+  value: string | number | boolean,
+  options?: ICookieSetterOptions
 ): void {
   options = assignProps({}, options);
   options.encode = options.encode || encodeURIComponent;
