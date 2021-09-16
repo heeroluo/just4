@@ -4,7 +4,6 @@
  * @internal
  */
 
-import { assignProps } from '@just4/util/object';
 import { IAJAXOptions, IAJAXResponse } from '../interfaces';
 import {
   parseMIMEType,
@@ -17,10 +16,10 @@ import { AJAXError } from '../ajax-error';
 
 // 创建 XMLHttpRequest 的 onload 处理函数
 function createOnLoad(
-  xhr: XMLHttpRequest,
-  options: IAJAXOptions,
-  resolve: (value?: unknown) => void,
-  reject: (reason?: Error) => void
+  xhr: Readonly<XMLHttpRequest>,
+  options: Readonly<IAJAXOptions>,
+  resolve: (value: Readonly<IAJAXResponse>) => void,
+  reject: (reason: Readonly<AJAXError>) => void
 ): () => void {
   return function() {
     let data: unknown;
@@ -52,25 +51,22 @@ function createOnLoad(
         data = xhr.responseText;
     }
 
-    const response: IAJAXResponse = {
-      xhr,
-      options,
-      data
-    };
-
     const status = xhr.status;
     let error: AJAXError | undefined;
     if (isErrorStatus(status)) {
-      error = new AJAXError('Error (HTTP status code: ' + status + ')');
-      error.code = status;
+      error = new AJAXError(
+        xhr, options, 'Error (HTTP status code: ' + status + ')'
+      );
     } else if (errMsg) {
-      error = new AJAXError(errMsg);
+      error = new AJAXError(xhr, options, errMsg);
     }
 
     if (error) {
-      reject(<AJAXError>assignProps(error, response));
+      error.code = status;
+      error.data = data;
+      reject(Object.freeze(error));
     } else {
-      resolve(response);
+      resolve(Object.freeze({ xhr, options, data }));
     }
   };
 }
@@ -78,12 +74,12 @@ function createOnLoad(
 
 // 记录所有进行中的 AJAX 请求
 const ajaxRecords: {
-  [key: number]: {
+  [key: number]: Readonly<{
     xhr: XMLHttpRequest,
     options: IAJAXOptions,
-    resolve: (value: IAJAXResponse) => void,
-    reject: (reason?: Error) => void
-  }
+    resolve: (value: Readonly<IAJAXResponse>) => void,
+    reject: (reason: Readonly<AJAXError>) => void
+  }>
 } = Object.create(null);
 
 // 每条 AJAX 记录的自增 id
@@ -96,13 +92,21 @@ let autoId = 0;
  */
 export function createAJAXRecord(
   xhr: XMLHttpRequest,
-  options: IAJAXOptions,
-  resolve: (response: IAJAXResponse) => void,
-  reject: (reason?: Error) => void
+  options: Readonly<IAJAXOptions>,
+  resolve: (response: Readonly<IAJAXResponse>) => void,
+  reject: (reason: Readonly<AJAXError>) => void
 ): number {
   xhr.onload = createOnLoad(xhr, options, resolve, reject);
-  xhr.ontimeout = function() { reject(createTimeoutError()); };
-  xhr.onerror = function() { reject(new AJAXError('Network error')); };
+  xhr.ontimeout = function() {
+    reject(
+      Object.freeze(createTimeoutError(xhr, options))
+    );
+  };
+  xhr.onerror = function() {
+    reject(
+      Object.freeze(new AJAXError(xhr, options, 'Network error'))
+    );
+  };
 
   if (options.onDownloadProgress) {
     xhr.addEventListener('progress', options.onDownloadProgress);
@@ -138,6 +142,8 @@ export function cancelRequest(id: number): void {
   const record = ajaxRecords[id];
   if (record) {
     record.xhr.abort();
-    record.reject(createCancelError());
+    record.reject(
+      createCancelError(record.xhr, record.options)
+    );
   }
 }

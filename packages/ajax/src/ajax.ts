@@ -30,7 +30,7 @@ function createXhr(
   isCross: boolean,
   method: string,
   requestType: string,
-  headers: { [key: string]: unknown },
+  headers: Readonly<UniversalParams>,
   withCredentials?: boolean
 ): XMLHttpRequest {
   const useXDomainRequest = isCross &&
@@ -49,7 +49,7 @@ function createXhr(
 // 拼接出最终请求的 URL
 function handleURL(
   url: string,
-  params?: URLParams,
+  params?: Readonly<URLParams>,
   preventCaching?: boolean
 ): string {
   if (params != null) { url = appendToURL(url, params, { ignoreEmpty: false }); }
@@ -89,7 +89,7 @@ function handleRequestBody(
 // 发送请求前，设置 XMLHttpRequest 对象的属性和请求头
 function setXhrPropsAndHeaders(
   xhr: XMLHttpRequest,
-  options: IAJAXOptions,
+  options: Readonly<IAJAXOptions>,
   isCross: boolean,
   headers: UniversalParams
 ) {
@@ -133,25 +133,35 @@ function setXhrPropsAndHeaders(
  * @param options 请求选项。
  * @returns 发送请求的 promise 实例。
  */
-export function send(url: string, options?: IAJAXOptions): Promise<IAJAXResponse> {
+export function send(
+  url: string, options?: Readonly<IAJAXOptions>
+): Promise<IAJAXResponse> {
   let xhrId = 0;
 
   return new Promise<IAJAXResponse>(function(resolve, reject): void {
-    options = <IAJAXOptions>assignProps({}, options);
-    options.method = options.method || 'get';
-    options.requestType = options.requestType || '';
-    options.responseType = options.responseType || 'json';
-    options.timeout = options.timeout || 0;
-    const method = <RequestMethod>options.method.toLowerCase();
-    const requestType = <RequestType>options.requestType.toLowerCase();
-    const headers = options.headers || {};
+    const ajaxOptions = <IAJAXOptions>assignProps({}, options);
+    ajaxOptions.method = ajaxOptions.method || 'get';
+    ajaxOptions.requestType = ajaxOptions.requestType || '';
+    ajaxOptions.responseType = ajaxOptions.responseType || 'json';
+    ajaxOptions.timeout = ajaxOptions.timeout || 0;
+    ajaxOptions.method = <RequestMethod>ajaxOptions.method.toLowerCase();
+    ajaxOptions.requestType = <RequestType>ajaxOptions.requestType.toLowerCase();
+    ajaxOptions.headers = ajaxOptions.headers || {};
 
-    url = handleURL(url, options.params, options.preventCaching);
+    Object.freeze(ajaxOptions);
+
+    url = handleURL(url, ajaxOptions.params, ajaxOptions.preventCaching);
     const isCross = isCrossDomain(url);
-    const xhr = createXhr(isCross, method, requestType, headers, options.withCredentials);
+    const xhr = createXhr(
+      isCross,
+      ajaxOptions.method,
+      ajaxOptions.requestType,
+      ajaxOptions.headers,
+      ajaxOptions.withCredentials
+    );
     xhrId = createAJAXRecord(
       xhr,
-      options,
+      ajaxOptions,
       function(response: IAJAXResponse) {
         deleteAJAXRecord(xhrId);
         resolve(response);
@@ -161,23 +171,36 @@ export function send(url: string, options?: IAJAXOptions): Promise<IAJAXResponse
         reject(error);
       }
     );
-    if (options.responseType === 'blob' || options.responseType === 'arraybuffer') {
-      xhr.responseType = options.responseType;
+    if (ajaxOptions.responseType === 'blob' ||
+      ajaxOptions.responseType === 'arraybuffer'
+    ) {
+      xhr.responseType = ajaxOptions.responseType;
     }
-    xhr.open(method, url, true, options.username, options.password);
+    xhr.open(
+      ajaxOptions.method,
+      url,
+      true,
+      ajaxOptions.username,
+      ajaxOptions.password
+    );
 
-    const body = handleRequestBody(method, headers, options.data, requestType);
+    const body = handleRequestBody(
+      ajaxOptions.method,
+      ajaxOptions.headers,
+      ajaxOptions.data,
+      ajaxOptions.requestType
+    );
 
-    setXhrPropsAndHeaders(xhr, options, isCross, headers);
+    setXhrPropsAndHeaders(xhr, ajaxOptions, isCross, ajaxOptions.headers);
 
-    if (typeof options.beforeSend === 'function') {
-      options.beforeSend.call(window, xhr);
+    if (typeof ajaxOptions.beforeSend === 'function') {
+      ajaxOptions.beforeSend.call(window, xhr);
     }
 
     xhr.send(body || '');
 
-    if (typeof options.receiveCancelId === 'function') {
-      options.receiveCancelId(xhrId);
+    if (typeof ajaxOptions.receiveCancelId === 'function') {
+      ajaxOptions.receiveCancelId(xhrId);
     }
   });
 }

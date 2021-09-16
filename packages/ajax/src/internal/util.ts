@@ -4,6 +4,7 @@
  * @internal
  */
 
+import { IAJAXOptions } from 'src/interfaces';
 import { AJAXError } from '../ajax-error';
 
 
@@ -13,8 +14,12 @@ const CANCEL_MESSAGE = 'Request cancelled';
  * @param message 错误信息。
  * @returns 错误对象。
  */
-export function createCancelError(message?: string): AJAXError {
-  const err = new AJAXError(message || CANCEL_MESSAGE);
+export function createCancelError(
+  xhr: Readonly<XMLHttpRequest>,
+  options: Readonly<IAJAXOptions>,
+  message?: string
+): AJAXError {
+  const err = new AJAXError(xhr, options, message || CANCEL_MESSAGE);
   err.isCancel = true;
   return err;
 }
@@ -25,8 +30,12 @@ const TIMEOUT_MESSAGE = 'Request timeout';
  * @param message 错误信息。
  * @returns 错误对象。
  */
-export function createTimeoutError(message?: string): AJAXError {
-  const err = new AJAXError(message || TIMEOUT_MESSAGE);
+export function createTimeoutError(
+  xhr: Readonly<XMLHttpRequest>,
+  options: Readonly<IAJAXOptions>,
+  message?: string
+): AJAXError {
+  const err = new AJAXError(xhr, options, message || TIMEOUT_MESSAGE);
   err.isTimeout = true;
   return err;
 }
