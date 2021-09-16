@@ -135,14 +135,14 @@
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
 					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite">
-						<li class="tsd-signature tsd-kind-icon">new AJAXError<span class="tsd-signature-symbol">(</span>message<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="ajax_error.ajaxerror.html" class="tsd-signature-type" data-tsd-kind="Class">AJAXError</a></li>
+						<li class="tsd-signature tsd-kind-icon">new AJAXError<span class="tsd-signature-symbol">(</span>xhr<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">XMLHttpRequest</span>, options<span class="tsd-signature-symbol">: </span><a href="../interfaces/interfaces.iajaxoptions.html" class="tsd-signature-type" data-tsd-kind="Interface">IAJAXOptions</a>, message<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="ajax_error.ajaxerror.html" class="tsd-signature-type" data-tsd-kind="Class">AJAXError</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<p>Overrides Error.constructor</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/heeroluo/just4/blob/371eabf/packages/ajax/src/ajax-error.ts#L36">packages/ajax/src/ajax-error.ts:36</a></li>
+									<li>Defined in <a href="https://github.com/heeroluo/just4/blob/2a1828e/packages/ajax/src/ajax-error.ts#L36">packages/ajax/src/ajax-error.ts:36</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -152,6 +152,12 @@
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
+								<li>
+									<h5>xhr: <span class="tsd-signature-type">XMLHttpRequest</span></h5>
+								</li>
+								<li>
+									<h5>options: <a href="../interfaces/interfaces.iajaxoptions.html" class="tsd-signature-type" data-tsd-kind="Interface">IAJAXOptions</a></h5>
+								</li>
 								<li>
 									<h5>message: <span class="tsd-signature-type">string</span></h5>
 									<div class="tsd-comment tsd-typography">
@@ -169,10 +175,10 @@
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
 					<a name="code" class="tsd-anchor"></a>
 					<h3>code</h3>
-					<div class="tsd-signature tsd-kind-icon">code<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
+					<div class="tsd-signature tsd-kind-icon">code<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/heeroluo/just4/blob/371eabf/packages/ajax/src/ajax-error.ts#L28">packages/ajax/src/ajax-error.ts:28</a></li>
+							<li>Defined in <a href="https://github.com/heeroluo/just4/blob/2a1828e/packages/ajax/src/ajax-error.ts#L28">packages/ajax/src/ajax-error.ts:28</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -188,7 +194,7 @@
 					<aside class="tsd-sources">
 						<p>Implementation of <a href="../interfaces/interfaces.iajaxresponse.html">IAJAXResponse</a>.<a href="../interfaces/interfaces.iajaxresponse.html#data">data</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/heeroluo/just4/blob/371eabf/packages/ajax/src/ajax-error.ts#L24">packages/ajax/src/ajax-error.ts:24</a></li>
+							<li>Defined in <a href="https://github.com/heeroluo/just4/blob/2a1828e/packages/ajax/src/ajax-error.ts#L24">packages/ajax/src/ajax-error.ts:24</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -200,10 +206,10 @@
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
 					<a name="iscancel" class="tsd-anchor"></a>
 					<h3>is<wbr>Cancel</h3>
-					<div class="tsd-signature tsd-kind-icon">is<wbr>Cancel<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
+					<div class="tsd-signature tsd-kind-icon">is<wbr>Cancel<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol"> = false</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/heeroluo/just4/blob/371eabf/packages/ajax/src/ajax-error.ts#L32">packages/ajax/src/ajax-error.ts:32</a></li>
+							<li>Defined in <a href="https://github.com/heeroluo/just4/blob/2a1828e/packages/ajax/src/ajax-error.ts#L32">packages/ajax/src/ajax-error.ts:32</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -215,10 +221,10 @@
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
 					<a name="istimeout" class="tsd-anchor"></a>
 					<h3>is<wbr>Timeout</h3>
-					<div class="tsd-signature tsd-kind-icon">is<wbr>Timeout<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
+					<div class="tsd-signature tsd-kind-icon">is<wbr>Timeout<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol"> = false</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/heeroluo/just4/blob/371eabf/packages/ajax/src/ajax-error.ts#L36">packages/ajax/src/ajax-error.ts:36</a></li>
+							<li>Defined in <a href="https://github.com/heeroluo/just4/blob/2a1828e/packages/ajax/src/ajax-error.ts#L36">packages/ajax/src/ajax-error.ts:36</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -251,12 +257,12 @@
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
 					<a name="options" class="tsd-anchor"></a>
-					<h3>options</h3>
-					<div class="tsd-signature tsd-kind-icon">options<span class="tsd-signature-symbol">:</span> <a href="../interfaces/interfaces.iajaxoptions.html" class="tsd-signature-type" data-tsd-kind="Interface">IAJAXOptions</a></div>
+					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> options</h3>
+					<div class="tsd-signature tsd-kind-icon">options<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Readonly</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/interfaces.iajaxoptions.html" class="tsd-signature-type" data-tsd-kind="Interface">IAJAXOptions</a><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<p>Implementation of <a href="../interfaces/interfaces.iajaxresponse.html">IAJAXResponse</a>.<a href="../interfaces/interfaces.iajaxresponse.html#options">options</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/heeroluo/just4/blob/371eabf/packages/ajax/src/ajax-error.ts#L20">packages/ajax/src/ajax-error.ts:20</a></li>
+							<li>Defined in <a href="https://github.com/heeroluo/just4/blob/2a1828e/packages/ajax/src/ajax-error.ts#L20">packages/ajax/src/ajax-error.ts:20</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -278,12 +284,12 @@
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
 					<a name="xhr" class="tsd-anchor"></a>
-					<h3>xhr</h3>
-					<div class="tsd-signature tsd-kind-icon">xhr<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">XMLHttpRequest</span></div>
+					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> xhr</h3>
+					<div class="tsd-signature tsd-kind-icon">xhr<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Readonly</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">XMLHttpRequest</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<p>Implementation of <a href="../interfaces/interfaces.iajaxresponse.html">IAJAXResponse</a>.<a href="../interfaces/interfaces.iajaxresponse.html#xhr">xhr</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/heeroluo/just4/blob/371eabf/packages/ajax/src/ajax-error.ts#L16">packages/ajax/src/ajax-error.ts:16</a></li>
+							<li>Defined in <a href="https://github.com/heeroluo/just4/blob/2a1828e/packages/ajax/src/ajax-error.ts#L16">packages/ajax/src/ajax-error.ts:16</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -302,16 +308,6 @@
 							<li>Defined in node_modules/@types/node/globals.d.ts:11</li>
 						</ul>
 					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>Optional override for formatting stack traces</p>
-						</div>
-						<dl class="tsd-comment-tags">
-							<dt>see</dt>
-							<dd><p><a href="https://github.com/v8/v8/wiki/Stack%20Trace%20API#customizing-stack-traces">https://github.com/v8/v8/wiki/Stack%20Trace%20API#customizing-stack-traces</a></p>
-							</dd>
-						</dl>
-					</div>
 					<div class="tsd-type-declaration">
 						<h4>Type declaration</h4>
 						<ul class="tsd-parameters">
@@ -321,6 +317,11 @@
 								</ul>
 								<ul class="tsd-descriptions">
 									<li class="tsd-description">
+										<div class="tsd-comment tsd-typography">
+											<div class="lead">
+												<p>Optional override for formatting stack traces</p>
+											</div>
+										</div>
 										<h4 class="tsd-parameters-title">Parameters</h4>
 										<ul class="tsd-parameters">
 											<li>
@@ -389,7 +390,7 @@
 			<nav class="tsd-navigation primary">
 				<ul>
 					<li class=" ">
-						<a href="../modules.html">Exports</a>
+						<a href="../modules.html">Modules</a>
 					</li>
 					<li class=" tsd-kind-module">
 						<a href="../modules/ajax.html">ajax</a>
