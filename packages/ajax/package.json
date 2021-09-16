@@ -1,6 +1,6 @@
 {
   "name": "@just4/ajax",
-  "version": "0.1.0-beta.9",
+  "version": "0.2.0-beta.1",
   "description": "Just for making XMLHTTPRequest easier to use in browser.",
   "keywords": ["ajax", "XMLHttpRequest", "XDomainRequest"],
   "scripts": {
