@@ -20,12 +20,14 @@ import { ICookieGetterOptions, ICookieSetterOptions } from './interfaces';
  * @param options 选项。
  * @returns cookie 值（cookie 不存在时返回空字符串）。
  */
-export function getCookie(key: string, options?: ICookieGetterOptions): string {
-  options = assignProps({}, options);
-  options.encode = options.encode || encodeURIComponent;
-  options.decode = options.decode || decodeURIComponent;
+export function getCookie(
+  key: string, options?: Readonly<ICookieGetterOptions>
+): string {
+  const opts: ICookieGetterOptions = assignProps({}, options);
+  opts.encode = opts.encode || encodeURIComponent;
+  opts.decode = opts.decode || decodeURIComponent;
 
-  key = '; ' + options.encode(key) + '=';
+  key = '; ' + opts.encode(key) + '=';
   const cookie = '; ' + document.cookie;
 
   let beginPos = cookie.indexOf(key);
@@ -35,7 +37,7 @@ export function getCookie(key: string, options?: ICookieGetterOptions): string {
   let endPos = cookie.indexOf(';', beginPos);
   if (endPos === -1) { endPos = cookie.length; }
 
-  return options.decode(cookie.substring(beginPos, endPos));
+  return opts.decode(cookie.substring(beginPos, endPos));
 }
 
 
@@ -57,23 +59,23 @@ export function getCookie(key: string, options?: ICookieGetterOptions): string {
 export function setCookie(
   key: string,
   value: string | number | boolean,
-  options?: ICookieSetterOptions
+  options?: Readonly<ICookieSetterOptions>
 ): void {
-  options = assignProps({}, options);
-  options.encode = options.encode || encodeURIComponent;
+  const opts: ICookieSetterOptions = assignProps({}, options);
+  opts.encode = opts.encode || encodeURIComponent;
 
-  let content = options.encode(key) + '=' + options.encode(value);
-  if (options.expires != null) {
+  let content = opts.encode(key) + '=' + opts.encode(value);
+  if (opts.expires != null) {
     content += '; expires=' + (
-      isDate(options.expires) ?
-        <Date>options.expires :
-        addToDate(new Date(), <number | string>options.expires)
+      isDate(opts.expires) ?
+        <Date>opts.expires :
+        addToDate(new Date(), <number | string>opts.expires)
     ).toUTCString();
   }
-  if (options.path) { content += '; path=' + options.path; }
-  if (options.domain) { content += '; domain=' + options.domain; }
-  if (options.secure === true) { content += '; secure'; }
-  if (options.sameSite) { content += '; samesite=' + options.sameSite; }
+  if (opts.path) { content += '; path=' + opts.path; }
+  if (opts.domain) { content += '; domain=' + opts.domain; }
+  if (opts.secure === true) { content += '; secure'; }
+  if (opts.sameSite) { content += '; samesite=' + opts.sameSite; }
 
   document.cookie = content;
 }
@@ -100,11 +102,13 @@ const shouldSetEmptyBeforeRemove: boolean = (function() {
  * @param key cookie 名。
  * @param options 选项。
  */
-export function removeCookie(key: string, options?: ICookieSetterOptions): void {
+export function removeCookie(
+  key: string, options?: Readonly<ICookieSetterOptions>
+): void {
   if (shouldSetEmptyBeforeRemove) { setCookie(key, '', options); }
 
-  options = options || { };
+  const opts: ICookieSetterOptions = assignProps({}, options);
   // 让其过期即为删除
-  options.expires = new Date(0);
-  setCookie(key, '', options);
+  opts.expires = new Date(0);
+  setCookie(key, '', opts);
 }

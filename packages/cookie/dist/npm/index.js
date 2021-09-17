@@ -5,10 +5,10 @@ import { isDate } from "@just4/util/type";
 import { addToDate } from "./time-unit";
 
 export function getCookie(key, options) {
-    options = assignProps({}, options);
-    options.encode = options.encode || encodeURIComponent;
-    options.decode = options.decode || decodeURIComponent;
-    key = "; " + options.encode(key) + "=";
+    const opts = assignProps({}, options);
+    opts.encode = opts.encode || encodeURIComponent;
+    opts.decode = opts.decode || decodeURIComponent;
+    key = "; " + opts.encode(key) + "=";
     const cookie = "; " + document.cookie;
     let beginPos = cookie.indexOf(key);
     if (beginPos === -1) {
@@ -19,27 +19,27 @@ export function getCookie(key, options) {
     if (endPos === -1) {
         endPos = cookie.length;
     }
-    return options.decode(cookie.substring(beginPos, endPos));
+    return opts.decode(cookie.substring(beginPos, endPos));
 }
 
 export function setCookie(key, value, options) {
-    options = assignProps({}, options);
-    options.encode = options.encode || encodeURIComponent;
-    let content = options.encode(key) + "=" + options.encode(value);
-    if (options.expires != null) {
-        content += "; expires=" + (isDate(options.expires) ? options.expires : addToDate(new Date, options.expires)).toUTCString();
+    const opts = assignProps({}, options);
+    opts.encode = opts.encode || encodeURIComponent;
+    let content = opts.encode(key) + "=" + opts.encode(value);
+    if (opts.expires != null) {
+        content += "; expires=" + (isDate(opts.expires) ? opts.expires : addToDate(new Date, opts.expires)).toUTCString();
     }
-    if (options.path) {
-        content += "; path=" + options.path;
+    if (opts.path) {
+        content += "; path=" + opts.path;
     }
-    if (options.domain) {
-        content += "; domain=" + options.domain;
+    if (opts.domain) {
+        content += "; domain=" + opts.domain;
     }
-    if (options.secure === true) {
+    if (opts.secure === true) {
         content += "; secure";
     }
-    if (options.sameSite) {
-        content += "; samesite=" + options.sameSite;
+    if (opts.sameSite) {
+        content += "; samesite=" + opts.sameSite;
     }
     document.cookie = content;
 }
@@ -58,7 +58,7 @@ export function removeCookie(key, options) {
     if (shouldSetEmptyBeforeRemove) {
         setCookie(key, "", options);
     }
-    options = options || {};
-    options.expires = new Date(0);
-    setCookie(key, "", options);
+    const opts = assignProps({}, options);
+    opts.expires = new Date(0);
+    setCookie(key, "", opts);
 }

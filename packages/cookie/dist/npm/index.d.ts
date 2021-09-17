@@ -14,7 +14,7 @@ import { ICookieGetterOptions, ICookieSetterOptions } from './interfaces';
  * @param options 选项。
  * @returns cookie 值（cookie 不存在时返回空字符串）。
  */
-export declare function getCookie(key: string, options?: ICookieGetterOptions): string;
+export declare function getCookie(key: string, options?: Readonly<ICookieGetterOptions>): string;
 /**
  * 写入 cookie。
  * @example
@@ -30,7 +30,7 @@ export declare function getCookie(key: string, options?: ICookieGetterOptions): 
  * @param value cookie 值。
  * @param options 选项。
  */
-export declare function setCookie(key: string, value: string | number | boolean, options?: ICookieSetterOptions): void;
+export declare function setCookie(key: string, value: string | number | boolean, options?: Readonly<ICookieSetterOptions>): void;
 /**
  * 移除 cookie。
  * @example
@@ -41,4 +41,4 @@ export declare function setCookie(key: string, value: string | number | boolean,
  * @param key cookie 名。
  * @param options 选项。
  */
-export declare function removeCookie(key: string, options?: ICookieSetterOptions): void;
+export declare function removeCookie(key: string, options?: Readonly<ICookieSetterOptions>): void;
