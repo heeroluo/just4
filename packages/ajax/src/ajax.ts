@@ -139,29 +139,29 @@ export function send(
   let xhrId = 0;
 
   return new Promise<IAJAXResponse>(function(resolve, reject): void {
-    const ajaxOptions = <IAJAXOptions>assignProps({}, options);
-    ajaxOptions.method = ajaxOptions.method || 'get';
-    ajaxOptions.requestType = ajaxOptions.requestType || '';
-    ajaxOptions.responseType = ajaxOptions.responseType || 'json';
-    ajaxOptions.timeout = ajaxOptions.timeout || 0;
-    ajaxOptions.method = <RequestMethod>ajaxOptions.method.toLowerCase();
-    ajaxOptions.requestType = <RequestType>ajaxOptions.requestType.toLowerCase();
-    ajaxOptions.headers = ajaxOptions.headers || {};
+    const opts = <IAJAXOptions>assignProps({}, options);
+    opts.method = opts.method || 'get';
+    opts.requestType = opts.requestType || '';
+    opts.responseType = opts.responseType || 'json';
+    opts.timeout = opts.timeout || 0;
+    opts.method = <RequestMethod>opts.method.toLowerCase();
+    opts.requestType = <RequestType>opts.requestType.toLowerCase();
+    opts.headers = opts.headers || {};
 
-    Object.freeze(ajaxOptions);
+    Object.freeze(opts);
 
-    url = handleURL(url, ajaxOptions.params, ajaxOptions.preventCaching);
+    url = handleURL(url, opts.params, opts.preventCaching);
     const isCross = isCrossDomain(url);
     const xhr = createXhr(
       isCross,
-      ajaxOptions.method,
-      ajaxOptions.requestType,
-      ajaxOptions.headers,
-      ajaxOptions.withCredentials
+      opts.method,
+      opts.requestType,
+      opts.headers,
+      opts.withCredentials
     );
     xhrId = createAJAXRecord(
       xhr,
-      ajaxOptions,
+      opts,
       function(response: IAJAXResponse) {
         deleteAJAXRecord(xhrId);
         resolve(response);
@@ -171,36 +171,36 @@ export function send(
         reject(error);
       }
     );
-    if (ajaxOptions.responseType === 'blob' ||
-      ajaxOptions.responseType === 'arraybuffer'
+    if (opts.responseType === 'blob' ||
+      opts.responseType === 'arraybuffer'
     ) {
-      xhr.responseType = ajaxOptions.responseType;
+      xhr.responseType = opts.responseType;
     }
     xhr.open(
-      ajaxOptions.method,
+      opts.method,
       url,
       true,
-      ajaxOptions.username,
-      ajaxOptions.password
+      opts.username,
+      opts.password
     );
 
     const body = handleRequestBody(
-      ajaxOptions.method,
-      ajaxOptions.headers,
-      ajaxOptions.data,
-      ajaxOptions.requestType
+      opts.method,
+      opts.headers,
+      opts.data,
+      opts.requestType
     );
 
-    setXhrPropsAndHeaders(xhr, ajaxOptions, isCross, ajaxOptions.headers);
+    setXhrPropsAndHeaders(xhr, opts, isCross, opts.headers);
 
-    if (typeof ajaxOptions.beforeSend === 'function') {
-      ajaxOptions.beforeSend.call(window, xhr);
+    if (typeof opts.beforeSend === 'function') {
+      opts.beforeSend.call(window, xhr);
     }
 
     xhr.send(body || '');
 
-    if (typeof ajaxOptions.receiveCancelId === 'function') {
-      ajaxOptions.receiveCancelId(xhrId);
+    if (typeof opts.receiveCancelId === 'function') {
+      opts.receiveCancelId(xhrId);
     }
   });
 }
