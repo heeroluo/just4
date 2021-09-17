@@ -37,7 +37,7 @@ export function parse(
     const pairArr = pair.split('=');
     let key = pairArr[0];
     let value = pairArr[1] || '';
-    if (opts.decode) {
+    if (typeof opts.decode === 'function') {
       key = opts.decode(key);
       value = opts.decode(value);
     }
