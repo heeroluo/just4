@@ -12,13 +12,13 @@ import { Version } from './version';
 import { IFeatureInfo } from './types';
 
 // 当前运行环境的 UAInfo 实例，在 getCurrentUAInfo 方法中初始化
-let currentUAInfo: UAInfo;
+let currentUAInfo: Readonly<UAInfo>;
 
 /**
  * 获取当前运行环境的 user agent 信息实例。
  * @returns 当前运行环境的 user agent 信息实例。
  */
-export function getCurrentUAInfo(): UAInfo {
+export function getCurrentUAInfo(): Readonly<UAInfo> {
   if (!currentUAInfo) {
     currentUAInfo = Object.freeze(
       typeof window !== 'undefined' ?

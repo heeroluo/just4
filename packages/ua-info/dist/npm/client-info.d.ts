@@ -82,7 +82,7 @@ export declare class ClientInfo {
     /**
      * 客户端版本号。
      */
-    readonly version: Version;
+    readonly version: Readonly<Version>;
     /**
      * 客户端信息类构造函数。
      * @param ua User agent 字符串。

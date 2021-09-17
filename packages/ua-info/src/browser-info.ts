@@ -49,7 +49,7 @@ export class BrowserInfo {
   /**
    * 浏览器内核版本号。
    */
-  public readonly version: Version;
+  public readonly version: Readonly<Version>;
 
   /**
    * 浏览器内核信息类构造函数。
@@ -63,5 +63,6 @@ export class BrowserInfo {
     } else {
       this.version = new Version('');
     }
+    Object.freeze(this.version);
   }
 }

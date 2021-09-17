@@ -18,7 +18,7 @@ export declare class Version {
     /**
      * 版本号字符串。
      */
-    protected _ver: string;
+    protected readonly _ver: string;
     /**
      * 版本号类构造函数
      * @param ver 版本号字符串。

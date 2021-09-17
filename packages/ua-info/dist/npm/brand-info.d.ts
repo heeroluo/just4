@@ -56,5 +56,5 @@ export declare class BrandInfo {
      * @param ua User agent 字符串。
      * @param os 操作系统信息。
      */
-    constructor(ua: string, os: OSInfo);
+    constructor(ua: string, os: Readonly<OSInfo>);
 }

@@ -14,19 +14,19 @@ export declare class UAInfo {
     /**
      * 操作系统信息。
      */
-    readonly os: OSInfo;
+    readonly os: Readonly<OSInfo>;
     /**
      * 品牌信息。
      */
-    readonly brand: BrandInfo;
+    readonly brand: Readonly<BrandInfo>;
     /**
      * 浏览器内核信息。
      */
-    readonly browser: BrowserInfo;
+    readonly browser: Readonly<BrowserInfo>;
     /**
      * 客户端信息。
      */
-    readonly client: ClientInfo;
+    readonly client: Readonly<ClientInfo>;
     /**
      * 是否便携设备。
      */
@@ -36,5 +36,5 @@ export declare class UAInfo {
      * @param ua User agent 字符串。
      * @param featureInfo 设备特性信息。
      */
-    constructor(ua: string, featureInfo?: IFeatureInfo);
+    constructor(ua: string, featureInfo?: Readonly<IFeatureInfo>);
 }

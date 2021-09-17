@@ -76,7 +76,7 @@ export class BrandInfo {
    * @param ua User agent 字符串。
    * @param os 操作系统信息。
    */
-  constructor(ua: string, os: OSInfo) {
+  constructor(ua: string, os: Readonly<OSInfo>) {
     // 品牌信息主要针对苹果设备和安卓设备，
     // 绝大部分 Windows 设备和 Linux 设备的 user agent 没有品牌信息
     let rules: IRule[] | undefined;

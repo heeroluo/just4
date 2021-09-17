@@ -110,7 +110,7 @@ export class ClientInfo {
   /**
    * 客户端版本号。
    */
-  public readonly version: Version;
+  public readonly version: Readonly<Version>;
 
   /**
    * 客户端信息类构造函数。
@@ -124,5 +124,6 @@ export class ClientInfo {
     } else {
       this.version = new Version('');
     }
+    Object.freeze(this.version);
   }
 }

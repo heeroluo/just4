@@ -28,5 +28,6 @@ export class BrowserInfo {
         } else {
             this.version = new Version("");
         }
+        Object.freeze(this.version);
     }
 }

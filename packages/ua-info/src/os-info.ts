@@ -40,17 +40,17 @@ export class OSInfo {
   /**
    * 操作系统版本号。
    */
-  public readonly version: Version;
+  public readonly version: Readonly<Version>;
 
   /**
    * 操作系统信息类构造函数。
    * @param ua User agent 字符串。
    * @param featureInfo 设备特性信息。
    */
-  constructor(ua: string, featureInfo?: IFeatureInfo) {
+  constructor(ua: string, featureInfo?: Readonly<IFeatureInfo>) {
     const result = execRules(ua, osRules);
     if (!result) {
-      this.version = new Version('');
+      this.version = Object.freeze(new Version(''));
       return;
     }
 
@@ -64,6 +64,6 @@ export class OSInfo {
     }
 
     this[propMap[result.name]] = true;
-    this.version = new Version(result.version);
+    this.version = Object.freeze(new Version(result.version));
   }
 }

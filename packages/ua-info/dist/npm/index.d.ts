@@ -13,5 +13,5 @@ import { IFeatureInfo } from './types';
  * 获取当前运行环境的 user agent 信息实例。
  * @returns 当前运行环境的 user agent 信息实例。
  */
-export declare function getCurrentUAInfo(): UAInfo;
+export declare function getCurrentUAInfo(): Readonly<UAInfo>;
 export { UAInfo, OSInfo, BrandInfo, BrowserInfo, ClientInfo, Version, IFeatureInfo };

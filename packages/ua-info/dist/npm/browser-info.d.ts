@@ -34,7 +34,7 @@ export declare class BrowserInfo {
     /**
      * 浏览器内核版本号。
      */
-    readonly version: Version;
+    readonly version: Readonly<Version>;
     /**
      * 浏览器内核信息类构造函数。
      * @param ua User agent 字符串。

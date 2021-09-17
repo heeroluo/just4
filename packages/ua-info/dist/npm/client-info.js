@@ -53,5 +53,6 @@ export class ClientInfo {
         } else {
             this.version = new Version("");
         }
+        Object.freeze(this.version);
     }
 }

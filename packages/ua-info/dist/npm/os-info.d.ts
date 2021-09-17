@@ -27,11 +27,11 @@ export declare class OSInfo {
     /**
      * 操作系统版本号。
      */
-    readonly version: Version;
+    readonly version: Readonly<Version>;
     /**
      * 操作系统信息类构造函数。
      * @param ua User agent 字符串。
      * @param featureInfo 设备特性信息。
      */
-    constructor(ua: string, featureInfo?: IFeatureInfo);
+    constructor(ua: string, featureInfo?: Readonly<IFeatureInfo>);
 }
