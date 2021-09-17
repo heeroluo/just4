@@ -26,8 +26,9 @@ export function parse(
     throw new Error('The str argument must be a string type');
   }
 
-  const opts: IQSParseOptions = assignProps({ }, options);
-  opts.decode = opts.decode || decodeURIComponent;
+  const opts: IQSParseOptions = assignProps({
+    decode: decodeURIComponent
+  }, options);
 
   const result: { [key: string]: string | string[] } = Object.create(null);
 

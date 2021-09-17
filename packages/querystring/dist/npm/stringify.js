@@ -1,8 +1,9 @@
 import { hasOwnProp, assignProps } from "@just4/util/index";
 
 export function stringify(data, options) {
-    const opts = assignProps({}, options);
-    opts.encode = opts.encode || encodeURIComponent;
+    const opts = assignProps({
+        encode: encodeURIComponent
+    }, options);
     const result = [];
     function addToResult(key, value) {
         if (value == null) {

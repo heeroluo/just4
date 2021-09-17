@@ -23,8 +23,9 @@ export function stringify(
   data: Readonly<{ [key: string]: unknown }>,
   options?: Readonly<IQSStringifyOptions>
 ): string {
-  const opts: IQSStringifyOptions = assignProps({}, options);
-  opts.encode = opts.encode || encodeURIComponent;
+  const opts: IQSStringifyOptions = assignProps({
+    encode: encodeURIComponent
+  }, options);
 
   const result: string[] = [];
   function addToResult(key: string, value: unknown): void {

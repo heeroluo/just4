@@ -4,8 +4,9 @@ export function parse(str, options) {
     if (typeof str !== "string") {
         throw new Error("The str argument must be a string type");
     }
-    const opts = assignProps({}, options);
-    opts.decode = opts.decode || decodeURIComponent;
+    const opts = assignProps({
+        decode: decodeURIComponent
+    }, options);
     const result = Object.create(null);
     str.split("&").forEach((function(pair) {
         if (!pair) {
