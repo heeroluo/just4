@@ -1,21 +1,19 @@
 import { hasOwnProp, assignProps } from "@just4/util/index";
 
 export function stringify(data, options) {
-    options = assignProps({
-        encode: encodeURIComponent,
-        ignoreEmpty: false
-    }, options);
+    const opts = assignProps({}, options);
+    opts.encode = opts.encode || encodeURIComponent;
     const result = [];
     function addToResult(key, value) {
         if (value == null) {
             value = "";
         }
-        if (value === "" && (options === null || options === void 0 ? void 0 : options.ignoreEmpty)) {
+        if (value === "" && opts.ignoreEmpty) {
             return;
         }
-        if (typeof (options === null || options === void 0 ? void 0 : options.encode) === "function") {
-            key = options.encode(key);
-            value = options.encode(String(value));
+        if (typeof opts.encode === "function") {
+            key = opts.encode(key);
+            value = opts.encode(String(value));
         }
         result.push(key + "=" + value);
     }

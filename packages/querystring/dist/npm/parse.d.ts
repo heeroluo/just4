@@ -15,6 +15,6 @@ import { IQSParseOptions } from './interfaces';
  * @param options 解析选项。
  * @returns 键值对集合。
  */
-export declare function parse(str: string, options?: IQSParseOptions): {
+export declare function parse(str: string, options?: Readonly<IQSParseOptions>): {
     [key: string]: string | string[];
 };

@@ -20,14 +20,14 @@ import { IQSParseOptions } from './interfaces';
  * @returns 键值对集合。
  */
 export function parse(
-  str: string, options?: IQSParseOptions
+  str: string, options?: Readonly<IQSParseOptions>
 ): { [key: string]: string | string[] } {
   if (typeof str !== 'string') {
     throw new Error('The str argument must be a string type');
   }
 
-  options = assignProps({ }, options);
-  options.decode = options.decode || decodeURIComponent;
+  const opts: IQSParseOptions = assignProps({ }, options);
+  opts.decode = opts.decode || decodeURIComponent;
 
   const result: { [key: string]: string | string[] } = Object.create(null);
 
@@ -36,9 +36,9 @@ export function parse(
     const pairArr = pair.split('=');
     let key = pairArr[0];
     let value = pairArr[1] || '';
-    if (options?.decode) {
-      key = options.decode(key);
-      value = options.decode(value);
+    if (opts.decode) {
+      key = opts.decode(key);
+      value = opts.decode(value);
     }
 
     if (hasOwnProp(result, key)) {

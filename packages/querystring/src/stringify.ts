@@ -20,21 +20,20 @@ import { IQSStringifyOptions } from './interfaces';
  * @returns 序列化结果。
  */
 export function stringify(
-  data: { [key: string]: unknown }, options?: IQSStringifyOptions
+  data: Readonly<{ [key: string]: unknown }>,
+  options?: Readonly<IQSStringifyOptions>
 ): string {
-  options = assignProps({
-    encode: encodeURIComponent,
-    ignoreEmpty: false
-  }, options);
+  const opts: IQSStringifyOptions = assignProps({}, options);
+  opts.encode = opts.encode || encodeURIComponent;
 
   const result: string[] = [];
-  function addToResult(key: string, value: unknown) {
+  function addToResult(key: string, value: unknown): void {
     if (value == null) { value = ''; }
     // 忽略空值的情况
-    if (value === '' && options?.ignoreEmpty) { return; }
-    if (typeof options?.encode === 'function') {
-      key = options.encode(key);
-      value = options.encode(String(value));
+    if (value === '' && opts.ignoreEmpty) { return; }
+    if (typeof opts.encode === 'function') {
+      key = opts.encode(key);
+      value = opts.encode(String(value));
     }
     result.push(key + '=' + value);
   }
@@ -42,7 +41,7 @@ export function stringify(
   let key: string, value: unknown;
 
   // 避免在循环中生成匿名函数，提到循环外
-  function loopItem(item: unknown) { addToResult(key, item); }
+  function loopItem(item: unknown): void { addToResult(key, item); }
 
   for (key in data) {
     if (hasOwnProp(data, key)) {

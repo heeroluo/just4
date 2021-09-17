@@ -18,6 +18,6 @@ import { IQSStringifyOptions } from './interfaces';
  * @param options 序列化选项。
  * @returns 处理后的 URL。
  */
-export declare function appendToURL(url: string, data?: string | {
+export declare function appendToURL(url: string, data?: string | Readonly<{
     [key: string]: unknown;
-}, options?: IQSStringifyOptions): string;
+}>, options?: Readonly<IQSStringifyOptions>): string;
