@@ -13,7 +13,7 @@ import { StorageWrap } from './storage-wrap';
  * typeof session.getAsJSON('user'); // 'object'
  * ```
  */
-export declare const session: StorageWrap;
+export declare const session: Readonly<StorageWrap>;
 /**
  * localStorage 的封装（通过 StorageWrap 包装了 localStorage）。
  * @example
@@ -25,4 +25,4 @@ export declare const session: StorageWrap;
  * typeof local.getAsJSON('user'); // 'object'
  * ```
  */
-export declare const local: StorageWrap;
+export declare const local: Readonly<StorageWrap>;

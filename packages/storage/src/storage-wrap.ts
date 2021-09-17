@@ -19,7 +19,7 @@ export class StorageWrap {
   /**
    * 使用的存储对象。
    */
-  private _storage: IStorage;
+  private readonly _storage: IStorage;
 
   /**
    * 本地存储包装类。

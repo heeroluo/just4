@@ -11,6 +11,6 @@ if (typeof window !== "undefined") {
     } catch (e) {}
 }
 
-export const session = new StorageWrap(sessionStorage);
+export const session = Object.freeze(new StorageWrap(sessionStorage));
 
-export const local = new StorageWrap(localStorage);
+export const local = Object.freeze(new StorageWrap(localStorage));

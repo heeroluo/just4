@@ -26,7 +26,9 @@ if (typeof window !== 'undefined') {
  * typeof session.getAsJSON('user'); // 'object'
  * ```
  */
-export const session = new StorageWrap(sessionStorage);
+export const session = Object.freeze(
+  new StorageWrap(sessionStorage)
+);
 
 /**
  * localStorage 的封装（通过 StorageWrap 包装了 localStorage）。
@@ -39,4 +41,6 @@ export const session = new StorageWrap(sessionStorage);
  * typeof local.getAsJSON('user'); // 'object'
  * ```
  */
-export const local = new StorageWrap(localStorage);
+export const local = Object.freeze(
+  new StorageWrap(localStorage)
+);

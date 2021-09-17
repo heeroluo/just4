@@ -17,7 +17,7 @@ export declare class StorageWrap {
     /**
      * 使用的存储对象。
      */
-    private _storage;
+    private readonly _storage;
     /**
      * 本地存储包装类。
      * @param storage 使用的存储对象。
