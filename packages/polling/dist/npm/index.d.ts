@@ -55,12 +55,12 @@ export declare class Polling {
      * @param executor 执行函数，返回值为 Promise（带有 then 方法）时会进行异步处理。
      * @param options 轮询选项。
      */
-    constructor(executor: Executor, options?: IPollingOptions);
+    constructor(executor: Executor, options?: Readonly<IPollingOptions>);
     /**
      * 更新轮询选项。
      * @param options 轮询选项。
      */
-    updateOptions(options?: IPollingOptions): void;
+    updateOptions(options?: Readonly<IPollingOptions>): void;
     /**
      * 执行轮询函数。
      */
