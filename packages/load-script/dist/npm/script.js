@@ -29,21 +29,21 @@ export function loadScript(url, options) {
                 window.clearTimeout(timeoutTimer);
             }
         }
-        options = assignProps({
+        const opts = assignProps({
             preventCaching: false,
             props: {
                 async: true
             }
         }, options);
-        if (options.data) {
-            url = appendToURL(url, options.data);
+        if (opts.data) {
+            url = appendToURL(url, opts.data);
         }
-        if (options.preventCaching) {
+        if (opts.preventCaching) {
             url = appendToURL(url, {
                 _: Date.now()
             });
         }
-        script = createScript(options.props);
+        script = createScript(opts.props);
         script.onload = function() {
             destroy();
             resolve();
@@ -54,7 +54,7 @@ export function loadScript(url, options) {
         };
         script.src = url;
         document.head.appendChild(script);
-        const timeout = Number(options === null || options === void 0 ? void 0 : options.timeout);
+        const timeout = Number(opts.timeout);
         if (timeout > 0) {
             timeoutTimer = window.setTimeout((function() {
                 destroy();

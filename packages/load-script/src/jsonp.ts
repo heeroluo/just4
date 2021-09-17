@@ -55,7 +55,9 @@ function genCallbackName(src: string): string {
  * @param options 请求选项。
  * @returns 请求 jsonp 的 promise 实例。
  */
-export function jsonp(url: string, options?: IJSONPOptions): Promise<unknown> {
+export function jsonp(
+  url: string, options?: Readonly<IJSONPOptions>
+): Promise<unknown> {
   return new Promise<unknown>(function(resolve, reject) {
     const callbackName = options?.callbackName || genCallbackName(url);
     url = appendToURL(url, { callback: callbackName });

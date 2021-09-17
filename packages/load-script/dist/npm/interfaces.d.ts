@@ -9,9 +9,9 @@ export interface ILoadScriptOptions {
     /**
      * URL 参数（查询字符串）。
      */
-    data?: string | {
+    data?: string | Readonly<{
         [key: string]: unknown;
-    };
+    }>;
     /**
      * 是否防止缓存（在 URL 的查询字符串中增加时间戳）。默认为 false。
      */

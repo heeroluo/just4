@@ -15,4 +15,4 @@ import { ILoadScriptOptions } from './interfaces';
  * @param options 加载选项。
  * @returns 加载脚本文件的 promise 实例。
  */
-export declare function loadScript(url: string, options?: ILoadScriptOptions): Promise<void>;
+export declare function loadScript(url: string, options?: Readonly<ILoadScriptOptions>): Promise<void>;

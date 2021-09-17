@@ -11,7 +11,9 @@ import { ILoadScriptOptions } from './interfaces';
 /**
  * 创建 script 节点，并设置特性。
  */
-function createScript(props?: Partial<HTMLScriptElement>): HTMLScriptElement {
+function createScript(
+  props?: Readonly<Partial<HTMLScriptElement>>
+): HTMLScriptElement {
   const script = document.createElement('script');
   if (props) {
     Object.keys(props).forEach(function(value) {
@@ -35,7 +37,7 @@ function createScript(props?: Partial<HTMLScriptElement>): HTMLScriptElement {
  * @returns 加载脚本文件的 promise 实例。
  */
 export function loadScript(
-  url: string, options?: ILoadScriptOptions
+  url: string, options?: Readonly<ILoadScriptOptions>
 ): Promise<void> {
   return new Promise<void>(function(resolve, reject) {
     let script: HTMLScriptElement | null;
@@ -52,16 +54,16 @@ export function loadScript(
       if (timeoutTimer) { window.clearTimeout(timeoutTimer); }
     }
 
-    options = assignProps({
+    const opts = assignProps({
       preventCaching: false,
       props: { async: true }
     }, options);
 
-    if (options.data) { url = appendToURL(url, options.data); }
+    if (opts.data) { url = appendToURL(url, opts.data); }
     // 增加时间戳参数防止本地缓存
-    if (options.preventCaching) { url = appendToURL(url, { _: Date.now() }); }
+    if (opts.preventCaching) { url = appendToURL(url, { _: Date.now() }); }
 
-    script = createScript(options.props);
+    script = createScript(opts.props);
     script.onload = function() {
       destroy();
       resolve();
@@ -74,7 +76,7 @@ export function loadScript(
     document.head.appendChild(script);
 
     // 超时处理
-    const timeout = Number(options?.timeout);
+    const timeout = Number(opts.timeout);
     if (timeout > 0) {
       timeoutTimer = window.setTimeout(function() {
         destroy();
