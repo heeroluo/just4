@@ -12,6 +12,15 @@ npm i @just4/ua-info
 
 ## 使用
 
+### 是否便携设备
+
+```javascript
+import { UAInfo } from '@just4/ua-info';
+
+const uaInfo = new UAInfo('an user agent string, such as navigator.userAgent');
+uaInfo.isPortable; // 是否便携设备
+```
+
 ### 操作系统信息
 
 ```javascript
