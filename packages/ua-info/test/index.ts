@@ -9,7 +9,8 @@ const uaList = [
   'Mozilla/5.0 (Linux;U;Android 5.1.1;zh-CN;OPPO A33 Build/LMY47V) AppleWebKit/537.36(KHTML,like Gecko) Version/4.0 Chrome/40.0.2214.89 UCBrowser/11.7.0.953 Mobile Safari/537.36',
   'Mozilla/5.0 (Linux; U; Android 4.1.2; en-us; HUAWEI G730-C00 Build/HuaweiG730-C00) AppleWebKit/533.1 (KHTML, like Gecko)Version/4.0 MQQBrowser/4.2 Mobile Safari/533.1',
   'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.114 Safari/537.36 Edg/89.0.774.68',
-  'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.140 Safari/537.36 Edge/18.17763'
+  'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.140 Safari/537.36 Edge/18.17763',
+  'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4651.0 Safari/537.36'
 ];
 const uaInfoList = uaList.map(function(ua) {
   return new UAInfo(ua);
@@ -76,6 +77,13 @@ QUnit.test('edge', function(assert: any) {
   assert.ok(uaInfoList[6].browser.version.gt('18'));
   assert.ok(uaInfoList[6].client.isEdge);
   assert.ok(uaInfoList[6].client.version.gt('18'));
+});
+
+QUnit.test('three-digit-version', function(assert: any) {
+  assert.ok(uaInfoList[7].browser.isChrome);
+  assert.ok(!uaInfoList[7].browser.version.lte('100'));
+  assert.ok(uaInfoList[7].browser.version.eq('100.0.4651.0'));
+  assert.ok(uaInfoList[7].browser.version.gt('100'));
 });
 
 QUnit.test('feature-info', function(assert: any) {
