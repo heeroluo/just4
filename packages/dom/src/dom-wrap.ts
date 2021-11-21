@@ -70,7 +70,7 @@ import { onEvent, offEvent, triggerEvent } from './internal/dom-event';
  * DOMWrap 类型 forEach/some/every/filter 的 callback。
  */
 export interface IDOMWrapIterator {
-  (member: DOMWrapMember, index: number, list: DOMWrap): unknown
+  (member: DOMWrapMember, index: number, list: ArrayLike<DOMWrapMember>): unknown
 }
 
 /**
@@ -186,7 +186,7 @@ export class DOMWrap implements ArrayLike<DOMWrapMember> {
    * @param context 上下文。
    * @returns 包含上述节点的 DOMWrap 对象。
    */
-  public add(selector: string, context?: HTMLElement | HTMLDocument): DOMWrap
+  public add(selector: string, context?: HTMLElement | Document): DOMWrap
 
   /**
    * 返回包含当前节点及指定节点的 DOMWrap 对象（节点顺序与其在文档树中的顺序一致）。
@@ -202,7 +202,7 @@ export class DOMWrap implements ArrayLike<DOMWrapMember> {
 
   public add(
     selector: string | ArrayLike<DOMWrapMember>,
-    context: HTMLElement | HTMLDocument = document
+    context: HTMLElement | Document = document
   ): DOMWrap {
     return new DOMWrap(
       uniqueSort(
@@ -229,7 +229,9 @@ export class DOMWrap implements ArrayLike<DOMWrapMember> {
    * @returns 当前对象。
    */
   public each(
-    callback: (this: DOMWrapMember, index?: number, member?: DOMWrapMember) => unknown
+    callback: (
+      this: DOMWrapMember, index?: number, member?: DOMWrapMember
+    ) => unknown
   ): DOMWrap {
     for (let i = 0; i < this.length; i++) {
       if (callback.call(this[i], i, this[i]) === false) { break; }
@@ -258,7 +260,10 @@ export class DOMWrap implements ArrayLike<DOMWrapMember> {
    * @param value 属性值。
    * @returns 当前对象。
    */
-  public attr(name: string, value: string | boolean | IValueFunction): DOMWrap
+  public attr(
+    name: string,
+    value: string | boolean | IValueFunction<string | boolean>
+  ): DOMWrap
   /**
    * 设置当前所有节点的属性值。
    * @example
@@ -270,13 +275,17 @@ export class DOMWrap implements ArrayLike<DOMWrapMember> {
    * @param kvPairs 属性键值对。
    * @returns 当前对象。
    */
-  public attr(kvPairs: { [key: string]: string | boolean | IValueFunction }): DOMWrap
+  public attr(kvPairs: {
+    [key: string]: string | boolean | IValueFunction<string | boolean>
+  }): DOMWrap
 
   public attr(
-    name: string | { [key: string]: string | boolean | IValueFunction },
-    value?: string | boolean | IValueFunction
+    name: string | {
+      [key: string]: string | boolean | IValueFunction<string | boolean>
+    },
+    value?: string | boolean | IValueFunction<string | boolean>
   ): string | DOMWrap {
-    return access(this, name, value, true, {
+    return access<string | boolean>(this, name, value, true, {
       get: getAttr,
       set: setAttr
     });
@@ -329,11 +338,13 @@ export class DOMWrap implements ArrayLike<DOMWrapMember> {
    * @param kvPairs 特性键值对。
    * @returns 当前对象。
    */
-  public prop(kvPairs: { [key: string]: unknown | IValueFunction }): DOMWrap
+  public prop(kvPairs: {
+    [key: string]: unknown | IValueFunction<unknown>
+  }): DOMWrap
 
   public prop(
-    name: string | { [key: string]: unknown | IValueFunction },
-    value?: unknown | IValueFunction
+    name: string | { [key: string]: unknown | IValueFunction<unknown> },
+    value?: unknown | IValueFunction<unknown>
   ): unknown | DOMWrap {
     return access(this, name, value, true, {
       get: getProp,
@@ -361,7 +372,7 @@ export class DOMWrap implements ArrayLike<DOMWrapMember> {
    * @param value 数据项值。
    * @returns 当前对象。
    */
-  public data(key: string, value: unknown | IValueFunction): DOMWrap
+  public data(key: string, value: unknown | IValueFunction<unknown>): DOMWrap
   /**
    * 设置当前所有节点的自定义数据项值。
    * @example
@@ -373,10 +384,12 @@ export class DOMWrap implements ArrayLike<DOMWrapMember> {
    * @param kvPairs 数据项键值对。
    * @returns 当前对象。
    */
-  public data(kvPairs: { [key: string]: unknown | IValueFunction }): DOMWrap
+  public data(
+    kvPairs: { [key: string]: unknown | IValueFunction<unknown> }
+  ): DOMWrap
 
   public data(
-    key: string | { [key: string]: unknown | IValueFunction },
+    key: string | { [key: string]: unknown | IValueFunction<unknown> },
     value?: unknown
   ): unknown | DOMWrap {
     return access(this, key, value, true, {
@@ -493,7 +506,10 @@ export class DOMWrap implements ArrayLike<DOMWrapMember> {
    * @param value 样式属性值。
    * @returns 当前对象。
    */
-  public css(name: string, value: number | string | IValueFunction): DOMWrap
+  public css(
+    name: string,
+    value: number | string | IValueFunction<number | string>
+  ): DOMWrap
   /**
    * 设置当前所有节点的样式属性值。
    * @example
@@ -506,11 +522,15 @@ export class DOMWrap implements ArrayLike<DOMWrapMember> {
    * @param kvPairs 样式属性键值对。
    * @returns 当前对象。
    */
-  public css(kvPairs: { [key: string]: number | string | IValueFunction }): DOMWrap
+  public css(kvPairs: {
+    [key: string]: number | string | IValueFunction<number | string>
+  }): DOMWrap
 
   public css(
-    name: string | { [key: string]: number | string | IValueFunction },
-    value?: number | string | IValueFunction
+    name: string | {
+      [key: string]: number | string | IValueFunction<number | string>
+    },
+    value?: number | string | IValueFunction<number | string>
   ): string | DOMWrap {
     return access(this, name, value, true, {
       get: getStyle,
@@ -695,9 +715,9 @@ export class DOMWrap implements ArrayLike<DOMWrapMember> {
    * @param value scrollTop 值。
    * @returns 当前对象。
    */
-  scrollTop(value: number | IValueFunction): DOMWrap
+  scrollTop(value: number | IValueFunction<number>): DOMWrap
 
-  scrollTop(value?: number | IValueFunction): number | DOMWrap {
+  scrollTop(value?: number | IValueFunction<number>): number | DOMWrap {
     return access(this, 'scrollTop', value, true, {
       get: getScroll,
       set: setScroll
@@ -715,9 +735,9 @@ export class DOMWrap implements ArrayLike<DOMWrapMember> {
    * @param value scrollLeft 值。
    * @returns 当前对象。
    */
-  scrollLeft(value: number | IValueFunction): DOMWrap
+  scrollLeft(value: number | IValueFunction<number>): DOMWrap
 
-  scrollLeft(value?: number | IValueFunction): number | DOMWrap {
+  scrollLeft(value?: number | IValueFunction<number>): number | DOMWrap {
     return access(this, 'scrollLeft', value, true, {
       get: getScroll,
       set: setScroll

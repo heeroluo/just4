@@ -49,7 +49,7 @@ export function isHTMLElement(obj: any): boolean {
 export function getWindow(node: DOMWrapMember): Window | null {
   if (isWindow(node)) { return <Window>node; }
   const doc = (<Node>node).nodeType === 9 ?
-    <HTMLDocument>node :
+    <Document>node :
     (<Node>node).ownerDocument;
   return doc == null ? null : doc.defaultView;
 }
@@ -60,14 +60,16 @@ export function getWindow(node: DOMWrapMember): Window | null {
  * @param str 指定字符串（如果传入数组，则不执行分割）。
  * @returns 字符串数组。
  */
-export function splitBySpace(str: string | string[] | null | undefined): string[] {
+export function splitBySpace(
+  str: string | string[] | null | undefined
+): string[] {
   let result: string[];
   if (typeof str === 'string') {
     result = str.split(/\s+/);
   } else {
-    result = <string[]>str;
+    result = str || [];
   }
-  return result || [];
+  return result;
 }
 
 
@@ -91,11 +93,13 @@ export function ifIsHTMLElement(
 ): unknown;
 
 export function ifIsHTMLElement(
-  node: DOMWrapMember | ArrayLike<DOMWrapMember>, fn: (elem: HTMLElement) => unknown
+  node: DOMWrapMember | ArrayLike<DOMWrapMember>,
+  fn: (elem: HTMLElement) => unknown
 ): unknown {
   if (isArrayLike(node)) {
     const nodeList = <ArrayLike<DOMWrapMember>>node;
-    for (let i = 0; i < nodeList.length; i++) {
+    const len = nodeList.length;
+    for (let i = 0; i < len; i++) {
       ifIsHTMLElement(nodeList[i], fn);
     }
   } else if (isHTMLElement(node)) {
@@ -107,9 +111,9 @@ export function ifIsHTMLElement(
 /**
  * Get First Set All 访问器接口定义。
  */
-interface IAccessor {
-  get: (this: ArrayLike<DOMWrapMember>, node: DOMWrapMember, key: string) => unknown,
-  set: (this: ArrayLike<DOMWrapMember>, node: DOMWrapMember, key: string, value: unknown) => void
+interface IAccessor<T> {
+  get: (this: ArrayLike<DOMWrapMember>, node: DOMWrapMember, key: string) => T,
+  set: (this: ArrayLike<DOMWrapMember>, node: DOMWrapMember, key: string, value: T) => void
 }
 
 /**
@@ -121,12 +125,12 @@ interface IAccessor {
  * @param accessor 访问器。
  * @returns Get first 操作返回第一个节点键名对应的值；Set all 操作返回被访问节点。
  */
-export function access(
+export function access<T>(
   nodes: ArrayLike<DOMWrapMember>,
-  key: string | { [key: string]: unknown },
-  value: unknown,
+  key: string | { [key: string]: T | IValueFunction<T> },
+  value: any,
   isExec = false,
-  accessor: IAccessor
+  accessor: IAccessor<T>
 ): any {
   if (key != null && typeof key === 'object') {
     for (const k in key) {
@@ -149,7 +153,8 @@ export function access(
         nodes[i],
         key,
         isExec ?
-          (<IValueFunction>value).call(
+          value.call(
+            nodes[i],
             nodes[i],
             accessor.get.call(nodes, nodes[i], key),
             i

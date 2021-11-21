@@ -81,7 +81,9 @@ export function getAttr(node: DOMWrapMember, name: string): string {
  * @param nodes 指定节点。
  * @param names 属性名。
  */
-export function removeAttr(nodes: ArrayLike<DOMWrapMember>, names: string | string[]): void {
+export function removeAttr(
+  nodes: ArrayLike<DOMWrapMember>, names: string | string[]
+): void {
   const nameArr = splitBySpace(names);
   if (!nameArr.length) { return; }
 

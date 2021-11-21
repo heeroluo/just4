@@ -4,7 +4,7 @@
     "baseUrl": "../",
     "paths": {
       "@/*": ["src/*"],
-      "@just4/util/*": ["../util/dist/*"]
+      "@just4/util/*": ["../util/dist/npm/*"]
     }
   }
 }

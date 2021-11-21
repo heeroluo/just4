@@ -9,7 +9,7 @@ import { isWindow, isHTMLElement } from './dom-base';
 
 
 // 滚动距离类型
-type ScrollDistanceType = 'scrollTop' | 'scrollLeft';
+export type ScrollDistanceType = 'scrollTop' | 'scrollLeft';
 
 // window 的滚动距离用 page{X|Y}Offset
 const scrollMap: { [key: string]: 'pageXOffset' | 'pageYOffset' } = Object.create(null);
@@ -22,12 +22,13 @@ scrollMap.scrollLeft = 'pageXOffset';
  * @param type 滚动距离类型。
  * @returns 滚动距离。
  */
-export function getScroll(node: DOMWrapMember | null, type: ScrollDistanceType): number {
+export function getScroll(node: DOMWrapMember | null, type: string): number {
   let result = 0;
+  const scrollType = <ScrollDistanceType>type;
   if (isWindow(node)) {
-    result = (<Window>node)[scrollMap[type]];
+    result = (<Window>node)[scrollMap[scrollType]];
   } else if (isHTMLElement(node)) {
-    result = (<HTMLElement>node)[type];
+    result = (<HTMLElement>node)[scrollType];
   }
   return result;
 }
@@ -39,10 +40,12 @@ export function getScroll(node: DOMWrapMember | null, type: ScrollDistanceType):
  * @param value 滚动距离。
  */
 export function setScroll(
-  node: DOMWrapMember, type: ScrollDistanceType, value: number
+  node: DOMWrapMember, type: string, value: number
 ): void {
+  const scrollType = <ScrollDistanceType>type;
+
   if (isWindow(node)) {
-    switch (type) {
+    switch (scrollType) {
       case 'scrollTop':
         window.scrollTo(getScroll(node, 'scrollLeft'), value);
         break;
@@ -51,6 +54,6 @@ export function setScroll(
         break;
     }
   } else if (isHTMLElement(node)) {
-    (<HTMLElement>node)[type] = value;
+    (<HTMLElement>node)[scrollType] = value;
   }
 }

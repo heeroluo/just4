@@ -37,19 +37,19 @@ export class EventWrap {
   /**
    * 对应原事件对象的 clientX。
    */
-  public readonly clientX: number;
+  public readonly clientX?: number;
   /**
    * 对应原事件对象的 clientY。
    */
-  public readonly clientY: number;
+  public readonly clientY?: number;
   /**
    * 对应原事件对象的 pageX。
    */
-  public readonly pageX: number;
+  public readonly pageX?: number;
   /**
    * 对应原事件对象的 pageY。
    */
-  public readonly pageY: number;
+  public readonly pageY?: number;
 
   /**
    * 构造函数。

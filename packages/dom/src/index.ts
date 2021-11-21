@@ -87,7 +87,7 @@ function $(elems: ArrayLike<DOMWrapMember>): DOMWrap;
 
 function $(
   selector: string | DOMWrapMember | ArrayLike<DOMWrapMember>,
-  context: HTMLElement | HTMLDocument | Array<HTMLElement | HTMLDocument> = document
+  context: HTMLElement | Document | Array<HTMLElement | Document> = document
 ): DOMWrap {
   let result: ArrayLike<DOMWrapMember>;
 
@@ -95,7 +95,7 @@ function $(
     selector = selector.trim();
     if (selector.charAt(0) === '<' && selector.charAt(selector.length - 1) === '>') {
       result = htmlToNodes(
-        selector, (<Node>context).nodeType === 9 ? <HTMLDocument>context : null
+        selector, (<Node>context).nodeType === 9 ? <Document>context : null
       );
     } else {
       result = querySelector(selector, context);

@@ -42,7 +42,9 @@ const dataSpaceManger = (function() {
  * @param options 空间配置。
  * @returns 数据空间对象。
  */
-export function createDataSpace(options?: IDataSpaceOptions): DataSpace {
+export function createDataSpace(
+  options?: Readonly<IDataSpaceOptions>
+): DataSpace {
   const space = new DataSpace(options);
   dataSpaceManger.add(space);
   return space;

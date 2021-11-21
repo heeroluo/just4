@@ -146,7 +146,10 @@ const listenerManager = (function() {
 
     // 移除监听器
     remove(
-      target: EventTarget, type?: string, selector?: string, handler?: IEventHandler
+      target: EventTarget,
+      type?: string,
+      selector?: string,
+      handler?: IEventHandler
     ): void {
       if (type && (selector || handler)) {
         const listeners = <IEventListener[]>(listenerSpace.getData(target, type));

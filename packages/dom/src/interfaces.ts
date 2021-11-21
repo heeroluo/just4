@@ -10,8 +10,8 @@ import { EventWrap } from './event-wrap';
 /**
  * Get first set all 操作中，设置值的函数。
  */
-export interface IValueFunction {
-  (this: DOMWrapMember, node?: DOMWrapMember, value?: unknown, index?: number): unknown
+export interface IValueFunction<T> {
+  (this: DOMWrapMember, node: DOMWrapMember, value: T, index: number): T
 }
 
 /**

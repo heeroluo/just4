@@ -42,7 +42,9 @@ export function htmlToNodes(
  * @param deepWithData 是否复制所有后代节点的数据。
  * @returns 节点的副本。
  */
-export function cloneNode(node: Node, withData = false, deepWithData = false): Node {
+export function cloneNode(
+  node: Node, withData = false, deepWithData = false
+): Node {
   const result = node.cloneNode(true);
 
   if (deepWithData) {
