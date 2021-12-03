@@ -47,7 +47,7 @@ async function compress(file) {
   await writeFile(file, result.code);
 }
 
-glob('dist/npm/**/*.js', {
+glob('dist/es/**/*.js', {
   cwd: pkgDir,
   absolute: true
 }, function(err, files) {

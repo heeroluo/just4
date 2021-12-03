@@ -14,8 +14,8 @@ npm i @just4/util
 
 ## 调用
 
-
+见 API 文档的代码示例。
 
 
 ## 相关文档
-- [API 文档](https://heeroluo.github.io/just4/util/index.html)
+- [API 文档](https://heeroluo.github.io/just4/util/modules/index.html)
