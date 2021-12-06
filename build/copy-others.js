@@ -5,7 +5,10 @@
 const fs = require('fs');
 const path = require('path');
 
-const pkgName = process.argv[2];
+const pkgName = path.relative(
+  path.resolve(__dirname, '../packages'),
+  process.cwd()
+);
 const pkgDir = path.resolve(__dirname, '..', 'packages', pkgName);
 const rootPkgJSON = require('../package');
 const pkgJSON = require(path.join(pkgDir, 'package.json'));

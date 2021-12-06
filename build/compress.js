@@ -7,7 +7,10 @@ const fs = require('fs');
 const glob = require('glob');
 const terser = require('terser');
 
-const pkgName = process.argv[2];
+const pkgName = path.relative(
+  path.resolve(__dirname, '../packages'),
+  process.cwd()
+);
 const pkgDir = path.resolve(__dirname, '..', 'packages', pkgName);
 
 function readFile(file) {
