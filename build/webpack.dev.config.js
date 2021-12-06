@@ -1,3 +1,4 @@
+const fs = require('fs');
 const path = require('path');
 const ESLintPlugin = require('eslint-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -88,6 +89,12 @@ module.exports = {
     overlay: {
       warnings: false,
       errors: true
+    },
+    before(app) {
+      const serverJsPath = path.join(rootPath, 'server', 'index.js');
+      if (fs.existsSync(serverJsPath)) {
+        require(serverJsPath)(app);
+      }
     }
   }
 };

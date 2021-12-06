@@ -5,15 +5,16 @@
   "keywords": ["script", "load", "jsonp"],
   "scripts": {
     "link-deps": "ln -s ../../node_modules ./node_modules",
-    "dev": "cross-env NODE_ENV=development webpack-dev-server --config build/webpack.dev.config.js",
+    "dev": "webpack-dev-server --config ../../build/webpack.dev.config.js",
     "lint": "eslint ./src/*.ts",
     "prebuild": "rimraf ./dist/*",
-    "build": "npm run lint && tsc -p ./src/tsconfig.json && node ../../build/compress load-script && node ../../build/copy-others load-script",
-    "gen-doc": "typedoc --tsconfig ./src/tsconfig.json"
+    "build": "npm run lint && tsc -p ./src/tsconfig.json && node ../../build/compress && node ../../build/copy-others",
+    "gen-doc": "typedoc --options ../typedoc.js --tsconfig ./src/tsconfig.json"
   },
   "dependencies": {
     "@just4/util": "^0.1.0-beta.3",
     "@just4/querystring": "^0.1.0-beta.4"
   },
-  "private": true
+  "private": true,
+  "devPort": 8605
 }
