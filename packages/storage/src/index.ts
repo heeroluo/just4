@@ -44,6 +44,3 @@ export const session = Object.freeze(
 export const local = Object.freeze(
   new StorageWrap(localStorage)
 );
-
-
-export { StorageWrap };
