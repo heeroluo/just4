@@ -1,364 +1,41 @@
-<!doctype html>
-<html class="default no-js">
-<head>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Polling | @just4/polling</title>
-	<meta name="description" content="Documentation for @just4/polling">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="stylesheet" href="../assets/css/main.css">
-	<script async src="../assets/js/search.js" id="search-script"></script>
-</head>
-<body>
-<header>
-	<div class="tsd-page-toolbar">
-		<div class="container">
-			<div class="table-wrap">
-				<div class="table-cell" id="tsd-search" data-index="../assets/js/search.json" data-base="..">
-					<div class="field">
-						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
-						<input id="tsd-search-field" type="text" />
-					</div>
-					<ul class="results">
-						<li class="state loading">Preparing search index...</li>
-						<li class="state failure">The search index is not available</li>
-					</ul>
-					<a href="../index.html" class="title">@just4/polling</a>
-				</div>
-				<div class="table-cell" id="tsd-widgets">
-					<div id="tsd-filter">
-						<a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a>
-						<div class="tsd-filter-group">
-							<div class="tsd-select" id="tsd-filter-visibility">
-								<span class="tsd-select-label">All</span>
-								<ul class="tsd-select-list">
-									<li data-value="public">Public</li>
-									<li data-value="protected">Public/Protected</li>
-									<li data-value="private" class="selected">All</li>
-								</ul>
-							</div>
-							<input type="checkbox" id="tsd-filter-inherited" checked />
-							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
-							<input type="checkbox" id="tsd-filter-externals" checked />
-							<label class="tsd-widget" for="tsd-filter-externals">Externals</label>
-						</div>
-					</div>
-					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
-				</div>
-			</div>
-		</div>
-	</div>
-	<div class="tsd-page-title">
-		<div class="container">
-			<ul class="tsd-breadcrumb">
-				<li>
-					<a href="../modules.html">@just4/polling</a>
-				</li>
-				<li>
-					<a href="../modules/index.html">index</a>
-				</li>
-				<li>
-					<a href="index.polling.html">Polling</a>
-				</li>
-			</ul>
-			<h1>Class Polling</h1>
-		</div>
-	</div>
-</header>
-<div class="container container-main">
-	<div class="row">
-		<div class="col-8 col-content">
-			<section class="tsd-panel tsd-comment">
-				<div class="tsd-comment tsd-typography">
-					<div class="lead">
-						<p>轮询类。</p>
-					</div>
-					<dl class="tsd-comment-tags">
-						<dt>example</dt>
-						<dd><pre><code class="language-javascript"><span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">Polling</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;@just4/polling&#039;</span><span style="color: #000000">;</span>
-<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">polling</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">Polling</span><span style="color: #000000">(() </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
-<span style="color: #000000">  </span><span style="color: #AF00DB">return</span><span style="color: #000000"> </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #267F99">Promise</span><span style="color: #000000">((</span><span style="color: #001080">resolve</span><span style="color: #000000">) </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
-<span style="color: #000000">    </span><span style="color: #795E26">setTimeout</span><span style="color: #000000">(() </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
-<span style="color: #000000">      </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;executed&#039;</span><span style="color: #000000">);</span>
-<span style="color: #000000">      </span><span style="color: #795E26">resolve</span><span style="color: #000000">();</span>
-<span style="color: #000000">    }, </span><span style="color: #098658">1000</span><span style="color: #000000">);</span>
-<span style="color: #000000">  });</span>
-<span style="color: #000000">}, {</span>
-<span style="color: #000000">  </span><span style="color: #001080">interval:</span><span style="color: #000000"> </span><span style="color: #098658">2000</span>
-<span style="color: #000000">});</span>
-<span style="color: #001080">polling</span><span style="color: #000000">.</span><span style="color: #795E26">start</span><span style="color: #000000">();</span>
+<!DOCTYPE html><html class="default"><head><meta charSet="utf-8"/><meta http-equiv="x-ua-compatible" content="IE=edge"/><title>Polling | @just4/polling</title><meta name="description" content="Documentation for @just4/polling"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="../assets/style.css"/><link rel="stylesheet" href="../assets/highlight.css"/><script async src="../assets/search.js" id="search-script"></script></head><body><script>document.body.classList.add(localStorage.getItem("tsd-theme") || "os")</script><header><div class="tsd-page-toolbar"><div class="container"><div class="table-wrap"><div class="table-cell" id="tsd-search" data-base=".."><div class="field"><label for="tsd-search-field" class="tsd-widget search no-caption">Search</label><input type="text" id="tsd-search-field"/></div><ul class="results"><li class="state loading">Preparing search index...</li><li class="state failure">The search index is not available</li></ul><a href="../index.html" class="title">@just4/polling</a></div><div class="table-cell" id="tsd-widgets"><div id="tsd-filter"><a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a><div class="tsd-filter-group"><div class="tsd-select" id="tsd-filter-visibility"><span class="tsd-select-label">All</span><ul class="tsd-select-list"><li data-value="public">Public</li><li data-value="protected">Public/Protected</li><li data-value="private" class="selected">All</li></ul></div> <input type="checkbox" id="tsd-filter-inherited" checked/><label class="tsd-widget" for="tsd-filter-inherited">Inherited</label><input type="checkbox" id="tsd-filter-externals" checked/><label class="tsd-widget" for="tsd-filter-externals">Externals</label></div></div><a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a></div></div></div></div><div class="tsd-page-title"><div class="container"><ul class="tsd-breadcrumb"><li><a href="../modules.html">@just4/polling</a></li><li><a href="../modules/index.html">index</a></li><li><a href="index.Polling.html">Polling</a></li></ul><h1>Class Polling</h1></div></div></header><div class="container container-main"><div class="row"><div class="col-8 col-content"><section class="tsd-panel tsd-comment"><div class="tsd-comment tsd-typography"><div class="lead">
+<p>轮询类。</p>
+</div><dl class="tsd-comment-tags"><dt>example</dt><dd><pre><code class="language-javascript"><span class="hl-4">import</span><span class="hl-0"> { </span><span class="hl-6">Polling</span><span class="hl-0"> } </span><span class="hl-4">from</span><span class="hl-0"> </span><span class="hl-7">&#39;@just4/polling&#39;</span><span class="hl-0">;</span><br/><span class="hl-1">const</span><span class="hl-0"> </span><span class="hl-2">polling</span><span class="hl-0"> = </span><span class="hl-1">new</span><span class="hl-0"> </span><span class="hl-3">Polling</span><span class="hl-0">(() </span><span class="hl-1">=&gt;</span><span class="hl-0"> {</span><br/><span class="hl-0">  </span><span class="hl-4">return</span><span class="hl-0"> </span><span class="hl-1">new</span><span class="hl-0"> </span><span class="hl-5">Promise</span><span class="hl-0">((</span><span class="hl-6">resolve</span><span class="hl-0">) </span><span class="hl-1">=&gt;</span><span class="hl-0"> {</span><br/><span class="hl-0">    </span><span class="hl-3">setTimeout</span><span class="hl-0">(() </span><span class="hl-1">=&gt;</span><span class="hl-0"> {</span><br/><span class="hl-0">      </span><span class="hl-6">console</span><span class="hl-0">.</span><span class="hl-3">log</span><span class="hl-0">(</span><span class="hl-7">&#39;executed&#39;</span><span class="hl-0">);</span><br/><span class="hl-0">      </span><span class="hl-3">resolve</span><span class="hl-0">();</span><br/><span class="hl-0">    }, </span><span class="hl-8">1000</span><span class="hl-0">);</span><br/><span class="hl-0">  });</span><br/><span class="hl-0">}, {</span><br/><span class="hl-0">  </span><span class="hl-6">interval:</span><span class="hl-0"> </span><span class="hl-8">2000</span><br/><span class="hl-0">});</span><br/><span class="hl-6">polling</span><span class="hl-0">.</span><span class="hl-3">start</span><span class="hl-0">();</span>
 </code></pre>
-						</dd>
-					</dl>
-				</div>
-			</section>
-			<section class="tsd-panel tsd-hierarchy">
-				<h3>Hierarchy</h3>
-				<ul class="tsd-hierarchy">
-					<li>
-						<span class="target">Polling</span>
-					</li>
-				</ul>
-			</section>
-			<section class="tsd-panel-group tsd-index-group">
-				<h2>Index</h2>
-				<section class="tsd-panel tsd-index-panel">
-					<div class="tsd-index-content">
-						<section class="tsd-index-section ">
-							<h3>Constructors</h3>
-							<ul class="tsd-index-list">
-								<li class="tsd-kind-constructor tsd-parent-kind-class"><a href="index.polling.html#constructor" class="tsd-kind-icon">constructor</a></li>
-							</ul>
-						</section>
-						<section class="tsd-index-section ">
-							<h3>Methods</h3>
-							<ul class="tsd-index-list">
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="index.polling.html#execimmediately" class="tsd-kind-icon">exec<wbr>Immediately</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="index.polling.html#start" class="tsd-kind-icon">start</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="index.polling.html#stop" class="tsd-kind-icon">stop</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="index.polling.html#updateoptions" class="tsd-kind-icon">update<wbr>Options</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="index.polling.html#stopall" class="tsd-kind-icon">stop<wbr>All</a></li>
-							</ul>
-						</section>
-					</div>
-				</section>
-			</section>
-			<section class="tsd-panel-group tsd-member-group ">
-				<h2>Constructors</h2>
-				<section class="tsd-panel tsd-member tsd-kind-constructor tsd-parent-kind-class">
-					<a name="constructor" class="tsd-anchor"></a>
-					<h3>constructor</h3>
-					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>Polling<span class="tsd-signature-symbol">(</span>executor<span class="tsd-signature-symbol">: </span><a href="../modules/types.html#executor" class="tsd-signature-type" data-tsd-kind="Type alias">Executor</a>, options<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Readonly</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/types.ipollingoptions.html" class="tsd-signature-type" data-tsd-kind="Interface">IPollingOptions</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="index.polling.html" class="tsd-signature-type" data-tsd-kind="Class">Polling</a></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/heeroluo/just4/blob/2e4df37/packages/polling/src/index.ts#L80">index.ts:80</a></li>
-								</ul>
-							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>构造函数。</p>
-								</div>
-							</div>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>executor: <a href="../modules/types.html#executor" class="tsd-signature-type" data-tsd-kind="Type alias">Executor</a></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>执行函数，返回值为 Promise（带有 then 方法）时会进行异步处理。</p>
-									</div>
-								</li>
-								<li>
-									<h5><span class="tsd-flag ts-flagOptional">Optional</span> options: <span class="tsd-signature-type">Readonly</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/types.ipollingoptions.html" class="tsd-signature-type" data-tsd-kind="Interface">IPollingOptions</a><span class="tsd-signature-symbol">&gt;</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>轮询选项。</p>
-									</div>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="index.polling.html" class="tsd-signature-type" data-tsd-kind="Class">Polling</a></h4>
-						</li>
-					</ul>
-				</section>
-			</section>
-			<section class="tsd-panel-group tsd-member-group ">
-				<h2>Methods</h2>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
-					<a name="execimmediately" class="tsd-anchor"></a>
-					<h3>exec<wbr>Immediately</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">exec<wbr>Immediately<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/heeroluo/just4/blob/2e4df37/packages/polling/src/index.ts#L175">index.ts:175</a></li>
-								</ul>
-							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>在当前轮询结束后马上执行一次执行函数。</p>
-								</div>
-							</div>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
-					<a name="start" class="tsd-anchor"></a>
-					<h3>start</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">start<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/heeroluo/just4/blob/2e4df37/packages/polling/src/index.ts#L191">index.ts:191</a></li>
-								</ul>
-							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>启动轮询。</p>
-								</div>
-							</div>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
-					<a name="stop" class="tsd-anchor"></a>
-					<h3>stop</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">stop<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/heeroluo/just4/blob/2e4df37/packages/polling/src/index.ts#L201">index.ts:201</a></li>
-								</ul>
-							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>停止轮询。</p>
-								</div>
-							</div>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
-					<a name="updateoptions" class="tsd-anchor"></a>
-					<h3>update<wbr>Options</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">update<wbr>Options<span class="tsd-signature-symbol">(</span>options<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Readonly</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/types.ipollingoptions.html" class="tsd-signature-type" data-tsd-kind="Interface">IPollingOptions</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/heeroluo/just4/blob/2e4df37/packages/polling/src/index.ts#L96">index.ts:96</a></li>
-								</ul>
-							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>更新轮询选项。</p>
-								</div>
-							</div>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5><span class="tsd-flag ts-flagOptional">Optional</span> options: <span class="tsd-signature-type">Readonly</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/types.ipollingoptions.html" class="tsd-signature-type" data-tsd-kind="Interface">IPollingOptions</a><span class="tsd-signature-symbol">&gt;</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>轮询选项。</p>
-									</div>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-static">
-					<a name="stopall" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagStatic">Static</span> stop<wbr>All</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-static">
-						<li class="tsd-signature tsd-kind-icon">stop<wbr>All<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/heeroluo/just4/blob/2e4df37/packages/polling/src/index.ts#L76">index.ts:76</a></li>
-								</ul>
-							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>停止所有轮询任务。</p>
-								</div>
-							</div>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
-						</li>
-					</ul>
-				</section>
-			</section>
-		</div>
-		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
-			<nav class="tsd-navigation primary">
-				<ul>
-					<li class=" ">
-						<a href="../modules.html">Modules</a>
-					</li>
-					<li class="current tsd-kind-module">
-						<a href="../modules/index.html">index</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="../modules/types.html">types</a>
-					</li>
-				</ul>
-			</nav>
-			<nav class="tsd-navigation secondary menu-sticky">
-				<ul class="before-current">
-				</ul>
-				<ul class="current">
-					<li class="current tsd-kind-class tsd-parent-kind-module">
-						<a href="index.polling.html" class="tsd-kind-icon">Polling</a>
-						<ul>
-							<li class=" tsd-kind-constructor tsd-parent-kind-class">
-								<a href="index.polling.html#constructor" class="tsd-kind-icon">constructor</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="index.polling.html#execimmediately" class="tsd-kind-icon">exec<wbr>Immediately</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="index.polling.html#start" class="tsd-kind-icon">start</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="index.polling.html#stop" class="tsd-kind-icon">stop</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="index.polling.html#updateoptions" class="tsd-kind-icon">update<wbr>Options</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-static">
-								<a href="index.polling.html#stopall" class="tsd-kind-icon">stop<wbr>All</a>
-							</li>
-						</ul>
-					</li>
-				</ul>
-				<ul class="after-current">
-				</ul>
-			</nav>
-		</div>
-	</div>
-</div>
-<footer class="with-border-bottom">
-	<div class="container">
-		<h2>Legend</h2>
-		<div class="tsd-legend-group">
-			<ul class="tsd-legend">
-				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
-				<li class="tsd-kind-constructor tsd-parent-kind-class"><span class="tsd-kind-icon">Constructor</span></li>
-				<li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static method</span></li>
-			</ul>
-		</div>
-	</div>
-</footer>
-<div class="container tsd-generator">
-	<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p>
-</div>
-<div class="overlay"></div>
-<script src="../assets/js/main.js"></script>
-</body>
-</html>
+</dd></dl></div></section><section class="tsd-panel tsd-hierarchy"><h3>Hierarchy</h3><ul class="tsd-hierarchy"><li><span class="target">Polling</span></li></ul></section><section class="tsd-panel-group tsd-index-group"><h2>Index</h2><section class="tsd-panel tsd-index-panel"><div class="tsd-index-content"><section class="tsd-index-section "><h3>Constructors</h3><ul class="tsd-index-list"><li class="tsd-kind-constructor tsd-parent-kind-class"><a href="index.Polling.html#constructor" class="tsd-kind-icon">constructor</a></li></ul></section><section class="tsd-index-section tsd-is-private-protected"><h3>Properties</h3><ul class="tsd-index-list"><li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><a href="index.Polling.html#_executor" class="tsd-kind-icon">_executor</a></li><li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="index.Polling.html#_isExecuting" class="tsd-kind-icon">_is<wbr/>Executing</a></li><li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><a href="index.Polling.html#_options" class="tsd-kind-icon">_options</a></li><li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="index.Polling.html#_shouldImmediate" class="tsd-kind-icon">_should<wbr/>Immediate</a></li><li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="index.Polling.html#_started" class="tsd-kind-icon">_started</a></li><li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="index.Polling.html#_timer" class="tsd-kind-icon">_timer</a></li></ul></section><section class="tsd-index-section "><h3>Methods</h3><ul class="tsd-index-list"><li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><a href="index.Polling.html#_clearTimeout" class="tsd-kind-icon">_clear<wbr/>Timeout</a></li><li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><a href="index.Polling.html#_exec" class="tsd-kind-icon">_exec</a></li><li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><a href="index.Polling.html#_next" class="tsd-kind-icon">_next</a></li><li class="tsd-kind-method tsd-parent-kind-class"><a href="index.Polling.html#execImmediately" class="tsd-kind-icon">exec<wbr/>Immediately</a></li><li class="tsd-kind-method tsd-parent-kind-class"><a href="index.Polling.html#start" class="tsd-kind-icon">start</a></li><li class="tsd-kind-method tsd-parent-kind-class"><a href="index.Polling.html#stop" class="tsd-kind-icon">stop</a></li><li class="tsd-kind-method tsd-parent-kind-class"><a href="index.Polling.html#updateOptions" class="tsd-kind-icon">update<wbr/>Options</a></li><li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="index.Polling.html#stopAll" class="tsd-kind-icon">stop<wbr/>All</a></li></ul></section></div></section></section><section class="tsd-panel-group tsd-member-group "><h2>Constructors</h2><section class="tsd-panel tsd-member tsd-kind-constructor tsd-parent-kind-class"><a id="constructor" class="tsd-anchor"></a><h3>constructor</h3><ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class"><li class="tsd-signature tsd-kind-icon">new <wbr/>Polling<span class="tsd-signature-symbol">(</span>executor<span class="tsd-signature-symbol">: </span><a href="../modules/types.html#Executor" class="tsd-signature-type" data-tsd-kind="Type alias">Executor</a>, options<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Readonly</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/types.IPollingOptions.html" class="tsd-signature-type" data-tsd-kind="Interface">IPollingOptions</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="index.Polling.html" class="tsd-signature-type" data-tsd-kind="Class">Polling</a></li></ul><ul class="tsd-descriptions"><li class="tsd-description"><aside class="tsd-sources"><ul><li>Defined in <a href="https://github.com/heeroluo/just4/blob/b824878/packages/polling/src/index.ts#L87">index.ts:87</a></li></ul></aside><div class="tsd-comment tsd-typography"><div class="lead">
+<p>构造函数。</p>
+</div></div><h4 class="tsd-parameters-title">Parameters</h4><ul class="tsd-parameters"><li><h5>executor: <a href="../modules/types.html#Executor" class="tsd-signature-type" data-tsd-kind="Type alias">Executor</a></h5><div class="tsd-comment tsd-typography"><div class="lead">
+<p>执行函数，返回值为 Promise（带有 then 方法）时会进行异步处理。</p>
+</div></div></li><li><h5><span class="tsd-flag ts-flagOptional">Optional</span> options: <span class="tsd-signature-type">Readonly</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/types.IPollingOptions.html" class="tsd-signature-type" data-tsd-kind="Interface">IPollingOptions</a><span class="tsd-signature-symbol">&gt;</span></h5><div class="tsd-comment tsd-typography"><div class="lead">
+<p>轮询选项。</p>
+</div></div></li></ul><h4 class="tsd-returns-title">Returns <a href="index.Polling.html" class="tsd-signature-type" data-tsd-kind="Class">Polling</a></h4></li></ul></section></section><section class="tsd-panel-group tsd-member-group tsd-is-private-protected"><h2>Properties</h2><section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-protected"><a id="_executor" class="tsd-anchor"></a><h3><span class="tsd-flag ts-flagProtected">Protected</span> <span class="tsd-flag ts-flagReadonly">Readonly</span> _executor</h3><div class="tsd-signature tsd-kind-icon">_executor<span class="tsd-signature-symbol">:</span> <a href="../modules/types.html#Executor" class="tsd-signature-type" data-tsd-kind="Type alias">Executor</a></div><aside class="tsd-sources"><ul><li>Defined in <a href="https://github.com/heeroluo/just4/blob/b824878/packages/polling/src/index.ts#L48">index.ts:48</a></li></ul></aside><div class="tsd-comment tsd-typography"><div class="lead">
+<p>执行函数。</p>
+</div></div></section><section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private"><a id="_isExecuting" class="tsd-anchor"></a><h3><span class="tsd-flag ts-flagPrivate">Private</span> _is<wbr/>Executing</h3><div class="tsd-signature tsd-kind-icon">_is<wbr/>Executing<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol"> = false</span></div><aside class="tsd-sources"><ul><li>Defined in <a href="https://github.com/heeroluo/just4/blob/b824878/packages/polling/src/index.ts#L67">index.ts:67</a></li></ul></aside><div class="tsd-comment tsd-typography"><div class="lead">
+<p>是否正在运行异步函数</p>
+</div></div></section><section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-protected"><a id="_options" class="tsd-anchor"></a><h3><span class="tsd-flag ts-flagProtected">Protected</span> <span class="tsd-flag ts-flagReadonly">Readonly</span> _options</h3><div class="tsd-signature tsd-kind-icon">_options<span class="tsd-signature-symbol">:</span> <a href="../interfaces/types.IPollingOptions.html" class="tsd-signature-type" data-tsd-kind="Interface">IPollingOptions</a><span class="tsd-signature-symbol"> = ...</span></div><aside class="tsd-sources"><ul><li>Defined in <a href="https://github.com/heeroluo/just4/blob/b824878/packages/polling/src/index.ts#L52">index.ts:52</a></li></ul></aside><div class="tsd-comment tsd-typography"><div class="lead">
+<p>轮询选项。</p>
+</div></div></section><section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private"><a id="_shouldImmediate" class="tsd-anchor"></a><h3><span class="tsd-flag ts-flagPrivate">Private</span> _should<wbr/>Immediate</h3><div class="tsd-signature tsd-kind-icon">_should<wbr/>Immediate<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol"> = false</span></div><aside class="tsd-sources"><ul><li>Defined in <a href="https://github.com/heeroluo/just4/blob/b824878/packages/polling/src/index.ts#L71">index.ts:71</a></li></ul></aside><div class="tsd-comment tsd-typography"><div class="lead">
+<p>是否要在当前执行结束后马上运行执行函数。</p>
+</div></div></section><section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private"><a id="_started" class="tsd-anchor"></a><h3><span class="tsd-flag ts-flagPrivate">Private</span> _started</h3><div class="tsd-signature tsd-kind-icon">_started<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol"> = false</span></div><aside class="tsd-sources"><ul><li>Defined in <a href="https://github.com/heeroluo/just4/blob/b824878/packages/polling/src/index.ts#L63">index.ts:63</a></li></ul></aside><div class="tsd-comment tsd-typography"><div class="lead">
+<p>轮询是否已启动。</p>
+</div></div></section><section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private"><a id="_timer" class="tsd-anchor"></a><h3><span class="tsd-flag ts-flagPrivate">Private</span> _timer</h3><div class="tsd-signature tsd-kind-icon">_timer<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Timer</span></div><aside class="tsd-sources"><ul><li>Defined in <a href="https://github.com/heeroluo/just4/blob/b824878/packages/polling/src/index.ts#L59">index.ts:59</a></li></ul></aside><div class="tsd-comment tsd-typography"><div class="lead">
+<p>轮询对应的 setTimeout 的计时器。</p>
+</div></div></section></section><section class="tsd-panel-group tsd-member-group "><h2>Methods</h2><section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-protected"><a id="_clearTimeout" class="tsd-anchor"></a><h3><span class="tsd-flag ts-flagProtected">Protected</span> _clear<wbr/>Timeout</h3><ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-protected"><li class="tsd-signature tsd-kind-icon">_clear<wbr/>Timeout<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li></ul><ul class="tsd-descriptions"><li class="tsd-description"><aside class="tsd-sources"><ul><li>Defined in <a href="https://github.com/heeroluo/just4/blob/b824878/packages/polling/src/index.ts#L160">index.ts:160</a></li></ul></aside><div class="tsd-comment tsd-typography"><div class="lead">
+<p>清理计时器。</p>
+</div></div><h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4></li></ul></section><section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-protected"><a id="_exec" class="tsd-anchor"></a><h3><span class="tsd-flag ts-flagProtected">Protected</span> _exec</h3><ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-protected"><li class="tsd-signature tsd-kind-icon">_exec<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li></ul><ul class="tsd-descriptions"><li class="tsd-description"><aside class="tsd-sources"><ul><li>Defined in <a href="https://github.com/heeroluo/just4/blob/b824878/packages/polling/src/index.ts#L106">index.ts:106</a></li></ul></aside><div class="tsd-comment tsd-typography"><div class="lead">
+<p>执行轮询函数。</p>
+</div></div><h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4></li></ul></section><section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-protected"><a id="_next" class="tsd-anchor"></a><h3><span class="tsd-flag ts-flagProtected">Protected</span> _next</h3><ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-protected"><li class="tsd-signature tsd-kind-icon">_next<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li></ul><ul class="tsd-descriptions"><li class="tsd-description"><aside class="tsd-sources"><ul><li>Defined in <a href="https://github.com/heeroluo/just4/blob/b824878/packages/polling/src/index.ts#L144">index.ts:144</a></li></ul></aside><div class="tsd-comment tsd-typography"><div class="lead">
+<p>下一次轮询。</p>
+</div></div><h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4></li></ul></section><section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="execImmediately" class="tsd-anchor"></a><h3>exec<wbr/>Immediately</h3><ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class"><li class="tsd-signature tsd-kind-icon">exec<wbr/>Immediately<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li></ul><ul class="tsd-descriptions"><li class="tsd-description"><aside class="tsd-sources"><ul><li>Defined in <a href="https://github.com/heeroluo/just4/blob/b824878/packages/polling/src/index.ts#L175">index.ts:175</a></li></ul></aside><div class="tsd-comment tsd-typography"><div class="lead">
+<p>在当前轮询结束后马上执行一次执行函数。</p>
+</div></div><h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4></li></ul></section><section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="start" class="tsd-anchor"></a><h3>start</h3><ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class"><li class="tsd-signature tsd-kind-icon">start<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li></ul><ul class="tsd-descriptions"><li class="tsd-description"><aside class="tsd-sources"><ul><li>Defined in <a href="https://github.com/heeroluo/just4/blob/b824878/packages/polling/src/index.ts#L191">index.ts:191</a></li></ul></aside><div class="tsd-comment tsd-typography"><div class="lead">
+<p>启动轮询。</p>
+</div></div><h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4></li></ul></section><section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="stop" class="tsd-anchor"></a><h3>stop</h3><ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class"><li class="tsd-signature tsd-kind-icon">stop<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li></ul><ul class="tsd-descriptions"><li class="tsd-description"><aside class="tsd-sources"><ul><li>Defined in <a href="https://github.com/heeroluo/just4/blob/b824878/packages/polling/src/index.ts#L201">index.ts:201</a></li></ul></aside><div class="tsd-comment tsd-typography"><div class="lead">
+<p>停止轮询。</p>
+</div></div><h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4></li></ul></section><section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="updateOptions" class="tsd-anchor"></a><h3>update<wbr/>Options</h3><ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class"><li class="tsd-signature tsd-kind-icon">update<wbr/>Options<span class="tsd-signature-symbol">(</span>options<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Readonly</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/types.IPollingOptions.html" class="tsd-signature-type" data-tsd-kind="Interface">IPollingOptions</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li></ul><ul class="tsd-descriptions"><li class="tsd-description"><aside class="tsd-sources"><ul><li>Defined in <a href="https://github.com/heeroluo/just4/blob/b824878/packages/polling/src/index.ts#L96">index.ts:96</a></li></ul></aside><div class="tsd-comment tsd-typography"><div class="lead">
+<p>更新轮询选项。</p>
+</div></div><h4 class="tsd-parameters-title">Parameters</h4><ul class="tsd-parameters"><li><h5><span class="tsd-flag ts-flagOptional">Optional</span> options: <span class="tsd-signature-type">Readonly</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/types.IPollingOptions.html" class="tsd-signature-type" data-tsd-kind="Interface">IPollingOptions</a><span class="tsd-signature-symbol">&gt;</span></h5><div class="tsd-comment tsd-typography"><div class="lead">
+<p>轮询选项。</p>
+</div></div></li></ul><h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4></li></ul></section><section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-static"><a id="stopAll" class="tsd-anchor"></a><h3><span class="tsd-flag ts-flagStatic">Static</span> stop<wbr/>All</h3><ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-static"><li class="tsd-signature tsd-kind-icon">stop<wbr/>All<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li></ul><ul class="tsd-descriptions"><li class="tsd-description"><aside class="tsd-sources"><ul><li>Defined in <a href="https://github.com/heeroluo/just4/blob/b824878/packages/polling/src/index.ts#L76">index.ts:76</a></li></ul></aside><div class="tsd-comment tsd-typography"><div class="lead">
+<p>停止所有轮询任务。</p>
+</div></div><h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4></li></ul></section></section></div><div class="col-4 col-menu menu-sticky-wrap menu-highlight"><nav class="tsd-navigation primary"><ul><li class=""><a href="../modules.html">Modules</a></li><li class="current tsd-kind-module"><a href="../modules/index.html">index</a></li><li class=" tsd-kind-module"><a href="../modules/types.html">types</a></li></ul></nav><nav class="tsd-navigation secondary menu-sticky"><ul><li class="current tsd-kind-class tsd-parent-kind-module"><a href="index.Polling.html" class="tsd-kind-icon">Polling</a><ul><li class="tsd-kind-constructor tsd-parent-kind-class"><a href="index.Polling.html#constructor" class="tsd-kind-icon">constructor</a></li><li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><a href="index.Polling.html#_executor" class="tsd-kind-icon">_executor</a></li><li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="index.Polling.html#_isExecuting" class="tsd-kind-icon">_is<wbr/>Executing</a></li><li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><a href="index.Polling.html#_options" class="tsd-kind-icon">_options</a></li><li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="index.Polling.html#_shouldImmediate" class="tsd-kind-icon">_should<wbr/>Immediate</a></li><li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="index.Polling.html#_started" class="tsd-kind-icon">_started</a></li><li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="index.Polling.html#_timer" class="tsd-kind-icon">_timer</a></li><li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><a href="index.Polling.html#_clearTimeout" class="tsd-kind-icon">_clear<wbr/>Timeout</a></li><li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><a href="index.Polling.html#_exec" class="tsd-kind-icon">_exec</a></li><li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><a href="index.Polling.html#_next" class="tsd-kind-icon">_next</a></li><li class="tsd-kind-method tsd-parent-kind-class"><a href="index.Polling.html#execImmediately" class="tsd-kind-icon">exec<wbr/>Immediately</a></li><li class="tsd-kind-method tsd-parent-kind-class"><a href="index.Polling.html#start" class="tsd-kind-icon">start</a></li><li class="tsd-kind-method tsd-parent-kind-class"><a href="index.Polling.html#stop" class="tsd-kind-icon">stop</a></li><li class="tsd-kind-method tsd-parent-kind-class"><a href="index.Polling.html#updateOptions" class="tsd-kind-icon">update<wbr/>Options</a></li><li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="index.Polling.html#stopAll" class="tsd-kind-icon">stop<wbr/>All</a></li></ul></li></ul></nav></div></div></div><footer class="with-border-bottom"><div class="container"><h2>Legend</h2><div class="tsd-legend-group"><ul class="tsd-legend"><li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li><li class="tsd-kind-constructor tsd-parent-kind-class"><span class="tsd-kind-icon">Constructor</span></li><li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li></ul><ul class="tsd-legend"><li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected property</span></li><li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected method</span></li></ul><ul class="tsd-legend"><li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li></ul><ul class="tsd-legend"><li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li></ul><ul class="tsd-legend"><li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private property</span></li></ul><ul class="tsd-legend"><li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static method</span></li></ul></div><h2>Settings</h2><p>Theme <select id="theme"><option value="os">OS</option><option value="light">Light</option><option value="dark">Dark</option></select></p></div></footer><div class="container tsd-generator"><p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p></div><div class="overlay"></div><script src="../assets/main.js"></script></body></html>
