@@ -1,0 +1,1 @@
+import{StorageWrap}from"./storage-wrap";let sessionStorage,localStorage;if("undefined"!=typeof window)try{sessionStorage=window.sessionStorage,localStorage=window.localStorage}catch(e){}export const session=Object.freeze(new StorageWrap(sessionStorage));export const local=Object.freeze(new StorageWrap(localStorage));
