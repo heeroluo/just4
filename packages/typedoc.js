@@ -7,6 +7,7 @@ const cwd = process.cwd();
 
 module.exports = {
   entryPoints: [path.join(cwd, 'src')],
+  entryPointStrategy: 'expand',
   out: path.resolve(
     __dirname, '../docs', path.relative(__dirname, cwd)
   ),
