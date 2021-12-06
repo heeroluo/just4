@@ -1,8 +1,6 @@
-module.exports = function() {
-  return {
-    target: 'web',
-    resolve: {
-      extensions: ['.js', '.ts']
-    }
-  };
+module.exports = {
+  target: 'web',
+  resolve: {
+    extensions: ['.js', '.ts']
+  }
 };

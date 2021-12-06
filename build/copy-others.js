@@ -19,6 +19,7 @@ Object.keys(rootPkgJSON).forEach((key) => {
 delete pkgJSON.devDependencies;
 delete pkgJSON.scripts;
 delete pkgJSON.private;
+delete pkgJSON.devPort;
 fs.writeFileSync(
   path.join(pkgDir, 'dist', 'es', 'package.json'),
   JSON.stringify(pkgJSON, null, 2),
