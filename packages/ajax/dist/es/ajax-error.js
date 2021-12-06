@@ -1,0 +1,1 @@
+export class AJAXError extends Error{constructor(r,s,t){super(t),this.isCancel=!1,this.isTimeout=!1,this.xhr=r,this.options=s,this.name="AJAXError"}}

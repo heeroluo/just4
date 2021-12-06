@@ -1,6 +1,6 @@
 {
   "name": "@just4/ajax",
-  "version": "0.2.0-beta.1",
+  "version": "0.2.0-beta.9",
   "description": "Just for making XMLHTTPRequest easier to use in browser.",
   "keywords": [
     "ajax",
@@ -8,8 +8,8 @@
     "XDomainRequest"
   ],
   "dependencies": {
-    "@just4/util": "^0.1.0-beta.2",
-    "@just4/querystring": "^0.1.0-beta.3"
+    "@just4/util": "^0.1.0-beta.3",
+    "@just4/querystring": "^0.1.0-beta.4"
   },
   "repository": {
     "type": "git",
