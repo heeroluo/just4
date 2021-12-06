@@ -1,8 +1,0 @@
-{
-  "entryPoints": ["./src/"],
-  "out": "../../docs/polling",
-  "excludeInternal": true,
-  "excludePrivate": true,
-  "excludeProtected": true,
-  "listInvalidSymbolLinks": true
-}

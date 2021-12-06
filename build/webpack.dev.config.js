@@ -2,7 +2,7 @@ const path = require('path');
 const ESLintPlugin = require('eslint-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
-const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
+
 // cross-env
 // const { merge } = require('webpack-merge');
 // const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
@@ -21,7 +21,6 @@ module.exports = {
     extensions: ['.js', '.ts'],
     alias: {
       '@': path.join(rootPath, 'src'),
-      // 不知道为什么，tsconfig-paths-webpack-plugin 无法解析下面两个路径
       '@just4/util': path.resolve(__dirname, '../packages/util/dist/es'),
       '@just4/querystring': path.resolve(__dirname, '../packages/querystring/dist/es')
     }
