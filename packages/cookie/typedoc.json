@@ -1,6 +1,0 @@
-{
-  "entryPoints": ["./src/"],
-  "out": "../../docs/cookie",
-  "excludeInternal": true,
-  "listInvalidSymbolLinks": true
-}
