@@ -1,7 +1,7 @@
 {
   "extends": "../../tsconfig.src.json",
   "compilerOptions": {
-    "outDir": "../dist/",
+    "outDir": "../dist/es",
     "baseUrl": "../",
     "paths": {
       "@just4/util/*": ["../util/dist/es/*"]

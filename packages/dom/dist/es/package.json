@@ -1,0 +1,30 @@
+{
+  "name": "@just4/dom",
+  "version": "0.1.0",
+  "description": "Just for making dom manipulation much more easier in browser.",
+  "keywords": [
+    "dom",
+    "manipulation",
+    "jquery"
+  ],
+  "dependencies": {
+    "@just4/util": "^0.1.0-beta.3"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/heeroluo/just4"
+  },
+  "author": {
+    "name": "Mr.Luo",
+    "email": "heeroluo@126.com",
+    "url": "https://mrluo.life/"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/heeroluo/just4/issues"
+  },
+  "homepage": "https://github.com/heeroluo/just4#readme",
+  "engines": {
+    "node": ">=10.0.0"
+  }
+}

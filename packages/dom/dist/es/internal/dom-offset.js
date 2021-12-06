@@ -1,0 +1,1 @@
+import{ifIsHTMLElement}from"./dom-base";import{getScroll}from"./dom-scroll";export function getOffset(t){return ifIsHTMLElement(t,(function(t){const e=t.ownerDocument,o=e.documentElement;if(t!==o&&o.contains(t)){const o=e.defaultView,l=t.getBoundingClientRect();return{top:l.top+getScroll(o,"scrollTop"),left:l.left+getScroll(o,"scrollLeft")}}}))||{top:0,left:0}}
