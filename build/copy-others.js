@@ -1,17 +1,14 @@
 /**
  * @file 拷贝非源代码文件到包的发布目录，包括：package.json、LICENSE、README.md。
+ * 其中，在拷贝 package.json 的时候，会移除开发阶段使用的字段。
  */
 
 const fs = require('fs');
 const path = require('path');
 
-const pkgName = path.relative(
-  path.resolve(__dirname, '../packages'),
-  process.cwd()
-);
-const pkgDir = path.resolve(__dirname, '..', 'packages', pkgName);
-const rootPkgJSON = require('../package');
+const pkgDir = process.cwd();
 const pkgJSON = require(path.join(pkgDir, 'package.json'));
+const rootPkgJSON = require('../package');
 
 // 复用根目录包信息
 Object.keys(rootPkgJSON).forEach((key) => {
@@ -19,6 +16,7 @@ Object.keys(rootPkgJSON).forEach((key) => {
     pkgJSON[key] = rootPkgJSON[key];
   }
 });
+// 移除开发阶段使用的字段
 delete pkgJSON.devDependencies;
 delete pkgJSON.scripts;
 delete pkgJSON.private;
