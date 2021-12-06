@@ -94,7 +94,7 @@ QUnit.test('请求图片', function(assert: any) {
     responseType: 'blob'
   }).then(function(res) {
     const img = new Image();
-    img.src = URL.createObjectURL(res.data);
+    img.src = URL.createObjectURL(<Blob>res.data);
     assert.ok(true);
     done();
   });
