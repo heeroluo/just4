@@ -4,7 +4,7 @@
     "outDir": "../dist/",
     "baseUrl": "../",
     "paths": {
-      "@just4/util/*": ["../util/dist/npm/*"]
+      "@just4/util/*": ["../util/dist/es/*"]
     }
   }
 }
