@@ -62,6 +62,7 @@ uaInfo.brand.isOnePlus; // 是否一加设备
 import { UAInfo } from '@just4/ua-info';
 
 const uaInfo = new UAInfo('an user agent string, such as navigator.userAgent');
+uaInfo.borwser.isIE; // 是否 IE 内核
 uaInfo.browser.isChrome; // 是否 Chrome 内核
 uaInfo.browser.isSafari; // 是否 Safari 内核
 uaInfo.browser.isEdge; // 是否 Edge(EdgeHTML) 内核
