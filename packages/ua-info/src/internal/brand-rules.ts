@@ -31,13 +31,16 @@ export const androidRules: IRule[] = [
   // 型号规则
   { name: 'huawei', modelRegExp: /^Mate\s\d{2}/ },
   { name: 'huawei', modelRegExp: /^Nova\s\d$/ },
-  { name: 'huawei', modelRegExp: /^(?:CHE|CHM|Che1|VIE|BND|PAR|JKM|EML|OXF|VOG|JSN|VCE|STK|STF|BZT|YAL|INE|COR|SPN|AGS2|MAR|LYA|BKL|CLT|SEA|MHA|EVR|VKY|ANE|ALP|TIT)-/ },
+  { name: 'huawei', modelRegExp: /^(?:CHE|CHM|Che1|VIE|BND|PAR|JKM|EML|OXF|VOG|JSN|VCE|STK|STF|BZT|YAL|INE|COR|SPN|AGS2|MAR|LYA|BKL|CLT|SEA|MHA|EVR|VKY|ANE|ALP|TIT|MRX|ELE|DVC|SCM|JLH|JDN2|JEF|Hera|Hebe)-/ },
+  { name: 'huawei', modelRegExp: /^TYH\d+[A-Z]$/ },
   { name: 'mi', modelRegExp: /^MI\s?(?:\d|CC|Note|MAX|PLAY|PAD)/i },
   { name: 'mi', modelRegExp: /^MIX\s\dS?/ },
   { name: 'mi', modelRegExp: /^(?:AWM|SKR|SKW|DLT)-/ },
-  { name: 'mi', modelRegExp: /^M\d{4}[CJ]\d+[A-Z]+$/ },
+  { name: 'mi', modelRegExp: /^M\d{4}[CKJ]\d+[A-Z]+$/ },
+  { name: 'mi', modelRegExp: /^2\d+[A-Z]*C$/ },
   { name: 'samsung', modelRegExp: /^S(?:M|[CGP]H)-[A-Za-z0-9]+$/ },
   { name: 'samsung', modelRegExp: /^SC-\d{2}[A-Z]$/ },
   { name: 'samsung', modelRegExp: /^SH[WV]-/ },
-  { name: 'samsung', modelRegExp: /^GT[-_][A-Z][A-Z0-9]{3,}$/i }
+  { name: 'samsung', modelRegExp: /^GT[-_][A-Z][A-Z0-9]{3,}$/i },
+  { name: 'oneplus', modelRegExp: /^(?:KB|HD|IN|GM|NE|LE|MT)\d{4}$/ }
 ];

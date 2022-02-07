@@ -9,7 +9,7 @@ import { Version } from './version';
 import { IFeatureInfo } from './types';
 
 
-// UA 分析结果与类属性的对应关系
+// UA 分析结果与类属性的对应关系
 const propMap: Record<string, Exclude<keyof OSInfo, 'version'>> = {
   'ios': 'isIOS',
   'android': 'isAndroid',
