@@ -2,9 +2,8 @@
  * 提供 DOM 包装类。
  * @packageDocumentation
  */
-import { DOMWrapMember } from './types';
+import { DOMWrapMember, TraversalUntil } from './types';
 import { IValueFunction, IEventHandler, IPosition } from './interfaces';
-import { TraversalUntil } from './internal/dom-traversal';
 import { InsertTarget } from './internal/dom-insertion';
 /**
  * DOMWrap 类型 forEach/some/every/filter 的 callback。
