@@ -5,7 +5,7 @@
  */
 
 import { mergeArray } from '@just4/util/array';
-import { DOMWrapMember } from '../types';
+import { DOMWrapMember, TraversalUntil } from '../types';
 import { isNode, ifIsHTMLElement, uniqueSort } from './dom-base';
 import { matchesSelector } from '../selector';
 
@@ -52,9 +52,6 @@ function sortAndFilter(
   }
   return filterBySelector(elems, selector);
 }
-
-// 截止元素或选择器
-export type TraversalUntil = string | HTMLElement | Array<HTMLElement>;
 
 
 /**

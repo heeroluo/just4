@@ -4,12 +4,8 @@
  */
 
 import { toArray, mergeArray, isArrayLike } from '@just4/util/array';
-import { DOMWrapMember } from './types';
-import {
-  IValueFunction,
-  IEventHandler,
-  IPosition
-} from './interfaces';
+import { DOMWrapMember, TraversalUntil } from './types';
+import { IValueFunction, IEventHandler, IPosition } from './interfaces';
 import { querySelectorAll } from './selector';
 import { isNode, access, uniqueSort } from './internal/dom-base';
 import {
@@ -42,7 +38,6 @@ import { getScroll, setScroll } from './internal/dom-scroll';
 import { getOffset } from './internal/dom-offset';
 import {
   findElements,
-  TraversalUntil,
   findElementsUntil,
   getChildren,
   getSiblings,
