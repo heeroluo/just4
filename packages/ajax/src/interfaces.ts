@@ -26,11 +26,6 @@ export type RequestType = '' | 'form' | 'json';
 export type URLParams = string | UniversalParams;
 
 /**
- * 请求数据。
- */
-export type DataType = UniversalParams | BodyType;
-
-/**
  * 请求主体（xhr.send 可以直接发送的类型）。
  */
 export type BodyType = string | FormData | Blob | ArrayBuffer;
@@ -52,7 +47,7 @@ export interface IAJAXOptions {
   /**
    * 请求体数据。
    */
-  data?: DataType,
+  data?: unknown,
   /**
    * 自定义请求头。
    */

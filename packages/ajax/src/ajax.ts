@@ -16,7 +16,6 @@ import {
   UniversalParams,
   URLParams,
   BodyType,
-  DataType,
   RequestMethod,
   RequestType,
   IAJAXOptions,
@@ -63,7 +62,7 @@ function handleURL(
 function handleRequestBody(
   method: RequestMethod,
   headers: UniversalParams,
-  data?: DataType,
+  data?: unknown,
   requestType?: string
 ): BodyType | undefined {
   if (data == null || method === 'get') { return; }
@@ -71,12 +70,12 @@ function handleRequestBody(
   let body: BodyType;
   let contentType: string | undefined;
   if (requestType === 'json') {
-    body = JSON.stringify(data);
+    body = typeof data === 'string' ? data : JSON.stringify(data);
     contentType = 'application/json; charset=utf-8';
   } else {
     body = isObject(data) ?
       stringify(<UniversalParams>data, { ignoreEmpty: false }) :
-      <string | FormData | Blob | ArrayBuffer>data;
+      <BodyType>data;
     if (typeof body === 'string') {
       contentType = 'application/x-www-form-urlencoded; charset=utf-8';
     }
