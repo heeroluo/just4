@@ -12,5 +12,7 @@ module.exports = {
     __dirname, '../docs', path.relative(__dirname, cwd)
   ),
   excludeInternal: true,
+  excludePrivate: true,
+  excludeProtected: true,
   listInvalidSymbolLinks: true
 };
