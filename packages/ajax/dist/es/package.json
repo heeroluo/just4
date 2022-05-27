@@ -1,6 +1,6 @@
 {
   "name": "@just4/ajax",
-  "version": "0.3.0-beta.1",
+  "version": "0.4.0-beta.1",
   "description": "Just for making XMLHTTPRequest easier to use in browser.",
   "keywords": [
     "ajax",
@@ -9,7 +9,7 @@
   ],
   "dependencies": {
     "@just4/util": "^0.1.0-beta.3",
-    "@just4/querystring": "^0.1.0-beta.4"
+    "@just4/querystring": "^0.2.0-beta.1"
   },
   "repository": {
     "type": "git",

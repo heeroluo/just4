@@ -24,7 +24,7 @@ import { stringify } from './stringify';
  */
 export function appendToURL(
   url: string,
-  data?: string | Readonly<{ [key: string]: unknown }>,
+  data?: string | object,
   options?: Readonly<IQSStringifyOptions>
 ): string {
   if (url == null || data == null) { return url; }

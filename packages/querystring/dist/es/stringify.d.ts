@@ -15,6 +15,4 @@ import { IQSStringifyOptions } from './interfaces';
  * @param options 序列化选项。
  * @returns 序列化结果。
  */
-export declare function stringify(data: Readonly<{
-    [key: string]: unknown;
-}>, options?: Readonly<IQSStringifyOptions>): string;
+export declare function stringify(data: object, options?: Readonly<IQSStringifyOptions>): string;

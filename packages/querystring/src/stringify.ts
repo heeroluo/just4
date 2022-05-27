@@ -20,7 +20,7 @@ import { IQSStringifyOptions } from './interfaces';
  * @returns 序列化结果。
  */
 export function stringify(
-  data: Readonly<{ [key: string]: unknown }>,
+  data: object,
   options?: Readonly<IQSStringifyOptions>
 ): string {
   const opts: IQSStringifyOptions = assignProps({
@@ -46,7 +46,7 @@ export function stringify(
 
   for (key in data) {
     if (hasOwnProp(data, key)) {
-      value = data[key];
+      value = (<any>data)[key];
       if (Array.isArray(value)) {
         value.forEach(loopItem);
       } else {

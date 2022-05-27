@@ -3,13 +3,6 @@
  * @packageDocumentation
  */
 
-
-/**
- * 通用参数集合。
- */
-export type UniversalParams = { [key: string]: unknown };
-
-
 /**
  * 请求方法。
  */
@@ -19,11 +12,6 @@ export type RequestMethod = 'get' | 'post' | 'put' | 'delete' | 'patch';
  * 请求格式。
  */
 export type RequestType = '' | 'form' | 'json';
-
-/**
- * URL 参数。
- */
-export type URLParams = string | UniversalParams;
 
 /**
  * 请求主体（xhr.send 可以直接发送的类型）。
@@ -43,15 +31,15 @@ export interface IAJAXOptions {
   /**
    * URL 参数。
    */
-  params?: URLParams,
+  params?: string | object,
   /**
    * 请求体数据。
    */
-  data?: unknown,
+  data?: string | object,
   /**
    * 自定义请求头。
    */
-  headers?: UniversalParams,
+  headers?: object,
   /**
    * 请求方法，get、post、put 或 delete。
    */

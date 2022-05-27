@@ -13,8 +13,6 @@ import {
   cancelRequest
 } from './internal/ajax-record';
 import {
-  UniversalParams,
-  URLParams,
   BodyType,
   RequestMethod,
   RequestType,
@@ -29,7 +27,7 @@ function createXhr(
   isCross: boolean,
   method: string,
   requestType: string,
-  headers: Readonly<UniversalParams>,
+  headers: object,
   withCredentials?: boolean
 ): XMLHttpRequest {
   const useXDomainRequest = isCross &&
@@ -48,10 +46,10 @@ function createXhr(
 // 拼接出最终请求的 URL
 function handleURL(
   url: string,
-  params?: Readonly<URLParams>,
+  params?: object | string,
   preventCaching?: boolean
 ): string {
-  if (params != null) { url = appendToURL(url, params, { ignoreEmpty: false }); }
+  url = appendToURL(url, params, { ignoreEmpty: false });
   // 在 URL 上增加时间戳参数以防止缓存
   if (preventCaching) { url = appendToURL(url, { _: Date.now() }); }
 
@@ -61,8 +59,8 @@ function handleURL(
 // 处理请求主体
 function handleRequestBody(
   method: RequestMethod,
-  headers: UniversalParams,
-  data?: unknown,
+  headers: any,
+  data?: string | object,
   requestType?: string
 ): BodyType | undefined {
   if (data == null || method === 'get') { return; }
@@ -74,7 +72,7 @@ function handleRequestBody(
     contentType = 'application/json; charset=utf-8';
   } else {
     body = isObject(data) ?
-      stringify(<UniversalParams>data, { ignoreEmpty: false }) :
+      stringify(<object>data, { ignoreEmpty: false }) :
       <BodyType>data;
     if (typeof body === 'string') {
       contentType = 'application/x-www-form-urlencoded; charset=utf-8';
@@ -90,7 +88,7 @@ function setXhrPropsAndHeaders(
   xhr: XMLHttpRequest,
   options: Readonly<IAJAXOptions>,
   isCross: boolean,
-  headers: UniversalParams
+  headers: any
 ) {
   // 在IE中，超时属性可能只能在调用 open() 方法之后且在调用 send() 方法之前设置
   if (options.timeout) { xhr.timeout = options.timeout; }
