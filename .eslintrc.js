@@ -32,9 +32,7 @@ module.exports = {
 
     // 基本
     'semi': ['error', 'always'],
-    'indent': ['error', 2, {
-      'SwitchCase': 1
-    }],
+    'indent': 'off',
     'brace-style': ['error', '1tbs', {
       'allowSingleLine': true
     }],
@@ -109,7 +107,7 @@ module.exports = {
     // ES6
     'no-var': 'error',
     'prefer-const': 'error',
-    'no-duplicate-imports': 'error',
+    'no-duplicate-imports': 'off',
     'prefer-promise-reject-errors': 'error',
     'template-curly-spacing': ['error', 'never'],
     'no-template-curly-in-string': 0,
@@ -124,7 +122,11 @@ module.exports = {
 
     // TypeScript
     '@typescript-eslint/semi': ['error', 'always'],
+    '@typescript-eslint/indent': ['error', 2, {
+      'SwitchCase': 1
+    }],
     '@typescript-eslint/comma-spacing': ['error'],
+    '@typescript-eslint/no-duplicate-imports': ['error'],
     '@typescript-eslint/type-annotation-spacing': ['error', {
       after: true,
       before: false,
