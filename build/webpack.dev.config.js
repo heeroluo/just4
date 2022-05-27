@@ -23,7 +23,8 @@ module.exports = {
     alias: {
       '@': path.join(rootPath, 'src'),
       '@just4/util': path.resolve(__dirname, '../packages/util/dist/es'),
-      '@just4/querystring': path.resolve(__dirname, '../packages/querystring/dist/es')
+      '@just4/querystring': path.resolve(__dirname, '../packages/querystring/dist/es'),
+      '@just4/dom': path.resolve(__dirname, '../packages/dom/dist/es')
     }
   },
   module: {
