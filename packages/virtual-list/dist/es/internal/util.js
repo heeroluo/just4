@@ -1,0 +1,1 @@
+export function debounce(e,o){let t;return()=>{t&&window.clearTimeout(t),t=window.setTimeout(e,o)}}

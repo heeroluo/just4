@@ -1,0 +1,11 @@
+{
+  "extends": "../../tsconfig.src.json",
+  "compilerOptions": {
+    "outDir": "../dist/es",
+    "baseUrl": "../",
+    "paths": {
+      "@just4/util/*": ["../util/dist/es/*"],
+      "@just4/dom/*": ["../dom/dist/es/*"]
+    }
+  }
+}
