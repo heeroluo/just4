@@ -3,7 +3,7 @@
  * @packageDocumentation
  * @internal
  */
-import { IRule } from './types';
+import type { IRule } from './types';
 /**
  * 操作系统匹配规则。
  */

@@ -3,7 +3,7 @@
  * @packageDocumentation
  * @internal
  */
-import { IMatchResult, IRule } from './types';
+import type { IMatchResult, IRule } from './types';
 /**
  * 执行匹配。
  * @param ua User agent 字符串。

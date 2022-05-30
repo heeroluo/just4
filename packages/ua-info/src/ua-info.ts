@@ -7,7 +7,7 @@ import { OSInfo } from './os-info';
 import { BrandInfo } from './brand-info';
 import { BrowserInfo } from './browser-info';
 import { ClientInfo } from './client-info';
-import { IFeatureInfo } from './types';
+import type { IFeatureInfo } from './types';
 
 
 /**

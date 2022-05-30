@@ -3,7 +3,7 @@
  * @packageDocumentation
  * @internal
  */
-import { IRule } from './types';
+import type { IRule } from './types';
 /**
  * 苹果设备匹配规则。
  */

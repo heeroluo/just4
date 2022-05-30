@@ -86,9 +86,29 @@ QUnit.test('three-digit-version', function(assert: any) {
   assert.ok(uaInfoList[7].browser.version.gt('100'));
 });
 
-QUnit.test('feature-info', function(assert: any) {
+QUnit.test('maxTouchPoint', function(assert: any) {
   const uaInfo = new UAInfo(uaList[2], {
     maxTouchPoints: 5
+  });
+  assert.ok(uaInfo.os.isIOS);
+  assert.ok(uaInfo.brand.isIPad);
+  assert.ok(!uaInfo.brand.isMac);
+  assert.ok(uaInfo.isPortable);
+});
+
+QUnit.test('platform', function(assert: any) {
+  const uaInfo = new UAInfo(uaList[7], {
+    platform: 'Android'
+  });
+  assert.ok(uaInfo.os.isAndroid);
+  assert.ok(!uaInfo.os.isWindows);
+  assert.ok(uaInfo.isPortable);
+});
+
+QUnit.test('maxTouchPoint & platform', function(assert: any) {
+  const uaInfo = new UAInfo(uaList[2], {
+    maxTouchPoints: 5,
+    platform: 'MacIntel'
   });
   assert.ok(uaInfo.os.isIOS);
   assert.ok(uaInfo.brand.isIPad);

@@ -3,7 +3,7 @@
  * @packageDocumentation
  * @internal
  */
-import { IRule } from './types';
+import type { IRule } from './types';
 /**
  * 浏览器内核匹配规则。
  */

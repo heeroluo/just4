@@ -4,7 +4,7 @@
  * @internal
  */
 
-import { IMatchResult, IRule } from './types';
+import type { IMatchResult, IRule } from './types';
 
 
 /**

@@ -4,7 +4,7 @@
  * @internal
  */
 
-import { IRule } from './types';
+import type { IRule } from './types';
 import { browserRules } from './browser-rules';
 
 

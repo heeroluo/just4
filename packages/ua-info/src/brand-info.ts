@@ -3,7 +3,7 @@
  * @packageDocumentation
  */
 
-import { IRule } from './internal/types';
+import type { IRule } from './internal/types';
 import { appleRules, androidRules } from './internal/brand-rules';
 import { execRules } from './internal/ua-detector';
 import { OSInfo } from './os-info';

@@ -7,7 +7,11 @@
  */
 export interface IFeatureInfo {
     /**
-     * 触摸屏最大触点数。
+     * 触摸屏最大触点数，可传入 navigator.maxTouchPoints。
      */
-    maxTouchPoints: number | undefined;
+    maxTouchPoints?: number | undefined;
+    /**
+     * 浏览器运行平台，可传入 navigator.platform。
+     */
+    platform?: string;
 }

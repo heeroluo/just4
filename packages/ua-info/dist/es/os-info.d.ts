@@ -3,7 +3,7 @@
  * @packageDocumentation
  */
 import { Version } from './version';
-import { IFeatureInfo } from './types';
+import type { IFeatureInfo } from './types';
 /**
  * 操作系统信息类。
  */
