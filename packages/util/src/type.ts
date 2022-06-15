@@ -15,7 +15,8 @@ const toString = Object.prototype.toString;
  * @param value 待测变量。
  * @returns `value` 是否 Function 类型。
  */
-export function isFunction(value: unknown): boolean {
+// eslint-disable-next-line @typescript-eslint/ban-types
+export function isFunction(value: unknown): value is Function {
   return toString.call(value) === '[object Function]';
 }
 
@@ -29,7 +30,7 @@ export function isFunction(value: unknown): boolean {
  * @param value 待测变量。
  * @returns `value` 是否 Date 类型。
  */
-export function isDate(value: unknown): boolean {
+export function isDate(value: unknown): value is Date {
   return toString.call(value) === '[object Date]';
 }
 
@@ -44,6 +45,6 @@ export function isDate(value: unknown): boolean {
  * @param value 待测变量。
  * @returns `value` 是否 Object 类型。
  */
-export function isObject(value: unknown): boolean {
+export function isObject(value: unknown): value is Record<string, unknown> {
   return toString.call(value) === '[object Object]';
 }
