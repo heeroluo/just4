@@ -181,7 +181,7 @@ export class DOMWrap implements ArrayLike<DOMWrapMember> {
    * @param context 上下文。
    * @returns 包含上述节点的 DOMWrap 对象。
    */
-  public add(selector: string, context?: HTMLElement | Document): DOMWrap
+  public add(selector: string, context?: HTMLElement | Document): DOMWrap;
 
   /**
    * 返回包含当前节点及指定节点的 DOMWrap 对象（节点顺序与其在文档树中的顺序一致）。
@@ -193,7 +193,7 @@ export class DOMWrap implements ArrayLike<DOMWrapMember> {
    * @param nodes 指定节点。
    * @returns 包含上述节点的 DOMWrap 对象。
    */
-  public add(nodes: ArrayLike<DOMWrapMember>): DOMWrap
+  public add(nodes: ArrayLike<DOMWrapMember>): DOMWrap;
 
   public add(
     selector: string | ArrayLike<DOMWrapMember>,
@@ -244,7 +244,7 @@ export class DOMWrap implements ArrayLike<DOMWrapMember> {
    * @param name 属性名。
    * @returns 属性值。
    */
-  public attr(name: string): string
+  public attr(name: string): string;
   /**
    * 设置当前所有节点的属性值。
    * @example
@@ -258,7 +258,7 @@ export class DOMWrap implements ArrayLike<DOMWrapMember> {
   public attr(
     name: string,
     value: string | boolean | IValueFunction<string | boolean>
-  ): DOMWrap
+  ): DOMWrap;
   /**
    * 设置当前所有节点的属性值。
    * @example
@@ -272,7 +272,7 @@ export class DOMWrap implements ArrayLike<DOMWrapMember> {
    */
   public attr(kvPairs: {
     [key: string]: string | boolean | IValueFunction<string | boolean>
-  }): DOMWrap
+  }): DOMWrap;
 
   public attr(
     name: string | {
@@ -310,7 +310,7 @@ export class DOMWrap implements ArrayLike<DOMWrapMember> {
    * ```
    * @returns 特性值。
    */
-  public prop(name: string): unknown
+  public prop(name: string): unknown;
   /**
    * 设置当前所有节点的特性值。
    * @example
@@ -321,7 +321,7 @@ export class DOMWrap implements ArrayLike<DOMWrapMember> {
    * @param value 特性值。
    * @returns 当前对象。
    */
-  public prop(name: string, value: unknown): DOMWrap
+  public prop(name: string, value: unknown): DOMWrap;
   /**
    * 设置当前所有节点的特性值。
    * @example
@@ -335,7 +335,7 @@ export class DOMWrap implements ArrayLike<DOMWrapMember> {
    */
   public prop(kvPairs: {
     [key: string]: unknown | IValueFunction<unknown>
-  }): DOMWrap
+  }): DOMWrap;
 
   public prop(
     name: string | { [key: string]: unknown | IValueFunction<unknown> },
@@ -356,7 +356,7 @@ export class DOMWrap implements ArrayLike<DOMWrapMember> {
    * @param key 数据项键。
    * @returns 数据项值。
    */
-  public data(key: string): unknown
+  public data(key: string): unknown;
   /**
    * 设置当前所有节点的自定义数据项值。
    * @example
@@ -367,7 +367,7 @@ export class DOMWrap implements ArrayLike<DOMWrapMember> {
    * @param value 数据项值。
    * @returns 当前对象。
    */
-  public data(key: string, value: unknown | IValueFunction<unknown>): DOMWrap
+  public data(key: string, value: unknown | IValueFunction<unknown>): DOMWrap;
   /**
    * 设置当前所有节点的自定义数据项值。
    * @example
@@ -381,7 +381,7 @@ export class DOMWrap implements ArrayLike<DOMWrapMember> {
    */
   public data(
     kvPairs: { [key: string]: unknown | IValueFunction<unknown> }
-  ): DOMWrap
+  ): DOMWrap;
 
   public data(
     key: string | { [key: string]: unknown | IValueFunction<unknown> },
@@ -421,7 +421,7 @@ export class DOMWrap implements ArrayLike<DOMWrapMember> {
    * ```
    * @returns 当前第一个节点的内部 html 代码。
    */
-  html(): string
+  html(): string;
   /**
    * 设置当前所有节点的内部 html 代码。
    * @example
@@ -431,7 +431,7 @@ export class DOMWrap implements ArrayLike<DOMWrapMember> {
    * @param html html 代码。
    * @returns 当前对象。
    */
-  html(html: string): DOMWrap
+  html(html: string): DOMWrap;
 
   html(html?: string): string | DOMWrap {
     return this.prop('innerHTML', html);
@@ -441,13 +441,13 @@ export class DOMWrap implements ArrayLike<DOMWrapMember> {
    * 获取当前第一个节点的内部文本内容。
    * @returns 当前第一个节点的内部文本内容。
    */
-  text(): string
+  text(): string;
   /**
    * 设置当前所有节点的内部文本内容。
    * @param text 文本内容。
    * @returns 当前对象。
    */
-  text(text: string): DOMWrap
+  text(text: string): DOMWrap;
 
   text(text?: string): string | DOMWrap {
     if (arguments.length) {
@@ -465,7 +465,7 @@ export class DOMWrap implements ArrayLike<DOMWrapMember> {
    * ```
    * @returns 当前第一个节点的 value 特性值。
    */
-  val(): string
+  val(): string;
   /**
    * 设置当前所有节点的 value 特性值。
    * @example
@@ -475,7 +475,7 @@ export class DOMWrap implements ArrayLike<DOMWrapMember> {
    * @param value value 值。
    * @returns 当前对象。
    */
-  val(value: string): DOMWrap
+  val(value: string): DOMWrap;
 
   val(value?: string): string | DOMWrap {
     return this.prop('value', value);
@@ -490,7 +490,7 @@ export class DOMWrap implements ArrayLike<DOMWrapMember> {
    * @param name 样式属性名。
    * @returns 样式属性值。
    */
-  public css(name: string): string
+  public css(name: string): string;
   /**
    * 设置当前所有节点的样式属性值。
    * @example
@@ -504,7 +504,7 @@ export class DOMWrap implements ArrayLike<DOMWrapMember> {
   public css(
     name: string,
     value: number | string | IValueFunction<number | string>
-  ): DOMWrap
+  ): DOMWrap;
   /**
    * 设置当前所有节点的样式属性值。
    * @example
@@ -519,7 +519,7 @@ export class DOMWrap implements ArrayLike<DOMWrapMember> {
    */
   public css(kvPairs: {
     [key: string]: number | string | IValueFunction<number | string>
-  }): DOMWrap
+  }): DOMWrap;
 
   public css(
     name: string | {
@@ -703,14 +703,14 @@ export class DOMWrap implements ArrayLike<DOMWrapMember> {
    * 获取当前第一个节点的 scrollTop。
    * @returns 当前第一个节点的 scrollTop。
    */
-  scrollTop(): number
+  scrollTop(): number;
 
   /**
    * 设置当前所有节点的 scrollTop。
    * @param value scrollTop 值。
    * @returns 当前对象。
    */
-  scrollTop(value: number | IValueFunction<number>): DOMWrap
+  scrollTop(value: number | IValueFunction<number>): DOMWrap;
 
   scrollTop(value?: number | IValueFunction<number>): number | DOMWrap {
     return access(this, 'scrollTop', value, true, {
@@ -723,14 +723,14 @@ export class DOMWrap implements ArrayLike<DOMWrapMember> {
    * 获取当前第一个节点的 scrollLeft。
    * @returns 当前第一个节点的 scrollLeft。
    */
-  scrollLeft(): number
+  scrollLeft(): number;
 
   /**
    * 设置当前所有节点的 scrollLeft。
    * @param value scrollLeft 值。
    * @returns 当前对象。
    */
-  scrollLeft(value: number | IValueFunction<number>): DOMWrap
+  scrollLeft(value: number | IValueFunction<number>): DOMWrap;
 
   scrollLeft(value?: number | IValueFunction<number>): number | DOMWrap {
     return access(this, 'scrollLeft', value, true, {

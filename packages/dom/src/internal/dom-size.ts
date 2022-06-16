@@ -5,7 +5,7 @@
  */
 
 import { DOMWrapMember } from '../types';
-import { isWindow } from './dom-base';
+import { isWindow, isDocument } from './dom-base';
 import { getStyle } from './dom-style';
 
 
@@ -35,13 +35,13 @@ export function computeSize(
   if (elem == null) { return 0; }
   if (isWindow(elem)) {
     // 为 window 对象，直接取浏览器可用尺寸
-    return <number>(<any>(<Window>elem).document.documentElement)['client' + which];
+    return <number>(<any>elem.document.documentElement)['client' + which];
   }
-  if ((<Node>elem).nodeType === 9) {
+  if (isDocument(elem)) {
     // document 节点，取整页尺寸
-    return <number>(<any>(<Document>elem).documentElement)['scroll' + which];
+    return <number>(<any>elem.documentElement)['scroll' + which];
   }
-  if (!(<Node>elem).ownerDocument || (<Node>elem).nodeType !== 1) {
+  if (!elem.ownerDocument || elem.nodeType !== 1) {
     // 没有所在文档的节点，非元素节点，都算 0
     return 0;
   }

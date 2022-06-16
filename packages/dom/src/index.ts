@@ -5,7 +5,12 @@
 
 import { mergeArray } from '@just4/util/array';
 import { DOMWrapMember } from './types';
-import { isNode, isWindow, uniqueSort } from './internal/dom-base';
+import {
+  isNode,
+  isDocument,
+  isWindow,
+  uniqueSort
+} from './internal/dom-base';
 import { htmlToNodes } from './internal/dom-insertion';
 import { querySelectorAll } from './selector';
 import { DOMWrap } from './dom-wrap';
@@ -94,9 +99,7 @@ function $(
   if (typeof selector === 'string') {
     selector = selector.trim();
     if (selector.charAt(0) === '<' && selector.charAt(selector.length - 1) === '>') {
-      result = htmlToNodes(
-        selector, (<Node>context).nodeType === 9 ? <Document>context : null
-      );
+      result = htmlToNodes(selector, isDocument(context) ? context : null);
     } else {
       result = querySelector(selector, context);
     }

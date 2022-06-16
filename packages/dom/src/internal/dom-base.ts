@@ -15,7 +15,7 @@ import { IValueFunction } from '../interfaces';
  * @param obj 指定对象。
  * @returns `obj` 是否 window 对象。
  */
-export function isWindow(obj: any): boolean {
+export function isWindow(obj: any): obj is Window {
   return obj != null && obj == obj.window;
 }
 
@@ -24,8 +24,17 @@ export function isWindow(obj: any): boolean {
  * @param obj 指定对象。
  * @returns `obj` 是否 DOM 节点。
  */
-export function isNode(obj: any): boolean {
+export function isNode(obj: any): obj is Node {
   return obj != null && !isWindow(obj) && typeof obj.nodeType === 'number';
+}
+
+/**
+ * 检查指定对象是否 Document 节点。
+ * @param obj 指定对象。
+ * @returns `obj` 是否 Document 节点。
+ */
+export function isDocument(obj: any): obj is Document {
+  return isNode(obj) && obj.nodeType === 9;
 }
 
 /**
@@ -33,7 +42,7 @@ export function isNode(obj: any): boolean {
  * @param obj 指定对象。
  * @returns `obj` 是否 HTML 元素节点。
  */
-export function isHTMLElement(obj: any): boolean {
+export function isHTMLElement(obj: any): obj is HTMLElement {
   return obj != null &&
     !isWindow(obj) &&
     obj.nodeType === 1 &&
@@ -46,11 +55,12 @@ export function isHTMLElement(obj: any): boolean {
  * @param node 节点。
  * @returns 节点所在的 window。如果不存在，则返回 null。
  */
-export function getWindow(node: DOMWrapMember): Window | null {
-  if (isWindow(node)) { return <Window>node; }
-  const doc = (<Node>node).nodeType === 9 ?
-    <Document>node :
-    (<Node>node).ownerDocument;
+export function getWindow(
+  node: DOMWrapMember | null | undefined
+): Window | null {
+  if (node == null) { return null; }
+  if (isWindow(node)) { return node; }
+  const doc = isDocument(node) ? node : node.ownerDocument;
   return doc == null ? null : doc.defaultView;
 }
 
@@ -103,7 +113,7 @@ export function ifIsHTMLElement(
       ifIsHTMLElement(nodeList[i], fn);
     }
   } else if (isHTMLElement(node)) {
-    return fn(<HTMLElement>node);
+    return fn(node);
   }
 }
 

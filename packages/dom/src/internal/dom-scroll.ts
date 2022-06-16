@@ -26,9 +26,9 @@ export function getScroll(node: DOMWrapMember | null, type: string): number {
   let result = 0;
   const scrollType = <ScrollDistanceType>type;
   if (isWindow(node)) {
-    result = (<Window>node)[scrollMap[scrollType]];
+    result = node[scrollMap[scrollType]];
   } else if (isHTMLElement(node)) {
-    result = (<HTMLElement>node)[scrollType];
+    result = node[scrollType];
   }
   return result;
 }
@@ -54,6 +54,6 @@ export function setScroll(
         break;
     }
   } else if (isHTMLElement(node)) {
-    (<HTMLElement>node)[scrollType] = value;
+    node[scrollType] = value;
   }
 }

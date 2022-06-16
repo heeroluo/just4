@@ -36,10 +36,7 @@ function filterBySelector(elems: HTMLElement[], selector?: string): HTMLElement[
 }
 
 // 相对位置
-type DOMPosition = 'nextElementSibling' |
-  'previousElementSibling' |
-  'parentNode' |
-  'firstElementChild';
+type DOMPosition = 'nextElementSibling' | 'previousElementSibling' | 'parentNode' | 'firstElementChild';
 
 // 排序、过滤节点
 function sortAndFilter(

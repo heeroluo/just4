@@ -295,9 +295,9 @@ export function triggerEvent(
 
     let doc: Document | null = null;
     if (isNode(node)) {
-      doc = (<Node>node).ownerDocument;
+      doc = node.ownerDocument;
     } else if (isWindow(node)) {
-      doc = (<Window>node).document;
+      doc = node.document;
     }
 
     if (doc) {

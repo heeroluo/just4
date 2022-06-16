@@ -10,25 +10,31 @@ import { IValueFunction } from '../interfaces';
  * @param obj 指定对象。
  * @returns `obj` 是否 window 对象。
  */
-export declare function isWindow(obj: any): boolean;
+export declare function isWindow(obj: any): obj is Window;
 /**
  * 检查指定对象是否 DOM 节点。
  * @param obj 指定对象。
  * @returns `obj` 是否 DOM 节点。
  */
-export declare function isNode(obj: any): boolean;
+export declare function isNode(obj: any): obj is Node;
+/**
+ * 检查指定对象是否 Document 节点。
+ * @param obj 指定对象。
+ * @returns `obj` 是否 Document 节点。
+ */
+export declare function isDocument(obj: any): obj is Document;
 /**
  * 检查指定对象是否 HTML 元素节点。
  * @param obj 指定对象。
  * @returns `obj` 是否 HTML 元素节点。
  */
-export declare function isHTMLElement(obj: any): boolean;
+export declare function isHTMLElement(obj: any): obj is HTMLElement;
 /**
  * 获取节点所在的 window。
  * @param node 节点。
  * @returns 节点所在的 window。如果不存在，则返回 null。
  */
-export declare function getWindow(node: DOMWrapMember): Window | null;
+export declare function getWindow(node: DOMWrapMember | null | undefined): Window | null;
 /**
  * 把指定字符串以一个或多个空格为分隔符分割为数组。
  * @param str 指定字符串（如果传入数组，则不执行分割）。
