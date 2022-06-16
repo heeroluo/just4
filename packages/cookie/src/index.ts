@@ -68,8 +68,8 @@ export function setCookie(
   if (opts.expires != null) {
     content += '; expires=' + (
       isDate(opts.expires) ?
-        <Date>opts.expires :
-        addToDate(new Date(), <number | string>opts.expires)
+        opts.expires :
+        addToDate(new Date(), opts.expires)
     ).toUTCString();
   }
   if (opts.path) { content += '; path=' + opts.path; }
