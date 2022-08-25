@@ -35,8 +35,8 @@ export function hasOwnProp(obj: any, key: string): boolean {
  * @param sources 源对象。如果有多个源对象存在相同属性，则后者覆盖前者。
  * @returns 目标对象。
  */
-export function assignProps<T>(
-  target: T, ...sources: (T | null | undefined)[]
+export function assignProps<T extends object>(
+  target: object, ...sources: (T | null | undefined)[]
 ): T {
   if (target == null) {
     throw new TypeError('Cannot convert undefined or null to object');
@@ -47,12 +47,12 @@ export function assignProps<T>(
     if (source == null) { continue; }
     for (const key in source) {
       if (key !== '__proto__' && hasOwnProp(source, key)) {
-        target[key] = source[key];
+        (<any>target)[key] = source[key];
       }
     }
   }
 
-  return target;
+  return <T>target;
 }
 
 /**
