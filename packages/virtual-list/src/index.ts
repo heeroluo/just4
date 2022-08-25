@@ -17,7 +17,7 @@ import type { VirtualListOptions, Renderer, InitialResponse } from './types';
 /**
  * 虚拟列表组件。
  */
-export class VirtualList<ItemType> {
+export class VirtualList<ItemType extends object> {
   /**
    * 组件选项。
    */
@@ -97,9 +97,7 @@ export class VirtualList<ItemType> {
    */
   constructor(options: VirtualListOptions<ItemType>) {
     this._container = $(options.container);
-    this._options = Object.freeze(
-      <VirtualListOptions<ItemType>>assignProps({}, <unknown>options)
-    );
+    this._options = Object.freeze(assignProps({}, options));
     this._prefetchDistance = this._options.prefetchDistance ?? 2;
     this._maxItemCount = this._options.maxItemCount ?? 100;
     this._init();
@@ -276,7 +274,7 @@ export class VirtualList<ItemType> {
       onClick.call(this, {
         domEvent: e,
         itemNode: this._itemNodes[itemIndex],
-        itemData: <ItemType>(assignProps({}, this._itemList[itemIndex]))
+        itemData: assignProps({}, this._itemList[itemIndex])
       });
     }
   }
@@ -538,6 +536,8 @@ export class VirtualList<ItemType> {
    * @returns 判定结果。
    */
   protected _shouldKeepDefaultView(): boolean {
+    if (!this._itemNodes.length) { return false; }
+
     const container = <HTMLElement>(this._container.get(0));
     const containerTop = container.getBoundingClientRect().top;
     const containerHeight = container.clientHeight;
@@ -550,6 +550,7 @@ export class VirtualList<ItemType> {
       const bottom = node.getBoundingClientRect().bottom - containerTop;
       return bottom < containerHeight || (bottom - containerHeight) <= containerHeight * 0.1;
     }
+
     return false;
   }
 
@@ -557,6 +558,7 @@ export class VirtualList<ItemType> {
    * 追加数据到边界。如果未到达边界，则数据不追加。
    * @param data 数据。
    * @param position 位置。
+   * @param keepDefaultView 是否保持默认视图位置。
    * @returns 数据是否已追加。
    */
   public addBoundaryItems(

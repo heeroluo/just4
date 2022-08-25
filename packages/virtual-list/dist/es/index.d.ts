@@ -10,7 +10,7 @@ import type { VirtualListOptions, Renderer } from './types';
 /**
  * 虚拟列表组件。
  */
-export declare class VirtualList<ItemType> {
+export declare class VirtualList<ItemType extends object> {
     /**
      * 组件选项。
      */
@@ -174,6 +174,7 @@ export declare class VirtualList<ItemType> {
      * 追加数据到边界。如果未到达边界，则数据不追加。
      * @param data 数据。
      * @param position 位置。
+     * @param keepDefaultView 是否保持默认视图位置。
      * @returns 数据是否已追加。
      */
     addBoundaryItems(data: ItemType[], position: RenderPosition, keepDefaultView?: boolean): boolean;

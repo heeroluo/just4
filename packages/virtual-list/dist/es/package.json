@@ -1,6 +1,6 @@
 {
   "name": "@just4/virtual-list",
-  "version": "0.1.0-beta.1",
+  "version": "0.2.0-beta.1",
   "description": "Just for making scrollable list rendering more efficiently.",
   "keywords": [
     "virtual",
@@ -8,6 +8,10 @@
     "list",
     "infinite"
   ],
+  "dependencies": {
+    "@just4/util": "^0.2.0-beta.1",
+    "@just4/dom": "^0.3.0-beta.2"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/heeroluo/just4"
@@ -24,6 +28,5 @@
   "homepage": "https://github.com/heeroluo/just4#readme",
   "engines": {
     "node": ">=10.0.0"
-  },
-  "dependencies": {}
+  }
 }

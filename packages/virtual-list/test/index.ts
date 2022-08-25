@@ -17,7 +17,7 @@ interface ItemData {
 
 
 const allData: ItemData[] = [];
-let i: number;
+let i = 0;
 for (i = 0; i < 200; i++) {
   const id = i + 1;
   allData.push({
@@ -135,10 +135,12 @@ if (container) {
   // }, 2000);
 
   // setInterval(() => {
-  //   virtualList.addBoundaryItems([{
+  //   const data = {
   //     id: ++i,
   //     content: i + ',' + 'ksjdlkfajskdlfjkaklsdjfaklsdjfkljfkkjkksldjfklasdj',
   //     img: imgs[(Math.random() * imgs.length) | 0]
-  //   }], RenderPosition.Foot, true);
+  //   };
+  //   allData.push(data);
+  //   virtualList.addBoundaryItems([data], RenderPosition.Foot, true);
   // }, 2000);
 }
