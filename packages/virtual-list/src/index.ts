@@ -438,7 +438,11 @@ export class VirtualList<ItemType extends object> {
     // 渲染数据
     const newItemNodes = this._options.renderer.renderItems(data);
     this._keepView(() => {
-      $(this._itemNodes[0]).before(newItemNodes);
+      if (this._itemNodes.length) {
+        $(this._itemNodes[0]).before(newItemNodes);
+      } else {
+        this._container.append(newItemNodes);
+      }
     });
     // 记录节点进行后续维护
     this._itemNodes = toArray(newItemNodes).concat(this._itemNodes);
@@ -480,8 +484,12 @@ export class VirtualList<ItemType extends object> {
 
     // 渲染数据
     const newItemNodes = this._options.renderer.renderItems(data);
-    const lastItemNode = $(this._itemNodes[this._itemNodes.length - 1]);
-    lastItemNode.after(newItemNodes);
+    if (this._itemNodes.length) {
+      const lastItemNode = $(this._itemNodes[this._itemNodes.length - 1]);
+      lastItemNode.after(newItemNodes);
+    } else {
+      this._container.append(newItemNodes);
+    }
     // 记录节点进行后续维护
     mergeArray(this._itemNodes, newItemNodes);
   }

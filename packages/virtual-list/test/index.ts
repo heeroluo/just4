@@ -134,13 +134,13 @@ if (container) {
   //   });
   // }, 2000);
 
-  // setInterval(() => {
-  //   const data = {
-  //     id: ++i,
-  //     content: i + ',' + 'ksjdlkfajskdlfjkaklsdjfaklsdjfkljfkkjkksldjfklasdj',
-  //     img: imgs[(Math.random() * imgs.length) | 0]
-  //   };
-  //   allData.push(data);
-  //   virtualList.addBoundaryItems([data], RenderPosition.Foot, true);
-  // }, 2000);
+  setInterval(() => {
+    const data = {
+      id: ++i,
+      content: i + ',' + 'ksjdlkfajskdlfjkaklsdjfaklsdjfkljfkkjkksldjfklasdj',
+      img: imgs[(Math.random() * imgs.length) | 0]
+    };
+    allData.push(data);
+    virtualList.addBoundaryItems([data], RenderPosition.Foot, true);
+  }, 2000);
 }
