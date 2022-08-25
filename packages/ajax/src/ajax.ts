@@ -72,7 +72,7 @@ function handleRequestBody(
     contentType = 'application/json; charset=utf-8';
   } else {
     body = isObject(data) ?
-      stringify(<object>data, { ignoreEmpty: false }) :
+      stringify(data, { ignoreEmpty: false }) :
       <BodyType>data;
     if (typeof body === 'string') {
       contentType = 'application/x-www-form-urlencoded; charset=utf-8';
@@ -136,7 +136,7 @@ export function send(
   let xhrId = 0;
 
   return new Promise<IAJAXResponse>(function(resolve, reject): void {
-    const opts = <IAJAXOptions>assignProps({}, options);
+    const opts = assignProps<IAJAXOptions>({}, options);
     opts.method = opts.method || 'get';
     opts.requestType = opts.requestType || '';
     opts.responseType = opts.responseType || 'json';
