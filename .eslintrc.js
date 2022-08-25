@@ -119,6 +119,7 @@ module.exports = {
     // Sonarjs
     'sonarjs/no-duplicate-string': ['error', 5],
     'sonarjs/no-collection-size-mischeck': 0,
+    'sonarjs/no-identical-functions': [devWarnProdError],
 
     // TypeScript
     '@typescript-eslint/semi': ['error', 'always'],
