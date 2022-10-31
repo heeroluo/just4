@@ -6,6 +6,7 @@ import { DOMWrap } from '@just4/dom/dom-wrap';
 import type { IEventHandler } from '@just4/dom/interfaces';
 import { EventWrap } from '@just4/dom/event-wrap';
 import { RenderPosition } from './types';
+import { ItemList } from './item-list';
 import type { VirtualListOptions, Renderer } from './types';
 /**
  * 虚拟列表组件。
@@ -15,14 +16,6 @@ export declare class VirtualList<ItemType extends object> {
      * 组件选项。
      */
     protected _options: VirtualListOptions<ItemType>;
-    /**
-     * 预读距离。
-     */
-    protected _prefetchDistance: number;
-    /**
-     * 最大渲染的数据项节点数。
-     */
-    protected _maxItemCount: number;
     /**
      * 滚动区域容器。
      */
@@ -34,7 +27,7 @@ export declare class VirtualList<ItemType extends object> {
     /**
      * 绑定到容器 click 事件的监听函数。
      */
-    protected _onClickFn?: IEventHandler;
+    protected _onItemClickFn?: IEventHandler;
     /**
      * 数据项。
      */
@@ -70,10 +63,27 @@ export declare class VirtualList<ItemType extends object> {
      */
     private __checkPositionCounterResetTimer?;
     /**
+     * 内部数据项的访问器。
+     */
+    readonly items: ItemList<ItemType>;
+    /**
      * 虚拟列表组件构造函数。
      * @param options 选项。
      */
     constructor(options: VirtualListOptions<ItemType>);
+    /**
+     * 修改组件选项（容器和默认视图不可修改）。
+     * @param options 需要修改的选项。
+     */
+    setOption<K extends keyof VirtualListOptions<ItemType>>(key: K, value: VirtualListOptions<ItemType>[K]): void;
+    /**
+     * 预读距离。
+     */
+    protected get _prefetchDistance(): number;
+    /**
+    * 最大渲染的数据项节点数。
+    */
+    protected get _maxItemCount(): number;
     /**
      * 销毁组件。
      * @param clearContainer 是否清理容器内的所有内容。
@@ -160,11 +170,23 @@ export declare class VirtualList<ItemType extends object> {
      */
     protected _fetchNext(): Promise<void>;
     /**
+     * 根据数据项的 id 寻找数据项。
+     * @param keyValue id 值。
+     * @returns 数据项的索引，如果找不到数据项，则返回 -1。
+     */
+    protected _findItemIndex(keyValue: unknown): number;
+    /**
      * 更新数据项。
      * @param itemData 要更新的数据。
      * @returns 数据项是否在当前列表中。
      */
     updateItem(itemData: ItemType): boolean;
+    /**
+     * 移除数据项。
+     * @param keyValue 要移除的数据项的 id。
+     * @returns 被移除的数据项。如果数据项不存在，则返回 undefined。
+     */
+    removeItem(keyValue: unknown): ItemType | undefined;
     /**
      * 判定当前是否应保持默认视图位置（最顶或最底）。
      * @returns 判定结果。
@@ -178,4 +200,14 @@ export declare class VirtualList<ItemType extends object> {
      * @returns 数据是否已追加。
      */
     addBoundaryItems(data: ItemType[], position: RenderPosition, keepDefaultView?: boolean): boolean;
+    /**
+     * 重置边界状态。
+     * @param position 位置。
+     */
+    resetBoundaryState(position: RenderPosition): void;
+    /**
+     * 重置错误状态并请求数据（如果不是处在错误状态，则不请求）。
+     * @param position 位置。
+     */
+    retryFetch(position: RenderPosition): void;
 }

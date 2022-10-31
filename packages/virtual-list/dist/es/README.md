@@ -31,7 +31,7 @@ const virtualList = new VirtualList({
 | defaultView | 'head' \| 'foot' | 默认视图，'head' 表示开头，'foot' 表示末尾 |
 | dataSource | Object | 数据源（详见下文说明） |
 | renderer | Object | 渲染器（详见下文说明） |
-| onClick | Function | 点击事件的回调函数（详见下文说明） |
+| onItemClick | Function | 数据项节点的点击回调函数（详见下文说明） |
 
 ### 关于数据源
 
@@ -163,9 +163,9 @@ const renderer = {
 };
 ```
 
-### 点击事件
+### 点击事件（onItemClick）
 
-所有的点击事件都是在 `container` 上做监听的，事件参数包含三个属性：
+注意，只有数据项节点的点击才会触发 onItemClick 的回调，事件参数包含三个属性：
 
 ```javascript
 {
@@ -174,6 +174,12 @@ const renderer = {
   itemData  // 触发事件的数据项节点对应的数据
 }
 ```
+
+### 异常重试
+
+如果在加载数据的过程中出现异常（Promise 返回已拒绝状态），那么在该方向上的滚动加载将会停止。此时可以通过界面上的交互引导用户手动点击重试。在重试操作中调用 `retryFetch` 这个方法。
+
+注意：如果在加载异常以外的状态下调用 `retryFetch` 方法，将不会执行任何操作。
 
 ## 其他
 - [API 文档](https://heeroluo.github.io/just4/virtual-list/index.html)

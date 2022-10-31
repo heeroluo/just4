@@ -64,9 +64,9 @@
 <td>渲染器（详见下文说明）</td>
 </tr>
 <tr>
-<td>onClick</td>
+<td>onItemClick</td>
 <td>Function</td>
-<td>点击事件的回调函数（详见下文说明）</td>
+<td>数据项节点的点击回调函数（详见下文说明）</td>
 </tr>
 </tbody></table>
 
@@ -109,12 +109,18 @@
 <pre><code class="language-javascript"><span class="hl-1">import</span><span class="hl-0"> { </span><span class="hl-2">RenderPosition</span><span class="hl-0"> } </span><span class="hl-1">from</span><span class="hl-0"> </span><span class="hl-3">&#39;@just4/virtual-list/types&#39;</span><span class="hl-0">;</span><br/><span class="hl-4">const</span><span class="hl-0"> </span><span class="hl-5">renderer</span><span class="hl-0"> = {</span><br/><span class="hl-0">  </span><span class="hl-7">// ...</span><br/><br/><span class="hl-0">  </span><span class="hl-6">renderBoundary</span><span class="hl-0">(</span><span class="hl-2">position</span><span class="hl-0">) {</span><br/><span class="hl-0">    </span><span class="hl-1">if</span><span class="hl-0"> (</span><span class="hl-2">position</span><span class="hl-0"> === </span><span class="hl-2">RenderPosition</span><span class="hl-0">.</span><span class="hl-2">Foot</span><span class="hl-0">) {</span><br/><span class="hl-0">      </span><span class="hl-4">const</span><span class="hl-0"> </span><span class="hl-5">div</span><span class="hl-0"> = </span><span class="hl-2">document</span><span class="hl-0">.</span><span class="hl-6">createElement</span><span class="hl-0">(</span><span class="hl-3">&#39;div&#39;</span><span class="hl-0">);</span><br/><span class="hl-0">      </span><span class="hl-2">div</span><span class="hl-0">.</span><span class="hl-2">className</span><span class="hl-0"> = </span><span class="hl-3">&#39;list-end&#39;</span><span class="hl-0">;</span><br/><span class="hl-0">      </span><span class="hl-2">div</span><span class="hl-0">.</span><span class="hl-2">innerHTML</span><span class="hl-0"> = </span><span class="hl-3">&#39;没有更多数据了&#39;</span><span class="hl-0">;</span><br/><span class="hl-0">      </span><span class="hl-1">return</span><span class="hl-0"> </span><span class="hl-2">div</span><span class="hl-0">;</span><br/><span class="hl-0">    }</span><br/><span class="hl-0">  }</span><br/><span class="hl-0">};</span>
 </code></pre>
 
-<a href="#点击事件" id="点击事件" style="color: inherit; text-decoration: none;">
-  <h3>点击事件</h3>
+<a href="#点击事件（onitemclick）" id="点击事件（onitemclick）" style="color: inherit; text-decoration: none;">
+  <h3>点击事件（onItemClick）</h3>
 </a>
-<p>所有的点击事件都是在 <code>container</code> 上做监听的，事件参数包含三个属性：</p>
+<p>注意，只有数据项节点的点击才会触发 onItemClick 的回调，事件参数包含三个属性：</p>
 <pre><code class="language-javascript"><span class="hl-0">{</span><br/><span class="hl-0">  </span><span class="hl-2">domEvent</span><span class="hl-0">, </span><span class="hl-7">// 经过 EventWrap 包装的事件对象</span><br/><span class="hl-0">  </span><span class="hl-2">itemNode</span><span class="hl-0">, </span><span class="hl-7">// 触发事件的数据项节点</span><br/><span class="hl-0">  </span><span class="hl-2">itemData</span><span class="hl-0">  </span><span class="hl-7">// 触发事件的数据项节点对应的数据</span><br/><span class="hl-0">}</span>
 </code></pre>
+
+<a href="#异常重试" id="异常重试" style="color: inherit; text-decoration: none;">
+  <h3>异常重试</h3>
+</a>
+<p>如果在加载数据的过程中出现异常（Promise 返回已拒绝状态），那么在该方向上的滚动加载将会停止。此时可以通过界面上的交互引导用户手动点击重试。在重试操作中调用 <code>retryFetch</code> 这个方法。</p>
+<p>注意：如果在加载异常以外的状态下调用 <code>retryFetch</code> 方法，将不会执行任何操作。</p>
 
 <a href="#其他" id="其他" style="color: inherit; text-decoration: none;">
   <h2>其他</h2>
@@ -122,4 +128,4 @@
 <ul>
 <li><a href="https://heeroluo.github.io/just4/virtual-list/index.html">API 文档</a></li>
 </ul>
-</div></div><div class="col-4 col-menu menu-sticky-wrap menu-highlight"><nav class="tsd-navigation primary"><ul><li class="current"><a href="modules.html">Modules</a></li><li class=" tsd-kind-module"><a href="modules/index.html">index</a></li><li class=" tsd-kind-module"><a href="modules/types.html">types</a></li></ul></nav></div></div></div><footer class="with-border-bottom"><div class="container"><h2>Legend</h2><div class="tsd-legend-group"><ul class="tsd-legend"><li class="tsd-kind-enum"><span class="tsd-kind-icon">Enumeration</span></li></ul><ul class="tsd-legend"><li class="tsd-kind-interface tsd-has-type-parameter"><span class="tsd-kind-icon">Interface with type parameter</span></li></ul><ul class="tsd-legend"><li class="tsd-kind-class tsd-has-type-parameter"><span class="tsd-kind-icon">Class with type parameter</span></li></ul></div><h2>Settings</h2><p>Theme <select id="theme"><option value="os">OS</option><option value="light">Light</option><option value="dark">Dark</option></select></p></div></footer><div class="container tsd-generator"><p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p></div><div class="overlay"></div><script src="assets/main.js"></script></body></html>
+</div></div><div class="col-4 col-menu menu-sticky-wrap menu-highlight"><nav class="tsd-navigation primary"><ul><li class="current"><a href="modules.html">Modules</a></li><li class=" tsd-kind-module"><a href="modules/index.html">index</a></li><li class=" tsd-kind-module"><a href="modules/item_list.html">item-<wbr/>list</a></li><li class=" tsd-kind-module"><a href="modules/types.html">types</a></li></ul></nav></div></div></div><footer class="with-border-bottom"><div class="container"><h2>Legend</h2><div class="tsd-legend-group"><ul class="tsd-legend"><li class="tsd-kind-enum"><span class="tsd-kind-icon">Enumeration</span></li></ul><ul class="tsd-legend"><li class="tsd-kind-interface tsd-has-type-parameter"><span class="tsd-kind-icon">Interface with type parameter</span></li></ul><ul class="tsd-legend"><li class="tsd-kind-class tsd-has-type-parameter"><span class="tsd-kind-icon">Class with type parameter</span></li></ul></div><h2>Settings</h2><p>Theme <select id="theme"><option value="os">OS</option><option value="light">Light</option><option value="dark">Dark</option></select></p></div></footer><div class="container tsd-generator"><p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p></div><div class="overlay"></div><script src="assets/main.js"></script></body></html>

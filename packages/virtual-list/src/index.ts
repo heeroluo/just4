@@ -11,6 +11,7 @@ import { EventWrap } from '@just4/dom/event-wrap';
 import { $ } from '@just4/dom/index';
 import { debounce } from './internal/util';
 import { RenderPosition } from './types';
+import { ItemList } from './item-list';
 import type { VirtualListOptions, Renderer, InitialResponse } from './types';
 
 
@@ -23,14 +24,6 @@ export class VirtualList<ItemType extends object> {
    */
   protected _options: VirtualListOptions<ItemType>;
   /**
-   * 预读距离。
-   */
-  protected _prefetchDistance: number;
-  /**
-   * 最大渲染的数据项节点数。
-   */
-  protected _maxItemCount: number;
-  /**
    * 滚动区域容器。
    */
   protected readonly _container: DOMWrap;
@@ -41,7 +34,7 @@ export class VirtualList<ItemType extends object> {
   /**
    * 绑定到容器 click 事件的监听函数。
    */
-  protected _onClickFn?: IEventHandler;
+  protected _onItemClickFn?: IEventHandler;
 
   /**
    * 数据项。
@@ -90,6 +83,11 @@ export class VirtualList<ItemType extends object> {
    */
   private __checkPositionCounterResetTimer?: number;
 
+  /**
+   * 内部数据项的访问器。
+   */
+  public readonly items: ItemList<ItemType>;
+
 
   /**
    * 虚拟列表组件构造函数。
@@ -97,10 +95,43 @@ export class VirtualList<ItemType extends object> {
    */
   constructor(options: VirtualListOptions<ItemType>) {
     this._container = $(options.container);
-    this._options = Object.freeze(assignProps({}, options));
-    this._prefetchDistance = this._options.prefetchDistance ?? 2;
-    this._maxItemCount = this._options.maxItemCount ?? 100;
-    this._init();
+    this._options = assignProps({}, options);
+    this.items = new ItemList<ItemType>(
+      (i) => this._itemList[i],
+      () => this._itemList.length
+    );
+    setTimeout(() => { this._init(); }, 0);
+  }
+
+  /**
+   * 修改组件选项（容器和默认视图不可修改）。
+   * @param options 需要修改的选项。
+   */
+  setOption<K extends keyof VirtualListOptions<ItemType>>(
+    key: K,
+    value: VirtualListOptions<ItemType>[K]
+  ): void {
+    if (key === 'container') {
+      throw new Error('Container cannot be changed.');
+    }
+    if (key === 'defaultView') {
+      throw new Error('Default view cannot be changed.');
+    }
+    this._options[key] = value;
+  }
+
+  /**
+   * 预读距离。
+   */
+  protected get _prefetchDistance() {
+    return this._options.prefetchDistance ?? 2;
+  }
+
+  /**
+  * 最大渲染的数据项节点数。
+  */
+  protected get _maxItemCount() {
+    return this._options.maxItemCount ?? 100;
   }
 
   /**
@@ -109,7 +140,7 @@ export class VirtualList<ItemType extends object> {
    */
   public destroy(clearContainer: boolean): void {
     if (this._onScrollFn) { this._container.off('scroll', this._onScrollFn); }
-    if (this._onClickFn) { this._container.off('click', this._onClickFn); }
+    if (this._onItemClickFn) { this._container.off('click', this._onItemClickFn); }
     if (clearContainer) { this._container.empty(); }
   }
 
@@ -244,17 +275,17 @@ export class VirtualList<ItemType extends object> {
    * @param e DOM 的事件参数。
    */
   protected _onClick(e: EventWrap): void {
-    const onClick = this._options.onClick;
-    if (!onClick || !e.target) { return; }
+    const onItemClick = this._options.onItemClick;
+    if (!onItemClick || !e.target) { return; }
 
-    let itemNode: HTMLElement;
+    let element: HTMLElement;
 
     // 找到事件目标元素所在的数据项节点
     const target = <HTMLElement>e.target;
     if (target.parentElement === this._container.get(0)) {
-      itemNode = target;
+      element = target;
     } else {
-      itemNode = <HTMLElement>(
+      element = <HTMLElement>(
         $(target).parentsUntil(
           <HTMLElement>(this._container.get(0))
         ).get(-1)
@@ -264,14 +295,14 @@ export class VirtualList<ItemType extends object> {
     // 找到数据项节点的索引，用于找到对应的数据项
     let itemIndex = -1;
     for (let i = this._itemNodes.length - 1; i >= 0; i--) {
-      if (this._itemNodes[i] === itemNode) {
+      if (this._itemNodes[i] === element) {
         itemIndex = i;
         break;
       }
     }
 
     if (itemIndex !== -1) {
-      onClick.call(this, {
+      onItemClick.call(this, {
         domEvent: e,
         itemNode: this._itemNodes[itemIndex],
         itemData: assignProps({}, this._itemList[itemIndex])
@@ -283,7 +314,8 @@ export class VirtualList<ItemType extends object> {
    * 监听点击事件。
    */
   protected _listenClick(): void {
-    this._container.on('click', this._onClick.bind(this));
+    this._onItemClickFn = this._onClick.bind(this);
+    this._container.on('click', this._onItemClickFn);
   }
 
   /**
@@ -375,7 +407,10 @@ export class VirtualList<ItemType extends object> {
     updateAndRenderData: (data: ItemType[]) => void
   ): Promise<void> {
     const stateFlags = this._stateFlags;
-    if (this.__isLoading || stateFlags.renderBoundary[position]) { return; }
+    if (this.__isLoading ||
+      stateFlags.renderBoundary[position] ||
+      stateFlags.renderError[position]
+    ) { return; }
 
     this._keepView(() => {
       this._setAndRenderState('renderLoading', true, position);
@@ -512,20 +547,29 @@ export class VirtualList<ItemType extends object> {
   }
 
   /**
+   * 根据数据项的 id 寻找数据项。
+   * @param keyValue id 值。
+   * @returns 数据项的索引，如果找不到数据项，则返回 -1。
+   */
+  protected _findItemIndex(keyValue: unknown): number {
+    const itemKey = this._options.itemKey;
+    let index = -1;
+    for (let i = this._itemList.length - 1; i >= 0; i--) {
+      if (this._itemList[i][itemKey] === keyValue) {
+        index = i;
+        break;
+      }
+    }
+    return index;
+  }
+
+  /**
    * 更新数据项。
    * @param itemData 要更新的数据。
    * @returns 数据项是否在当前列表中。
    */
   public updateItem(itemData: ItemType): boolean {
-    const itemKey = this._options.itemKey;
-    let index = -1;
-    for (let i = this._itemList.length - 1; i >= 0; i--) {
-      if (this._itemList[i][itemKey] === itemData[itemKey]) {
-        index = i;
-        break;
-      }
-    }
-
+    const index = this._findItemIndex(itemData[this._options.itemKey]);
     if (index === -1) { return false; }
 
     this._itemList[index] = itemData;
@@ -537,6 +581,22 @@ export class VirtualList<ItemType extends object> {
     this._itemNodes[index] = newNode;
 
     return true;
+  }
+
+  /**
+   * 移除数据项。
+   * @param keyValue 要移除的数据项的 id。
+   * @returns 被移除的数据项。如果数据项不存在，则返回 undefined。
+   */
+  public removeItem(keyValue: unknown): ItemType | undefined {
+    const index = this._findItemIndex(keyValue);
+    if (index !== -1) {
+      const itemData = this._itemList.splice(index, 1)[0];
+      this._keepView(() => {
+        $(this._itemNodes.splice(index, 1)).remove();
+      });
+      return itemData;
+    }
   }
 
   /**
@@ -603,5 +663,32 @@ export class VirtualList<ItemType extends object> {
     }
 
     return true;
+  }
+
+  /**
+   * 重置边界状态。
+   * @param position 位置。
+   */
+  public resetBoundaryState(position: RenderPosition): void {
+    this._keepView(() => {
+      this._setAndRenderState('renderBoundary', false, position);
+    });
+  }
+
+  /**
+   * 重置错误状态并请求数据（如果不是处在错误状态，则不请求）。
+   * @param position 位置。
+   */
+  public retryFetch(position: RenderPosition): void {
+    if (!this._stateFlags.renderError[position]) { return; }
+    this._keepView(() => {
+      this._setAndRenderState('renderError', false, position);
+      this._setAndRenderState('renderLoading', true, position);
+    });
+    if (position === RenderPosition.Head) {
+      this._fetchPrevious();
+    } else if (position === RenderPosition.Foot) {
+      this._fetchNext();
+    }
   }
 }

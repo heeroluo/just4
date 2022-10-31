@@ -29,6 +29,8 @@ for (i = 0; i < 200; i++) {
 
 const PAGE_SIZE = 50;
 
+let loadSuccess = false;
+
 const dataSource: DataSource<ItemData> = {
   loadInitialData() {
     return new Promise((resolve) => {
@@ -49,6 +51,7 @@ const dataSource: DataSource<ItemData> = {
   },
 
   loadNextData(ref: unknown) {
+    console.log('load next data: ' + ref);
     return new Promise((resolve) => {
       setTimeout(function() {
         for (let i = 0; i < allData.length; i++) {
@@ -63,19 +66,27 @@ const dataSource: DataSource<ItemData> = {
   },
 
   loadPreviousData(ref: unknown) {
-    return new Promise((resolve) => {
-      setTimeout(function() {
-        for (let i = 0; i < allData.length; i++) {
-          if (allData[i].id.toString() === String(ref)) {
-            resolve(allData.slice(Math.max(0, i - PAGE_SIZE), i));
-            break;
+    console.log('load prev data: ' + ref);
+    if (loadSuccess) {
+      return new Promise((resolve) => {
+        setTimeout(function() {
+          for (let i = 0; i < allData.length; i++) {
+            if (allData[i].id.toString() === String(ref)) {
+              resolve(allData.slice(Math.max(0, i - PAGE_SIZE), i));
+              break;
+            }
           }
-        }
-        resolve([]);
-      }, (Math.random() * 2000) | 0);
-    });
+          resolve([]);
+        }, (Math.random() * 2000) | 0);
+      });
+    } else {
+      loadSuccess = true;
+      return Promise.reject(new Error('error'));
+    }
   }
 };
+
+let virtualList: VirtualList<ItemData> | undefined = undefined;
 
 const renderer: Renderer<ItemData> = {
   renderItems(data: ItemData[]) {
@@ -87,21 +98,21 @@ const renderer: Renderer<ItemData> = {
     div.innerHTML = html;
     return div.querySelectorAll('.list-item');
   },
-
   renderLoading() {
     const div = document.createElement('div');
     div.className = 'list-loading';
     div.innerHTML = '加载中';
     return div;
   },
-
-  renderError() {
+  renderError(position) {
     const div = document.createElement('div');
     div.className = 'list-error';
     div.innerHTML = '数据加载出错';
+    div.onclick = function() {
+      if (virtualList) { virtualList.retryFetch(position); }
+    };
     return div;
   },
-
   renderBoundary(position) {
     if (position === RenderPosition.Head) {
       const div = document.createElement('div');
@@ -112,35 +123,47 @@ const renderer: Renderer<ItemData> = {
   }
 };
 
+const container = document.getElementById('list') || document.body;
 
-const container = document.getElementById('list');
-if (container) {
-  const virtualList = new VirtualList<ItemData>({
-    container,
-    dataSource,
-    itemKey: 'id',
-    renderer,
-    defaultView: 'foot',
-    onClick(e) {
-      console.log(e);
-    }
-  });
+virtualList = new VirtualList<ItemData>({
+  container,
+  dataSource,
+  itemKey: 'id',
+  renderer,
+  defaultView: 'foot',
+  onItemClick(e) {
+    console.log(e);
+  }
+});
 
-  // setInterval(() => {
-  //   virtualList.updateItem({
-  //     id: 190,
-  //     content: Date.now().toString(),
-  //     img: ''
-  //   });
-  // }, 2000);
+setTimeout(function() {
+  if (!virtualList) { return; }
+  console.log('itemList length: ' + virtualList.items.length);
+  console.log('first item id: ' + virtualList.items.first()?.id);
+  console.log('last item id: ' + virtualList.items.last()?.id);
+}, 3000);
 
-  setInterval(() => {
-    const data = {
-      id: ++i,
-      content: i + ',' + 'ksjdlkfajskdlfjkaklsdjfaklsdjfkljfkkjkksldjfklasdj',
-      img: imgs[(Math.random() * imgs.length) | 0]
-    };
-    allData.push(data);
-    virtualList.addBoundaryItems([data], RenderPosition.Foot, true);
-  }, 2000);
-}
+setTimeout(function() {
+  // if (!virtualList) { return; }
+  // // virtualList.removeItem(190);
+  // virtualList.resetBoundaryState(RenderPosition.Foot);
+  // virtualList.checkPosition();
+}, 5000);
+
+// setInterval(() => {
+//   virtualList?.updateItem({
+//     id: 190,
+//     content: Date.now().toString(),
+//     img: ''
+//   });
+// }, 2000);
+
+// setInterval(() => {
+//   const data = {
+//     id: ++i,
+//     content: i + ',' + 'ksjdlkfajskdlfjkaklsdjfaklsdjfkljfkkjkksldjfklasdj',
+//     img: imgs[(Math.random() * imgs.length) | 0]
+//   };
+//   allData.push(data);
+//   virtualList?.addBoundaryItems([data], RenderPosition.Foot, true);
+// }, 2000);

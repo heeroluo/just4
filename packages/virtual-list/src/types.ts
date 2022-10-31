@@ -89,7 +89,7 @@ export interface Renderer<ItemType> {
 /**
  * 虚拟滚动组件的事件参数。
  */
-export interface VirtualListEvent<ItemType> {
+export interface ItemClickEvent<ItemType> {
   /**
    * DOM 的事件对象。
    */
@@ -97,11 +97,11 @@ export interface VirtualListEvent<ItemType> {
   /**
    * 事件相关的数据项节点。
    */
-  itemNode: HTMLElement,
+  itemNode?: HTMLElement,
   /**
    * 事件相关数据项的拷贝。
    */
-  itemData: ItemType
+  itemData?: ItemType
 }
 
 /**
@@ -139,5 +139,5 @@ export interface VirtualListOptions<ItemType> {
   /**
    * 点击事件的回调函数。
    */
-  onClick?: (evt: VirtualListEvent<ItemType>) => unknown
+  onItemClick?: (evt: ItemClickEvent<ItemType>) => unknown
 }
