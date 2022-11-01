@@ -1,6 +1,6 @@
 {
   "name": "@just4/virtual-list",
-  "version": "0.3.0-beta.1",
+  "version": "0.4.0-beta.1",
   "description": "Just for making scrollable list rendering more efficiently.",
   "keywords": [
     "virtual",
@@ -10,7 +10,8 @@
   ],
   "dependencies": {
     "@just4/util": "^0.2.0-beta.1",
-    "@just4/dom": "^0.3.0-beta.2"
+    "@just4/dom": "^0.3.0-beta.2",
+    "eventemitter3": "^4.0.7"
   },
   "repository": {
     "type": "git",

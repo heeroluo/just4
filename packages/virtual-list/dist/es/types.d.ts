@@ -3,10 +3,11 @@
  * @packageDocumentation
  */
 import { EventWrap } from '@just4/dom/event-wrap';
+import type { VirtualList } from './index';
 /**
  * 初始响应。
  */
-export interface InitialResponse<ItemType> {
+export interface InitialResponse<ItemType extends object> {
     /**
      * 数据。
      */
@@ -23,7 +24,7 @@ export interface InitialResponse<ItemType> {
 /**
  * 数据源。
  */
-export interface DataSource<ItemType> {
+export interface DataSource<ItemType extends object> {
     /**
      * 获取初始数据。
      */
@@ -57,32 +58,32 @@ export declare enum RenderPosition {
 /**
  * 渲染器。
  */
-export interface Renderer<ItemType> {
+export interface Renderer<ItemType extends object> {
     /**
      * 渲染数据项。
      */
-    renderItems: (data: ItemType[]) => ArrayLike<HTMLElement>;
+    renderItems: (data: ItemType[], instance: VirtualList<ItemType>) => ArrayLike<HTMLElement>;
     /**
      * 渲染“加载中”。
      */
-    renderLoading?: (type: RenderPosition) => HTMLElement | undefined | null;
+    renderLoading?: (type: RenderPosition, instance: VirtualList<ItemType>) => HTMLElement | undefined | null;
     /**
      * 渲染错误提示。
      */
-    renderError?: (type: RenderPosition, error: unknown) => HTMLElement | undefined | null;
+    renderError?: (type: RenderPosition, instance: VirtualList<ItemType>, error: unknown) => HTMLElement | undefined | null;
     /**
      * 渲染空数据提示。
      */
-    renderEmpty?: () => HTMLElement | undefined | null;
+    renderEmpty?: (type: RenderPosition, instance: VirtualList<ItemType>) => HTMLElement | undefined | null;
     /**
      * 渲染数据边界。
      */
-    renderBoundary?: (type: RenderPosition) => HTMLElement | undefined | null;
+    renderBoundary?: (type: RenderPosition, instance: VirtualList<ItemType>) => HTMLElement | undefined | null;
 }
 /**
  * 虚拟滚动组件的事件参数。
  */
-export interface ItemClickEvent<ItemType> {
+export interface ItemClickEvent<ItemType extends object> {
     /**
      * DOM 的事件对象。
      */
@@ -99,7 +100,7 @@ export interface ItemClickEvent<ItemType> {
 /**
  * 虚拟滚动参数。
  */
-export interface VirtualListOptions<ItemType> {
+export interface VirtualListOptions<ItemType extends object> {
     /**
      * 滚动容器。
      */
@@ -128,8 +129,4 @@ export interface VirtualListOptions<ItemType> {
      * 默认视图。'head' 表示开头，'foot' 表示末尾。
      */
     defaultView?: 'head' | 'foot';
-    /**
-     * 点击事件的回调函数。
-     */
-    onItemClick?: (evt: ItemClickEvent<ItemType>) => unknown;
 }

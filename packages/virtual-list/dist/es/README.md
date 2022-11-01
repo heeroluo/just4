@@ -31,7 +31,6 @@ const virtualList = new VirtualList({
 | defaultView | 'head' \| 'foot' | 默认视图，'head' 表示开头，'foot' 表示末尾 |
 | dataSource | Object | 数据源（详见下文说明） |
 | renderer | Object | 渲染器（详见下文说明） |
-| onItemClick | Function | 数据项节点的点击回调函数（详见下文说明） |
 
 ### 关于数据源
 
@@ -152,20 +151,32 @@ import { RenderPosition } from '@just4/virtual-list/types';
 const renderer = {
   // ...
 
-  renderBoundary(position) {
+  renderBoundary(position, instance) {
     if (position === RenderPosition.Foot) {
       const div = document.createElement('div');
       div.className = 'list-end';
       div.innerHTML = '没有更多数据了';
+      div.onclick = function() {
+        // instance 即为虚拟滚动列表实例
+        instance.retryFetch();
+      };
       return div;
     }
   }
 };
 ```
 
-### 点击事件（onItemClick）
+### 事件
 
-注意，只有数据项节点的点击才会触发 onItemClick 的回调，事件参数包含三个属性：
+#### 点击数据项节点
+
+```javascript
+virtualList.on('item-click', function(args) {
+  console.dir(args);
+});
+```
+
+其中 args 包含三个字段：
 
 ```javascript
 {
@@ -179,7 +190,7 @@ const renderer = {
 
 如果在加载数据的过程中出现异常（Promise 返回已拒绝状态），那么在该方向上的滚动加载将会停止。此时可以通过界面上的交互引导用户手动点击重试。在重试操作中调用 `retryFetch` 这个方法。
 
-注意：如果在加载异常以外的状态下调用 `retryFetch` 方法，将不会执行任何操作。
+注意：如果在加载异常和到达边界以外的状态下调用 `retryFetch` 方法，将不会执行任何操作。
 
 ## 其他
 - [API 文档](https://heeroluo.github.io/just4/virtual-list/index.html)

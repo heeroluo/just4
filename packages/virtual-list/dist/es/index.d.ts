@@ -27,7 +27,7 @@ export declare class VirtualList<ItemType extends object> {
     /**
      * 绑定到容器 click 事件的监听函数。
      */
-    protected _onItemClickFn?: IEventHandler;
+    protected _onClickFn?: IEventHandler;
     /**
      * 数据项。
      */
@@ -62,6 +62,10 @@ export declare class VirtualList<ItemType extends object> {
      * 重置 __checkPositionCounter 的计时器 id。
      */
     private __checkPositionCounterResetTimer?;
+    /**
+     * 事件监听/触发器。
+     */
+    protected readonly _eventEmitter: import("eventemitter3")<string | symbol, any>;
     /**
      * 内部数据项的访问器。
      */
@@ -206,8 +210,22 @@ export declare class VirtualList<ItemType extends object> {
      */
     resetBoundaryState(position: RenderPosition): void;
     /**
-     * 重置错误状态并请求数据（如果不是处在错误状态，则不请求）。
+     * 重置边界状态和错误状态并请求数据（如果不是处在这两个状态，则不请求）。
      * @param position 位置。
      */
     retryFetch(position: RenderPosition): void;
+    /**
+     * 添加事件监听器。
+     * @param type 事件类型。
+     * @param cb 监听函数。
+     * @param context 调用监听函数的上下文。
+     */
+    on(type: string, cb: (...args: unknown[]) => void, context?: unknown): void;
+    /**
+     * 移除事件监听器。
+     * @param type 仅移除指定事件类型。
+     * @param cb 仅移除指定监听函数。
+     * @param context 仅移除指定上下文。
+     */
+    off(type: string, cb?: (...args: unknown[]) => void, context?: unknown): void;
 }
