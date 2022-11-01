@@ -86,7 +86,6 @@ const dataSource: DataSource<ItemData> = {
   }
 };
 
-let virtualList: VirtualList<ItemData> | undefined = undefined;
 
 const renderer: Renderer<ItemData> = {
   renderItems(data: ItemData[]) {
@@ -104,12 +103,12 @@ const renderer: Renderer<ItemData> = {
     div.innerHTML = '加载中';
     return div;
   },
-  renderError(position) {
+  renderError(position, instance) {
     const div = document.createElement('div');
     div.className = 'list-error';
     div.innerHTML = '数据加载出错';
     div.onclick = function() {
-      if (virtualList) { virtualList.retryFetch(position); }
+      instance.retryFetch(position);
     };
     return div;
   },
@@ -125,19 +124,19 @@ const renderer: Renderer<ItemData> = {
 
 const container = document.getElementById('list') || document.body;
 
-virtualList = new VirtualList<ItemData>({
+const virtualList = new VirtualList<ItemData>({
   container,
   dataSource,
   itemKey: 'id',
   renderer,
-  defaultView: 'foot',
-  onItemClick(e) {
-    console.log(e);
-  }
+  defaultView: 'foot'
 });
+function listenClick(args: unknown) {
+  console.dir(args);
+}
+virtualList.on('item-click', listenClick);
 
 setTimeout(function() {
-  if (!virtualList) { return; }
   console.log('itemList length: ' + virtualList.items.length);
   console.log('first item id: ' + virtualList.items.first()?.id);
   console.log('last item id: ' + virtualList.items.last()?.id);

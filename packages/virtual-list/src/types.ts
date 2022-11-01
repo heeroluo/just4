@@ -152,9 +152,5 @@ export interface VirtualListOptions<ItemType extends object> {
   /**
    * 默认视图。'head' 表示开头，'foot' 表示末尾。
    */
-  defaultView?: 'head' | 'foot',
-  /**
-   * 点击事件的回调函数。
-   */
-  onItemClick?: (evt: ItemClickEvent<ItemType>) => unknown
+  defaultView?: 'head' | 'foot'
 }

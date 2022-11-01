@@ -9,6 +9,7 @@ import { DOMWrap } from '@just4/dom/dom-wrap';
 import type { IEventHandler } from '@just4/dom/interfaces';
 import { EventWrap } from '@just4/dom/event-wrap';
 import { $ } from '@just4/dom/index';
+import { EventEmitter } from 'eventemitter3';
 import { debounce } from './internal/util';
 import { RenderPosition } from './types';
 import { ItemList } from './item-list';
@@ -34,7 +35,7 @@ export class VirtualList<ItemType extends object> {
   /**
    * 绑定到容器 click 事件的监听函数。
    */
-  protected _onItemClickFn?: IEventHandler;
+  protected _onClickFn?: IEventHandler;
 
   /**
    * 数据项。
@@ -82,6 +83,11 @@ export class VirtualList<ItemType extends object> {
    * 重置 __checkPositionCounter 的计时器 id。
    */
   private __checkPositionCounterResetTimer?: number;
+
+  /**
+   * 事件监听/触发器。
+   */
+  protected readonly _eventEmitter = new EventEmitter();
 
   /**
    * 内部数据项的访问器。
@@ -139,8 +145,9 @@ export class VirtualList<ItemType extends object> {
    * @param clearContainer 是否清理容器内的所有内容。
    */
   public destroy(clearContainer: boolean): void {
+    this._eventEmitter.removeAllListeners();
     if (this._onScrollFn) { this._container.off('scroll', this._onScrollFn); }
-    if (this._onItemClickFn) { this._container.off('click', this._onItemClickFn); }
+    if (this._onClickFn) { this._container.off('click', this._onClickFn); }
     if (clearContainer) { this._container.empty(); }
   }
 
@@ -275,13 +282,10 @@ export class VirtualList<ItemType extends object> {
    * @param e DOM 的事件参数。
    */
   protected _onClick(e: EventWrap): void {
-    const onItemClick = this._options.onItemClick;
-    if (!onItemClick || !e.target) { return; }
+    const target = <HTMLElement>e.target;
+    if (!target) { return; }
 
     let element: HTMLElement;
-
-    // 找到事件目标元素所在的数据项节点
-    const target = <HTMLElement>e.target;
     if (target.parentElement === this._container.get(0)) {
       element = target;
     } else {
@@ -302,7 +306,7 @@ export class VirtualList<ItemType extends object> {
     }
 
     if (itemIndex !== -1) {
-      onItemClick.call(this, {
+      this._eventEmitter.emit('item-click', {
         domEvent: e,
         itemNode: this._itemNodes[itemIndex],
         itemData: assignProps({}, this._itemList[itemIndex])
@@ -314,8 +318,8 @@ export class VirtualList<ItemType extends object> {
    * 监听点击事件。
    */
   protected _listenClick(): void {
-    this._onItemClickFn = this._onClick.bind(this);
-    this._container.on('click', this._onItemClickFn);
+    this._onClickFn = this._onClick.bind(this);
+    this._container.on('click', this._onClickFn);
   }
 
   /**
@@ -690,5 +694,33 @@ export class VirtualList<ItemType extends object> {
     } else if (position === RenderPosition.Foot) {
       this._fetchNext();
     }
+  }
+
+  /**
+   * 添加事件监听器。
+   * @param type 事件类型。
+   * @param cb 监听函数。
+   * @param context 调用监听函数的上下文。
+   */
+  public on(
+    type: string,
+    cb: (...args: unknown[]) => void,
+    context?: unknown
+  ): void {
+    this._eventEmitter.on(type, cb, context);
+  }
+
+  /**
+   * 移除事件监听器。
+   * @param type 仅移除指定事件类型。
+   * @param cb 仅移除指定监听函数。
+   * @param context 仅移除指定上下文。
+   */
+  public off(
+    type: string,
+    cb?: (...args: unknown[]) => void,
+    context?: unknown
+  ): void {
+    this._eventEmitter.off(type, cb, context);
   }
 }
