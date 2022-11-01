@@ -196,7 +196,7 @@ export class VirtualList<ItemType extends object> {
     }
 
     mergeArray(this._itemList, data);
-    const newItemNodes = renderer.renderItems(data);
+    const newItemNodes = renderer.renderItems(data, this);
     mergeArray(this._itemNodes, newItemNodes);
     this._container.append(newItemNodes);
 
@@ -341,7 +341,7 @@ export class VirtualList<ItemType extends object> {
       const renderer = this._options.renderer;
       const render = renderer[renderFn];
       if (render) {
-        const node = stateNodes[position] = render.call(renderer, position, extra);
+        const node = stateNodes[position] = render.call(renderer, position, this, extra);
         if (node) {
           if (position === RenderPosition.Head) {
             this._container.prepend(node);
@@ -471,7 +471,7 @@ export class VirtualList<ItemType extends object> {
 
     this._itemList = data.concat(this._itemList);
     // 渲染数据
-    const newItemNodes = this._options.renderer.renderItems(data);
+    const newItemNodes = this._options.renderer.renderItems(data, this);
     this._keepView(() => {
       if (this._itemNodes.length) {
         $(this._itemNodes[0]).before(newItemNodes);
@@ -518,7 +518,7 @@ export class VirtualList<ItemType extends object> {
     mergeArray(this._itemList, data);
 
     // 渲染数据
-    const newItemNodes = this._options.renderer.renderItems(data);
+    const newItemNodes = this._options.renderer.renderItems(data, this);
     if (this._itemNodes.length) {
       const lastItemNode = $(this._itemNodes[this._itemNodes.length - 1]);
       lastItemNode.after(newItemNodes);
@@ -574,7 +574,7 @@ export class VirtualList<ItemType extends object> {
 
     this._itemList[index] = itemData;
 
-    const newNode = this._options.renderer.renderItems([itemData])[0];
+    const newNode = this._options.renderer.renderItems([itemData], this)[0];
     this._keepView(() => {
       $(this._itemNodes[index]).replaceWith(newNode);
     });

@@ -4,6 +4,7 @@
  */
 
 import { EventWrap } from '@just4/dom/event-wrap';
+import type { VirtualList } from './index';
 
 
 /**
@@ -63,27 +64,43 @@ export enum RenderPosition {
 /**
  * 渲染器。
  */
-export interface Renderer<ItemType> {
+export interface Renderer<ItemType extends object> {
   /**
    * 渲染数据项。
    */
-  renderItems: (data: ItemType[]) => ArrayLike<HTMLElement>
+  renderItems: (
+    data: ItemType[],
+    instance: VirtualList<ItemType>
+  ) => ArrayLike<HTMLElement>
   /**
    * 渲染“加载中”。
    */
-  renderLoading?: (type: RenderPosition) => HTMLElement | undefined | null
+  renderLoading?: (
+    type: RenderPosition,
+    instance: VirtualList<ItemType>
+  ) => HTMLElement | undefined | null
   /**
    * 渲染错误提示。
    */
-  renderError?: (type: RenderPosition, error: unknown) => HTMLElement | undefined | null
+  renderError?: (
+    type: RenderPosition,
+    instance: VirtualList<ItemType>,
+    error: unknown
+  ) => HTMLElement | undefined | null
   /**
    * 渲染空数据提示。
    */
-  renderEmpty?: () => HTMLElement | undefined | null,
+  renderEmpty?: (
+    type: RenderPosition,
+    instance: VirtualList<ItemType>
+  ) => HTMLElement | undefined | null,
   /**
    * 渲染数据边界。
    */
-  renderBoundary?: (type: RenderPosition) => HTMLElement | undefined | null
+  renderBoundary?: (
+    type: RenderPosition,
+    instance: VirtualList<ItemType>
+  ) => HTMLElement | undefined | null
 }
 
 /**
@@ -107,7 +124,7 @@ export interface ItemClickEvent<ItemType> {
 /**
  * 虚拟滚动参数。
  */
-export interface VirtualListOptions<ItemType> {
+export interface VirtualListOptions<ItemType extends object> {
   /**
    * 滚动容器。
    */
