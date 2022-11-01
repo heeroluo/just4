@@ -10,7 +10,7 @@ import type { VirtualList } from './index';
 /**
  * 初始响应。
  */
-export interface InitialResponse<ItemType> {
+export interface InitialResponse<ItemType extends object> {
   /**
    * 数据。
    */
@@ -28,7 +28,7 @@ export interface InitialResponse<ItemType> {
 /**
  * 数据源。
  */
-export interface DataSource<ItemType> {
+export interface DataSource<ItemType extends object> {
   /**
    * 获取初始数据。
    */
@@ -106,7 +106,7 @@ export interface Renderer<ItemType extends object> {
 /**
  * 虚拟滚动组件的事件参数。
  */
-export interface ItemClickEvent<ItemType> {
+export interface ItemClickEvent<ItemType extends object> {
   /**
    * DOM 的事件对象。
    */
