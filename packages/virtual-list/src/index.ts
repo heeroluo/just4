@@ -680,15 +680,20 @@ export class VirtualList<ItemType extends object> {
   }
 
   /**
-   * 重置错误状态并请求数据（如果不是处在错误状态，则不请求）。
+   * 重置边界状态和错误状态并请求数据（如果不是处在这两个状态，则不请求）。
    * @param position 位置。
    */
   public retryFetch(position: RenderPosition): void {
-    if (!this._stateFlags.renderError[position]) { return; }
+    if (!this._stateFlags.renderError[position] &&
+      !this._stateFlags.renderBoundary[position]
+    ) { return; }
+
     this._keepView(() => {
       this._setAndRenderState('renderError', false, position);
+      this._setAndRenderState('renderBoundary', false, position);
       this._setAndRenderState('renderLoading', true, position);
     });
+
     if (position === RenderPosition.Head) {
       this._fetchPrevious();
     } else if (position === RenderPosition.Foot) {

@@ -112,11 +112,14 @@ const renderer: Renderer<ItemData> = {
     };
     return div;
   },
-  renderBoundary(position) {
-    if (position === RenderPosition.Head) {
+  renderBoundary(position, instance) {
+    if (position === RenderPosition.Head || position === RenderPosition.Foot) {
       const div = document.createElement('div');
       div.className = 'list-end';
       div.innerHTML = '没有更多数据了';
+      div.onclick = function() {
+        instance.retryFetch(position);
+      };
       return div;
     }
   }
