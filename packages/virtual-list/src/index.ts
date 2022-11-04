@@ -13,6 +13,7 @@ import { EventEmitter } from 'eventemitter3';
 import { debounce } from './internal/util';
 import { RenderPosition } from './types';
 import { ItemList } from './item-list';
+import { VirtualListEvent, ItemClickEvent, ItemsRemoveEvent } from './events';
 import type { VirtualListOptions, Renderer, InitialResponse } from './types';
 
 
@@ -306,11 +307,13 @@ export class VirtualList<ItemType extends object> {
     }
 
     if (itemIndex !== -1) {
-      this._eventEmitter.emit('item-click', {
+      // 触发数据项点击事件
+      const args: ItemClickEvent<ItemType> = {
         domEvent: e,
         itemNode: this._itemNodes[itemIndex],
         itemData: assignProps({}, this._itemList[itemIndex])
-      });
+      };
+      this._eventEmitter.emit(VirtualListEvent.ITEM_CLICK, args);
     }
   }
 
@@ -463,11 +466,21 @@ export class VirtualList<ItemType extends object> {
     // 超出最大数据量时，裁掉尾部的超出数据
     const overflow = this._itemList.length + data.length - this._maxItemCount;
     if (overflow > 0) {
-      this._itemList.splice(this._itemList.length - overflow, overflow);
-      $(this._itemNodes.splice(
+      const overflowItems = this._itemList.splice(
+        this._itemList.length - overflow,
+        overflow
+      );
+      const overflowNodes = $(this._itemNodes.splice(
         this._itemNodes.length - overflow,
         overflow
       )).remove();
+
+      // 触发数据移除事件
+      const args: ItemsRemoveEvent<ItemType> = {
+        itemList: overflowItems,
+        itemNodes: overflowNodes
+      };
+      this._eventEmitter.emit(VirtualListEvent.ITEM_REMOVE, args);
 
       // 因为裁掉了尾部的数据，尾部必然没到边界，要更新状态
       this._setAndRenderState('renderBoundary', false, RenderPosition.Foot);
@@ -510,13 +523,20 @@ export class VirtualList<ItemType extends object> {
   protected _updateAndRenderNext(data: ItemType[]): void {
     const overflow = this._itemList.length + data.length - this._maxItemCount;
     if (overflow > 0) {
-      this._itemList.splice(0, overflow);
+      const overflowItems = this._itemList.splice(0, overflow);
       const overflowNodes = $(this._itemNodes.splice(0, overflow));
       this._keepView(() => {
         // 因为裁掉了头部的数据，头部必然没到边界，要更新状态
         this._setAndRenderState('renderBoundary', false, RenderPosition.Head);
         overflowNodes.remove();
       });
+
+      // 触发数据移除事件
+      const args: ItemsRemoveEvent<ItemType> = {
+        itemList: overflowItems,
+        itemNodes: overflowNodes
+      };
+      this._eventEmitter.emit(VirtualListEvent.ITEM_REMOVE, args);
     }
 
     mergeArray(this._itemList, data);
@@ -595,11 +615,20 @@ export class VirtualList<ItemType extends object> {
   public removeItem(keyValue: unknown): ItemType | undefined {
     const index = this._findItemIndex(keyValue);
     if (index !== -1) {
-      const itemData = this._itemList.splice(index, 1)[0];
+      const itemList = this._itemList.splice(index, 1);
+      const itemNodes = $(this._itemNodes.splice(index, 1));
       this._keepView(() => {
-        $(this._itemNodes.splice(index, 1)).remove();
+        itemNodes.remove();
       });
-      return itemData;
+
+      // 触发数据移除事件
+      const args: ItemsRemoveEvent<ItemType> = {
+        itemList,
+        itemNodes
+      };
+      this._eventEmitter.emit(VirtualListEvent.ITEM_REMOVE, args);
+
+      return itemList[0];
     }
   }
 
@@ -708,7 +737,7 @@ export class VirtualList<ItemType extends object> {
    * @param context 调用监听函数的上下文。
    */
   public on(
-    type: string,
+    type: VirtualListEvent,
     cb: (...args: unknown[]) => void,
     context?: unknown
   ): void {
@@ -722,7 +751,7 @@ export class VirtualList<ItemType extends object> {
    * @param context 仅移除指定上下文。
    */
   public off(
-    type: string,
+    type: VirtualListEvent,
     cb?: (...args: unknown[]) => void,
     context?: unknown
   ): void {

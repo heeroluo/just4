@@ -3,7 +3,6 @@
  * @packageDocumentation
  */
 
-import { EventWrap } from '@just4/dom/event-wrap';
 import type { VirtualList } from './index';
 
 
@@ -101,24 +100,6 @@ export interface Renderer<ItemType extends object> {
     type: RenderPosition,
     instance: VirtualList<ItemType>
   ) => HTMLElement | undefined | null
-}
-
-/**
- * 虚拟滚动组件的事件参数。
- */
-export interface ItemClickEvent<ItemType extends object> {
-  /**
-   * DOM 的事件对象。
-   */
-  domEvent: EventWrap,
-  /**
-   * 事件相关的数据项节点。
-   */
-  itemNode?: HTMLElement,
-  /**
-   * 事件相关数据项的拷贝。
-   */
-  itemData?: ItemType
 }
 
 /**

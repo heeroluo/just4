@@ -1,6 +1,7 @@
 import 'core-js';
 import { VirtualList } from '@/index';
 import { DataSource, Renderer, RenderPosition } from '@/types';
+import { VirtualListEvent } from '@/events';
 
 const imgs = [
   'https://p4.itc.cn/images01/20210608/219fddbc66e64db8a4be54b45cefd8ea.png',
@@ -134,10 +135,14 @@ const virtualList = new VirtualList<ItemData>({
   renderer,
   defaultView: 'foot'
 });
-function listenClick(args: unknown) {
+virtualList.on(VirtualListEvent.ITEM_CLICK, (args: unknown) => {
+  console.log('数据点击');
   console.dir(args);
-}
-virtualList.on('item-click', listenClick);
+});
+virtualList.on(VirtualListEvent.ITEM_REMOVE, (args: unknown) => {
+  console.log('数据移除');
+  console.dir(args);
+});
 
 setTimeout(function() {
   console.log('itemList length: ' + virtualList.items.length);
