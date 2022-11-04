@@ -7,6 +7,7 @@ import type { IEventHandler } from '@just4/dom/interfaces';
 import { EventWrap } from '@just4/dom/event-wrap';
 import { RenderPosition } from './types';
 import { ItemList } from './item-list';
+import { VirtualListEvent } from './events';
 import type { VirtualListOptions, Renderer } from './types';
 /**
  * 虚拟列表组件。
@@ -220,12 +221,12 @@ export declare class VirtualList<ItemType extends object> {
      * @param cb 监听函数。
      * @param context 调用监听函数的上下文。
      */
-    on(type: string, cb: (...args: unknown[]) => void, context?: unknown): void;
+    on(type: VirtualListEvent, cb: (...args: unknown[]) => void, context?: unknown): void;
     /**
      * 移除事件监听器。
      * @param type 仅移除指定事件类型。
      * @param cb 仅移除指定监听函数。
      * @param context 仅移除指定上下文。
      */
-    off(type: string, cb?: (...args: unknown[]) => void, context?: unknown): void;
+    off(type: VirtualListEvent, cb?: (...args: unknown[]) => void, context?: unknown): void;
 }
