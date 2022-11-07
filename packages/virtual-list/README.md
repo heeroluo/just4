@@ -1,6 +1,6 @@
 # 虚拟滚动列表
 
-本模块提供基于原生 DOM 操作的高性能虚拟滚动列表，适用于无限上拉/下拉数据列表、聊天记录等场景。
+本模块提供基于原生 DOM 操作的高性能虚拟滚动列表框架，适用于无限上拉/下拉数据列表、聊天记录等场景。
 
 ## 使用
 
@@ -24,15 +24,15 @@ const virtualList = new VirtualList({
 
 | 参数名 | 类型 | 说明 |
 | --- | --- | --- |
-| container | HTMLElement | 滚动容器（HTML 元素） |
-| itemKey | string | 数据项的 key 属性 |
+| container | HTMLElement | 滚动容器（HTML 元素）。 |
+| itemKey | string | 数据项的 key 属性。 |
 | maxItemCount | number | 最大渲染的节点数，默认为 100 |
-| prefetchDistance | number | 预加载距离，为滚动容器高度的倍数。默认为 2 |
-| defaultView | 'head' \| 'foot' | 默认视图，'head' 表示开头，'foot' 表示末尾 |
-| dataSource | Object | 数据源（详见下文说明） |
-| renderer | Object | 渲染器（详见下文说明） |
+| prefetchDistance | number | 预加载距离，为滚动容器高度的倍数，默认为 2。 |
+| defaultView | 'head' \| 'foot' | 默认视图，'head' 表示开头，'foot' 表示末尾。 |
+| dataSource | Object | 数据源（详见下文说明）。 |
+| renderer | Object | 渲染器（详见下文说明）。 |
 
-### 关于数据源
+### 关于数据源（dataSource）
 
 实际项目中的数据分页方式有很多种，比如根据页码分页、根据数据的 key 属性值分页等。模块内部无法适配这么多的情况，所以提供了 `dataSource` 参数。
 
@@ -97,9 +97,9 @@ const dataSource = {
 };
 ```
 
-如果这三个方法返回的是空数组，则表示数据已到达边界，不会在该方向上继续加载。
+**如果返回的是空数组，则表示数据已到达边界，不会在该方向上继续加载**。
 
-可见，`dataSource` 是按数据 key 值的方式去分页的，如果你的项目是按页码分页，只需要在 `loadPreviousData` 和 `loadNextData` 中做一次“转换”即可。例如：
+可见，`dataSource` 是按数据 key 值去分页的，如果你的项目是按页码分页，只需要在 `loadPreviousData` 和 `loadNextData` 中做一次“转换”即可。例如：
 
 ```javascript
 {
@@ -129,7 +129,7 @@ const dataSource = {
 }
 ```
 
-### 渲染器
+### 渲染器（renderer）
 
 模块内部会把数据传入渲染器，并把渲染器返回的 DOM 节点渲染到容器内，渲染器是一个包含以下方法的对象：
 - `renderItems`：渲染数据项，需返回一个 DOM 节点的**类数组或数组**；
@@ -138,7 +138,7 @@ const dataSource = {
 - `renderBoundary`：渲染数据边界界面，需返回 DOM 节点；
 - `renderEmpty`：渲染空数据提示，需返回 DOM 节点。
 
-其中 `renderLoading`、`renderError`、`renderBoundary` 的第一个参数为渲染位置：
+其中 `renderLoading`、`renderError`、`renderBoundary` 的第一个参数为渲染位置、第二个参数为虚拟滚动列表的实例：
 
 - `RenderPosition.Main`：主位置，指的是没有数据项时的状态；
 - `RenderPosition.Head`：开头位置。
@@ -168,23 +168,37 @@ const renderer = {
 
 ### 事件
 
+所有可用事件都在 `VirtualListEvent` 这个枚举类型中：
+
+```
+import { VirtualListEvent } from '@just4/virtual-list/events';
+```
+
 #### 点击数据项节点
 
 ```javascript
-virtualList.on('item-click', function(args) {
+virtualList.on(VirtualListEvent.ITEM_CLICK, function(args) {
   console.dir(args);
 });
 ```
 
-其中 args 包含三个字段：
+args 为点击数据项事件的事件参数，类型说明见[文档](https://heeroluo.github.io/just4/virtual-list/interfaces/events.ItemClickEvent.html)。
+
+#### 移除数据项
+
+以下两种情况都会触发数据项的移除：
+
+- 数据量超出 `maxItemCount`；
+- 调用 `removeItem` 移除数据。
 
 ```javascript
-{
-  domEvent, // 经过 EventWrap 包装的事件对象
-  itemNode, // 触发事件的数据项节点
-  itemData  // 触发事件的数据项节点对应的数据
-}
+virtualList.on(VirtualListEvent.ITEM_REMOVE, function(args) {
+  console.dir(args);
+});
 ```
+
+args 为数据项移除事件的事件参数，类型说明见[文档](https://heeroluo.github.io/just4/virtual-list/interfaces/events.ItemsRemoveEvent.html)。
+
 
 ### 异常重试
 
