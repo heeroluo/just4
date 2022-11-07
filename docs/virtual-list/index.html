@@ -2,7 +2,7 @@
 <a href="#虚拟滚动列表" id="虚拟滚动列表" style="color: inherit; text-decoration: none;">
   <h1>虚拟滚动列表</h1>
 </a>
-<p>本模块提供基于原生 DOM 操作的高性能虚拟滚动列表，适用于无限上拉/下拉数据列表、聊天记录等场景。</p>
+<p>本模块提供基于原生 DOM 操作的高性能虚拟滚动列表框架，适用于无限上拉/下拉数据列表、聊天记录等场景。</p>
 
 <a href="#使用" id="使用" style="color: inherit; text-decoration: none;">
   <h2>使用</h2>
@@ -31,12 +31,12 @@
 <tbody><tr>
 <td>container</td>
 <td>HTMLElement</td>
-<td>滚动容器（HTML 元素）</td>
+<td>滚动容器（HTML 元素）。</td>
 </tr>
 <tr>
 <td>itemKey</td>
 <td>string</td>
-<td>数据项的 key 属性</td>
+<td>数据项的 key 属性。</td>
 </tr>
 <tr>
 <td>maxItemCount</td>
@@ -46,27 +46,27 @@
 <tr>
 <td>prefetchDistance</td>
 <td>number</td>
-<td>预加载距离，为滚动容器高度的倍数。默认为 2</td>
+<td>预加载距离，为滚动容器高度的倍数，默认为 2。</td>
 </tr>
 <tr>
 <td>defaultView</td>
 <td>&#39;head&#39; | &#39;foot&#39;</td>
-<td>默认视图，&#39;head&#39; 表示开头，&#39;foot&#39; 表示末尾</td>
+<td>默认视图，&#39;head&#39; 表示开头，&#39;foot&#39; 表示末尾。</td>
 </tr>
 <tr>
 <td>dataSource</td>
 <td>Object</td>
-<td>数据源（详见下文说明）</td>
+<td>数据源（详见下文说明）。</td>
 </tr>
 <tr>
 <td>renderer</td>
 <td>Object</td>
-<td>渲染器（详见下文说明）</td>
+<td>渲染器（详见下文说明）。</td>
 </tr>
 </tbody></table>
 
-<a href="#关于数据源" id="关于数据源" style="color: inherit; text-decoration: none;">
-  <h3>关于数据源</h3>
+<a href="#关于数据源（datasource）" id="关于数据源（datasource）" style="color: inherit; text-decoration: none;">
+  <h3>关于数据源（dataSource）</h3>
 </a>
 <p>实际项目中的数据分页方式有很多种，比如根据页码分页、根据数据的 key 属性值分页等。模块内部无法适配这么多的情况，所以提供了 <code>dataSource</code> 参数。</p>
 <p><code>dataSource</code> 是一个包含以下<strong>异步方法</strong>的对象：</p>
@@ -78,13 +78,13 @@
 <p>以下为数据源对象的示例：</p>
 <pre><code class="language-javascript"><span class="hl-7">// 数据</span><br/><span class="hl-4">const</span><span class="hl-0"> </span><span class="hl-5">allData</span><span class="hl-0"> = [</span><br/><span class="hl-0">  </span><span class="hl-7">// 数据...</span><br/><span class="hl-0">];</span><br/><br/><span class="hl-7">// 分页的页大小</span><br/><span class="hl-4">const</span><span class="hl-0"> </span><span class="hl-5">PAGE_SIZE</span><span class="hl-0"> = </span><span class="hl-8">50</span><span class="hl-0">;</span><br/><br/><span class="hl-4">const</span><span class="hl-0"> </span><span class="hl-5">dataSource</span><span class="hl-0"> = {</span><br/><span class="hl-0">  </span><span class="hl-6">loadInitialData</span><span class="hl-0">() {</span><br/><span class="hl-0">    </span><span class="hl-1">return</span><span class="hl-0"> </span><span class="hl-4">new</span><span class="hl-0"> </span><span class="hl-9">Promise</span><span class="hl-0">((</span><span class="hl-2">resolve</span><span class="hl-0">) </span><span class="hl-4">=&gt;</span><span class="hl-0"> {</span><br/><span class="hl-0">      </span><span class="hl-6">setTimeout</span><span class="hl-0">(</span><span class="hl-4">function</span><span class="hl-0">() {</span><br/><span class="hl-0">        </span><span class="hl-6">resolve</span><span class="hl-0">(</span><br/><span class="hl-0">          {</span><br/><span class="hl-0">            </span><span class="hl-2">data:</span><span class="hl-0"> </span><span class="hl-2">allData</span><span class="hl-0">.</span><span class="hl-6">slice</span><span class="hl-0">(</span><span class="hl-8">0</span><span class="hl-0">, </span><span class="hl-5">PAGE_SIZE</span><span class="hl-0">),</span><br/><span class="hl-0">            </span><span class="hl-2">reachedFootBoundary:</span><span class="hl-0"> </span><span class="hl-4">false</span><span class="hl-0">,</span><br/><span class="hl-0">            </span><span class="hl-2">reachedHeadBoundary:</span><span class="hl-0"> </span><span class="hl-4">true</span><br/><span class="hl-0">          }</span><br/><span class="hl-0">        );</span><br/><span class="hl-0">      }, </span><span class="hl-8">500</span><span class="hl-0">);</span><br/><span class="hl-0">    });</span><br/><span class="hl-0">  },</span><br/><br/><span class="hl-0">  </span><span class="hl-6">loadNextData</span><span class="hl-0">(</span><span class="hl-2">ref</span><span class="hl-0">: </span><span class="hl-9">unknown</span><span class="hl-0">) {</span><br/><span class="hl-0">    </span><span class="hl-1">return</span><span class="hl-0"> </span><span class="hl-4">new</span><span class="hl-0"> </span><span class="hl-9">Promise</span><span class="hl-0">((</span><span class="hl-2">resolve</span><span class="hl-0">) </span><span class="hl-4">=&gt;</span><span class="hl-0"> {</span><br/><span class="hl-0">      </span><span class="hl-6">setTimeout</span><span class="hl-0">(</span><span class="hl-4">function</span><span class="hl-0">() {</span><br/><span class="hl-0">        </span><span class="hl-1">for</span><span class="hl-0"> (</span><span class="hl-4">let</span><span class="hl-0"> </span><span class="hl-2">i</span><span class="hl-0"> = </span><span class="hl-8">0</span><span class="hl-0">; </span><span class="hl-2">i</span><span class="hl-0"> &lt; </span><span class="hl-2">allData</span><span class="hl-0">.</span><span class="hl-2">length</span><span class="hl-0">; </span><span class="hl-2">i</span><span class="hl-0">++) {</span><br/><span class="hl-0">          </span><span class="hl-1">if</span><span class="hl-0"> (</span><span class="hl-2">allData</span><span class="hl-0">[</span><span class="hl-2">i</span><span class="hl-0">].</span><span class="hl-2">id</span><span class="hl-0">.</span><span class="hl-6">toString</span><span class="hl-0">() === </span><span class="hl-9">String</span><span class="hl-0">(</span><span class="hl-2">ref</span><span class="hl-0">)) {</span><br/><span class="hl-0">            </span><span class="hl-6">resolve</span><span class="hl-0">(</span><span class="hl-2">allData</span><span class="hl-0">.</span><span class="hl-6">slice</span><span class="hl-0">(</span><span class="hl-2">i</span><span class="hl-0"> + </span><span class="hl-8">1</span><span class="hl-0">, </span><span class="hl-2">i</span><span class="hl-0"> + </span><span class="hl-8">1</span><span class="hl-0"> + </span><span class="hl-5">PAGE_SIZE</span><span class="hl-0">));</span><br/><span class="hl-0">            </span><span class="hl-1">break</span><span class="hl-0">;</span><br/><span class="hl-0">          }</span><br/><span class="hl-0">        }</span><br/><span class="hl-0">        </span><span class="hl-6">resolve</span><span class="hl-0">([]);</span><br/><span class="hl-0">      }, </span><span class="hl-8">500</span><span class="hl-0">);</span><br/><span class="hl-0">    });</span><br/><span class="hl-0">  },</span><br/><br/><span class="hl-0">  </span><span class="hl-6">loadPreviousData</span><span class="hl-0">(</span><span class="hl-2">ref</span><span class="hl-0">: </span><span class="hl-9">unknown</span><span class="hl-0">) {</span><br/><span class="hl-0">    </span><span class="hl-1">return</span><span class="hl-0"> </span><span class="hl-4">new</span><span class="hl-0"> </span><span class="hl-9">Promise</span><span class="hl-0">((</span><span class="hl-2">resolve</span><span class="hl-0">) </span><span class="hl-4">=&gt;</span><span class="hl-0"> {</span><br/><span class="hl-0">      </span><span class="hl-6">setTimeout</span><span class="hl-0">(</span><span class="hl-4">function</span><span class="hl-0">() {</span><br/><span class="hl-0">        </span><span class="hl-1">for</span><span class="hl-0"> (</span><span class="hl-4">let</span><span class="hl-0"> </span><span class="hl-2">i</span><span class="hl-0"> = </span><span class="hl-8">0</span><span class="hl-0">; </span><span class="hl-2">i</span><span class="hl-0"> &lt; </span><span class="hl-2">allData</span><span class="hl-0">.</span><span class="hl-2">length</span><span class="hl-0">; </span><span class="hl-2">i</span><span class="hl-0">++) {</span><br/><span class="hl-0">          </span><span class="hl-1">if</span><span class="hl-0"> (</span><span class="hl-2">allData</span><span class="hl-0">[</span><span class="hl-2">i</span><span class="hl-0">].</span><span class="hl-2">id</span><span class="hl-0">.</span><span class="hl-6">toString</span><span class="hl-0">() === </span><span class="hl-9">String</span><span class="hl-0">(</span><span class="hl-2">ref</span><span class="hl-0">)) {</span><br/><span class="hl-0">            </span><span class="hl-6">resolve</span><span class="hl-0">(</span><span class="hl-2">allData</span><span class="hl-0">.</span><span class="hl-6">slice</span><span class="hl-0">(</span><span class="hl-9">Math</span><span class="hl-0">.</span><span class="hl-6">max</span><span class="hl-0">(</span><span class="hl-8">0</span><span class="hl-0">, </span><span class="hl-2">i</span><span class="hl-0"> - </span><span class="hl-5">PAGE_SIZE</span><span class="hl-0">), </span><span class="hl-2">i</span><span class="hl-0">));</span><br/><span class="hl-0">            </span><span class="hl-1">break</span><span class="hl-0">;</span><br/><span class="hl-0">          }</span><br/><span class="hl-0">        }</span><br/><span class="hl-0">        </span><span class="hl-6">resolve</span><span class="hl-0">([]);</span><br/><span class="hl-0">      }, </span><span class="hl-8">500</span><span class="hl-0">);</span><br/><span class="hl-0">    });</span><br/><span class="hl-0">  }</span><br/><span class="hl-0">};</span>
 </code></pre>
-<p>如果这三个方法返回的是空数组，则表示数据已到达边界，不会在该方向上继续加载。</p>
-<p>可见，<code>dataSource</code> 是按数据 key 值的方式去分页的，如果你的项目是按页码分页，只需要在 <code>loadPreviousData</code> 和 <code>loadNextData</code> 中做一次“转换”即可。例如：</p>
+<p><strong>如果返回的是空数组，则表示数据已到达边界，不会在该方向上继续加载</strong>。</p>
+<p>可见，<code>dataSource</code> 是按数据 key 值去分页的，如果你的项目是按页码分页，只需要在 <code>loadPreviousData</code> 和 <code>loadNextData</code> 中做一次“转换”即可。例如：</p>
 <pre><code class="language-javascript"><span class="hl-0">{</span><br/><span class="hl-0">  </span><span class="hl-2">async</span><span class="hl-0"> </span><span class="hl-6">loadNextData</span><span class="hl-0">(</span><span class="hl-2">ref</span><span class="hl-0">: </span><span class="hl-2">unknown</span><span class="hl-0">) {</span><br/><span class="hl-0">    </span><span class="hl-7">// ref 是最后一条数据时，要加载下一页</span><br/><span class="hl-0">    </span><span class="hl-1">if</span><span class="hl-0"> (</span><span class="hl-2">ref</span><span class="hl-0"> === </span><span class="hl-2">allData</span><span class="hl-0">[</span><span class="hl-2">allData</span><span class="hl-0">.</span><span class="hl-2">length</span><span class="hl-0"> - </span><span class="hl-8">1</span><span class="hl-0">].</span><span class="hl-2">id</span><span class="hl-0">) {</span><br/><span class="hl-0">      </span><span class="hl-7">// 加载下一页数据</span><br/><span class="hl-0">      </span><span class="hl-4">const</span><span class="hl-0"> </span><span class="hl-5">nextData</span><span class="hl-0"> = </span><span class="hl-1">await</span><span class="hl-0"> </span><span class="hl-6">getData</span><span class="hl-0">(</span><span class="hl-2">page</span><span class="hl-0"> + </span><span class="hl-8">1</span><span class="hl-0">);</span><br/><span class="hl-0">      </span><span class="hl-1">if</span><span class="hl-0"> (</span><span class="hl-2">nextData</span><span class="hl-0"> &amp;&amp; </span><span class="hl-2">nextData</span><span class="hl-0">.</span><span class="hl-2">length</span><span class="hl-0">) {</span><br/><span class="hl-0">        </span><span class="hl-2">allData</span><span class="hl-0"> = </span><span class="hl-2">allData</span><span class="hl-0">.</span><span class="hl-6">concat</span><span class="hl-0">(</span><span class="hl-2">nextData</span><span class="hl-0">);</span><br/><span class="hl-0">        </span><span class="hl-1">return</span><span class="hl-0"> </span><span class="hl-2">nextData</span><span class="hl-0">;</span><br/><span class="hl-0">      } </span><span class="hl-1">else</span><span class="hl-0"> {</span><br/><span class="hl-0">        </span><span class="hl-1">return</span><span class="hl-0"> [];</span><br/><span class="hl-0">      }</span><br/><span class="hl-0">    }</span><br/><br/><span class="hl-0">    </span><span class="hl-1">for</span><span class="hl-0"> (</span><span class="hl-4">let</span><span class="hl-0"> </span><span class="hl-2">i</span><span class="hl-0"> = </span><span class="hl-8">0</span><span class="hl-0">; </span><span class="hl-2">i</span><span class="hl-0"> &lt; </span><span class="hl-2">allData</span><span class="hl-0">.</span><span class="hl-2">length</span><span class="hl-0">; </span><span class="hl-2">i</span><span class="hl-0">++) {</span><br/><span class="hl-0">      </span><span class="hl-1">if</span><span class="hl-0"> (</span><span class="hl-2">allData</span><span class="hl-0">[</span><span class="hl-2">i</span><span class="hl-0">].</span><span class="hl-2">id</span><span class="hl-0"> === </span><span class="hl-2">ref</span><span class="hl-0">) {</span><br/><span class="hl-0">        </span><span class="hl-1">return</span><span class="hl-0"> </span><span class="hl-2">allData</span><span class="hl-0">.</span><span class="hl-6">slice</span><span class="hl-0">(</span><span class="hl-2">i</span><span class="hl-0"> + </span><span class="hl-8">1</span><span class="hl-0">, </span><span class="hl-2">i</span><span class="hl-0"> + </span><span class="hl-8">1</span><span class="hl-0"> + </span><span class="hl-5">PAGE_SIZE</span><span class="hl-0">);</span><br/><span class="hl-0">      }</span><br/><span class="hl-0">    }</span><br/><br/><span class="hl-0">    </span><span class="hl-1">return</span><span class="hl-0"> [];</span><br/><span class="hl-0">  },</span><br/><br/><span class="hl-0">  </span><span class="hl-7">// ...</span><br/><span class="hl-0">}</span>
 </code></pre>
 
-<a href="#渲染器" id="渲染器" style="color: inherit; text-decoration: none;">
-  <h3>渲染器</h3>
+<a href="#渲染器（renderer）" id="渲染器（renderer）" style="color: inherit; text-decoration: none;">
+  <h3>渲染器（renderer）</h3>
 </a>
 <p>模块内部会把数据传入渲染器，并把渲染器返回的 DOM 节点渲染到容器内，渲染器是一个包含以下方法的对象：</p>
 <ul>
@@ -94,7 +94,7 @@
 <li><code>renderBoundary</code>：渲染数据边界界面，需返回 DOM 节点；</li>
 <li><code>renderEmpty</code>：渲染空数据提示，需返回 DOM 节点。</li>
 </ul>
-<p>其中 <code>renderLoading</code>、<code>renderError</code>、<code>renderBoundary</code> 的第一个参数为渲染位置：</p>
+<p>其中 <code>renderLoading</code>、<code>renderError</code>、<code>renderBoundary</code> 的第一个参数为渲染位置、第二个参数为虚拟滚动列表的实例：</p>
 <ul>
 <li><code>RenderPosition.Main</code>：主位置，指的是没有数据项时的状态；</li>
 <li><code>RenderPosition.Head</code>：开头位置。</li>
@@ -107,15 +107,28 @@
 <a href="#事件" id="事件" style="color: inherit; text-decoration: none;">
   <h3>事件</h3>
 </a>
+<p>所有可用事件都在 <code>VirtualListEvent</code> 这个枚举类型中：</p>
+<pre><code><span class="hl-1">import</span><span class="hl-0"> { </span><span class="hl-2">VirtualListEvent</span><span class="hl-0"> } </span><span class="hl-1">from</span><span class="hl-0"> </span><span class="hl-3">&#39;@just4/virtual-list/events&#39;</span><span class="hl-0">;</span>
+</code></pre>
 
 <a href="#点击数据项节点" id="点击数据项节点" style="color: inherit; text-decoration: none;">
   <h4>点击数据项节点</h4>
 </a>
-<pre><code class="language-javascript"><span class="hl-2">virtualList</span><span class="hl-0">.</span><span class="hl-6">on</span><span class="hl-0">(</span><span class="hl-3">&#39;item-click&#39;</span><span class="hl-0">, </span><span class="hl-4">function</span><span class="hl-0">(</span><span class="hl-2">args</span><span class="hl-0">) {</span><br/><span class="hl-0">  </span><span class="hl-2">console</span><span class="hl-0">.</span><span class="hl-6">dir</span><span class="hl-0">(</span><span class="hl-2">args</span><span class="hl-0">);</span><br/><span class="hl-0">});</span>
+<pre><code class="language-javascript"><span class="hl-2">virtualList</span><span class="hl-0">.</span><span class="hl-6">on</span><span class="hl-0">(</span><span class="hl-2">VirtualListEvent</span><span class="hl-0">.</span><span class="hl-5">ITEM_CLICK</span><span class="hl-0">, </span><span class="hl-4">function</span><span class="hl-0">(</span><span class="hl-2">args</span><span class="hl-0">) {</span><br/><span class="hl-0">  </span><span class="hl-2">console</span><span class="hl-0">.</span><span class="hl-6">dir</span><span class="hl-0">(</span><span class="hl-2">args</span><span class="hl-0">);</span><br/><span class="hl-0">});</span>
 </code></pre>
-<p>其中 args 包含三个字段：</p>
-<pre><code class="language-javascript"><span class="hl-0">{</span><br/><span class="hl-0">  </span><span class="hl-2">domEvent</span><span class="hl-0">, </span><span class="hl-7">// 经过 EventWrap 包装的事件对象</span><br/><span class="hl-0">  </span><span class="hl-2">itemNode</span><span class="hl-0">, </span><span class="hl-7">// 触发事件的数据项节点</span><br/><span class="hl-0">  </span><span class="hl-2">itemData</span><span class="hl-0">  </span><span class="hl-7">// 触发事件的数据项节点对应的数据</span><br/><span class="hl-0">}</span>
+<p>args 为点击数据项事件的事件参数，类型说明见<a href="https://heeroluo.github.io/just4/virtual-list/interfaces/events.ItemClickEvent.html">文档</a>。</p>
+
+<a href="#移除数据项" id="移除数据项" style="color: inherit; text-decoration: none;">
+  <h4>移除数据项</h4>
+</a>
+<p>以下两种情况都会触发数据项的移除：</p>
+<ul>
+<li>数据量超出 <code>maxItemCount</code>；</li>
+<li>调用 <code>removeItem</code> 移除数据。</li>
+</ul>
+<pre><code class="language-javascript"><span class="hl-2">virtualList</span><span class="hl-0">.</span><span class="hl-6">on</span><span class="hl-0">(</span><span class="hl-2">VirtualListEvent</span><span class="hl-0">.</span><span class="hl-5">ITEM_REMOVE</span><span class="hl-0">, </span><span class="hl-4">function</span><span class="hl-0">(</span><span class="hl-2">args</span><span class="hl-0">) {</span><br/><span class="hl-0">  </span><span class="hl-2">console</span><span class="hl-0">.</span><span class="hl-6">dir</span><span class="hl-0">(</span><span class="hl-2">args</span><span class="hl-0">);</span><br/><span class="hl-0">});</span>
 </code></pre>
+<p>args 为数据项移除事件的事件参数，类型说明见<a href="https://heeroluo.github.io/just4/virtual-list/interfaces/events.ItemsRemoveEvent.html">文档</a>。</p>
 
 <a href="#异常重试" id="异常重试" style="color: inherit; text-decoration: none;">
   <h3>异常重试</h3>
