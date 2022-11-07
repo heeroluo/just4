@@ -572,7 +572,7 @@ export class VirtualList<ItemType extends object> {
 
   /**
    * 根据数据项的 id 寻找数据项。
-   * @param keyValue id 值。
+   * @param keyValue key 值。
    * @returns 数据项的索引，如果找不到数据项，则返回 -1。
    */
   protected _findItemIndex(keyValue: unknown): number {
@@ -589,11 +589,12 @@ export class VirtualList<ItemType extends object> {
 
   /**
    * 更新数据项。
-   * @param itemData 要更新的数据。
+   * @param itemData 新数据。
+   * @param keyValue 要更新的数据项的 key 值。如果为空，则以 itemData 的 key 值为准。
    * @returns 数据项是否在当前列表中。
    */
-  public updateItem(itemData: ItemType): boolean {
-    const index = this._findItemIndex(itemData[this._options.itemKey]);
+  public updateItem(itemData: ItemType, keyValue?: unknown): boolean {
+    const index = this._findItemIndex(keyValue ?? itemData[this._options.itemKey]);
     if (index === -1) { return false; }
 
     this._itemList[index] = itemData;
