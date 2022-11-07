@@ -176,16 +176,17 @@ export declare class VirtualList<ItemType extends object> {
     protected _fetchNext(): Promise<void>;
     /**
      * 根据数据项的 id 寻找数据项。
-     * @param keyValue id 值。
+     * @param keyValue key 值。
      * @returns 数据项的索引，如果找不到数据项，则返回 -1。
      */
     protected _findItemIndex(keyValue: unknown): number;
     /**
      * 更新数据项。
-     * @param itemData 要更新的数据。
+     * @param itemData 新数据。
+     * @param keyValue 要更新的数据项的 key 值。如果为空，则以 itemData 的 key 值为准。
      * @returns 数据项是否在当前列表中。
      */
-    updateItem(itemData: ItemType): boolean;
+    updateItem(itemData: ItemType, keyValue?: unknown): boolean;
     /**
      * 移除数据项。
      * @param keyValue 要移除的数据项的 id。
