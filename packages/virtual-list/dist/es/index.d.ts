@@ -30,6 +30,17 @@ export declare class VirtualList<ItemType extends object> {
      */
     protected _onClickFn?: IEventHandler;
     /**
+     * 本组件存在清空数据这个操作。
+     * 如果在清空前，某些请求已经发出，并且在清空后才响应，
+     * 响应回来的数据就不应该再渲染到界面上。
+     * 所以每次清空数据之后都生成新的批次 id，去区分是不是同一批数据。
+     */
+    private __batchId;
+    /**
+     * 是否已销毁，销毁后不能再次初始化。
+     */
+    private __destroyed;
+    /**
      * 数据项。
      */
     protected _itemList: ItemType[];
@@ -91,9 +102,8 @@ export declare class VirtualList<ItemType extends object> {
     protected get _maxItemCount(): number;
     /**
      * 销毁组件。
-     * @param clearContainer 是否清理容器内的所有内容。
      */
-    destroy(clearContainer: boolean): void;
+    destroy(): void;
     /**
      * 滚动到列表头部。
      */
@@ -103,13 +113,36 @@ export declare class VirtualList<ItemType extends object> {
      */
     scrollToFoot(): void;
     /**
+     * 移除所有事件监听。
+     */
+    protected _removeEventListeners(): void;
+    /**
+     * 获取当前数据列表是否为空。
+     * @returns 当前数据列表是否为空。
+     */
+    isEmpty(): boolean;
+    /**
+     * 设置无数据状态。
+     * @param state 是否为无数据状态。
+     * @param beforeEvent 进行事件操作前执行的函数。
+     */
+    protected _setEmpty(state: boolean, beforeEvent?: () => void): void;
+    /**
      * 加载并渲染初始数据。
      */
     protected _init(): Promise<void>;
     /**
+     * 重置组件状态。
+     */
+    protected _reset(): void;
+    /**
      * 刷新数据（重新加载）。
      */
     refresh(): Promise<void>;
+    /**
+     * 清空所有数据项，进入当前无数据的状态。
+     */
+    clear(): Promise<void>;
     /**
      * 检查当前滚动位置，如果在数据预读区间，则加载数据。
      * @param fromFetch 是否来自 _fetch 的调用。
@@ -212,7 +245,7 @@ export declare class VirtualList<ItemType extends object> {
      */
     resetBoundaryState(position: RenderPosition): void;
     /**
-     * 重置边界状态和错误状态并请求数据（如果不是处在这两个状态，则不请求）。
+     * 重置无数据状态、边界状态和错误状态并请求数据（如果不是处在这三个状态，则不请求）。
      * @param position 位置。
      */
     retryFetch(position: RenderPosition): void;
