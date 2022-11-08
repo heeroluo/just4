@@ -117,6 +117,7 @@ module.exports = {
     'unicorn/prefer-includes': 0,
 
     // Sonarjs
+    'sonarjs/cognitive-complexity': ['error', 18],
     'sonarjs/no-duplicate-string': ['error', 5],
     'sonarjs/no-collection-size-mischeck': 0,
     'sonarjs/no-identical-functions': [devWarnProdError],

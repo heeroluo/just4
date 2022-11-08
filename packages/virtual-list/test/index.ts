@@ -17,7 +17,7 @@ interface ItemData {
 }
 
 
-const allData: ItemData[] = [];
+const allData: ItemData[] = (<any>window).allData = [];
 let i = 0;
 for (i = 0; i < 200; i++) {
   const id = i + 1;
@@ -29,8 +29,6 @@ for (i = 0; i < 200; i++) {
 }
 
 const PAGE_SIZE = 50;
-
-let loadSuccess = false;
 
 const dataSource: DataSource<ItemData> = {
   loadInitialData() {
@@ -68,22 +66,17 @@ const dataSource: DataSource<ItemData> = {
 
   loadPreviousData(ref: unknown) {
     console.log('load prev data: ' + ref);
-    if (loadSuccess) {
-      return new Promise((resolve) => {
-        setTimeout(function() {
-          for (let i = 0; i < allData.length; i++) {
-            if (allData[i].id.toString() === String(ref)) {
-              resolve(allData.slice(Math.max(0, i - PAGE_SIZE), i));
-              break;
-            }
+    return new Promise((resolve) => {
+      setTimeout(function() {
+        for (let i = 0; i < allData.length; i++) {
+          if (allData[i].id.toString() === String(ref)) {
+            resolve(allData.slice(Math.max(0, i - PAGE_SIZE), i));
+            break;
           }
-          resolve([]);
-        }, (Math.random() * 2000) | 0);
-      });
-    } else {
-      loadSuccess = true;
-      return Promise.reject(new Error('error'));
-    }
+        }
+        resolve([]);
+      }, (Math.random() * 2000) | 0);
+    });
   }
 };
 
@@ -104,7 +97,8 @@ const renderer: Renderer<ItemData> = {
     div.innerHTML = '加载中';
     return div;
   },
-  renderError(position, instance) {
+  renderError(position, instance, e) {
+    console.error(e);
     const div = document.createElement('div');
     div.className = 'list-error';
     div.innerHTML = '数据加载出错';
@@ -123,12 +117,18 @@ const renderer: Renderer<ItemData> = {
       };
       return div;
     }
+  },
+  renderEmpty() {
+    const div = document.createElement('div');
+    div.className = 'list-empty';
+    div.innerHTML = '暂无数据';
+    return div;
   }
 };
 
 const container = document.getElementById('list') || document.body;
 
-const virtualList = new VirtualList<ItemData>({
+const virtualList = (<any>window).virtualList = new VirtualList<ItemData>({
   container,
   dataSource,
   itemKey: 'id',

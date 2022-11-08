@@ -29,6 +29,7 @@ export class VirtualList<ItemType extends object> {
    * 滚动区域容器。
    */
   protected readonly _container: DOMWrap;
+
   /**
    * 绑定到容器 scroll 事件的监听函数。
    */
@@ -37,6 +38,19 @@ export class VirtualList<ItemType extends object> {
    * 绑定到容器 click 事件的监听函数。
    */
   protected _onClickFn?: IEventHandler;
+
+  /**
+   * 本组件存在清空数据这个操作。
+   * 如果在清空前，某些请求已经发出，并且在清空后才响应，
+   * 响应回来的数据就不应该再渲染到界面上。
+   * 所以每次清空数据之后都生成新的批次 id，去区分是不是同一批数据。
+   */
+  private __batchId = Date.now();
+
+  /**
+   * 是否已销毁，销毁后不能再次初始化。
+   */
+  private __destroyed = false;
 
   /**
    * 数据项。
@@ -143,13 +157,12 @@ export class VirtualList<ItemType extends object> {
 
   /**
    * 销毁组件。
-   * @param clearContainer 是否清理容器内的所有内容。
    */
-  public destroy(clearContainer: boolean): void {
+  public destroy(): void {
+    this._removeEventListeners();
     this._eventEmitter.removeAllListeners();
-    if (this._onScrollFn) { this._container.off('scroll', this._onScrollFn); }
-    if (this._onClickFn) { this._container.off('click', this._onClickFn); }
-    if (clearContainer) { this._container.empty(); }
+    this._container.empty();
+    this.__destroyed = true;
   }
 
   /**
@@ -168,10 +181,47 @@ export class VirtualList<ItemType extends object> {
   }
 
   /**
+   * 移除所有事件监听。
+   */
+  protected _removeEventListeners(): void {
+    if (this._onScrollFn) { this._container.off('scroll', this._onScrollFn); }
+    if (this._onClickFn) { this._container.off('click', this._onClickFn); }
+  }
+
+  /**
+   * 获取当前数据列表是否为空。
+   * @returns 当前数据列表是否为空。
+   */
+  public isEmpty(): boolean {
+    return this._stateFlags.renderEmpty[RenderPosition.Main] === true;
+  }
+
+  /**
+   * 设置无数据状态。
+   * @param state 是否为无数据状态。
+   * @param beforeEvent 进行事件操作前执行的函数。
+   */
+  protected _setEmpty(state: boolean, beforeEvent?: () => void): void {
+    this._setAndRenderState('renderEmpty', state, RenderPosition.Main);
+    if (beforeEvent) { beforeEvent(); }
+    if (state) {
+      this._removeEventListeners();
+      // 空状态下，边界状态必定要设为 false；反之则不一定
+      this._setAndRenderState('renderBoundary', false, RenderPosition.Head);
+      this._setAndRenderState('renderBoundary', false, RenderPosition.Foot);
+    } else {
+      this._listenScroll();
+      this._listenClick();
+    }
+  }
+
+  /**
    * 加载并渲染初始数据。
    */
   protected async _init(): Promise<void> {
-    const renderer = this._options.renderer;
+    if (this.__destroyed) {
+      throw new Error('This component has been destroyed.');
+    }
 
     // 加载初始数据，显示主位置 loading
     this._setAndRenderState('renderLoading', true, RenderPosition.Main);
@@ -187,48 +237,76 @@ export class VirtualList<ItemType extends object> {
       this._setAndRenderState('renderLoading', false, RenderPosition.Main);
     }
 
-    if (error || !res) {
+    if (this.__destroyed) { return; }
+
+    if (error) {
       // 加载异常，渲染错误界面
       this._setAndRenderState('renderError', true, RenderPosition.Main, error);
       return;
     }
 
-    const data = res.data;
-
-    if (data == null || !data.length) {
+    if (res == null || res.data == null || !res.data.length) {
       // 初始数据为空，则认为无数据，渲染空数据界面
-      this._stateFlags.renderBoundary[RenderPosition.Head] =
-      this._stateFlags.renderBoundary[RenderPosition.Foot] = true;
-      this._setAndRenderState('renderEmpty', true, RenderPosition.Main);
+      this._setEmpty(true);
       return;
     }
 
-    mergeArray(this._itemList, data);
-    const newItemNodes = renderer.renderItems(data, this);
-    mergeArray(this._itemNodes, newItemNodes);
-    this._container.append(newItemNodes);
+    const data = res.data;
+    const reachedHeadBoundary = res.reachedHeadBoundary;
+    const reachedFootBoundary = res.reachedFootBoundary;
 
-    if (res.reachedHeadBoundary === true) {
-      this._keepView(() => {
-        this._setAndRenderState('renderBoundary', true, RenderPosition.Head);
-      });
+    this._setEmpty(false, () => {
+      mergeArray(this._itemList, data);
+      const renderer = this._options.renderer;
+      const newItemNodes = renderer.renderItems(data, this);
+      mergeArray(this._itemNodes, newItemNodes);
+      this._container.append(newItemNodes);
+
+      if (reachedHeadBoundary === true) {
+        this._keepView(() => {
+          this._setAndRenderState('renderBoundary', true, RenderPosition.Head);
+        });
+      }
+      if (reachedFootBoundary === true) {
+        this._setAndRenderState('renderBoundary', true, RenderPosition.Foot);
+      }
+
+      if (this._options.defaultView === 'foot') { this.scrollToFoot(); }
+    });
+  }
+
+  /**
+   * 重置组件状态。
+   */
+  protected _reset(): void {
+    this.__batchId = Date.now();
+    this._itemList = [];
+    this._itemNodes = [];
+
+    let key: Exclude<keyof Renderer<ItemType>, 'renderItems'>;
+    for (key in this._stateFlags) {
+      this._stateFlags[key] = [];
+      this._stateNodes[key] = [];
     }
-    if (res.reachedFootBoundary === true) {
-      this._setAndRenderState('renderBoundary', true, RenderPosition.Foot);
-    }
 
-    if (this._options.defaultView === 'foot') { this.scrollToFoot(); }
-
-    this._listenScroll();
-    this._listenClick();
+    this._container.empty();
   }
 
   /**
    * 刷新数据（重新加载）。
    */
   public async refresh(): Promise<void> {
-    this.destroy(true);
-    await this._init();
+    this._removeEventListeners();
+    this._reset();
+    this._init();
+  }
+
+  /**
+   * 清空所有数据项，进入当前无数据的状态。
+   */
+  public async clear() {
+    this._reset();
+    this._setEmpty(true);
   }
 
   /**
@@ -273,7 +351,7 @@ export class VirtualList<ItemType extends object> {
    * 监听滚动事件。
    */
   protected _listenScroll(): void {
-    this._onScrollFn = debounce(this.checkPosition.bind(this), 100);
+    this._onScrollFn = this._onScrollFn ?? debounce(this.checkPosition.bind(this), 100);
     this._container.on('scroll', this._onScrollFn);
     this.checkPosition();
   }
@@ -321,7 +399,7 @@ export class VirtualList<ItemType extends object> {
    * 监听点击事件。
    */
   protected _listenClick(): void {
-    this._onClickFn = this._onClick.bind(this);
+    this._onClickFn = this._onClickFn ?? this._onClick.bind(this);
     this._container.on('click', this._onClickFn);
   }
 
@@ -427,6 +505,7 @@ export class VirtualList<ItemType extends object> {
     let error: unknown;
 
     this.__isLoading = true;
+    const batchId = this.__batchId;
     try {
       // 根据第一条数据的 key 值加载上一页数据
       data = await loadData();
@@ -436,10 +515,14 @@ export class VirtualList<ItemType extends object> {
       this.__isLoading = false;
     }
 
+    if (batchId !== this.__batchId || this.__destroyed) {
+      return;
+    }
+
     if (error) {
       this._keepView(() => {
         this._setAndRenderState('renderLoading', false, position);
-        this._setAndRenderState('renderError', true, position);
+        this._setAndRenderState('renderError', true, position, error);
       });
       return;
     }
@@ -508,8 +591,9 @@ export class VirtualList<ItemType extends object> {
     return this._fetch(
       RenderPosition.Head,
       () => {
+        const firstItem = this._itemList[0];
         return this._options.dataSource.loadPreviousData(
-          this._itemList[0][this._options.itemKey]
+          firstItem ? firstItem[this._options.itemKey] : null
         );
       },
       this._updateAndRenderPrevious.bind(this)
@@ -563,7 +647,7 @@ export class VirtualList<ItemType extends object> {
       () => {
         const lastItem = this._itemList[this._itemList.length - 1];
         return this._options.dataSource.loadNextData(
-          lastItem[this._options.itemKey]
+          lastItem ? lastItem[this._options.itemKey] : null
         );
       },
       this._updateAndRenderNext.bind(this)
@@ -605,6 +689,8 @@ export class VirtualList<ItemType extends object> {
     });
     this._itemNodes[index] = newNode;
 
+    setTimeout(() => { this._checkPosition(false); }, 0);
+
     return true;
   }
 
@@ -621,6 +707,12 @@ export class VirtualList<ItemType extends object> {
       this._keepView(() => {
         itemNodes.remove();
       });
+
+      if (this._itemList.length) {
+        setTimeout(() => { this._checkPosition(false); }, 0);
+      } else {
+        this._setEmpty(true);
+      }
 
       // 触发数据移除事件
       const args: ItemsRemoveEvent<ItemType> = {
@@ -668,32 +760,49 @@ export class VirtualList<ItemType extends object> {
     position: RenderPosition,
     keepDefaultView?: boolean
   ): boolean {
-    if (this._stateFlags.renderBoundary[position] !== true) {
+    const isEmpty = this.isEmpty();
+    // 不在边界，不处理
+    if (!isEmpty && this._stateFlags.renderBoundary[position] !== true) {
       return false;
     }
 
-    const shouldKeepDefaultView = this._shouldKeepDefaultView();
+    const render = () => {
+      const shouldKeepDefaultView = this._shouldKeepDefaultView();
 
-    if (position === RenderPosition.Head) {
-      this._updateAndRenderPrevious(data);
-    } else if (position === RenderPosition.Foot) {
-      this._updateAndRenderNext(data);
-    } else {
-      throw new Error(
-        '"position" must be "RenderPosition.Head" or "RenderPosition.Foot".'
-      );
-    }
-
-    if (keepDefaultView && shouldKeepDefaultView) {
-      switch (this._options.defaultView) {
-        case 'head':
-          this.scrollToHead();
-          break;
-
-        case 'foot':
-          this.scrollToFoot();
-          break;
+      if (position === RenderPosition.Head) {
+        this._updateAndRenderPrevious(data);
+      } else if (position === RenderPosition.Foot) {
+        this._updateAndRenderNext(data);
+      } else {
+        throw new Error(
+          '"position" must be "RenderPosition.Head" or "RenderPosition.Foot".'
+        );
       }
+
+      // 无数据状态下，边界状态为 false；
+      // 有数据后，边界状态需设为 true
+      if (isEmpty) {
+        this._setAndRenderState('renderBoundary', true, RenderPosition.Head);
+        this._setAndRenderState('renderBoundary', true, RenderPosition.Foot);
+      }
+
+      if (keepDefaultView && shouldKeepDefaultView) {
+        switch (this._options.defaultView) {
+          case 'head':
+            this.scrollToHead();
+            break;
+
+          case 'foot':
+            this.scrollToFoot();
+            break;
+        }
+      }
+    };
+
+    if (isEmpty) {
+      this._setEmpty(false, render);
+    } else {
+      render();
     }
 
     return true;
@@ -710,13 +819,26 @@ export class VirtualList<ItemType extends object> {
   }
 
   /**
-   * 重置边界状态和错误状态并请求数据（如果不是处在这两个状态，则不请求）。
+   * 重置无数据状态、边界状态和错误状态并请求数据（如果不是处在这三个状态，则不请求）。
    * @param position 位置。
    */
   public retryFetch(position: RenderPosition): void {
-    if (!this._stateFlags.renderError[position] &&
-      !this._stateFlags.renderBoundary[position]
-    ) { return; }
+    const stateFlags = this._stateFlags;
+
+    // 初始数据为空或加载失败，应重新加载初始数据
+    if (this.isEmpty() ||
+      stateFlags.renderError[RenderPosition.Main]
+    ) {
+      this.refresh();
+      return;
+    }
+
+    if (
+      !this._stateFlags.renderBoundary[position] &&
+      !this._stateFlags.renderError[position]
+    ) {
+      return;
+    }
 
     this._keepView(() => {
       this._setAndRenderState('renderError', false, position);
