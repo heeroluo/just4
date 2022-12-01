@@ -474,7 +474,12 @@ export class VirtualList<ItemType extends object> {
 
     const childNewTop = child.parentNode ? child.getBoundingClientRect().top : 0;
     const changes = childNewTop - childOrigTop;
-    if (changes) {
+    // Chrome 下出现的奇怪现象：
+    // 在当前屏的前面增加了节点，但是浏览器自身可维持当前可视区域不变，
+    // child.getBoundingClientRect().top 也没有变化或者只是小数位有变化。
+    // 此时如果重新设置 scrollTop，可视区域就会乱跳。
+    // 所以增加判断，changes 大于等于 1 才重新设置 scrollTop。
+    if (changes >= 1) {
       this._container.scrollTop(origScrollTop + changes);
     }
   }

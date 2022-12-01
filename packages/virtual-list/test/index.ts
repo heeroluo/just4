@@ -28,7 +28,7 @@ for (i = 0; i < 200; i++) {
   });
 }
 
-const PAGE_SIZE = 50;
+const PAGE_SIZE = 20;
 
 const dataSource: DataSource<ItemData> = {
   loadInitialData() {
@@ -133,7 +133,8 @@ const virtualList = (<any>window).virtualList = new VirtualList<ItemData>({
   dataSource,
   itemKey: 'id',
   renderer,
-  defaultView: 'foot'
+  defaultView: 'foot',
+  prefetchDistance: 1
 });
 virtualList.on(VirtualListEvent.ITEM_CLICK, (args: unknown) => {
   console.log('数据点击');
