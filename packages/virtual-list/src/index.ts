@@ -328,6 +328,9 @@ export class VirtualList<ItemType extends object> {
     }
 
     const container = this._container;
+    // 元素不可见时（offsetParent 不存在），不处理
+    if (!container.prop('offsetParent')) { return; }
+
     const scrollTop = container.scrollTop();
     const scrollHeight = <number>container.prop('scrollHeight');
     const size = <number>container.prop('clientHeight');
@@ -454,6 +457,10 @@ export class VirtualList<ItemType extends object> {
     // 在原有 scrollTop 的基础上，修正位置变化值就可以保持可视区域不变
 
     const container = <HTMLElement>(this._container.get(0));
+
+    // 容器不可见时，获取到的位置信息是 0，无法处理
+    if (!container.offsetParent) { return; }
+
     const origScrollTop = container.scrollTop;
     const containerTop = container.getBoundingClientRect().top;
 
@@ -738,6 +745,9 @@ export class VirtualList<ItemType extends object> {
     if (!this._itemNodes.length) { return false; }
 
     const container = <HTMLElement>(this._container.get(0));
+    // 容器不可见时，获取到的位置信息是 0，无法处理
+    if (!container.offsetParent) { return false; }
+
     const containerTop = container.getBoundingClientRect().top;
     const containerHeight = container.clientHeight;
     if (this._options.defaultView === 'head') {
@@ -831,9 +841,7 @@ export class VirtualList<ItemType extends object> {
     const stateFlags = this._stateFlags;
 
     // 初始数据为空或加载失败，应重新加载初始数据
-    if (this.isEmpty() ||
-      stateFlags.renderError[RenderPosition.Main]
-    ) {
+    if (this.isEmpty() || stateFlags.renderError[RenderPosition.Main]) {
       this.refresh();
       return;
     }
