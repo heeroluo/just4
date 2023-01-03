@@ -168,9 +168,7 @@ export function send(
         reject(error);
       }
     );
-    if (opts.responseType === 'blob' ||
-      opts.responseType === 'arraybuffer'
-    ) {
+    if (opts.responseType === 'blob' || opts.responseType === 'arraybuffer') {
       xhr.responseType = opts.responseType;
     }
     xhr.open(

@@ -41,7 +41,7 @@ export interface IAJAXOptions {
    */
   headers?: object,
   /**
-   * 请求方法，get、post、put 或 delete。
+   * 请求方法，get、post、put 或 delete，默认为 get。
    */
   method?: RequestMethod,
   /**
