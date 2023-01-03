@@ -12,7 +12,7 @@
 <li>支持常用的请求方式：get、post、put、delete 和 patch。</li>
 <li>支持发送常用的数据类型：文本、对象、FormData、Blob 和 ArrayBuffer。</li>
 <li>支持把数据序列化为 <code>application/json</code> 或 <code>application/x-www-form-urlencoded</code> 的请求体。</li>
-<li>根据参数设置把响应内容解析为 JSON、XML、文本、Blob 或 ArrayBuffer。</li>
+<li>根据选项设置把响应内容解析为 JSON、XML、文本、Blob 或 ArrayBuffer。</li>
 <li>支持文件上传和下载场景下的进度响应（<code>onDownloadProgress</code>、<code>onUploadProgress</code>）。</li>
 <li>具备 Promise 化的接口。</li>
 <li>带有 TypeScript 类型声明。</li>
@@ -32,7 +32,7 @@
   <h2>调用</h2>
 </a>
 <p>安装完毕之后，就可以引入并调用相关的方法：</p>
-<pre><code class="language-typescript"><span class="hl-1">import</span><span class="hl-0"> { </span><span class="hl-2">send</span><span class="hl-0">, </span><span class="hl-2">cancel</span><span class="hl-0"> } </span><span class="hl-1">from</span><span class="hl-0"> </span><span class="hl-3">&#39;@just4/ajax/ajax&#39;</span><span class="hl-0">;</span><br/><br/><span class="hl-4">const</span><span class="hl-0"> </span><span class="hl-5">res</span><span class="hl-0"> = </span><span class="hl-1">await</span><span class="hl-0"> </span><span class="hl-6">send</span><span class="hl-0">(</span><span class="hl-2">url</span><span class="hl-0">, {</span><br/><span class="hl-0">  </span><span class="hl-7">// 参数说明见下文和 API 文档</span><br/><span class="hl-0">});</span><br/><br/><span class="hl-2">res</span><span class="hl-0">.</span><span class="hl-2">data</span><span class="hl-0">; </span><span class="hl-7">// data 是响应的数据</span><br/><span class="hl-2">res</span><span class="hl-0">.</span><span class="hl-2">xhr</span><span class="hl-0">; </span><span class="hl-7">// xhr 是发送请求的 XMLHttpRequest 对象</span><br/><span class="hl-2">res</span><span class="hl-0">.</span><span class="hl-2">options</span><span class="hl-0">; </span><span class="hl-7">// options 是发送请求的参数</span>
+<pre><code class="language-typescript"><span class="hl-1">import</span><span class="hl-0"> { </span><span class="hl-2">send</span><span class="hl-0">, </span><span class="hl-2">cancel</span><span class="hl-0"> } </span><span class="hl-1">from</span><span class="hl-0"> </span><span class="hl-3">&#39;@just4/ajax/ajax&#39;</span><span class="hl-0">;</span><br/><br/><span class="hl-4">const</span><span class="hl-0"> </span><span class="hl-5">res</span><span class="hl-0"> = </span><span class="hl-1">await</span><span class="hl-0"> </span><span class="hl-6">send</span><span class="hl-0">(</span><span class="hl-2">url</span><span class="hl-0">, {</span><br/><span class="hl-0">  </span><span class="hl-7">// 选项说明见下文和 API 文档</span><br/><span class="hl-0">});</span><br/><br/><span class="hl-2">res</span><span class="hl-0">.</span><span class="hl-2">data</span><span class="hl-0">; </span><span class="hl-7">// data 是响应的数据</span><br/><span class="hl-2">res</span><span class="hl-0">.</span><span class="hl-2">xhr</span><span class="hl-0">; </span><span class="hl-7">// xhr 是发送请求的 XMLHttpRequest 对象</span><br/><span class="hl-2">res</span><span class="hl-0">.</span><span class="hl-2">options</span><span class="hl-0">; </span><span class="hl-7">// options 是发送请求的选项</span>
 </code></pre>
 
 <a href="#get-请求" id="get-请求" style="color: inherit; text-decoration: none;">
@@ -44,10 +44,10 @@
 <a href="#post-请求" id="post-请求" style="color: inherit; text-decoration: none;">
   <h3>POST 请求</h3>
 </a>
-<p>把 <code>method</code> 参数的值设为 <code>post</code>，就可以发送 POST 请求。</p>
+<p>把 <code>method</code> 选项的值设为 <code>post</code>，就可以发送 POST 请求。</p>
 <pre><code class="language-typescript"><span class="hl-1">await</span><span class="hl-0"> </span><span class="hl-6">send</span><span class="hl-0">(</span><span class="hl-3">&#39;/login&#39;</span><span class="hl-0">, {</span><br/><span class="hl-0">  </span><span class="hl-2">method:</span><span class="hl-0"> </span><span class="hl-3">&#39;post&#39;</span><span class="hl-0">,</span><br/><span class="hl-0">  </span><span class="hl-2">data:</span><span class="hl-0"> {</span><br/><span class="hl-0">    </span><span class="hl-2">username:</span><span class="hl-0"> </span><span class="hl-3">&#39;user&#39;</span><span class="hl-0">,</span><br/><span class="hl-0">    </span><span class="hl-2">password:</span><span class="hl-0"> </span><span class="hl-3">&#39;qwer123&#39;</span><br/><span class="hl-0">  }</span><br/><span class="hl-0">});</span>
 </code></pre>
-<p>如果 POST 请求的部分数据是以 URL 参数的形式传输，仍然可以放到 <code>params</code> 参数中：</p>
+<p>如果 POST 请求的部分数据是以 URL 参数的形式传输，仍然可以放到 <code>params</code> 选项中：</p>
 <pre><code class="language-typescript"><span class="hl-1">await</span><span class="hl-0"> </span><span class="hl-6">send</span><span class="hl-0">(</span><span class="hl-3">&#39;/login&#39;</span><span class="hl-0">, {</span><br/><span class="hl-0">  </span><span class="hl-2">method:</span><span class="hl-0"> </span><span class="hl-3">&#39;post&#39;</span><span class="hl-0">,</span><br/><span class="hl-0">  </span><span class="hl-2">params:</span><span class="hl-0"> {</span><br/><span class="hl-0">    </span><span class="hl-2">from:</span><span class="hl-0"> </span><span class="hl-3">&#39;promotion&#39;</span><br/><span class="hl-0">  },</span><br/><span class="hl-0">  </span><span class="hl-2">data:</span><span class="hl-0"> {</span><br/><span class="hl-0">    </span><span class="hl-2">username:</span><span class="hl-0"> </span><span class="hl-3">&#39;user&#39;</span><span class="hl-0">,</span><br/><span class="hl-0">    </span><span class="hl-2">password:</span><span class="hl-0"> </span><span class="hl-3">&#39;qwer123&#39;</span><br/><span class="hl-0">  }</span><br/><span class="hl-0">});</span>
 </code></pre>
 <p>默认情况下，POST 请求的数据是以 <code>application/x-www-form-urlencoded</code> 编码发送的。如果需要发送 <code>application/json</code> 编码的数据，可以把 <code>requestType</code> 设置为 <code>json</code>。</p>
@@ -57,7 +57,7 @@
 <a href="#防止缓存" id="防止缓存" style="color: inherit; text-decoration: none;">
   <h3>防止缓存</h3>
 </a>
-<p>设置 <code>preventCaching</code> 参数为 <code>true</code> 后，<code>send</code> 方法会在请求的 URL 后拼接时间戳参数（任何请求方式都有效）。</p>
+<p>设置 <code>preventCaching</code> 选项为 <code>true</code> 后，<code>send</code> 方法会在请求的 URL 后拼接时间戳参数（任何请求方式都有效）。</p>
 <pre><code class="language-typescript"><span class="hl-7">// 实际请求的地址类似于 /detail?id=12345&amp;_=1672712809951</span><br/><span class="hl-1">await</span><span class="hl-0"> </span><span class="hl-6">send</span><span class="hl-0">(</span><span class="hl-3">&#39;/detail&#39;</span><span class="hl-0">, {</span><br/><span class="hl-0">  </span><span class="hl-2">params:</span><span class="hl-0"> { </span><span class="hl-2">id:</span><span class="hl-0"> </span><span class="hl-3">&#39;12345&#39;</span><span class="hl-0"> },</span><br/><span class="hl-0">  </span><span class="hl-2">preventCaching:</span><span class="hl-0"> </span><span class="hl-4">true</span><br/><span class="hl-0">});</span>
 </code></pre>
 
