@@ -1,4 +1,4 @@
-<!DOCTYPE html><html class="default"><head><meta charSet="utf-8"/><meta http-equiv="x-ua-compatible" content="IE=edge"/><title>@just4/cookie</title><meta name="description" content="Documentation for @just4/cookie"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="assets/style.css"/><link rel="stylesheet" href="assets/highlight.css"/><script async src="assets/search.js" id="search-script"></script></head><body><script>document.body.classList.add(localStorage.getItem("tsd-theme") || "os")</script><header><div class="tsd-page-toolbar"><div class="container"><div class="table-wrap"><div class="table-cell" id="tsd-search" data-base="."><div class="field"><label for="tsd-search-field" class="tsd-widget search no-caption">Search</label><input type="text" id="tsd-search-field"/></div><ul class="results"><li class="state loading">Preparing search index...</li><li class="state failure">The search index is not available</li></ul><a href="index.html" class="title">@just4/cookie</a></div><div class="table-cell" id="tsd-widgets"><div id="tsd-filter"><a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a><div class="tsd-filter-group"><div class="tsd-select" id="tsd-filter-visibility"><span class="tsd-select-label">All</span><ul class="tsd-select-list"><li data-value="public">Public</li><li data-value="protected">Public/Protected</li><li data-value="private" class="selected">All</li></ul></div> <input type="checkbox" id="tsd-filter-inherited" checked/><label class="tsd-widget" for="tsd-filter-inherited">Inherited</label><input type="checkbox" id="tsd-filter-externals" checked/><label class="tsd-widget" for="tsd-filter-externals">Externals</label></div></div><a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a></div></div></div></div><div class="tsd-page-title"><div class="container"><h1> @just4/cookie</h1></div></div></header><div class="container container-main"><div class="row"><div class="col-8 col-content"><div class="tsd-panel tsd-typography">
+<!DOCTYPE html><html class="default"><head><meta charSet="utf-8"/><meta http-equiv="x-ua-compatible" content="IE=edge"/><title>@just4/cookie</title><meta name="description" content="Documentation for @just4/cookie"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="assets/style.css"/><link rel="stylesheet" href="assets/highlight.css"/><script async src="assets/search.js" id="search-script"></script></head><body><script>document.body.classList.add(localStorage.getItem("tsd-theme") || "os")</script><header><div class="tsd-page-toolbar"><div class="container"><div class="table-wrap"><div class="table-cell" id="tsd-search" data-base="."><div class="field"><label for="tsd-search-field" class="tsd-widget search no-caption">Search</label><input type="text" id="tsd-search-field"/></div><ul class="results"><li class="state loading">Preparing search index...</li><li class="state failure">The search index is not available</li></ul><a href="index.html" class="title">@just4/cookie</a></div><div class="table-cell" id="tsd-widgets"><div id="tsd-filter"><a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a><div class="tsd-filter-group"><div class="tsd-select" id="tsd-filter-visibility"><span class="tsd-select-label">All</span><ul class="tsd-select-list"><li data-value="public">Public</li><li data-value="protected">Public/Protected</li><li data-value="private" class="selected">All</li></ul></div> <input type="checkbox" id="tsd-filter-inherited" checked/><label class="tsd-widget" for="tsd-filter-inherited">Inherited</label><input type="checkbox" id="tsd-filter-externals" checked/><label class="tsd-widget" for="tsd-filter-externals">Externals</label></div></div><a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a></div></div></div></div><div class="tsd-page-title"><div class="container"><h1> @just4/cookie </h1></div></div></header><div class="container container-main"><div class="row"><div class="col-8 col-content"><div class="tsd-panel tsd-typography">
 <a href="#just4cookie" id="just4cookie" style="color: inherit; text-decoration: none;">
   <h1>@just4/cookie</h1>
 </a>
@@ -9,8 +9,85 @@
 </a>
 <ul>
 <li>提供了浏览器端 cookie 读取、写入以及删除的接口。</li>
-<li>写入 cookie 时，支持设置 expires、samesite 等参数。</li>
+<li>写入 cookie 时，支持设置有效时间、主机名、路径、Secure、SameSite 等属性。</li>
 </ul>
+
+<a href="#安装" id="安装" style="color: inherit; text-decoration: none;">
+  <h2>安装</h2>
+</a>
+<pre><code class="language-bash"><span class="hl-0">npm install @just4/cookie</span>
+</code></pre>
+
+<a href="#调用" id="调用" style="color: inherit; text-decoration: none;">
+  <h2>调用</h2>
+</a>
+<p>安装完毕之后，就可以引入并调用相关的方法：</p>
+<pre><code class="language-typescript"><span class="hl-1">import</span><span class="hl-0"> {</span><br/><span class="hl-0">  </span><span class="hl-2">getCookie</span><span class="hl-0">,</span><br/><span class="hl-0">  </span><span class="hl-2">setCookie</span><span class="hl-0">,</span><br/><span class="hl-0">  </span><span class="hl-2">removeCookie</span><br/><span class="hl-0">} </span><span class="hl-1">from</span><span class="hl-0"> </span><span class="hl-3">&#39;@just4/cookie&#39;</span><span class="hl-0">;</span>
+</code></pre>
+
+<a href="#读取-cookie" id="读取-cookie" style="color: inherit; text-decoration: none;">
+  <h3>读取 cookie</h3>
+</a>
+<pre><code class="language-typescript"><span class="hl-4">getCookie</span><span class="hl-0">(</span><span class="hl-3">&#39;nickname&#39;</span><span class="hl-0">);</span>
+</code></pre>
+<p>默认情况下，读取 cookie 时分别是用 <code>encodeURIComponent</code> 和 <code>decodeURIComponent</code> 进行编码和解码的。如果要用其他编解码函数，可以通过 <code>encode</code> 和 <code>decode</code> 选项指定。</p>
+<pre><code class="language-typescript"><span class="hl-4">getCookie</span><span class="hl-0">(</span><span class="hl-3">&#39;nickname&#39;</span><span class="hl-0">, {</span><br/><span class="hl-0">  </span><span class="hl-4">encode</span><span class="hl-0">(</span><span class="hl-2">content</span><span class="hl-0">) {</span><br/><span class="hl-0">    </span><span class="hl-5">//...</span><br/><span class="hl-0">  },</span><br/><span class="hl-0">  </span><span class="hl-4">decode</span><span class="hl-0">(</span><span class="hl-2">content</span><span class="hl-0">) {</span><br/><span class="hl-0">    </span><span class="hl-5">//...</span><br/><span class="hl-0">  }</span><br/><span class="hl-0">});</span>
+</code></pre>
+
+<a href="#写入-cookie" id="写入-cookie" style="color: inherit; text-decoration: none;">
+  <h3>写入 cookie</h3>
+</a>
+<p>最简单的 cookie 写入只需指定 key 和 value 的值。</p>
+<pre><code class="language-typescript"><span class="hl-4">setCookie</span><span class="hl-0">(</span><span class="hl-3">&#39;nickname&#39;</span><span class="hl-0">, </span><span class="hl-3">&#39;Tom&#39;</span><span class="hl-0">);</span>
+</code></pre>
+<p>但 Cookie 还有多个属性（见 MDN 的《<a href="https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Headers/Set-Cookie">Set-Cookie</a>》文档），除了 HttpOnly 以外，其他均可在浏览器端进行设置。可通过 <code>setCookie</code> 函数的选项参数对 cookie 的属性进行设置。</p>
+
+<a href="#有效时间" id="有效时间" style="color: inherit; text-decoration: none;">
+  <h4>有效时间</h4>
+</a>
+<pre><code class="language-typescript"><span class="hl-4">setCookie</span><span class="hl-0">(</span><span class="hl-3">&#39;nickname&#39;</span><span class="hl-0">, </span><span class="hl-3">&#39;Tom&#39;</span><span class="hl-0">, {</span><br/><span class="hl-0">  </span><span class="hl-2">expires:</span><span class="hl-0"> </span><span class="hl-3">&#39;1 month&#39;</span><span class="hl-0">  </span><span class="hl-5">// 过期时间为一个月</span><br/><span class="hl-0">});</span>
+</code></pre>
+<pre><code class="language-typescript"><span class="hl-4">setCookie</span><span class="hl-0">(</span><span class="hl-3">&#39;nickname&#39;</span><span class="hl-0">, </span><span class="hl-3">&#39;Tom&#39;</span><span class="hl-0">, {</span><br/><span class="hl-0">  </span><span class="hl-2">expires:</span><span class="hl-0"> </span><span class="hl-3">&#39;2 years&#39;</span><span class="hl-0">  </span><span class="hl-5">// 过期时间为两年</span><br/><span class="hl-0">});</span>
+</code></pre>
+<pre><code class="language-typescript"><span class="hl-4">setCookie</span><span class="hl-0">(</span><span class="hl-3">&#39;nickname&#39;</span><span class="hl-0">, </span><span class="hl-3">&#39;Tom&#39;</span><span class="hl-0">, {</span><br/><span class="hl-0">  </span><span class="hl-2">expires:</span><span class="hl-0"> </span><span class="hl-6">new</span><span class="hl-0"> </span><span class="hl-7">Date</span><span class="hl-0">(</span><span class="hl-8">2023</span><span class="hl-0">, </span><span class="hl-8">0</span><span class="hl-0">, </span><span class="hl-8">1</span><span class="hl-0">)  </span><span class="hl-5">// 2023 年 1 月 1 日过期</span><br/><span class="hl-0">});</span>
+</code></pre>
+<pre><code class="language-typescript"><span class="hl-4">setCookie</span><span class="hl-0">(</span><span class="hl-3">&#39;nickname&#39;</span><span class="hl-0">, </span><span class="hl-3">&#39;Tom&#39;</span><span class="hl-0">, {</span><br/><span class="hl-0">  </span><span class="hl-2">expires:</span><span class="hl-0"> </span><span class="hl-8">10000</span><span class="hl-0">  </span><span class="hl-5">// 10 秒后过期</span><br/><span class="hl-0">});</span>
+</code></pre>
+
+<a href="#主机名和路径" id="主机名和路径" style="color: inherit; text-decoration: none;">
+  <h3>主机名和路径</h3>
+</a>
+<pre><code class="language-typescript"><span class="hl-4">setCookie</span><span class="hl-0">(</span><span class="hl-3">&#39;nickname&#39;</span><span class="hl-0">, </span><span class="hl-3">&#39;Tom&#39;</span><span class="hl-0">, {</span><br/><span class="hl-0">  </span><span class="hl-2">domain:</span><span class="hl-0"> </span><span class="hl-3">&#39;.abc.com&#39;</span><span class="hl-0">,</span><br/><span class="hl-0">  </span><span class="hl-2">path:</span><span class="hl-0"> </span><span class="hl-3">&#39;/&#39;</span><br/><span class="hl-0">});</span>
+</code></pre>
+
+<a href="#仅在-https-请求中可用" id="仅在-https-请求中可用" style="color: inherit; text-decoration: none;">
+  <h3>仅在 https 请求中可用</h3>
+</a>
+<pre><code class="language-typescript"><span class="hl-4">setCookie</span><span class="hl-0">(</span><span class="hl-3">&#39;nickname&#39;</span><span class="hl-0">, </span><span class="hl-3">&#39;Tom&#39;</span><span class="hl-0">, {</span><br/><span class="hl-0">  </span><span class="hl-2">secure:</span><span class="hl-0"> </span><span class="hl-6">true</span><br/><span class="hl-0">});</span>
+</code></pre>
+
+<a href="#samesite" id="samesite" style="color: inherit; text-decoration: none;">
+  <h3>SameSite</h3>
+</a>
+<p>关于 SameSite 的说明可以参阅 MDN 的《<a href="https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Headers/Set-Cookie/SameSite">SameSite cookies</a>》。</p>
+<pre><code class="language-typescript"><span class="hl-4">setCookie</span><span class="hl-0">(</span><span class="hl-3">&#39;nickname&#39;</span><span class="hl-0">, </span><span class="hl-3">&#39;Tom&#39;</span><span class="hl-0">, {</span><br/><span class="hl-0">  </span><span class="hl-2">sameSite:</span><span class="hl-0"> </span><span class="hl-3">&#39;strict&#39;</span><br/><span class="hl-0">});</span>
+</code></pre>
+<pre><code class="language-typescript"><span class="hl-5">// SameSite 设为 none 时需要同时设置 Secure</span><br/><span class="hl-4">setCookie</span><span class="hl-0">(</span><span class="hl-3">&#39;nickname&#39;</span><span class="hl-0">, </span><span class="hl-3">&#39;Tom&#39;</span><span class="hl-0">, {</span><br/><span class="hl-0">  </span><span class="hl-2">sameSite:</span><span class="hl-0"> </span><span class="hl-3">&#39;none&#39;</span><span class="hl-0">,</span><br/><span class="hl-0">  </span><span class="hl-2">secure:</span><span class="hl-0"> </span><span class="hl-6">true</span><br/><span class="hl-0">});</span>
+</code></pre>
+
+<a href="#指定内容编码" id="指定内容编码" style="color: inherit; text-decoration: none;">
+  <h3>指定内容编码</h3>
+</a>
+<p>默认情况下，写入 cookie 时是用 <code>encodeURIComponent</code> 进行编码的。如果要用其他编码函数，可以通过 <code>encode</code> 选项指定。</p>
+<pre><code class="language-typescript"><span class="hl-4">setCookie</span><span class="hl-0">(</span><span class="hl-3">&#39;nickname&#39;</span><span class="hl-0">, </span><span class="hl-3">&#39;汤姆&#39;</span><span class="hl-0">, {</span><br/><span class="hl-0">  </span><span class="hl-4">encode</span><span class="hl-0">(</span><span class="hl-2">content</span><span class="hl-0">) {</span><br/><span class="hl-0">    </span><span class="hl-5">//...</span><br/><span class="hl-0">  }</span><br/><span class="hl-0">});</span>
+</code></pre>
+
+<a href="#删除-cookie" id="删除-cookie" style="color: inherit; text-decoration: none;">
+  <h3>删除 cookie</h3>
+</a>
+<pre><code class="language-typescript"><span class="hl-4">removeCookie</span><span class="hl-0">(</span><span class="hl-3">&#39;nickname&#39;</span><span class="hl-0">);</span>
+</code></pre>
+<p>删除 cookie 实质上是把 cookie 设为过期，因此 <code>removeCookie</code> 支持 <code>setCookie</code> 的所有选项。</p>
 
 <a href="#相关文档" id="相关文档" style="color: inherit; text-decoration: none;">
   <h2>相关文档</h2>
