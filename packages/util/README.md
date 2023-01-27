@@ -1,6 +1,6 @@
 # @just4/util
 
-提供基础的工具函数支持。包括三大类接口：
+本程序包主要为 Just4 的其他包提供基础的工具方法。包括三大类接口：
 
 - 数组操作接口。
 - 对象操作接口。
@@ -14,8 +14,4 @@ npm i @just4/util
 
 ## 调用
 
-见 API 文档的代码示例。
-
-
-## 相关文档
-- [API 文档](https://heeroluo.github.io/just4/util/modules/index.html)
+工具函数的功能和用法都较为简单，可参阅[API 文档](https://heeroluo.github.io/just4/util/modules/index.html)中的代码示例。
