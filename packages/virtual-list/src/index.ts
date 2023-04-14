@@ -576,7 +576,7 @@ export class VirtualList<ItemType extends object> {
     // data 本身的数据量较大时，为了保持当前视图位置不变，只截取后面的 2/3
     const maxDataLength = Math.ceil(this._maxItemCount * 2 / 3);
     if (data.length > maxDataLength) {
-      data = data.slice(maxDataLength);
+      data = data.slice(-maxDataLength);
     }
 
     // 超出最大数据量时，裁掉尾部的超出数据
