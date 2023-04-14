@@ -5,6 +5,7 @@
 
 import { DOMWrap } from '@just4/dom/dom-wrap';
 import { EventWrap } from '@just4/dom/event-wrap';
+import type { RenderPosition } from './types';
 
 /**
  * 所有事件类型的枚举。
@@ -17,7 +18,11 @@ export enum VirtualListEvent {
   /**
    * 数据项移除。
    */
-  ITEM_REMOVE = 'item-remove'
+  ITEM_REMOVE = 'item-remove',
+  /**
+   * 单次渲染完成。
+   */
+  RENDERED = 'rendered'
 }
 
 /**
@@ -27,11 +32,11 @@ export interface ItemClickEvent<ItemType extends object> {
   /**
    * DOM 的事件对象。
    */
-  domEvent: EventWrap,
+  domEvent: EventWrap
   /**
    * 事件相关的数据项节点。
    */
-  itemNode: HTMLElement,
+  itemNode: HTMLElement
   /**
    * 事件相关数据项的拷贝。
    */
@@ -48,6 +53,24 @@ export interface ItemsRemoveEvent<ItemType extends object> {
   itemNodes: DOMWrap
   /**
    * 事件相关的数据项。
+   */
+  itemList: ItemType[]
+}
+
+/**
+ * 单次渲染完成事件的事件参数。
+ */
+export interface RenderedEvent<ItemType extends object> {
+  /**
+   * 渲染位置。
+   */
+  position: RenderPosition
+  /**
+   * 本次渲染的数据项节点。
+   */
+  itemNodes: DOMWrap
+  /**
+   * 本次渲染的数据项。
    */
   itemList: ItemType[]
 }

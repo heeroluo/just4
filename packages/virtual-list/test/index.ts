@@ -144,6 +144,10 @@ virtualList.on(VirtualListEvent.ITEM_REMOVE, (args: unknown) => {
   console.log('数据移除');
   console.dir(args);
 });
+virtualList.on(VirtualListEvent.RENDERED, (args: unknown) => {
+  console.log('单次渲染');
+  console.dir(args);
+});
 
 setTimeout(function() {
   console.log('itemList length: ' + virtualList.items.length);
