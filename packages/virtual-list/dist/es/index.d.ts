@@ -188,6 +188,13 @@ export declare class VirtualList<ItemType extends object> {
      */
     protected _fetch(position: RenderPosition, loadData: () => Promise<ItemType[] | null | undefined>, updateAndRenderData: (data: ItemType[]) => void): Promise<void>;
     /**
+     * 触发单次渲染完成事件。
+     * @param position 渲染位置。
+     * @param data 渲染的数据项。
+     * @param nodes 渲染的数据项节点。
+     */
+    protected _emitRenderedEvent(position: RenderPosition, data: ItemType[], nodes: ArrayLike<HTMLElement>): void;
+    /**
      * 更新并渲染头部数据。
      * @param data 数据。
      */

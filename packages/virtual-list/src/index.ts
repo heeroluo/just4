@@ -279,13 +279,7 @@ export class VirtualList<ItemType extends object> {
       if (this._options.defaultView === 'foot') { this.scrollToFoot(); }
 
       setTimeout(() => {
-        const args: RenderedEvent<ItemType> = {
-          position: RenderPosition.Main,
-          itemList: data.slice(),
-          itemNodes: new DOMWrap(newItemNodes)
-        };
-        // 触发单次渲染完成事件
-        this._eventEmitter.emit(VirtualListEvent.RENDERED, args);
+        this._emitRenderedEvent(RenderPosition.Main, data, newItemNodes);
       }, 0);
     });
   }
@@ -569,14 +563,33 @@ export class VirtualList<ItemType extends object> {
   }
 
   /**
+   * 触发单次渲染完成事件。
+   * @param position 渲染位置。
+   * @param data 渲染的数据项。
+   * @param nodes 渲染的数据项节点。
+   */
+  protected _emitRenderedEvent(
+    position: RenderPosition,
+    data: ItemType[],
+    nodes: ArrayLike<HTMLElement>
+  ): void {
+    const args: RenderedEvent<ItemType> = {
+      position,
+      itemList: data.slice(),
+      itemNodes: new DOMWrap(nodes)
+    };
+    // 触发单次渲染完成事件
+    this._eventEmitter.emit(VirtualListEvent.RENDERED, args);
+  }
+
+  /**
    * 更新并渲染头部数据。
    * @param data 数据。
    */
   protected _updateAndRenderPrevious(data: ItemType[]): void {
-    // data 本身的数据量较大时，为了保持当前视图位置不变，只截取后面的 2/3
-    const maxDataLength = Math.ceil(this._maxItemCount * 2 / 3);
-    if (data.length > maxDataLength) {
-      data = data.slice(-maxDataLength);
+    // data 本身的数据量较大时，为了保持最大消息量不变，只截取前面的数据
+    if (data.length > this._maxItemCount) {
+      data = data.slice(0, this._maxItemCount);
     }
 
     // 超出最大数据量时，裁掉尾部的超出数据
@@ -616,13 +629,7 @@ export class VirtualList<ItemType extends object> {
     this._itemNodes = toArray(newItemNodes).concat(this._itemNodes);
 
     setTimeout(() => {
-      const args: RenderedEvent<ItemType> = {
-        position: RenderPosition.Head,
-        itemList: data.slice(),
-        itemNodes: new DOMWrap(newItemNodes)
-      };
-      // 触发单次渲染完成事件
-      this._eventEmitter.emit(VirtualListEvent.RENDERED, args);
+      this._emitRenderedEvent(RenderPosition.Head, data, newItemNodes);
     }, 0);
   }
 
@@ -648,10 +655,9 @@ export class VirtualList<ItemType extends object> {
    * @param data 数据。
    */
   protected _updateAndRenderNext(data: ItemType[]): void {
-    // data 本身的数据量较大时，为了保持当前视图位置不变，只截取前面的 2/3
-    const maxDataLength = Math.ceil(this._maxItemCount * 2 / 3);
-    if (data.length > maxDataLength) {
-      data = data.slice(0, maxDataLength);
+    // data 本身的数据量较大时，为了保持最大消息量不变，只截取后面的数据
+    if (data.length > this._maxItemCount) {
+      data = data.slice(this._maxItemCount);
     }
 
     const overflow = this._itemList.length + data.length - this._maxItemCount;
@@ -686,13 +692,7 @@ export class VirtualList<ItemType extends object> {
     mergeArray(this._itemNodes, newItemNodes);
 
     setTimeout(() => {
-      const args: RenderedEvent<ItemType> = {
-        position: RenderPosition.Foot,
-        itemList: data.slice(),
-        itemNodes: new DOMWrap(newItemNodes)
-      };
-      // 触发单次渲染完成事件
-      this._eventEmitter.emit(VirtualListEvent.RENDERED, args);
+      this._emitRenderedEvent(RenderPosition.Foot, data, newItemNodes);
     }, 0);
   }
 
