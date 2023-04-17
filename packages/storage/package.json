@@ -1,6 +1,6 @@
 {
   "name": "@just4/storage",
-  "version": "0.1.0-beta.1",
+  "version": "1.0.0",
   "description": "Just for making localStorage and sessionStorage easier to use.",
   "keywords": ["localStorage", "sessionStorage", "storage"],
   "scripts": {
