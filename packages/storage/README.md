@@ -5,9 +5,9 @@
 | 接口 | 说明 |
 | --- | --- |
 | get(key) | 即存储对象的 getItem 方法 |
-| getAsJSON(key) | 对 get 的结果执行 JSON 解析后返回 |
+| getAsJSON(key) | 对 get 的结果执行 JSON.parse 后返回 |
 | set(key, value) | 调用存储对象的 setItem 方法时做了 try...catch 处理 |
-| setAsJSON(key, value) | 对 value 执行 JSON 序列化处理后再调用 set |
+| setAsJSON(key, value) | 对 value 执行 JSON.stringify 后再调用 set |
 | remove(key) | 即存储对象的 removeItem 方法 |
 
 ## 安装
