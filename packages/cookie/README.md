@@ -9,14 +9,14 @@
 ## 安装
 
 ```bash
-npm install @just4/cookie
+npm i @just4/cookie
 ```
 
 ## 调用
 
 安装完毕之后，就可以引入并调用相关的方法：
 
-```typescript
+```javascript
 import {
   getCookie,
   setCookie,
@@ -26,13 +26,13 @@ import {
 
 ### 读取 cookie
 
-```typescript
+```javascript
 getCookie('nickname');
 ```
 
 默认情况下，读取 cookie 时分别是用 `encodeURIComponent` 和 `decodeURIComponent` 进行编码和解码的。如果要用其他编解码函数，可以通过 `encode` 和 `decode` 选项指定。
 
-```typescript
+```javascript
 getCookie('nickname', {
   encode(content) {
     //...
@@ -47,7 +47,7 @@ getCookie('nickname', {
 
 最简单的 cookie 写入只需指定 key 和 value 的值。
 
-```typescript
+```javascript
 setCookie('nickname', 'Tom');
 ```
 
@@ -56,33 +56,33 @@ setCookie('nickname', 'Tom');
 
 #### 有效时间
 
-```typescript
+```javascript
 setCookie('nickname', 'Tom', {
-  expires: '1 month'  // 过期时间为一个月
+  expires: '1 month'  // 过期时间为一个月（30 天后）
 });
 ```
 
-```typescript
+```javascript
 setCookie('nickname', 'Tom', {
-  expires: '2 years'  // 过期时间为两年
+  expires: '2 years'  // 过期时间为两年（730 天）后
 });
 ```
 
-```typescript
+```javascript
 setCookie('nickname', 'Tom', {
-  expires: new Date(2023, 0, 1)  // 2023 年 1 月 1 日过期
+  expires: new Date(2023, 0, 1)  // 2023 年 1 月 1 日 0 点过期
 });
 ```
 
-```typescript
+```javascript
 setCookie('nickname', 'Tom', {
-  expires: 10000  // 10 秒后过期
+  expires: 10 * 1000  // 10 秒后过期
 });
 ```
 
 ### 主机名和路径
 
-```typescript
+```javascript
 setCookie('nickname', 'Tom', {
   domain: '.abc.com',
   path: '/'
@@ -91,7 +91,7 @@ setCookie('nickname', 'Tom', {
 
 ### 仅在 https 请求中可用
 
-```typescript
+```javascript
 setCookie('nickname', 'Tom', {
   secure: true
 });
@@ -101,13 +101,13 @@ setCookie('nickname', 'Tom', {
 
 关于 SameSite 的说明可以参阅 MDN 的《[SameSite cookies](https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Headers/Set-Cookie/SameSite)》。
 
-```typescript
+```javascript
 setCookie('nickname', 'Tom', {
   sameSite: 'strict'
 });
 ```
 
-```typescript
+```javascript
 // SameSite 设为 none 时需要同时设置 Secure
 setCookie('nickname', 'Tom', {
   sameSite: 'none',
@@ -119,7 +119,7 @@ setCookie('nickname', 'Tom', {
 
 默认情况下，写入 cookie 时是用 `encodeURIComponent` 进行编码的。如果要用其他编码函数，可以通过 `encode` 选项指定。
 
-```typescript
+```javascript
 setCookie('nickname', '汤姆', {
   encode(content) {
     //...
@@ -129,11 +129,11 @@ setCookie('nickname', '汤姆', {
 
 ### 删除 cookie
 
-```typescript
+```javascript
 removeCookie('nickname');
 ```
 
 删除 cookie 实质上是把 cookie 设为过期，因此 `removeCookie` 支持 `setCookie` 的所有选项。
 
 ## 相关文档
-- [API 文档](https://heeroluo.github.io/just4/cookie/index.html)
+- [API 文档](https://heeroluo.github.io/just4/cookie/modules/index.html)
