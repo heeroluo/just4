@@ -5,10 +5,21 @@
 ## 安装
 
 ```bash
-npm install @just4/load-script
+npm i @just4/load-script
 ```
 
 ## 调用
+
+安装完毕之后，就可以引入并调用相关的方法：
+
+```javascript
+import {
+  loadScript,
+  jsonp
+} from '@just4/load-script';
+```
+
+### 动态加载脚本文件
 
 加载外部脚本文件，并获取其写入的全局对象：
 
@@ -18,7 +29,9 @@ await loadScript('https://code.jquery.com/jquery-1.12.4.min.js');
 const $ = window.jQuery;
 ```
 
-发送 jsonp 请求：
+### JSONP 请求
+
+JSONP 本质上是通过动态加载脚本文件的方式来加载数据，调用示例如下：
 
 ```javascript
 import { jsonp } from '@just4/load-script';
@@ -31,8 +44,8 @@ const res = await jsonp('a jsonp url', {
 
 ### 注意事项
 
-- 请慎用 preventCaching 选项，如果设为 true，会给请求的 url 加上时间戳参数，这可能会导致后端服务缓存穿透。
-- 调用 jsonp 方法时，该方法会按照特定规则生成回调函数名，并确保该名字对应的全局变量没有被占用。如果你希望指定回调函数名，可以使用 callbackName 选项进行控制，但是这种情况下请自行确保 callbackName 对应的全局变量没有被占用。
+- 慎用 `preventCaching` 选项。设为 `true` 时，会给请求的 url 加上时间戳参数，这可能会导致后端服务缓存穿透。
+- 调用 `jsonp` 方法时，该方法会按照特定规则生成回调函数名，并确保该名字对应的全局变量没有被占用。如果你希望指定回调函数名，可以使用 `callbackName` 选项进行控制，但是这种情况下请自行确保 `callbackName` 对应的全局变量没有被占用。
 
 ## 相关文档
 - [API 文档](https://heeroluo.github.io/just4/load-script/modules/index.html)
