@@ -36,4 +36,4 @@ typeof local.getAsJSON('user'); // 'object'
 ```
 
 ## 相关文档
-- [API 文档](https://heeroluo.github.io/just4/storage/index.html)
+- [API 文档](https://heeroluo.github.io/just4/storage/modules/index.html)
