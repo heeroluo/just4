@@ -811,6 +811,16 @@ export class VirtualList<ItemType extends object> {
   }
 
   /**
+   * 获取指定位置是否已到达边界。
+   * @param position 位置。
+   * @returns 是否到达边界。
+   */
+  public reachedBoundary(position: RenderPosition): boolean {
+    return this.isEmpty() ||
+      this._stateFlags.renderBoundary[position] === true;
+  }
+
+  /**
    * 追加数据到边界。如果未到达边界，则数据不追加。
    * @param data 数据。
    * @param position 位置。
@@ -822,9 +832,8 @@ export class VirtualList<ItemType extends object> {
     position: RenderPosition,
     keepDefaultView?: boolean
   ): boolean {
-    const isEmpty = this.isEmpty();
     // 不在边界，不处理
-    if (!isEmpty && this._stateFlags.renderBoundary[position] !== true) {
+    if (!this.reachedBoundary(position)) {
       return false;
     }
 
@@ -843,7 +852,7 @@ export class VirtualList<ItemType extends object> {
 
       // 无数据状态下，边界状态为 false；
       // 有数据后，边界状态需设为 true
-      if (isEmpty) {
+      if (this.isEmpty()) {
         this._setAndRenderState('renderBoundary', true, RenderPosition.Head);
         this._setAndRenderState('renderBoundary', true, RenderPosition.Foot);
       }
@@ -861,7 +870,7 @@ export class VirtualList<ItemType extends object> {
       }
     };
 
-    if (isEmpty) {
+    if (this.isEmpty()) {
       this._setEmpty(false, render);
     } else {
       render();

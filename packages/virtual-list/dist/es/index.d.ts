@@ -239,6 +239,12 @@ export declare class VirtualList<ItemType extends object> {
      */
     protected _shouldKeepDefaultView(): boolean;
     /**
+     * 获取指定位置是否已到达边界。
+     * @param position 位置。
+     * @returns 是否到达边界。
+     */
+    reachedBoundary(position: RenderPosition): boolean;
+    /**
      * 追加数据到边界。如果未到达边界，则数据不追加。
      * @param data 数据。
      * @param position 位置。
