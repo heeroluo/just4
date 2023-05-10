@@ -204,16 +204,19 @@ export class VirtualList<ItemType extends object> {
   /**
    * 设置无数据状态。
    * @param state 是否为无数据状态。
-   * @param beforeEvent 进行事件操作前执行的函数。
+   * @param onAfterSet 进行事件操作前执行的函数。
    */
-  protected _setEmpty(state: boolean, beforeEvent?: () => void): void {
+  protected _setEmpty(state: boolean, onAfterSet?: () => void): void {
     this._setAndRenderState('renderEmpty', state, RenderPosition.Main);
-    if (beforeEvent) { beforeEvent(); }
     if (state) {
-      this._removeEventListeners();
-      // 空状态下，边界状态必定要设为 false；反之则不一定
+      // 空状态下，边界状态必定要设为 false，否则就会渲染边界节点
       this._setAndRenderState('renderBoundary', false, RenderPosition.Head);
       this._setAndRenderState('renderBoundary', false, RenderPosition.Foot);
+    }
+    if (onAfterSet) { onAfterSet(); }
+
+    if (state) {
+      this._removeEventListeners();
     } else {
       this._listenScroll();
       this._listenClick();
@@ -429,7 +432,6 @@ export class VirtualList<ItemType extends object> {
     extra?: unknown
   ): void {
     if (this._stateFlags[renderFn][position] === state) { return; }
-
     // 更新状态
     this._stateFlags[renderFn][position] = state;
 
@@ -514,7 +516,7 @@ export class VirtualList<ItemType extends object> {
   ): Promise<void> {
     const stateFlags = this._stateFlags;
     if (this.__isLoading ||
-      stateFlags.renderBoundary[position] ||
+      this.reachedBoundary(position) ||
       stateFlags.renderError[position]
     ) { return; }
 
@@ -837,6 +839,8 @@ export class VirtualList<ItemType extends object> {
       return false;
     }
 
+    const isEmptyBeforeAdd = this.isEmpty();
+
     const render = () => {
       const shouldKeepDefaultView = this._shouldKeepDefaultView();
 
@@ -852,7 +856,7 @@ export class VirtualList<ItemType extends object> {
 
       // 无数据状态下，边界状态为 false；
       // 有数据后，边界状态需设为 true
-      if (this.isEmpty()) {
+      if (isEmptyBeforeAdd) {
         this._setAndRenderState('renderBoundary', true, RenderPosition.Head);
         this._setAndRenderState('renderBoundary', true, RenderPosition.Foot);
       }
@@ -870,7 +874,7 @@ export class VirtualList<ItemType extends object> {
       }
     };
 
-    if (this.isEmpty()) {
+    if (isEmptyBeforeAdd) {
       this._setEmpty(false, render);
     } else {
       render();

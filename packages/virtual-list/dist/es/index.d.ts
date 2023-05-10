@@ -124,9 +124,9 @@ export declare class VirtualList<ItemType extends object> {
     /**
      * 设置无数据状态。
      * @param state 是否为无数据状态。
-     * @param beforeEvent 进行事件操作前执行的函数。
+     * @param onAfterSet 进行事件操作前执行的函数。
      */
-    protected _setEmpty(state: boolean, beforeEvent?: () => void): void;
+    protected _setEmpty(state: boolean, onAfterSet?: () => void): void;
     /**
      * 加载并渲染初始数据。
      */
