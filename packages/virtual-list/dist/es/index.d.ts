@@ -12,11 +12,11 @@ import type { VirtualListOptions, Renderer } from './types';
 /**
  * 虚拟列表组件。
  */
-export declare class VirtualList<ItemType extends object> {
+export declare class VirtualList<ItemType extends object, ItemKey extends keyof ItemType = keyof ItemType> {
     /**
      * 组件选项。
      */
-    protected _options: VirtualListOptions<ItemType>;
+    protected _options: VirtualListOptions<ItemType, ItemKey>;
     /**
      * 滚动区域容器。
      */
@@ -86,12 +86,12 @@ export declare class VirtualList<ItemType extends object> {
      * 虚拟列表组件构造函数。
      * @param options 选项。
      */
-    constructor(options: VirtualListOptions<ItemType>);
+    constructor(options: VirtualListOptions<ItemType, ItemKey>);
     /**
      * 修改组件选项（容器和默认视图不可修改）。
      * @param options 需要修改的选项。
      */
-    setOption<K extends keyof VirtualListOptions<ItemType>>(key: K, value: VirtualListOptions<ItemType>[K]): void;
+    setOption<K extends keyof VirtualListOptions<ItemType, ItemKey>>(key: K, value: VirtualListOptions<ItemType, ItemKey>[K]): void;
     /**
      * 预读距离。
      */
@@ -219,20 +219,20 @@ export declare class VirtualList<ItemType extends object> {
      * @param keyValue key 值。
      * @returns 数据项的索引，如果找不到数据项，则返回 -1。
      */
-    protected _findItemIndex(keyValue: unknown): number;
+    protected _findItemIndex(keyValue: ItemType[ItemKey]): number;
     /**
      * 更新数据项。
-     * @param itemData 新数据。
-     * @param keyValue 要更新的数据项的 key 值。如果为空，则以 itemData 的 key 值为准。
+     * @param newData 新数据。
+     * @param keyValue 要更新的数据项的 key 值。如果为空，则以 newData 的 key 值为准。
      * @returns 数据项是否在当前列表中。
      */
-    updateItem(itemData: ItemType, keyValue?: unknown): boolean;
+    updateItem(newData: ItemType, keyValue?: ItemType[ItemKey]): boolean;
     /**
      * 移除数据项。
      * @param keyValue 要移除的数据项的 id。
      * @returns 被移除的数据项。如果数据项不存在，则返回 undefined。
      */
-    removeItem(keyValue: unknown): ItemType | undefined;
+    removeItem(keyValue: ItemType[ItemKey]): ItemType | undefined;
     /**
      * 判定当前是否应保持默认视图位置（最顶或最底）。
      * @returns 判定结果。

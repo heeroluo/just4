@@ -105,7 +105,10 @@ export interface Renderer<ItemType extends object> {
 /**
  * 虚拟滚动参数。
  */
-export interface VirtualListOptions<ItemType extends object> {
+export interface VirtualListOptions<
+  ItemType extends object,
+  ItemKey extends keyof ItemType
+> {
   /**
    * 滚动容器。
    */
@@ -117,7 +120,7 @@ export interface VirtualListOptions<ItemType extends object> {
   /**
    * 数据项中可作为唯一标识的属性名。
    */
-  itemKey: keyof ItemType
+  itemKey: ItemKey
   /**
    * 渲染器。
    */

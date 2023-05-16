@@ -184,6 +184,18 @@ virtualList.on(VirtualListEvent.ITEM_CLICK, function(args) {
 
 args 为点击数据项事件的事件参数，类型说明见[文档](https://heeroluo.github.io/just4/virtual-list/interfaces/events.ItemClickEvent.html)。
 
+
+#### 更新数据项
+
+```javascript
+virtualList.on(VirtualListEvent.ITEM_UPDATE, function(args) {
+  console.dir(args);
+});
+```
+
+args 为数据项更新事件的事件参数，类型说明见[文档](https://heeroluo.github.io/just4/virtual-list/interfaces/events.ItemUpdateEvent.html)。
+
+
 #### 移除数据项
 
 以下两种情况都会触发数据项的移除：

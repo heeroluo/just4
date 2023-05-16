@@ -16,6 +16,7 @@ import { ItemList } from './item-list';
 import {
   VirtualListEvent,
   ItemClickEvent,
+  ItemUpdateEvent,
   ItemsRemoveEvent,
   RenderedEvent
 } from './events';
@@ -25,11 +26,11 @@ import type { VirtualListOptions, Renderer, InitialResponse } from './types';
 /**
  * 虚拟列表组件。
  */
-export class VirtualList<ItemType extends object> {
+export class VirtualList<ItemType extends object, ItemKey extends keyof ItemType = keyof ItemType> {
   /**
    * 组件选项。
    */
-  protected _options: VirtualListOptions<ItemType>;
+  protected _options: VirtualListOptions<ItemType, ItemKey>;
   /**
    * 滚动区域容器。
    */
@@ -119,7 +120,7 @@ export class VirtualList<ItemType extends object> {
    * 虚拟列表组件构造函数。
    * @param options 选项。
    */
-  constructor(options: VirtualListOptions<ItemType>) {
+  constructor(options: VirtualListOptions<ItemType, ItemKey>) {
     this._container = $(options.container);
     this._options = assignProps({}, options);
     this.items = new ItemList<ItemType>(
@@ -133,9 +134,9 @@ export class VirtualList<ItemType extends object> {
    * 修改组件选项（容器和默认视图不可修改）。
    * @param options 需要修改的选项。
    */
-  setOption<K extends keyof VirtualListOptions<ItemType>>(
+  setOption<K extends keyof VirtualListOptions<ItemType, ItemKey>>(
     key: K,
-    value: VirtualListOptions<ItemType>[K]
+    value: VirtualListOptions<ItemType, ItemKey>[K]
   ): void {
     if (key === 'container') {
       throw new Error('Container cannot be changed.');
@@ -720,7 +721,7 @@ export class VirtualList<ItemType extends object> {
    * @param keyValue key 值。
    * @returns 数据项的索引，如果找不到数据项，则返回 -1。
    */
-  protected _findItemIndex(keyValue: unknown): number {
+  protected _findItemIndex(keyValue: ItemType[ItemKey]): number {
     const itemKey = this._options.itemKey;
     let index = -1;
     for (let i = this._itemList.length - 1; i >= 0; i--) {
@@ -734,23 +735,35 @@ export class VirtualList<ItemType extends object> {
 
   /**
    * 更新数据项。
-   * @param itemData 新数据。
-   * @param keyValue 要更新的数据项的 key 值。如果为空，则以 itemData 的 key 值为准。
+   * @param newData 新数据。
+   * @param keyValue 要更新的数据项的 key 值。如果为空，则以 newData 的 key 值为准。
    * @returns 数据项是否在当前列表中。
    */
-  public updateItem(itemData: ItemType, keyValue?: unknown): boolean {
-    const index = this._findItemIndex(keyValue ?? itemData[this._options.itemKey]);
+  public updateItem(newData: ItemType, keyValue?: ItemType[ItemKey]): boolean {
+    const index = this._findItemIndex(keyValue ?? newData[this._options.itemKey]);
     if (index === -1) { return false; }
 
-    this._itemList[index] = itemData;
+    const oldData: ItemType = this._itemList[index];
+    const oldNode = $(this._itemNodes[index]);
 
-    const newNode = this._options.renderer.renderItems([itemData], this)[0];
+    this._itemList[index] = newData;
+    const newNode = this._options.renderer.renderItems([newData], this)[0];
     this._keepView(() => {
-      $(this._itemNodes[index]).replaceWith(newNode);
+      oldNode.replaceWith(newNode);
     });
     this._itemNodes[index] = newNode;
 
+    // 数据更新可能导致尺寸变化，要检查一次是否要加载数据
     setTimeout(() => { this._checkPosition(false); }, 0);
+
+    // 触发数据更新事件
+    const args: ItemUpdateEvent<ItemType> = {
+      oldData,
+      oldNode,
+      newData,
+      newNode: $(newNode)
+    };
+    this._eventEmitter.emit(VirtualListEvent.ITEM_UPDATE, args);
 
     return true;
   }
@@ -760,7 +773,7 @@ export class VirtualList<ItemType extends object> {
    * @param keyValue 要移除的数据项的 id。
    * @returns 被移除的数据项。如果数据项不存在，则返回 undefined。
    */
-  public removeItem(keyValue: unknown): ItemType | undefined {
+  public removeItem(keyValue: ItemType[ItemKey]): ItemType | undefined {
     const index = this._findItemIndex(keyValue);
     if (index !== -1) {
       const itemList = this._itemList.splice(index, 1);

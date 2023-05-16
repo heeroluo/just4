@@ -16,6 +16,10 @@ export enum VirtualListEvent {
    */
   ITEM_CLICK = 'item-click',
   /**
+   * 数据项更新。
+   */
+  ITEM_UPDATE = 'item-update',
+  /**
    * 数据项移除。
    */
   ITEM_REMOVE = 'item-remove',
@@ -41,6 +45,28 @@ export interface ItemClickEvent<ItemType extends object> {
    * 事件相关数据项的拷贝。
    */
   itemData: ItemType
+}
+
+/**
+ * 数据项更新事件的事件参数。
+ */
+export interface ItemUpdateEvent<ItemType extends object> {
+  /**
+   * 旧数据。
+   */
+  oldData: ItemType,
+  /**
+   * 旧节点。
+   */
+  oldNode: DOMWrap,
+  /**
+   * 新数据。
+   */
+  newData: ItemType,
+  /**
+   * 新节点。
+   */
+  newNode: DOMWrap
 }
 
 /**

@@ -128,7 +128,7 @@ const renderer: Renderer<ItemData> = {
 
 const container = document.getElementById('list') || document.body;
 
-const virtualList = (<any>window).virtualList = new VirtualList<ItemData>({
+const virtualList = (<any>window).virtualList = new VirtualList<ItemData, 'id'>({
   container,
   dataSource,
   itemKey: 'id',
@@ -138,6 +138,10 @@ const virtualList = (<any>window).virtualList = new VirtualList<ItemData>({
 });
 virtualList.on(VirtualListEvent.ITEM_CLICK, (args: unknown) => {
   console.log('数据点击');
+  console.dir(args);
+});
+virtualList.on(VirtualListEvent.ITEM_UPDATE, (args: unknown) => {
+  console.log('数据更新');
   console.dir(args);
 });
 virtualList.on(VirtualListEvent.ITEM_REMOVE, (args: unknown) => {
@@ -155,12 +159,12 @@ setTimeout(function() {
   console.log('last item id: ' + virtualList.items.last()?.id);
 }, 3000);
 
-setTimeout(function() {
-  // if (!virtualList) { return; }
-  // // virtualList.removeItem(190);
-  // virtualList.resetBoundaryState(RenderPosition.Foot);
-  // virtualList.checkPosition();
-}, 5000);
+// setTimeout(function() {
+//   if (!virtualList) { return; }
+//   // virtualList.removeItem(190);
+//   virtualList.resetBoundaryState(RenderPosition.Foot);
+//   virtualList.checkPosition();
+// }, 5000);
 
 // setInterval(() => {
 //   virtualList?.updateItem({
