@@ -15,6 +15,9 @@
     "@just4/util": "^0.2.0-beta.1",
     "@just4/querystring": "^0.2.0-beta.2"
   },
+  "peerDependencies": {
+    "miniprogram-api-typings": "^3.9.1"
+  },
   "private": true,
   "devPort": 8606
 }

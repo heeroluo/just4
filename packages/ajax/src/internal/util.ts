@@ -4,42 +4,8 @@
  * @internal
  */
 
-import { IAJAXOptions } from 'src/interfaces';
-import { AJAXError } from '../ajax-error';
-
-
-const CANCEL_MESSAGE = 'Request cancelled';
-/**
- * 创建放弃请求的错误对象。
- * @param message 错误信息。
- * @returns 错误对象。
- */
-export function createCancelError(
-  xhr: Readonly<XMLHttpRequest>,
-  options: Readonly<IAJAXOptions>,
-  message?: string
-): AJAXError {
-  const err = new AJAXError(xhr, options, message || CANCEL_MESSAGE);
-  err.isCancel = true;
-  return err;
-}
-
-const TIMEOUT_MESSAGE = 'Request timeout';
-/**
- * 创建超时的错误对象。
- * @param message 错误信息。
- * @returns 错误对象。
- */
-export function createTimeoutError(
-  xhr: Readonly<XMLHttpRequest>,
-  options: Readonly<IAJAXOptions>,
-  message?: string
-): AJAXError {
-  const err = new AJAXError(xhr, options, message || TIMEOUT_MESSAGE);
-  err.isTimeout = true;
-  return err;
-}
-
+import type { IRequestResult } from '../types';
+import { RequestWith } from '../types';
 
 /**
  * 检查指定 URL 与当前页是否跨域。
@@ -47,6 +13,11 @@ export function createTimeoutError(
  * @returns 指定 URL 与当前页是否跨域。
  */
 export function isCrossDomain(url: string): boolean {
+  // 仅支持在浏览器端调用
+  if (typeof document === 'undefined' || typeof document.createElement !== 'function') {
+    return false;
+  }
+
   let div: HTMLDivElement | null = document.createElement('div');
   div.innerHTML = '<a href="' + url + '"></a>';
   let a: HTMLAnchorElement | null = <HTMLAnchorElement>div.firstChild;
@@ -91,4 +62,19 @@ export function isErrorStatus(status: number): boolean {
     status === 1223 ||
     status === 304
   );
+}
+
+
+/**
+ * 创建请求结果（主要作用是设置 requestWith 属性，并冻结对象）。
+ * @param result 请求结果对象。
+ * @param requestWith 请求方式。
+ * @returns 处理后的请求结果。
+ */
+export function handleRequestResult<T extends IRequestResult>(
+  result: T,
+  requestWith: RequestWith
+): Readonly<T> {
+  result.requestWith = requestWith;
+  return Object.freeze(result);
 }

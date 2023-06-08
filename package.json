@@ -38,6 +38,7 @@
     "eventemitter3": "^4.0.7",
     "glob": "^7.2.0",
     "html-webpack-plugin": "^4.5.2",
+    "miniprogram-api-typings": "^3.9.1",
     "rimraf": "^3.0.2",
     "terser": "^5.10.0",
     "ts-loader": "^8.3.0",
