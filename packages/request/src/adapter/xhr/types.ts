@@ -3,10 +3,11 @@
  * @packageDocumentation
  */
 
-import type { IRequestResult } from 'src/types';
+import type { IRequestResult } from '../../types';
+
 
 /**
- * XMLHttpRequest 网络请求的结果。
+ * XMLHttpRequest 请求的结果。
  */
 export interface IXhrRequestResult extends IRequestResult {
   /**

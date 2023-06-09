@@ -1,20 +1,29 @@
-import type {
-  RequestOptionsWithRequired,
-} from 'src/types';
-import { RequestWith } from 'src/types';
-import { RequestError, RequestErrorType } from 'src/request-error';
+/**
+ * 处理 XMLHttpRequest 实例的事件监听。
+ * @packageDocumentation
+ * @internal
+ */
+
+import type { RequestAdapterOptions } from '../../types';
+import { RequestWith } from '../../types';
+import { RequestError, RequestErrorType } from '../../request-error';
 import {
   isErrorStatus,
   parseMIMEType,
   handleRequestResult
-} from 'src/internal/util';
+} from '../../internal/util';
+import {
+  MSG_HTTP_ERROR,
+  MSG_NETWORK_ERROR,
+  MSG_TIMEOUT
+} from '../../internal/message';
 import type { IXhrRequestResult } from './types';
 
 
 // 创建 XMLHttpRequest 的 onload 回调函数
 function createOnLoad(
   xhr: Readonly<XMLHttpRequest>,
-  options: Readonly<RequestOptionsWithRequired>,
+  options: Readonly<RequestAdapterOptions>,
   resolve: (value: Readonly<IXhrRequestResult>) => void,
   reject: (reason: Readonly<RequestError>) => void
 ): () => void {
@@ -62,7 +71,7 @@ function createOnLoad(
     let error: RequestError | undefined;
     if (isErrorStatus(status)) {
       error = new RequestError({
-        message: 'Error (HTTP status code: ' + status + ')',
+        message: MSG_HTTP_ERROR.replace('${status}', status.toString()),
         type: RequestErrorType.HTTP_ERROR,
         code: status,
         result
@@ -86,7 +95,7 @@ function createOnLoad(
 // 创建 XMLHttpRequest 的 ontimeout 和 onerror 的回调函数
 function createOnError(
   xhr: XMLHttpRequest,
-  options: Readonly<RequestOptionsWithRequired>,
+  options: Readonly<RequestAdapterOptions>,
   reject: (reason: Readonly<RequestError>) => void,
   message: string,
   type: RequestErrorType,
@@ -105,25 +114,32 @@ function createOnError(
   };
 }
 
+/**
+ * 创建 XMLHttpRequest 实例的事件回调函数。
+ * @param xhr XMLHttpRequest 实例。
+ * @param options 桥接器的请求选项。
+ * @param resolve 请求成功时的回调函数。
+ * @param reject 请求出错时的回调函数。
+ */
 export function createXhrEventListeners(
   xhr: XMLHttpRequest,
-  options: Readonly<RequestOptionsWithRequired>,
+  options: Readonly<RequestAdapterOptions>,
   resolve: (response: Readonly<IXhrRequestResult>) => void,
   reject: (reason: RequestError) => void
-) {
+): void {
   xhr.onload = createOnLoad(xhr, options, resolve, reject);
   xhr.ontimeout = createOnError(
     xhr,
     options,
     reject,
-    'Request timeout',
+    MSG_TIMEOUT,
     RequestErrorType.TIMEOUT
   );
   xhr.onerror = createOnError(
     xhr,
     options,
     reject,
-    'Network error',
+    MSG_NETWORK_ERROR,
     RequestErrorType.NETWORK_ERROR
   );
 

@@ -29,6 +29,10 @@ export type ResponseType = 'json' | 'xml' | 'text' | 'blob' | 'arraybuffer';
  */
 export interface IRequestOptions {
   /**
+   * 基础 URL。
+   */
+  baseURL?: string,
+  /**
    * URL 参数。
    */
   params?: string | object,
@@ -90,14 +94,6 @@ export interface IRequestOptions {
   onDownloadProgress?: (evt: ProgressEvent) => void
 }
 
-// 请求选项的必备属性。
-type RequiredRequestOptions = 'method' | 'requestType' | 'responseType' | 'headers';
-
-/**
- * 包含必备属性的请求选项。
- */
-export type RequestOptionsWithRequired = Required<Pick<IRequestOptions, RequiredRequestOptions>> & Pick<IRequestOptions, Exclude<keyof IRequestOptions, RequiredRequestOptions>>;
-
 
 /**
  * 请求方式。
@@ -111,21 +107,6 @@ export enum RequestWith {
    * 微信小程序 wx.request。
    */
   WX_REQUEST = 'wx.request'
-}
-
-
-/**
- * 请求结果类初始化参数。
- */
-export interface IRequestResultOptions {
-  /**
-   * 发送请求的选项。
-   */
-  options: IRequestOptions
-  /**
-   * 请求响应的数据。
-   */
-  data?: unknown
 }
 
 /**
@@ -147,13 +128,41 @@ export interface IRequestResult {
 }
 
 
+// 请求选项的必备属性。
+type RequiredRequestOptions = 'method' | 'requestType' | 'responseType' | 'headers';
 
+/**
+ * 请求适配器的初始化选项。
+ */
+/* eslint-disable @typescript-eslint/indent */
+export type RequestAdapterOptions = Required<Pick<IRequestOptions, RequiredRequestOptions>> &
+  Pick<IRequestOptions, Exclude<keyof IRequestOptions, RequiredRequestOptions>> &
+  {
+    /**
+     * 完整的请求地址。
+     */
+    url: string
+  };
+/* eslint-enable @typescript-eslint/indent */
 
-
+/**
+ * 请求适配器。
+ */
 export interface IRequestAdapter {
+  /**
+   * 发送请求。
+   * @param url 已拼接 GET 参数的请求 URL。
+   * @param opts 包含必备参数的请求选项。
+   * @returns 发送请求的 promise 实例。
+   */
   send: (
-    url: string,
-    opts: Readonly<RequestOptionsWithRequired>
+    opts: Readonly<RequestAdapterOptions>
   ) => Promise<Readonly<IRequestResult>>
-  abort: (id: number) => void
+
+  /**
+   * 中断请求。
+   * @param id 请求编号。
+   * @returns 中断请求操作是否有被执行。
+   */
+  abort: (id: number) => boolean
 }

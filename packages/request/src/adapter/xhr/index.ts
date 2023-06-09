@@ -8,18 +8,19 @@ import { isObject } from '@just4/util/type';
 import { stringify } from '@just4/querystring/index';
 import type {
   IRequestAdapter,
-  RequestOptionsWithRequired,
+  RequestAdapterOptions,
   RequestMethod,
   BodyType
-} from 'src/types';
-import { RequestWith } from 'src/types';
-import { RequestError, RequestErrorType } from 'src/request-error';
+} from '../../types';
+import { RequestWith } from '../../types';
+import { RequestError, RequestErrorType } from '../../request-error';
 import {
   isOldIE,
   isCrossDomain,
   handleRequestResult
-} from 'src/internal/util';
-import { TaskManager } from 'src/internal/task-manager';
+} from '../../internal/util';
+import { TaskManager } from '../../internal/task-manager';
+import { MSG_ABORTED } from '../../internal/message';
 import type { IXhrRequestResult } from './types';
 import { createXhrEventListeners } from './events';
 
@@ -31,7 +32,7 @@ interface IRequestTask {
   // 发送请求的 XMLHttpRequest 实例
   xhr: XMLHttpRequest,
   // 请求选项
-  options: Readonly<RequestOptionsWithRequired>,
+  options: Readonly<RequestAdapterOptions>,
   // 出错时执行的函数
   reject: (reason: Readonly<RequestError>) => void
 }
@@ -63,7 +64,7 @@ function createXhr(
 // 设置 XMLHttpRequest 实例的属性和请求头
 function setXhrPropsAndHeaders(
   xhr: XMLHttpRequest,
-  opts: Readonly<RequestOptionsWithRequired>,
+  opts: Readonly<RequestAdapterOptions>,
   isCross: boolean,
   headers: any
 ): void {
@@ -122,18 +123,16 @@ function handleRequestBody(
 export const xhrAdapter: IRequestAdapter = {
   /**
    * 发送请求。
-   * @param url 已拼接 GET 参数的请求 URL。
    * @param opts 包含必备参数的请求选项。
    * @returns 发送请求的 promise 实例。
    */
   send(
-    url: string,
-    opts: Readonly<RequestOptionsWithRequired>
+    opts: Readonly<RequestAdapterOptions>
   ): Promise<Readonly<IXhrRequestResult>> {
     return new Promise((resolve, reject) => {
       let taskId = 0;
 
-      const isCross = isCrossDomain(url);
+      const isCross = isCrossDomain(opts.url);
       const xhr = createXhr(
         isCross,
         opts.method,
@@ -161,6 +160,17 @@ export const xhrAdapter: IRequestAdapter = {
         reject
       });
 
+      if (opts.responseType === 'blob' || opts.responseType === 'arraybuffer') {
+        xhr.responseType = opts.responseType;
+      }
+      xhr.open(
+        opts.method,
+        opts.url,
+        true,
+        opts.username,
+        opts.password
+      );
+
       const body = handleRequestBody(
         opts.method,
         opts.headers,
@@ -186,16 +196,17 @@ export const xhrAdapter: IRequestAdapter = {
 
   /**
    * 中断请求。
-   * @param id AJAX 请求编号。
+   * @param id 请求编号。
+   * @returns 中断请求操作是否有被执行。
    */
-  abort(id: number): void {
+  abort(id: number): boolean {
     const task = taskManager.removeTask(id);
     if (task) {
       task.xhr.abort();
       const reject = task.reject;
       reject(
         new RequestError({
-          message: 'Request aborted',
+          message: MSG_ABORTED,
           type: RequestErrorType.ABORTED,
           result: handleRequestResult({
             xhr: task.xhr,
@@ -203,6 +214,8 @@ export const xhrAdapter: IRequestAdapter = {
           }, RequestWith.XHR)
         })
       );
+      return true;
     }
+    return false;
   }
 };

@@ -73,14 +73,14 @@ export class RequestError extends Error {
 
   /**
    * 构造函数。
-   * @param options 初始化参数。
+   * @param opts 初始化参数。
    */
-  constructor(options: IRequestErrorOptions) {
-    super(options.message);
+  constructor(opts: IRequestErrorOptions) {
+    super(opts.message);
     this.name = 'RequestError';
-    this.result = options.result;
-    this.code = options.code;
-    this.type = options.type;
+    this.result = opts.result;
+    this.code = opts.code;
+    this.type = opts.type;
     Object.freeze(this);
   }
 }

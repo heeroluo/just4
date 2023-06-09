@@ -7,12 +7,13 @@ import 'miniprogram-api-typings';
 import {
   IRequestAdapter,
   IRequestResult,
-  RequestOptionsWithRequired,
+  RequestAdapterOptions,
   RequestWith,
-} from 'src/types';
-import { isErrorStatus, handleRequestResult } from 'src/internal/util';
-import { TaskManager } from 'src/internal/task-manager';
-import { RequestErrorType, RequestError } from 'src/request-error';
+} from '../../types';
+import { isErrorStatus, handleRequestResult } from '../../internal/util';
+import { MSG_HTTP_ERROR, MSG_ABORTED } from '../../internal/message';
+import { TaskManager } from '../../internal/task-manager';
+import { RequestErrorType, RequestError } from '../../request-error';
 
 
 /**
@@ -34,7 +35,7 @@ interface IRequestTask {
   // 请求任务（wx.request 的返回值）
   task: WechatMiniprogram.RequestTask
   // 请求选项
-  options: Readonly<RequestOptionsWithRequired>
+  options: Readonly<RequestAdapterOptions>
   // 出错时执行的函数
   reject: (reason: Readonly<RequestError>) => void
 }
@@ -53,8 +54,7 @@ export const wxRequestAdapter: IRequestAdapter = {
    * @returns 发送请求的 promise 实例。
    */
   send(
-    url: string,
-    opts: Readonly<RequestOptionsWithRequired>
+    opts: Readonly<RequestAdapterOptions>
   ): Promise<Readonly<IWxRequestResult>> {
     return new Promise((resolve, reject) => {
       const beforeSend = opts.beforeSend;
@@ -63,7 +63,7 @@ export const wxRequestAdapter: IRequestAdapter = {
       let taskId = 0;
 
       const task = wx.request({
-        url,
+        url: opts.url,
         data: opts.data,
         header: opts.headers,
         timeout: opts.timeout,
@@ -81,7 +81,7 @@ export const wxRequestAdapter: IRequestAdapter = {
           let error: RequestError | undefined;
           if (isErrorStatus(res.statusCode)) {
             error = new RequestError({
-              message: 'Error (HTTP status code: ' + res.statusCode + ')',
+              message: MSG_HTTP_ERROR.replace('${status}', res.statusCode.toString()),
               type: RequestErrorType.HTTP_ERROR,
               code: res.statusCode,
               result
@@ -128,17 +128,18 @@ export const wxRequestAdapter: IRequestAdapter = {
   },
 
   /**
-   * 取消请求。
+   * 中断请求。
    * @param id 请求编号。
+   * @returns 中断请求操作是否有被执行。
    */
-  abort(id: number): void {
+  abort(id: number): boolean {
     const task = taskManager.removeTask(id);
     if (task) {
       task.task.abort();
       const reject = task.reject;
       reject(
         new RequestError({
-          message: 'Request aborted',
+          message: MSG_ABORTED,
           type: RequestErrorType.ABORTED,
           result: handleRequestResult(
             { options: task.options },
@@ -146,6 +147,8 @@ export const wxRequestAdapter: IRequestAdapter = {
           )
         })
       );
+      return true;
     }
+    return false;
   }
 };

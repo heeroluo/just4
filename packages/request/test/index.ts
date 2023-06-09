@@ -1,5 +1,9 @@
 import 'core-js';
-import { send, cancel } from '@/ajax';
+import { Request } from '@/index';
+import { xhrAdapter } from '@/adapter/xhr';
+import { RequestErrorType } from '@/request-error';
+
+const request = new Request(xhrAdapter);
 
 const QUnit = (<any>window).QUnit;
 
@@ -10,8 +14,8 @@ QUnit.test('返回文本', function(assert: any) {
   const done = assert.async();
 
   Promise.all([
-    send('/api/ajax/text', { method: 'get', responseType: 'text', params: { num: 100 } }),
-    send('/api/ajax/text', { method: 'post', responseType: 'text', data: { num: 200 } })
+    request.send('/api/ajax/text', { method: 'GET', responseType: 'text', params: { num: 100 } }),
+    request.send('/api/ajax/text', { method: 'POST', responseType: 'text', data: { num: 200 } })
   ]).then(([res1, res2]) => {
     assert.strictEqual(res1.data, '100');
     assert.strictEqual(res2.data, '200');
@@ -24,8 +28,8 @@ QUnit.test('返回 JSON', function(assert: any) {
   const done = assert.async();
 
   Promise.all([
-    send('/api/ajax/json', { method: 'get', params: { num: 100 } }),
-    send('/api/ajax/json', { method: 'post', data: { num: 200 } })
+    request.send('/api/ajax/json', { method: 'GET', params: { num: 100 } }),
+    request.send('/api/ajax/json', { method: 'POST', data: { num: 200 } })
   ]).then(([res1, res2]) => {
     assert.deepEqual(res1.data, { num: '100' });
     assert.deepEqual(res2.data, { num: '200' });
@@ -37,10 +41,10 @@ QUnit.test('超时', function(assert: any) {
   assert.expect(1);
   const done = assert.async();
 
-  send('/api/ajax/timeout', { timeout: 2000 }).then(
+  request.send('/api/ajax/timeout', { timeout: 2000 }).then(
     null,
     function(error) {
-      assert.ok(error.isTimeout);
+      assert.deepEqual(error.type, RequestErrorType.TIMEOUT);
       done();
     }
   );
@@ -52,18 +56,18 @@ QUnit.test('取消', function(assert: any) {
 
   let ajaxId = 0;
 
-  send('/api/ajax/timeout', {
+  request.send('/api/ajax/timeout', {
     receiveCancelId: function(id) { ajaxId = id; }
   }).then(
     null,
     function(error) {
-      assert.ok(error.isCancel);
+      assert.deepEqual(error.type, RequestErrorType.ABORTED);
       done();
     }
   );
 
   setTimeout(function() {
-    cancel(ajaxId);
+    request.abort(ajaxId);
   }, 2000);
 });
 
@@ -71,13 +75,13 @@ QUnit.test('请求错误', function(assert: any) {
   assert.expect(2);
   const done = assert.async();
 
-  send('/api/ajax/error', {
+  request.send('/api/ajax/error', {
     params: { num: 100 }
   }).then(
     null,
     function(error) {
       assert.strictEqual(error.code, 500);
-      assert.deepEqual(error.data, { num: '100' });
+      assert.deepEqual(error.result.data, { num: '100' });
       done();
     }
   );
@@ -87,7 +91,7 @@ QUnit.test('请求图片', function(assert: any) {
   assert.expect(1);
   const done = assert.async();
 
-  send('//live.polyv.net/kaptcha', {
+  request.send('//live.polyv.net/kaptcha', {
     params: {
       timestamp: Date.now()
     },
