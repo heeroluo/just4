@@ -1,0 +1,110 @@
+<!DOCTYPE html><html class="default"><head><meta charSet="utf-8"/><meta http-equiv="x-ua-compatible" content="IE=edge"/><title>@just4/request</title><meta name="description" content="Documentation for @just4/request"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="assets/style.css"/><link rel="stylesheet" href="assets/highlight.css"/><script async src="assets/search.js" id="search-script"></script></head><body><script>document.body.classList.add(localStorage.getItem("tsd-theme") || "os")</script><header><div class="tsd-page-toolbar"><div class="container"><div class="table-wrap"><div class="table-cell" id="tsd-search" data-base="."><div class="field"><label for="tsd-search-field" class="tsd-widget search no-caption">Search</label><input type="text" id="tsd-search-field"/></div><ul class="results"><li class="state loading">Preparing search index...</li><li class="state failure">The search index is not available</li></ul><a href="index.html" class="title">@just4/request</a></div><div class="table-cell" id="tsd-widgets"><div id="tsd-filter"><a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a><div class="tsd-filter-group"><div class="tsd-select" id="tsd-filter-visibility"><span class="tsd-select-label">All</span><ul class="tsd-select-list"><li data-value="public">Public</li><li data-value="protected">Public/Protected</li><li data-value="private" class="selected">All</li></ul></div> <input type="checkbox" id="tsd-filter-inherited" checked/><label class="tsd-widget" for="tsd-filter-inherited">Inherited</label><input type="checkbox" id="tsd-filter-externals" checked/><label class="tsd-widget" for="tsd-filter-externals">Externals</label></div></div><a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a></div></div></div></div><div class="tsd-page-title"><div class="container"><h1> @just4/request </h1></div></div></header><div class="container container-main"><div class="row"><div class="col-8 col-content"><div class="tsd-panel tsd-typography">
+<a href="#just4request" id="just4request" style="color: inherit; text-decoration: none;">
+  <h1>@just4/request</h1>
+</a>
+<p>提供封装了 HTTP 请求流程的 Promise 化接口。</p>
+
+<a href="#特性" id="特性" style="color: inherit; text-decoration: none;">
+  <h2>特性</h2>
+</a>
+<ul>
+<li>具备 Promise 化的接口，并支持中断请求。</li>
+<li>带有 TypeScript 类型声明。</li>
+<li>支持<strong>浏览器</strong>和<strong>微信小程序</strong>两种运行环境，并提供了一致的外部接口。</li>
+<li>在浏览器环境下：<ul>
+<li>封装了 XMLHTTPRequest 对象创建、请求发起、请求响应的全流程。</li>
+<li>支持发送常用的数据类型：文本、对象、FormData、Blob 和 ArrayBuffer。</li>
+<li>支持把数据序列化为 <code>application/json</code> 或 <code>application/x-www-form-urlencoded</code> 的请求体。</li>
+<li>根据选项设置把响应内容解析为 JSON、XML、文本、Blob 或 ArrayBuffer。</li>
+<li>支持文件上传和下载场景下的进度响应（<code>onDownloadProgress</code>、<code>onUploadProgress</code>）。</li>
+<li>支持 PC 和移动端所有主流浏览器（其中 IE 浏览器的最低兼容版本是 9）。<ul>
+<li>在 IE 9 中，符合特定条件的情况下，通过 XDomainRequest 发起跨域请求。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>在微信小程序环境下：<ul>
+<li>基于 wx.request 进行封装。</li>
+<li>支持发送的数据类型包括：文本、对象和 ArrayBuffer。</li>
+<li>根据选项设置把响应内容解析为 JSON、文本或 ArrayBuffer。</li>
+</ul>
+</li>
+</ul>
+
+<a href="#安装" id="安装" style="color: inherit; text-decoration: none;">
+  <h2>安装</h2>
+</a>
+<pre><code class="language-bash"><span class="hl-0">npm install @just4/request</span>
+</code></pre>
+
+<a href="#调用" id="调用" style="color: inherit; text-decoration: none;">
+  <h2>调用</h2>
+</a>
+
+<a href="#适配不同运行环境" id="适配不同运行环境" style="color: inherit; text-decoration: none;">
+  <h3>适配不同运行环境</h3>
+</a>
+<pre><code class="language-javascript"><span class="hl-1">import</span><span class="hl-0"> { </span><span class="hl-2">Request</span><span class="hl-0">, </span><span class="hl-2">xhrAdapter</span><span class="hl-0">, </span><span class="hl-2">wxRequestAdapter</span><span class="hl-0"> } </span><span class="hl-1">from</span><span class="hl-0"> </span><span class="hl-3">&#39;@just4/request&#39;</span><span class="hl-0">;</span><br/><br/><span class="hl-4">// 用于浏览器端</span><br/><span class="hl-5">const</span><span class="hl-0"> </span><span class="hl-6">xhrRequest</span><span class="hl-0"> = </span><span class="hl-5">new</span><span class="hl-0"> </span><span class="hl-7">Request</span><span class="hl-0">(</span><span class="hl-2">xhrAdapter</span><span class="hl-0">);</span><br/><br/><span class="hl-4">// 用于微信小程序端</span><br/><span class="hl-5">const</span><span class="hl-0"> </span><span class="hl-6">wxRequest</span><span class="hl-0"> = </span><span class="hl-5">new</span><span class="hl-0"> </span><span class="hl-7">Request</span><span class="hl-0">(</span><span class="hl-2">wxRequestAdapter</span><span class="hl-0">);</span>
+</code></pre>
+
+<a href="#发送请求" id="发送请求" style="color: inherit; text-decoration: none;">
+  <h3>发送请求</h3>
+</a>
+<p>创建 Request 类的实例之后，就可以调用相关方法：</p>
+<pre><code class="language-javascript"><span class="hl-5">const</span><span class="hl-0"> </span><span class="hl-6">result</span><span class="hl-0"> = </span><span class="hl-1">await</span><span class="hl-0"> </span><span class="hl-2">xhrRequest</span><span class="hl-0">.</span><span class="hl-7">send</span><span class="hl-0">(</span><span class="hl-2">url</span><span class="hl-0">, {</span><br/><span class="hl-0">  </span><span class="hl-4">// 选项说明见 API 文档</span><br/><span class="hl-0">});</span><br/><br/><span class="hl-2">res</span><span class="hl-0">.</span><span class="hl-2">data</span><span class="hl-0">; </span><span class="hl-4">// data 是响应数据</span><br/><span class="hl-2">res</span><span class="hl-0">.</span><span class="hl-2">options</span><span class="hl-0">; </span><span class="hl-4">// options 是请求选项</span><br/><span class="hl-2">res</span><span class="hl-0">.</span><span class="hl-2">requestWith</span><span class="hl-0">; </span><span class="hl-4">// requestWith 是所使用的适配器的标识</span>
+</code></pre>
+
+<a href="#请求选项的合并" id="请求选项的合并" style="color: inherit; text-decoration: none;">
+  <h3>请求选项的合并</h3>
+</a>
+<p>实例化 Request 实例时可以传入基础选项。调用 send 方法时，传入的选项将与基础选项合并。合并后的选项才是请求时使用的选项。</p>
+<pre><code class="language-javascript"><span class="hl-5">const</span><span class="hl-0"> </span><span class="hl-6">xhrRequest</span><span class="hl-0"> = </span><span class="hl-5">new</span><span class="hl-0"> </span><span class="hl-7">Request</span><span class="hl-0">(</span><span class="hl-2">xhrAdapter</span><span class="hl-0">, {</span><br/><span class="hl-0">  </span><span class="hl-2">responseType:</span><span class="hl-0"> </span><span class="hl-3">&#39;json&#39;</span><br/><span class="hl-0">  </span><span class="hl-2">preventCaching</span><span class="hl-0">: </span><span class="hl-5">false</span><br/><span class="hl-0">});</span><br/><br/><span class="hl-4">// 合并后的选项为 { preventCaching: true, responseType: &#39;json&#39; }</span><br/><span class="hl-2">xhrRequest</span><span class="hl-0">.</span><span class="hl-7">send</span><span class="hl-0">(</span><span class="hl-2">url</span><span class="hl-0">, {</span><br/><span class="hl-0">  </span><span class="hl-2">preventCaching:</span><span class="hl-0"> </span><span class="hl-5">true</span><br/><span class="hl-0">});</span>
+</code></pre>
+
+<a href="#get-请求" id="get-请求" style="color: inherit; text-decoration: none;">
+  <h3>GET 请求</h3>
+</a>
+<pre><code class="language-javascript"><span class="hl-4">// 以下两种调用方法，发送的请求是一样的</span><br/><span class="hl-1">await</span><span class="hl-0"> </span><span class="hl-2">xhrRequest</span><span class="hl-0">.</span><span class="hl-7">send</span><span class="hl-0">(</span><span class="hl-3">&#39;/detail?id=12345&#39;</span><span class="hl-0">);</span><br/><span class="hl-1">await</span><span class="hl-0"> </span><span class="hl-2">xhrRequest</span><span class="hl-0">.</span><span class="hl-7">send</span><span class="hl-0">(</span><span class="hl-3">&#39;/detail&#39;</span><span class="hl-0">, {</span><br/><span class="hl-0">  </span><span class="hl-2">params:</span><span class="hl-0"> { </span><span class="hl-2">id:</span><span class="hl-0"> </span><span class="hl-3">&#39;12345&#39;</span><span class="hl-0"> }</span><br/><span class="hl-0">});</span>
+</code></pre>
+
+<a href="#post-请求" id="post-请求" style="color: inherit; text-decoration: none;">
+  <h3>POST 请求</h3>
+</a>
+<p>把 <code>method</code> 选项的值设为 <code>POST</code>，就可以发送 POST 请求。</p>
+<pre><code class="language-javascript"><span class="hl-1">await</span><span class="hl-0"> </span><span class="hl-2">xhrRequest</span><span class="hl-0">.</span><span class="hl-7">send</span><span class="hl-0">(</span><span class="hl-3">&#39;/login&#39;</span><span class="hl-0">, {</span><br/><span class="hl-0">  </span><span class="hl-2">method:</span><span class="hl-0"> </span><span class="hl-3">&#39;POST&#39;</span><span class="hl-0">,</span><br/><span class="hl-0">  </span><span class="hl-2">data:</span><span class="hl-0"> {</span><br/><span class="hl-0">    </span><span class="hl-2">username:</span><span class="hl-0"> </span><span class="hl-3">&#39;user&#39;</span><span class="hl-0">,</span><br/><span class="hl-0">    </span><span class="hl-2">password:</span><span class="hl-0"> </span><span class="hl-3">&#39;qwer123&#39;</span><br/><span class="hl-0">  }</span><br/><span class="hl-0">});</span>
+</code></pre>
+<p>如果 POST 请求的部分数据是以 URL 参数的形式传输，仍然可以放到 <code>params</code> 选项中：</p>
+<pre><code class="language-javascript"><span class="hl-1">await</span><span class="hl-0"> </span><span class="hl-2">xhrRequest</span><span class="hl-0">.</span><span class="hl-7">send</span><span class="hl-0">(</span><span class="hl-3">&#39;/login&#39;</span><span class="hl-0">, {</span><br/><span class="hl-0">  </span><span class="hl-2">method:</span><span class="hl-0"> </span><span class="hl-3">&#39;POST&#39;</span><span class="hl-0">,</span><br/><span class="hl-0">  </span><span class="hl-2">params:</span><span class="hl-0"> {</span><br/><span class="hl-0">    </span><span class="hl-2">from:</span><span class="hl-0"> </span><span class="hl-3">&#39;promotion&#39;</span><br/><span class="hl-0">  },</span><br/><span class="hl-0">  </span><span class="hl-2">data:</span><span class="hl-0"> {</span><br/><span class="hl-0">    </span><span class="hl-2">username:</span><span class="hl-0"> </span><span class="hl-3">&#39;user&#39;</span><span class="hl-0">,</span><br/><span class="hl-0">    </span><span class="hl-2">password:</span><span class="hl-0"> </span><span class="hl-3">&#39;qwer123&#39;</span><br/><span class="hl-0">  }</span><br/><span class="hl-0">});</span>
+</code></pre>
+<p>默认情况下，POST 请求的数据是以 <code>application/x-www-form-urlencoded</code> 编码发送的。如果需要发送 <code>application/json</code> 编码的数据，可以把 <code>requestType</code> 设置为 <code>json</code>。</p>
+<pre><code class="language-javascript"><span class="hl-1">await</span><span class="hl-0"> </span><span class="hl-2">xhrRequest</span><span class="hl-0">.</span><span class="hl-7">send</span><span class="hl-0">(</span><span class="hl-3">&#39;/login&#39;</span><span class="hl-0">, {</span><br/><span class="hl-0">  </span><span class="hl-2">method:</span><span class="hl-0"> </span><span class="hl-3">&#39;POST&#39;</span><span class="hl-0">,</span><br/><span class="hl-0">  </span><span class="hl-2">requestType:</span><span class="hl-0"> </span><span class="hl-3">&#39;json&#39;</span><span class="hl-0">,</span><br/><span class="hl-0">  </span><span class="hl-2">params:</span><span class="hl-0"> {</span><br/><span class="hl-0">    </span><span class="hl-2">from:</span><span class="hl-0"> </span><span class="hl-3">&#39;promotion&#39;</span><br/><span class="hl-0">  },</span><br/><span class="hl-0">  </span><span class="hl-2">data:</span><span class="hl-0"> {</span><br/><span class="hl-0">    </span><span class="hl-2">username:</span><span class="hl-0"> </span><span class="hl-3">&#39;user&#39;</span><span class="hl-0">,</span><br/><span class="hl-0">    </span><span class="hl-2">password:</span><span class="hl-0"> </span><span class="hl-3">&#39;qwer123&#39;</span><br/><span class="hl-0">  }</span><br/><span class="hl-0">});</span>
+</code></pre>
+
+<a href="#防止缓存" id="防止缓存" style="color: inherit; text-decoration: none;">
+  <h3>防止缓存</h3>
+</a>
+<p>设置 <code>preventCaching</code> 选项为 <code>true</code> 后，<code>send</code> 方法会在请求的 URL 后拼接时间戳参数（任何请求方式都有效）。</p>
+<pre><code class="language-javascript"><span class="hl-4">// 实际请求的地址类似于 /detail?id=12345&amp;_=1672712809951</span><br/><span class="hl-1">await</span><span class="hl-0"> </span><span class="hl-2">xhrRequest</span><span class="hl-0">.</span><span class="hl-7">send</span><span class="hl-0">(</span><span class="hl-3">&#39;/detail&#39;</span><span class="hl-0">, {</span><br/><span class="hl-0">  </span><span class="hl-2">params:</span><span class="hl-0"> { </span><span class="hl-2">id:</span><span class="hl-0"> </span><span class="hl-3">&#39;12345&#39;</span><span class="hl-0"> },</span><br/><span class="hl-0">  </span><span class="hl-2">preventCaching:</span><span class="hl-0"> </span><span class="hl-5">true</span><br/><span class="hl-0">});</span>
+</code></pre>
+
+<a href="#请求超时" id="请求超时" style="color: inherit; text-decoration: none;">
+  <h3>请求超时</h3>
+</a>
+<p>可以通过 <code>timeout</code> 指定请求的超时时间（毫秒）。如果请求超时，将会返回拒绝状态的 promise 实例。</p>
+<pre><code class="language-javascript"><span class="hl-1">import</span><span class="hl-0"> { </span><span class="hl-2">RequestErrorType</span><span class="hl-0"> } </span><span class="hl-1">from</span><span class="hl-0"> </span><span class="hl-3">&#39;@just4/request/request-error&#39;</span><span class="hl-0">;</span><br/><br/><span class="hl-1">try</span><span class="hl-0"> {</span><br/><span class="hl-0">  </span><span class="hl-1">await</span><span class="hl-0"> </span><span class="hl-2">xhrRequeset</span><span class="hl-0">.</span><span class="hl-7">send</span><span class="hl-0">(</span><span class="hl-3">&#39;/login&#39;</span><span class="hl-0">, {</span><br/><span class="hl-0">    </span><span class="hl-2">method:</span><span class="hl-0"> </span><span class="hl-3">&#39;post&#39;</span><span class="hl-0">,</span><br/><span class="hl-0">    </span><span class="hl-2">data:</span><span class="hl-0"> {</span><br/><span class="hl-0">      </span><span class="hl-2">username:</span><span class="hl-0"> </span><span class="hl-3">&#39;user&#39;</span><span class="hl-0">,</span><br/><span class="hl-0">      </span><span class="hl-2">password:</span><span class="hl-0"> </span><span class="hl-3">&#39;qwer123&#39;</span><br/><span class="hl-0">    },</span><br/><span class="hl-0">    </span><span class="hl-2">timeout:</span><span class="hl-0"> </span><span class="hl-8">8000</span><br/><span class="hl-0">  });</span><br/><span class="hl-0">} </span><span class="hl-1">catch</span><span class="hl-0"> (</span><span class="hl-2">e</span><span class="hl-0">) {</span><br/><span class="hl-0">  </span><span class="hl-1">if</span><span class="hl-0"> (</span><span class="hl-2">e</span><span class="hl-0">.</span><span class="hl-2">type</span><span class="hl-0"> === </span><span class="hl-2">RequestErrorType</span><span class="hl-0">.</span><span class="hl-6">TIMEOUT</span><span class="hl-0">) {</span><br/><span class="hl-0">    </span><span class="hl-4">// 请求超时</span><br/><span class="hl-0">  }</span><br/><span class="hl-0">}</span>
+</code></pre>
+
+<a href="#取消请求" id="取消请求" style="color: inherit; text-decoration: none;">
+  <h3>取消请求</h3>
+</a>
+<p>先通过 <code>receiveTaskId</code> 把请求的 id 记录下来，通过 <code>cancel</code> 方法取消请求。如果请求在完成前被取消，将会返回拒绝状态的 promise 实例。</p>
+<pre><code class="language-javascript"><span class="hl-5">let</span><span class="hl-0"> </span><span class="hl-2">taskId</span><span class="hl-0"> = </span><span class="hl-8">0</span><span class="hl-0">;</span><br/><br/><span class="hl-7">setTimeout</span><span class="hl-0">(() </span><span class="hl-5">=&gt;</span><span class="hl-0"> {</span><br/><span class="hl-0">  </span><span class="hl-7">cancel</span><span class="hl-0">(</span><span class="hl-2">requestId</span><span class="hl-0">);</span><br/><span class="hl-0">}, </span><span class="hl-8">5000</span><span class="hl-0">);</span><br/><br/><span class="hl-1">try</span><span class="hl-0"> {</span><br/><span class="hl-0">  </span><span class="hl-1">await</span><span class="hl-0"> </span><span class="hl-2">xhrRequest</span><span class="hl-0">.</span><span class="hl-7">send</span><span class="hl-0">(</span><span class="hl-3">&#39;/login&#39;</span><span class="hl-0">, {</span><br/><span class="hl-0">    </span><span class="hl-2">method:</span><span class="hl-0"> </span><span class="hl-3">&#39;POST&#39;</span><span class="hl-0">,</span><br/><span class="hl-0">    </span><span class="hl-2">data:</span><span class="hl-0"> {</span><br/><span class="hl-0">      </span><span class="hl-2">username:</span><span class="hl-0"> </span><span class="hl-3">&#39;user&#39;</span><span class="hl-0">,</span><br/><span class="hl-0">      </span><span class="hl-2">password:</span><span class="hl-0"> </span><span class="hl-3">&#39;qwer123&#39;</span><br/><span class="hl-0">    },</span><br/><span class="hl-0">    </span><span class="hl-7">receiveTaskId</span><span class="hl-0">(</span><span class="hl-2">id</span><span class="hl-0">) {</span><br/><span class="hl-0">      </span><span class="hl-2">taskId</span><span class="hl-0"> = </span><span class="hl-2">id</span><span class="hl-0">;</span><br/><span class="hl-0">    }</span><br/><span class="hl-0">  });</span><br/><span class="hl-0">} </span><span class="hl-1">catch</span><span class="hl-0"> (</span><span class="hl-2">e</span><span class="hl-0">) {</span><br/><span class="hl-0">  </span><span class="hl-1">if</span><span class="hl-0"> (</span><span class="hl-2">e</span><span class="hl-0">.</span><span class="hl-2">type</span><span class="hl-0"> === </span><span class="hl-2">RequestErrorType</span><span class="hl-0">.</span><span class="hl-6">ABORT</span><span class="hl-0">) {</span><br/><span class="hl-0">    </span><span class="hl-4">// 请求被取消</span><br/><span class="hl-0">  }</span><br/><span class="hl-0">}</span>
+</code></pre>
+
+<a href="#api-文档" id="api-文档" style="color: inherit; text-decoration: none;">
+  <h2>API 文档</h2>
+</a>
+<ul>
+<li><a href="https://heeroluo.github.io/just4/request/index.html">API 文档</a></li>
+</ul>
+</div></div><div class="col-4 col-menu menu-sticky-wrap menu-highlight"><nav class="tsd-navigation primary"><ul><li class="current"><a href="modules.html">Modules</a></li><li class=" tsd-kind-module"><a href="modules/adapter_wx_request.html">adapter/wx-<wbr/>request</a></li><li class=" tsd-kind-module"><a href="modules/adapter_xhr.html">adapter/xhr</a></li><li class=" tsd-kind-module"><a href="modules/adapter_xhr_types.html">adapter/xhr/types</a></li><li class=" tsd-kind-module"><a href="modules/index.html">index</a></li><li class=" tsd-kind-module"><a href="modules/request_error.html">request-<wbr/>error</a></li><li class=" tsd-kind-module"><a href="modules/types.html">types</a></li></ul></nav></div></div></div><footer class="with-border-bottom"><div class="container"><h2>Legend</h2><div class="tsd-legend-group"><ul class="tsd-legend"><li class="tsd-kind-variable"><span class="tsd-kind-icon">Variable</span></li><li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li></ul><ul class="tsd-legend"><li class="tsd-kind-enum"><span class="tsd-kind-icon">Enumeration</span></li></ul><ul class="tsd-legend"><li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li></ul><ul class="tsd-legend"><li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li></ul></div><h2>Settings</h2><p>Theme <select id="theme"><option value="os">OS</option><option value="light">Light</option><option value="dark">Dark</option></select></p></div></footer><div class="container tsd-generator"><p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p></div><div class="overlay"></div><script src="assets/main.js"></script></body></html>
