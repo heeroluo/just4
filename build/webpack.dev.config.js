@@ -55,7 +55,8 @@ module.exports = {
         loader: 'ts-loader',
         options: {
           configFile: tsCfgPath
-        }
+        },
+        exclude: /node_modules/
       }
     ]
   },

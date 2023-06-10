@@ -3,20 +3,8 @@
  * @packageDocumentation
  * @internal
  */
-import { IAJAXOptions } from 'src/interfaces';
-import { AJAXError } from '../ajax-error';
-/**
- * 创建放弃请求的错误对象。
- * @param message 错误信息。
- * @returns 错误对象。
- */
-export declare function createCancelError(xhr: Readonly<XMLHttpRequest>, options: Readonly<IAJAXOptions>, message?: string): AJAXError;
-/**
- * 创建超时的错误对象。
- * @param message 错误信息。
- * @returns 错误对象。
- */
-export declare function createTimeoutError(xhr: Readonly<XMLHttpRequest>, options: Readonly<IAJAXOptions>, message?: string): AJAXError;
+import type { IRequestResult } from '../types';
+import { RequestWith } from '../types';
 /**
  * 检查指定 URL 与当前页是否跨域。
  * @param url 指定 URL。
@@ -40,3 +28,25 @@ export declare function parseMIMEType(contentType: string | null): string;
  * @returns 是否为错误的 HTTP 状态码。
  */
 export declare function isErrorStatus(status: number): boolean;
+/**
+ * 创建请求结果（主要作用是设置 requestWith 属性，并冻结对象）。
+ * @param result 请求结果对象。
+ * @param requestWith 请求方式。
+ * @returns 处理后的请求结果。
+ */
+export declare function handleRequestResult<T extends IRequestResult>(result: T, requestWith: RequestWith): Readonly<T>;
+/**
+ * 拼接 URL。
+ * @param baseURL 基础 URL。
+ * @param url 要拼接的 URL。
+ * @returns 拼接后的 URL。
+ */
+export declare function joinURL(baseURL: string, url: string): string;
+/**
+ * 生成请求的完整 URL。
+ * @param url 请求 URL。
+ * @param params GET 参数。
+ * @param preventCaching 是否防止缓存（加时间戳）。
+ * @returns 完整 URL。
+ */
+export declare function concatURLParams(url: string, params?: object | string, preventCaching?: boolean): string;

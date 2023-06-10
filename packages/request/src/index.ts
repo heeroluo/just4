@@ -17,6 +17,11 @@ import {
 import { joinURL, concatURLParams } from './internal/util';
 
 
+export { xhrAdapter, IXhrRequestResult } from './adapter/xhr';
+export { wxRequestAdapter, IWxRequestResult } from './adapter/wx-request';
+export { RequestError, RequestErrorType } from './request-error';
+
+
 /**
  * 请求类。
  */
@@ -89,7 +94,7 @@ export class Request {
         username: opts.username,
         password: opts.password,
         beforeSend: opts.beforeSend,
-        receiveCancelId: opts.receiveCancelId,
+        receiveTaskId: opts.receiveTaskId,
         onUploadProgress: opts.onUploadProgress,
         onDownloadProgress: opts.onDownloadProgress
       })

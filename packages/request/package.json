@@ -2,7 +2,7 @@
   "name": "@just4/request",
   "version": "0.1.0",
   "description": "Just for making request easier to use in browser and miniprogram.",
-  "keywords": ["ajax", "XMLHttpRequest", "XDomainRequest", "wx.request"],
+  "keywords": ["ajax", "XMLHttpRequest", "XDomainRequest", "小程序", "wx.request"],
   "scripts": {
     "link-deps": "ln -s ../../node_modules ./node_modules",
     "dev": "webpack-dev-server --config ../../build/webpack.dev.config.js",

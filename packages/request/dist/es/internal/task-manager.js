@@ -1,0 +1,1 @@
+export class TaskManager{constructor(){this.__autoId=0,this.__list=Object.create(null)}addTask(t){const s=++this.__autoId;return this.__list[s]=t,s}removeTask(t){const s=this.__list[t];return delete this.__list[t],s}}

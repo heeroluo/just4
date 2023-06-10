@@ -11,7 +11,7 @@ import {
   RequestWith,
 } from '../../types';
 import { isErrorStatus, handleRequestResult } from '../../internal/util';
-import { MSG_HTTP_ERROR, MSG_ABORTED } from '../../internal/message';
+import { MSG_HTTP_ERROR, MSG_TIMEOUT, MSG_ABORTED, MSG_NETWORK_ERROR } from '../../internal/message';
 import { TaskManager } from '../../internal/task-manager';
 import { RequestErrorType, RequestError } from '../../request-error';
 
@@ -68,7 +68,8 @@ export const wxRequestAdapter: IRequestAdapter = {
         header: opts.headers,
         timeout: opts.timeout,
         method: opts.method === 'PATCH' ? 'PUT' : opts.method,
-        dataType: opts.responseType === 'json' ? 'json' : undefined,
+        dataType: opts.responseType === 'json' ? 'json' : '其他',
+        responseType: opts.responseType === 'arraybuffer' ? 'arraybuffer' : 'text',
 
         success(res) {
           const result = handleRequestResult<IWxRequestResult>({
@@ -96,10 +97,28 @@ export const wxRequestAdapter: IRequestAdapter = {
         },
 
         fail(err) {
+          let errMsg: string;
+          let errType: RequestErrorType;
+          switch (err.errMsg) {
+            case 'request:fail timeout':
+              errMsg = MSG_TIMEOUT;
+              errType = RequestErrorType.TIMEOUT;
+              break;
+
+            case 'request:fail abort':
+              errMsg = MSG_ABORTED;
+              errType = RequestErrorType.ABORTED;
+              break;
+
+            default:
+              errMsg = MSG_NETWORK_ERROR;
+              errType = RequestErrorType.NETWORK_ERROR;
+          }
+
           reject(
             new RequestError({
-              message: err.errMsg,
-              type: RequestErrorType.NETWORK_ERROR,
+              message: errMsg,
+              type: errType,
               result: handleRequestResult(
                 { options: opts },
                 RequestWith.WX_REQUEST
@@ -120,9 +139,9 @@ export const wxRequestAdapter: IRequestAdapter = {
         reject
       });
 
-      const receiveCancelId = opts.receiveCancelId;
-      if (typeof receiveCancelId === 'function') {
-        receiveCancelId(taskId);
+      const receiveTaskId = opts.receiveTaskId;
+      if (typeof receiveTaskId === 'function') {
+        receiveTaskId(taskId);
       }
     });
   },
@@ -136,17 +155,6 @@ export const wxRequestAdapter: IRequestAdapter = {
     const task = taskManager.removeTask(id);
     if (task) {
       task.task.abort();
-      const reject = task.reject;
-      reject(
-        new RequestError({
-          message: MSG_ABORTED,
-          type: RequestErrorType.ABORTED,
-          result: handleRequestResult(
-            { options: task.options },
-            RequestWith.WX_REQUEST
-          )
-        })
-      );
       return true;
     }
     return false;

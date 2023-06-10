@@ -1,12 +1,11 @@
 import 'core-js';
-import { Request } from '@/index';
-import { xhrAdapter } from '@/adapter/xhr';
-import { RequestErrorType } from '@/request-error';
+import { Request, xhrAdapter, RequestErrorType } from '@/index';
 
-const request = new Request(xhrAdapter);
+const request = new Request(xhrAdapter, {
+  baseURL: '/api/'
+});
 
 const QUnit = (<any>window).QUnit;
-
 QUnit.start();
 
 QUnit.test('返回文本', function(assert: any) {
@@ -14,8 +13,8 @@ QUnit.test('返回文本', function(assert: any) {
   const done = assert.async();
 
   Promise.all([
-    request.send('/api/ajax/text', { method: 'GET', responseType: 'text', params: { num: 100 } }),
-    request.send('/api/ajax/text', { method: 'POST', responseType: 'text', data: { num: 200 } })
+    request.send('text', { method: 'GET', responseType: 'text', params: { num: 100 } }),
+    request.send('text', { method: 'POST', responseType: 'text', data: { num: 200 } })
   ]).then(([res1, res2]) => {
     assert.strictEqual(res1.data, '100');
     assert.strictEqual(res2.data, '200');
@@ -28,8 +27,8 @@ QUnit.test('返回 JSON', function(assert: any) {
   const done = assert.async();
 
   Promise.all([
-    request.send('/api/ajax/json', { method: 'GET', params: { num: 100 } }),
-    request.send('/api/ajax/json', { method: 'POST', data: { num: 200 } })
+    request.send('json', { method: 'GET', params: { num: 100 } }),
+    request.send('json', { method: 'POST', data: { num: 200 } })
   ]).then(([res1, res2]) => {
     assert.deepEqual(res1.data, { num: '100' });
     assert.deepEqual(res2.data, { num: '200' });
@@ -41,7 +40,7 @@ QUnit.test('超时', function(assert: any) {
   assert.expect(1);
   const done = assert.async();
 
-  request.send('/api/ajax/timeout', { timeout: 2000 }).then(
+  request.send('timeout', { timeout: 2000 }).then(
     null,
     function(error) {
       assert.deepEqual(error.type, RequestErrorType.TIMEOUT);
@@ -56,8 +55,8 @@ QUnit.test('取消', function(assert: any) {
 
   let ajaxId = 0;
 
-  request.send('/api/ajax/timeout', {
-    receiveCancelId: function(id) { ajaxId = id; }
+  request.send('timeout', {
+    receiveTaskId: function(id) { ajaxId = id; }
   }).then(
     null,
     function(error) {
@@ -75,7 +74,7 @@ QUnit.test('请求错误', function(assert: any) {
   assert.expect(2);
   const done = assert.async();
 
-  request.send('/api/ajax/error', {
+  request.send('error', {
     params: { num: 100 }
   }).then(
     null,

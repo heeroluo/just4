@@ -1,0 +1,1 @@
+export const MSG_NETWORK_ERROR="Network error";export const MSG_ABORTED="Request aborted";export const MSG_TIMEOUT="Request timeout";export const MSG_HTTP_ERROR="HTTP status error(${status})";

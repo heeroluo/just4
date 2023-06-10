@@ -1,0 +1,1 @@
+export var RequestWith;!function(t){t.XHR="XMLHttpRequest",t.WX_REQUEST="wx.request"}(RequestWith||(RequestWith={}));

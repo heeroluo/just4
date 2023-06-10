@@ -81,9 +81,9 @@ export interface IRequestOptions {
    */
   beforeSend?: (xhr?: XMLHttpRequest) => void,
   /**
-   * 提供一个编号，可用于中断请求。
+   * 接收请求任务编号的函数，该编号可用于中断请求。
    */
-  receiveCancelId?: (id: number) => void,
+  receiveTaskId?: (id: number) => void,
   /**
    * 上传进度变化时触发的回调，仅在 XMLHttpRequest 请求方式下有效。
    */

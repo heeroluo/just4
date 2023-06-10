@@ -187,9 +187,9 @@ export const xhrAdapter: IRequestAdapter = {
 
       xhr.send(body || '');
 
-      const receiveCancelId = opts.receiveCancelId;
-      if (typeof receiveCancelId === 'function') {
-        receiveCancelId(taskId);
+      const receiveTaskId = opts.receiveTaskId;
+      if (typeof receiveTaskId === 'function') {
+        receiveTaskId(taskId);
       }
     });
   },
