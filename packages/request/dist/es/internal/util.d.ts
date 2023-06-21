@@ -50,3 +50,11 @@ export declare function joinURL(baseURL: string, url: string): string;
  * @returns 完整 URL。
  */
 export declare function concatURLParams(url: string, params?: object | string, preventCaching?: boolean): string;
+/**
+ * 设置 header（不区分属性大小写）。
+ * @param headers 存放所有 header 的对象。
+ * @param name header 名。
+ * @param value header 值。
+ * @param overwrite 是否覆盖原有的值。
+ */
+export declare function setHeader(headers: any, name: string, value: unknown, overwrite?: boolean): void;

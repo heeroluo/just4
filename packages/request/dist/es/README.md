@@ -161,7 +161,7 @@ try {
 
 ### 取消请求
 
-先通过 `receiveCancelId` 把请求的 id 记录下来，通过 `cancel` 方法取消请求。如果请求在完成前被取消，将会返回拒绝状态的 promise 实例。
+先通过 `receiveTaskId` 把请求的 id 记录下来，通过 `cancel` 方法取消请求。如果请求在完成前被取消，将会返回拒绝状态的 promise 实例。
 
 ```javascript
 let taskId = 0;

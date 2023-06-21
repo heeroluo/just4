@@ -10,7 +10,7 @@ import {
   RequestAdapterOptions,
   RequestWith,
 } from '../../types';
-import { isErrorStatus, handleRequestResult } from '../../internal/util';
+import { isErrorStatus, handleRequestResult, setHeader } from '../../internal/util';
 import { MSG_HTTP_ERROR, MSG_TIMEOUT, MSG_ABORTED, MSG_NETWORK_ERROR } from '../../internal/message';
 import { TaskManager } from '../../internal/task-manager';
 import { RequestErrorType, RequestError } from '../../request-error';
@@ -61,6 +61,14 @@ export const wxRequestAdapter: IRequestAdapter = {
       if (typeof beforeSend === 'function') { beforeSend(); }
 
       let taskId = 0;
+
+      if (opts.method !== 'GET') {
+        if (opts.requestType === 'json') {
+          setHeader(opts.headers, 'Content-Type', 'application/json', false);
+        } else {
+          setHeader(opts.headers, 'Content-Type', 'application/x-www-form-urlencoded', false);
+        }
+      }
 
       const task = wx.request({
         url: opts.url,

@@ -128,3 +128,27 @@ export function concatURLParams(
 
   return url;
 }
+
+
+/**
+ * 设置 header（不区分属性大小写）。
+ * @param headers 存放所有 header 的对象。
+ * @param name header 名。
+ * @param value header 值。
+ * @param overwrite 是否覆盖原有的值。
+ */
+export function setHeader(
+  headers: any,
+  name: string,
+  value: unknown,
+  overwrite = true
+) {
+  const lowerName = name.toLowerCase();
+  const result = Object.keys(headers).some((key: string) => {
+    if (key.toLowerCase() === lowerName) {
+      if (overwrite) { headers[key] = value; }
+      return true;
+    }
+  });
+  if (!result) { headers[name] = value; }
+}

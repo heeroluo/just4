@@ -1,6 +1,6 @@
 {
   "name": "@just4/request",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Just for making request easier to use in browser and miniprogram.",
   "keywords": [
     "ajax",

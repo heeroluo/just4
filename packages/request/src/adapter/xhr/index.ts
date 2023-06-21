@@ -17,22 +17,23 @@ import { RequestError, RequestErrorType } from '../../request-error';
 import {
   isOldIE,
   isCrossDomain,
-  handleRequestResult
+  handleRequestResult,
+  setHeader
 } from '../../internal/util';
 import { TaskManager } from '../../internal/task-manager';
 import { MSG_ABORTED } from '../../internal/message';
 import type { IXhrRequestResult } from './types';
 import { createXhrEventListeners } from './events';
 
-
 export type { IXhrRequestResult };
+
 
 // 任务管理器存储的任务对象
 interface IRequestTask {
   // 发送请求的 XMLHttpRequest 实例
-  xhr: XMLHttpRequest,
+  xhr: XMLHttpRequest
   // 请求选项
-  options: Readonly<RequestAdapterOptions>,
+  options: Readonly<RequestAdapterOptions>
   // 出错时执行的函数
   reject: (reason: Readonly<RequestError>) => void
 }
@@ -77,8 +78,8 @@ function setXhrPropsAndHeaders(
   }
 
   // 同域才设置 X-Request-With，避免跨域情况下没有允许这个自定义头
-  if (!isCross && headers['X-Request-With'] == null) {
-    headers['X-Request-With'] = 'XMLHttpRequest';
+  if (!isCross) {
+    setHeader(headers, 'X-Request-With', 'XMLHttpRequest', false);
   }
 
   // 自定义请求头
@@ -111,7 +112,8 @@ function handleRequestBody(
       contentType = 'application/x-www-form-urlencoded; charset=utf-8';
     }
   }
-  headers['Content-Type'] = headers['Content-Type'] || contentType;
+
+  setHeader(headers, 'Content-Type', contentType, false);
 
   return body;
 }
