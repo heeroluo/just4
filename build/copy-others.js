@@ -1,6 +1,6 @@
 /**
  * @file 拷贝非源代码文件到包的发布目录，包括：package.json、LICENSE、README.md。
- * 其中，在拷贝 package.json 的时候，会移除开发阶段使用的字段。
+ * 其中，在拷贝 package.json 的时候，会修改其中的字段。
  */
 
 const fs = require('fs');
@@ -16,11 +16,16 @@ Object.keys(rootPkgJSON).forEach((key) => {
     pkgJSON[key] = rootPkgJSON[key];
   }
 });
+// 补充包入口字段
+if (fs.existsSync(path.join(pkgDir, 'src', 'index.ts'))) {
+  pkgJSON['main'] = 'index.js';
+}
 // 移除开发阶段使用的字段
 delete pkgJSON.devDependencies;
 delete pkgJSON.scripts;
 delete pkgJSON.private;
 delete pkgJSON.devPort;
+
 fs.writeFileSync(
   path.join(pkgDir, 'dist', 'es', 'package.json'),
   JSON.stringify(pkgJSON, null, 2),
