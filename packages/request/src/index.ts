@@ -102,6 +102,34 @@ export class Request {
   }
 
   /**
+   * 发送 GET 请求。
+   * @param url 请求地址。
+   * @param options 请求选项。
+   * @returns 发送请求的 promise 实例。
+   */
+  get(
+    url: string, options: IRequestOptions
+  ): Promise<Readonly<IRequestResult>> {
+    const opts = assignProps(Object.create(null), options);
+    opts.method = 'GET';
+    return this.send(url, opts);
+  }
+
+  /**
+   * 发送 POST 请求。
+   * @param url 请求地址。
+   * @param options 请求选项。
+   * @returns 发送请求的 promise 实例。
+   */
+  post(
+    url: string, options: IRequestOptions
+  ): Promise<Readonly<IRequestResult>> {
+    const opts = assignProps(Object.create(null), options);
+    opts.method = 'POST';
+    return this.send(url, opts);
+  }
+
+  /**
    * 中断请求。
    * @param id 请求编号。
    * @returns 中断请求是否有被执行。如果返回 false，则该请求可能不存在或已完成。
