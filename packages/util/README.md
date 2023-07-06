@@ -20,4 +20,4 @@ npm i @just4/util
 
 ### v1.0.1
 
-- package.json 中增加 `main` 和 `miniprogram` 两个字段.
+- package.json 中增加 `main` 和 `miniprogram` 两个字段。
