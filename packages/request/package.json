@@ -12,12 +12,13 @@
     "gen-doc": "typedoc --options ../typedoc.js --tsconfig ./src/tsconfig.json"
   },
   "dependencies": {
-    "@just4/util": "^1.0.0",
-    "@just4/querystring": "^1.0.0"
+    "@just4/util": "^1.0.1",
+    "@just4/querystring": "^1.0.1"
   },
   "peerDependencies": {
     "miniprogram-api-typings": "^3.9.1"
   },
+  "miniprogram": "./",
   "private": true,
   "devPort": 8606
 }
