@@ -1,6 +1,6 @@
 {
   "name": "@just4/querystring",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Just for querystring manipulation.",
   "keywords": [
     "querystring",
@@ -8,8 +8,9 @@
     "parse"
   ],
   "dependencies": {
-    "@just4/util": "^1.0.0"
+    "@just4/util": "^1.0.1"
   },
+  "miniprogram": "./",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/heeroluo/just4"
@@ -26,5 +27,6 @@
   "homepage": "https://github.com/heeroluo/just4#readme",
   "engines": {
     "node": ">=10.0.0"
-  }
+  },
+  "main": "index.js"
 }

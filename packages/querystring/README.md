@@ -54,3 +54,9 @@ appendToURL('https://abc.com/?a=1#hash', {
 
 ## 相关文档
 - [API 文档](https://heeroluo.github.io/just4/querystring/modules/index.html)
+
+## Changelog
+
+### v1.0.1
+
+- package.json 中增加 `main` 和 `miniprogram` 两个字段。
