@@ -15,3 +15,9 @@ npm i @just4/util
 ## 调用
 
 工具函数的功能和用法都较为简单，可参阅[API 文档](https://heeroluo.github.io/just4/util/modules/index.html)中的代码示例。
+
+## Changelog
+
+### v1.0.1
+
+- package.json 中增加 `main` 和 `miniprogram` 两个字段.
