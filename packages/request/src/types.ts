@@ -79,7 +79,11 @@ export interface IRequestOptions {
   /**
    * 发送请求前执行的操作。
    */
-  beforeSend?: (xhr?: XMLHttpRequest) => void
+  beforeSend?: (opts?: IRequestOptions) => IRequestOptions | void
+  /**
+   * 调用 XMLHttpRequest 对象的 send 方法前执行的操作。
+   */
+  beforeXhrSend?: (xhr: XMLHttpRequest) => void
   /**
    * 接收请求任务编号的函数，该编号可用于中断请求。
    */

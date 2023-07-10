@@ -68,11 +68,16 @@ export class Request {
     url: string,
     options: IRequestOptions
   ): Promise<Readonly<IRequestResult>> {
-    const opts = assignProps(
+    let opts = assignProps(
       Object.create(null),
       options,
       this._baseOptions
     );
+
+    const beforeSend = opts.beforeSend;
+    if (typeof beforeSend === 'function') {
+      opts = beforeSend(opts) ?? opts;
+    }
 
     if (opts.baseURL) { url = joinURL(opts.baseURL, url); }
     // 拼接 GET 参数
@@ -94,6 +99,7 @@ export class Request {
         username: opts.username,
         password: opts.password,
         beforeSend: opts.beforeSend,
+        beforeXhrSend: opts.beforeXhrSend,
         receiveTaskId: opts.receiveTaskId,
         onUploadProgress: opts.onUploadProgress,
         onDownloadProgress: opts.onDownloadProgress
