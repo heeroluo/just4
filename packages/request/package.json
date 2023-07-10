@@ -1,6 +1,6 @@
 {
   "name": "@just4/request",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Just for making request easier to use in browser and miniprogram.",
   "keywords": ["ajax", "XMLHttpRequest", "XDomainRequest", "小程序", "wx.request"],
   "scripts": {

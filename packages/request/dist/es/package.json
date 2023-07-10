@@ -1,6 +1,6 @@
 {
   "name": "@just4/request",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Just for making request easier to use in browser and miniprogram.",
   "keywords": [
     "ajax",
@@ -10,12 +10,13 @@
     "wx.request"
   ],
   "dependencies": {
-    "@just4/util": "^1.0.0",
-    "@just4/querystring": "^1.0.0"
+    "@just4/util": "^1.0.1",
+    "@just4/querystring": "^1.0.1"
   },
   "peerDependencies": {
     "miniprogram-api-typings": "^3.9.1"
   },
+  "miniprogram": "./",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/heeroluo/just4"
@@ -32,5 +33,6 @@
   "homepage": "https://github.com/heeroluo/just4#readme",
   "engines": {
     "node": ">=10.0.0"
-  }
+  },
+  "main": "index.js"
 }
