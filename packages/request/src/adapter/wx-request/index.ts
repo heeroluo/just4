@@ -57,9 +57,6 @@ export const wxRequestAdapter: IRequestAdapter = {
     opts: Readonly<RequestAdapterOptions>
   ): Promise<Readonly<IWxRequestResult>> {
     return new Promise((resolve, reject) => {
-      const beforeSend = opts.beforeSend;
-      if (typeof beforeSend === 'function') { beforeSend(); }
-
       let taskId = 0;
 
       if (opts.method !== 'GET') {

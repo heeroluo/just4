@@ -165,6 +165,7 @@ export const xhrAdapter: IRequestAdapter = {
       if (opts.responseType === 'blob' || opts.responseType === 'arraybuffer') {
         xhr.responseType = opts.responseType;
       }
+
       xhr.open(
         opts.method,
         opts.url,
@@ -182,9 +183,9 @@ export const xhrAdapter: IRequestAdapter = {
 
       setXhrPropsAndHeaders(xhr, opts, isCross, opts.headers);
 
-      const beforeSend = opts.beforeSend;
-      if (typeof beforeSend === 'function') {
-        beforeSend(xhr);
+      const beforeXhrSend = opts.beforeXhrSend;
+      if (typeof beforeXhrSend === 'function') {
+        beforeXhrSend(xhr);
       }
 
       xhr.send(body || '');
