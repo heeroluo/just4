@@ -20,3 +20,7 @@ export {
   mergeArray,
   isArrayLike
 } from './array';
+
+export {
+  addRelativeTime
+} from './date';
