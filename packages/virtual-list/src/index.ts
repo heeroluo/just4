@@ -329,15 +329,16 @@ export class VirtualList<ItemType extends object, ItemKey extends keyof ItemType
   protected _checkPosition(fromFetch: boolean): void {
     if (fromFetch) {
       // 加载并渲染数据后，会再次调用 _checkPosition 检查是否已经到达预读区间
-      // 为了防止 _fetch => _checkPosition => _fetch 的无限循环调用
-      // 增加来自 _fetch 的调用频率限制，1 秒内最多调用 10 次
+      // 为了防止 _fetch => _checkPosition => _fetch 的无限循环调用导致页面卡死
+      // 增加来自 _fetch 的调用频率限制，200 毫秒内最多调用 1 次
       if (this.__checkPositionCounterResetTimer) {
         clearTimeout(this.__checkPositionCounterResetTimer);
       }
       this.__checkPositionCounterResetTimer = window.setTimeout(() => {
         this.__checkPositionCounter = 0;
-      }, 1000);
-      if (this.__checkPositionCounter++ > 10) { return; }
+        this._checkPosition(fromFetch);
+      }, 200);
+      if (this.__checkPositionCounter++ > 1) { return; }
     }
 
     const container = this._container;

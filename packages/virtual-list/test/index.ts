@@ -30,6 +30,8 @@ for (i = 0; i < 200; i++) {
 
 const PAGE_SIZE = 20;
 
+let doNotRender = false;
+
 const dataSource: DataSource<ItemData> = {
   loadInitialData() {
     return new Promise((resolve) => {
@@ -66,6 +68,7 @@ const dataSource: DataSource<ItemData> = {
 
   loadPreviousData(ref: unknown) {
     console.log('load prev data: ' + ref);
+    doNotRender = false;
     return new Promise((resolve) => {
       setTimeout(function() {
         for (let i = 0; i < allData.length; i++) {
@@ -85,7 +88,11 @@ const renderer: Renderer<ItemData> = {
   renderItems(data: ItemData[]) {
     let html = '';
     data.forEach((item) => {
-      html += `<div class="list-item" data-id="${item.id}"><p>${item.content}</p><img src="${item.img}" /></div>`;
+      html += `<div class="list-item" data-id="${item.id}"`;
+      if (doNotRender) {
+        html += ' style="display: none;"';
+      }
+      html += `><p>${item.content}</p><img src="${item.img}" /></div>`;
     });
     const div = document.createElement('div');
     div.innerHTML = html;
