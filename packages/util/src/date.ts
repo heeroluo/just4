@@ -8,6 +8,7 @@ import { hasOwnProp } from './object';
 
 // 时间单位
 const addTime: Readonly<Record<string, (date: Date, amount: number) => void>> = {
+  msec(date, amount) { date.setMilliseconds(date.getMilliseconds() + amount); },
   sec(date, amount) { date.setSeconds(date.getSeconds() + amount); },
   min(date, amount) { date.setMinutes(date.getMinutes() + amount); },
   hour(date, amount) { date.setHours(date.getHours() + amount); },
@@ -19,7 +20,8 @@ const addTime: Readonly<Record<string, (date: Date, amount: number) => void>> = 
 /**
  * 返回指定日期加上相对时间后的日期。
  * @param date 指定日期。
- * @param relTime 相对时间。支持以下格式（%表示数字，复数 s 可有可无）：
+ * @param relTime 相对时间。支持以下格式（% 表示一个整数，复数 s 可有可无）：
+ *   - % msecs;
  *   - % secs；
  *   - % mins；
  *   - % hours；
@@ -33,19 +35,20 @@ const addTime: Readonly<Record<string, (date: Date, amount: number) => void>> = 
  * addRelativeTime(new Date(2020, 0, 1), '2 months'); // 2020-03-01 01:00:00
  * ```
  */
-export function addRelativeTime(
-  date = new Date(),
-  relTime: string
-): Date {
-  if (!/^([+-]?\d+)\s*([a-z]+)$/i.test(relTime)) {
-    throw new Error('Invalid relative date string.');
+export function addRelativeTime(date: Date, relTime?: string): Date {
+  const result = new Date(date.getTime());
+
+  if (!relTime) { return result; }
+  if (!/^([+-]?\d+)\s*([a-z]+)?$/i.test(relTime)) {
+    throw new Error('Invalid relative time string.');
   }
 
   const num = Number(RegExp.$1);
-  const unit = RegExp.$2.toLowerCase().replace(/s$/, ''); // 移除复数的 s;
+  const unit = (RegExp.$2 || 'msec')
+    .toLowerCase()
+    .replace(/s$/, ''); // 移除复数的 s;
 
   if (hasOwnProp(addTime, unit)) {
-    const result = new Date(date.getTime());
     addTime[unit](result, num);
     return result;
   } else {

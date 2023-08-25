@@ -74,7 +74,9 @@ module.exports = {
     'object-property-newline': ['error', {
       allowAllPropertiesOnSameLine: true
     }],
-    'operator-linebreak': ['error', 'after'],
+    'operator-linebreak': ['error', 'after', {
+      'overrides': { '?': 'before', ':': 'before' }
+    }],
     'eol-last': ['error', 'always'],
     'padded-blocks': 0,
 
