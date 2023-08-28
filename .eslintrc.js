@@ -150,6 +150,7 @@ module.exports = {
       'functions': false,
       'classes': false,
       'variables': true
-    }]
+    }],
+    '@typescript-eslint/no-empty-interface': 'warn'
   }
 };
