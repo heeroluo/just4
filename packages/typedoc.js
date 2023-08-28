@@ -14,5 +14,7 @@ module.exports = {
   excludeInternal: true,
   excludePrivate: true,
   excludeProtected: true,
-  listInvalidSymbolLinks: true
+  validation: {
+    invalidLink: true
+  }
 };
