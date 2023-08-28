@@ -18,6 +18,10 @@ npm i @just4/util
 
 ## Changelog
 
+### v1.1.0
+
+- 新增 date 模块，目前仅有 `addRelativeTime` 一个方法。
+
 ### v1.0.1
 
 - package.json 中增加 `main` 和 `miniprogram` 两个字段。
