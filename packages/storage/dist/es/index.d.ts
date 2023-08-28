@@ -3,6 +3,7 @@
  * @packageDocumentation
  */
 import { StorageWrap } from './storage-wrap';
+export { StorageWrap };
 /**
  * sessionStorage 的封装（通过 StorageWrap 包装了 sessionStorage）。
  * @example
@@ -13,7 +14,7 @@ import { StorageWrap } from './storage-wrap';
  * typeof session.getAsJSON('user'); // 'object'
  * ```
  */
-export declare const session: Readonly<StorageWrap>;
+export declare const session: Readonly<StorageWrap<object>>;
 /**
  * localStorage 的封装（通过 StorageWrap 包装了 localStorage）。
  * @example
@@ -25,4 +26,6 @@ export declare const session: Readonly<StorageWrap>;
  * typeof local.getAsJSON('user'); // 'object'
  * ```
  */
-export declare const local: Readonly<StorageWrap>;
+export declare const local: Readonly<StorageWrap<object>>;
+export { IActionParams, IGettingParams, ISettingParams, IRemovingParams } from './storage-wrap';
+export { ExpiresPlugin } from './expires-plugin';

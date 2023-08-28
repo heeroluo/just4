@@ -1,12 +1,15 @@
 {
   "name": "@just4/storage",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Just for making localStorage and sessionStorage easier to use.",
   "keywords": [
     "localStorage",
     "sessionStorage",
     "storage"
   ],
+  "dependencies": {
+    "@just4/util": "^1.1.0"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/heeroluo/just4"
@@ -24,5 +27,5 @@
   "engines": {
     "node": ">=10.0.0"
   },
-  "dependencies": {}
+  "main": "index.js"
 }

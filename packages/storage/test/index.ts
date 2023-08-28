@@ -1,6 +1,10 @@
 import 'core-js';
-import { local, session } from '@/index';
-
+import {
+  local,
+  session,
+  StorageWrap,
+  ExpiresPlugin
+} from '@/index';
 const QUnit = (<any>window).QUnit;
 
 QUnit.start();
@@ -21,4 +25,28 @@ QUnit.test('local', function(assert: any) {
   assert.deepEqual(local.getAsJSON('user'), user);
   local.remove('user');
   assert.ok(local.get('user') === null);
+});
+
+QUnit.test('local-enhancement-expires', function(assert: any) {
+  const enhancedLocal = new StorageWrap(localStorage, {
+    plugins: [
+      new ExpiresPlugin(localStorage)
+    ]
+  });
+
+  assert.expect(3);
+  const done = assert.async();
+
+  enhancedLocal.set('expired', '1', { expires: '-1 sec' });
+  assert.deepEqual(enhancedLocal.get('expired'), null);
+
+  enhancedLocal.set('test', '1', { expires: '5 secs' });
+
+  setTimeout(() => {
+    assert.deepEqual(enhancedLocal.get('test'), '1');
+  }, 2000);
+  setTimeout(() => {
+    assert.deepEqual(enhancedLocal.get('test'), null);
+    done();
+  }, 6000);
 });

@@ -7,7 +7,7 @@
 | get(key) | 即存储对象的 getItem 方法 |
 | getAsJSON(key) | 对 get 的结果执行 JSON.parse 后返回 |
 | set(key, value) | 调用存储对象的 setItem 方法时做了 try...catch 处理 |
-| setAsJSON(key, value) | 对 value 执行 JSON.stringify 后再调用 set |
+| setAsJSON(key, value, options) | 对 value 执行 JSON.stringify 后再调用 set |
 | remove(key) | 即存储对象的 removeItem 方法 |
 
 ## 安装
@@ -17,6 +17,8 @@ npm i @just4/storage
 ```
 
 ## 调用示例
+
+### 简单调用
 
 ```javascript
 import { local, session } from '@just4/storage';
@@ -37,3 +39,11 @@ typeof local.getAsJSON('user'); // 'object'
 
 ## 相关文档
 - [API 文档](https://heeroluo.github.io/just4/storage/modules/index.html)
+
+## Changelog
+
+### v1.1.0
+
+- StorageWrap 的 set 方法不再返回写入结果。
+- 对 StorageWrap 进行了重构使其能支持插件机制。
+- 新增过期时间插件 ExpiresPlugin，可以指定存储项的过期时间。

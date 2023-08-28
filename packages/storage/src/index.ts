@@ -3,7 +3,8 @@
  * @packageDocumentation
  */
 
-import { IStorage, StorageWrap } from './storage-wrap';
+import type { IStorage } from './storage-wrap';
+import { StorageWrap } from './storage-wrap';
 
 let sessionStorage: IStorage | undefined;
 let localStorage: IStorage | undefined;
@@ -15,6 +16,8 @@ if (typeof window !== 'undefined') {
   } catch (e) {
   }
 }
+
+export { StorageWrap };
 
 /**
  * sessionStorage 的封装（通过 StorageWrap 包装了 sessionStorage）。
@@ -44,3 +47,12 @@ export const session = Object.freeze(
 export const local = Object.freeze(
   new StorageWrap(localStorage)
 );
+
+export {
+  IActionParams,
+  IGettingParams,
+  ISettingParams,
+  IRemovingParams
+} from './storage-wrap';
+
+export { ExpiresPlugin } from './expires-plugin';
