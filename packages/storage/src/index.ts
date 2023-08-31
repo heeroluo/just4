@@ -1,21 +1,20 @@
 /**
- * 提供包装过的 localStorage、sessionStorage。
+ * 调用入口。
  * @packageDocumentation
  */
 
-import type { IStorage } from './storage-wrap';
 import { StorageWrap } from './storage-wrap';
 
-let sessionStorage: IStorage | undefined;
-let localStorage: IStorage | undefined;
-if (typeof window !== 'undefined') {
-  // Chrome 隐私模式，跨域 iframe 内访问本地存储的相关对象会抛出异常
-  try {
-    sessionStorage = window.sessionStorage;
-    localStorage = window.localStorage;
-  } catch (e) {
-  }
-}
+export {
+  ItemValue,
+  IStorage,
+  IStorageOptions,
+  StorageType,
+  IActionParams,
+  IGettingParams,
+  ISettingParams,
+  IRemovingParams
+} from './types';
 
 export { StorageWrap };
 
@@ -29,9 +28,7 @@ export { StorageWrap };
  * typeof session.getAsJSON('user'); // 'object'
  * ```
  */
-export const session = Object.freeze(
-  new StorageWrap(sessionStorage)
-);
+export const session = Object.freeze(new StorageWrap('session'));
 
 /**
  * localStorage 的封装（通过 StorageWrap 包装了 localStorage）。
@@ -44,15 +41,6 @@ export const session = Object.freeze(
  * typeof local.getAsJSON('user'); // 'object'
  * ```
  */
-export const local = Object.freeze(
-  new StorageWrap(localStorage)
-);
-
-export {
-  IActionParams,
-  IGettingParams,
-  ISettingParams,
-  IRemovingParams
-} from './storage-wrap';
+export const local = Object.freeze(new StorageWrap('local'));
 
 export { ExpiresPlugin } from './expires-plugin';

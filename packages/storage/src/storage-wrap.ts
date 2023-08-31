@@ -4,78 +4,17 @@
  */
 
 import { mergeArray } from '@just4/util/array';
+import type {
+  ItemValue,
+  IStorage,
+  StorageType,
+  IGettingParams,
+  ISettingParams,
+  IRemovingParams,
+  IStorageOptions
+} from './types';
+import { SimpleWrap } from './simple-wrap';
 
-
-/**
- * 存储项的值。
- */
-export type ItemValue = string | null;
-
-/**
- * 本地存储的接口。
- */
-export interface IStorage {
-  getItem: (key: string) => ItemValue
-  setItem: (key: string, value: string) => void
-  removeItem: (key: string) => void
-}
-
-/**
- * 执行具体动作的参数。
- */
-export interface IActionParams {
-  /**
-   * 键名。
-   */
-  key: string
-  /**
-   * 父对象。使用插件时，插件调用方为父对象。
-   */
-  parent: StorageWrap
-}
-
-/**
- * 获取存储项操作的参数。
- */
-export interface IGettingParams extends IActionParams {
-  /**
-   * 获取操作的结果。
-   */
-  value: ItemValue
-}
-
-/**
- * 写入存储项操作的参数。
- */
-export interface ISettingParams<T> extends IActionParams {
-  /**
-   * 存储项的值。
-   */
-  value: string
-  /**
-   * 写入操作的选项。
-   */
-  options?: T
-}
-
-/**
- * 移除存储项操作的参数。
- */
-export interface IRemovingParams extends IActionParams {}
-
-/**
- * 存储包装的选项。
- */
-export interface IStorageOptions {
-  /**
-   * 键前缀。
-   */
-  keyPrefix?: string
-  /**
-   * 使用的插件。
-   */
-  plugins?: StorageWrap[]
-}
 
 /**
  * 本地存储包装类。
@@ -84,7 +23,11 @@ export class StorageWrap<T extends object = object> {
   /**
    * 使用的存储对象。
    */
-  private readonly __storage: IStorage;
+  protected readonly _storage: SimpleWrap;
+  /**
+   * 当前存储对象是否有效（如果获取存储对象出现异常，则无效）。
+   */
+  public readonly available: boolean;
   /**
    * 存储包装的选项。
    */
@@ -96,19 +39,44 @@ export class StorageWrap<T extends object = object> {
 
   /**
    * 本地存储包装类。
+   * @since 2.0.0
    * @param storage 使用的存储对象。
    */
   constructor(
-    storage: IStorage = {
-      getItem() { return null; },
-      setItem() { throw new Error(''); },
-      removeItem() { return; }
-    },
-    options: IStorageOptions = {
-      keyPrefix: ''
-    }
+    storageType: StorageType,
+    options: IStorageOptions = { keyPrefix: '' }
   ) {
-    this.__storage = storage;
+    let storageObj: IStorage;
+
+    // Chrome 隐私模式下，
+    // 被 iframe 页面与父页面域名不一致时，
+    // 访问本地存储的相关对象会抛出异常，故增加 try...catch
+    try {
+      if (typeof storageType === 'function') {
+        storageObj = storageType();
+      } else if (storageType === 'local') {
+        storageObj = window.localStorage;
+      } else if (storageType === 'session') {
+        storageObj = window.sessionStorage;
+      } else {
+        throw new Error('Invalid storage type.');
+      }
+      this.available = true;
+
+    } catch (e) {
+      console.warn(
+        'The storage wrap is not available. ' +
+        'Message: ' + (<Error>e).message
+      );
+      storageObj = {
+        getItem() { return null; },
+        setItem() { throw new Error(''); },
+        removeItem() { return; }
+      };
+      this.available = false;
+    }
+
+    this._storage = new SimpleWrap(storageObj, options.keyPrefix);
     this._options = options;
     if (this._options.plugins) {
       mergeArray(this._plugins, this._options.plugins);
@@ -116,52 +84,17 @@ export class StorageWrap<T extends object = object> {
   }
 
   /**
-   * 返回前缀和键名拼接后的字符串。
-   * @param key 键名。
-   * @returns 前缀和键名拼接后的字符串。
-   */
-  public getRealKey(key: string): string {
-    return (this._options.keyPrefix ?? '') + key;
-  }
-
-  /**
-   * 获取存储项的原子方法。
-   * @param key 键名。
-   * @returns 存储项的值。
-   */
-  protected _getItem(key: string): ItemValue {
-    return this.__storage.getItem(this.getRealKey(key));
-  }
-
-  /**
-   * 设置存储项的原子方法。
-   * @param key 键名。
-   * @param value 存储项的值。
-   */
-  protected _setItem(key: string, value: string): void {
-    try {
-      this.__storage.setItem(this.getRealKey(key), value);
-    } catch (e) {}
-  }
-
-  /**
-   * 移除存储项的原子方法。
-   * @param key 键名。
-   */
-  protected _removeItem(key: string): void {
-    this.__storage.removeItem(this.getRealKey(key));
-  }
-
-  /**
    * 执行 get 操作的函数。
+   * @since 2.0.0
    * @param params get 操作的参数。
    */
   protected _doGetting(params: IGettingParams): void {
-    params.value = this._getItem(params.key);
+    params.value = this._storage.get(params.key);
   }
 
   /**
    * 用于在插件机制中处理 get 操作。
+   * @since 2.0.0
    * @param params get 操作的参数。
    */
   public handleGetting(params: IGettingParams): void {
@@ -201,21 +134,25 @@ export class StorageWrap<T extends object = object> {
 
   /**
    * 执行 set 操作的函数。
+   * @since 2.0.0
    * @param params set 操作的参数。
+   * @returns set 操作是否成功。
    */
-  protected _doSetting(params: ISettingParams<T>): void {
-    return this._setItem(params.key, params.value);
+  protected _doSetting(params: ISettingParams<T>): boolean {
+    return this._storage.set(params.key, params.value);
   }
 
   /**
    * 用于在插件机制中处理 set 操作。
+   * @since 2.0.0
    * @param params set 操作的参数。
+   * @returns set 操作是否成功。
    */
-  handleSetting(params: ISettingParams<T>): void {
-    this._doSetting(params);
-    this._plugins.forEach(function(plugin) {
-      plugin.handleSetting(params);
-    });
+  public handleSetting(params: ISettingParams<T>): boolean {
+    return this._doSetting(params) &&
+      this._plugins.every(function(plugin) {
+        return plugin.handleSetting(params);
+      });
   }
 
   /**
@@ -248,14 +185,16 @@ export class StorageWrap<T extends object = object> {
 
   /**
    * 执行 remove 操作的函数。
+   * @since 2.0.0
    * @param params remove 操作的参数。
    */
   protected _doRemoving(params: IRemovingParams): void {
-    this._removeItem(this.getRealKey(params.key));
+    this._storage.remove(params.key);
   }
 
   /**
    * 用于在插件机制中处理 remove 操作。
+   * @since 2.0.0
    * @param params remove 操作的参数。
    */
   public handleRemoving(params: IRemovingParams): void {

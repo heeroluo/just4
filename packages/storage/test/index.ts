@@ -28,25 +28,30 @@ QUnit.test('local', function(assert: any) {
 });
 
 QUnit.test('local-enhancement-expires', function(assert: any) {
-  const enhancedLocal = new StorageWrap(localStorage, {
+  const enhancedLocal = new StorageWrap('local', {
     plugins: [
-      new ExpiresPlugin(localStorage)
+      new ExpiresPlugin('local')
     ]
   });
 
-  assert.expect(3);
+  assert.expect(4);
   const done = assert.async();
 
   enhancedLocal.set('expired', '1', { expires: '-1 sec' });
   assert.deepEqual(enhancedLocal.get('expired'), null);
 
-  enhancedLocal.set('test', '1', { expires: '5 secs' });
+  enhancedLocal.set('test-01', '1', { expires: '5 secs' });
 
   setTimeout(() => {
-    assert.deepEqual(enhancedLocal.get('test'), '1');
+    assert.deepEqual(enhancedLocal.get('test-01'), '1');
   }, 2000);
   setTimeout(() => {
-    assert.deepEqual(enhancedLocal.get('test'), null);
-    done();
+    assert.deepEqual(enhancedLocal.get('test-01'), null);
   }, 6000);
+
+  enhancedLocal.set('test-02', '1');
+  setTimeout(() => {
+    assert.deepEqual(enhancedLocal.get('test-02'), '1');
+    done();
+  }, 8000);
 });
