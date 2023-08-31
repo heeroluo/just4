@@ -34,7 +34,7 @@ const addTime: Readonly<Record<string, (date: Date, amount: number) => void>> = 
  * ```javascript
  * import { addRelativeTime } from '@just4/util';
  * addRelativeTime(new Date(2020, 0, 1), '1 hour'); // 2020-01-01 01:00:00
- * addRelativeTime(new Date(2020, 0, 1), '2 months'); // 2020-03-01 01:00:00
+ * addRelativeTime(new Date(2020, 0, 1), '2 months'); // 2020-03-01 00:00:00
  * ```
  */
 export function addRelativeTime(date: Date, relTime?: string): Date {
