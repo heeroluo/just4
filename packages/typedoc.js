@@ -13,7 +13,7 @@ module.exports = {
   ),
   excludeInternal: true,
   excludePrivate: true,
-  excludeProtected: true,
+  // excludeProtected: true,
   validation: {
     invalidLink: true
   }

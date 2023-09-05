@@ -136,23 +136,21 @@ export class StorageWrap<T extends object = object> {
    * 执行 set 操作的函数。
    * @since 2.0.0
    * @param params set 操作的参数。
-   * @returns set 操作是否成功。
    */
-  protected _doSetting(params: ISettingParams<T>): boolean {
-    return this._storage.set(params.key, params.value);
+  protected _doSetting(params: ISettingParams<T>): void {
+    this._storage.set(params.key, params.value);
   }
 
   /**
    * 用于在插件机制中处理 set 操作。
    * @since 2.0.0
    * @param params set 操作的参数。
-   * @returns set 操作是否成功。
    */
-  public handleSetting(params: ISettingParams<T>): boolean {
-    return this._doSetting(params) &&
-      this._plugins.every(function(plugin) {
-        return plugin.handleSetting(params);
-      });
+  public handleSetting(params: ISettingParams<T>): void {
+    this._doSetting(params);
+    this._plugins.forEach(function(plugin) {
+      return plugin.handleSetting(params);
+    });
   }
 
   /**

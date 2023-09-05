@@ -17,6 +17,7 @@ import { addRelativeTime } from '@just4/util/date';
 
 /**
  * 写入存储项的选项。
+ * @since 2.0.0
  */
 export interface ISetItemOptions {
   /**
@@ -45,7 +46,7 @@ export interface ISetItemOptions {
  * }); // 当前时间的 5 秒后过期
  * storage.get('test-03'); // '1'
  * setTimeout(() => {
- *   storage.get('test-02'); // null
+ *   storage.get('test-03'); // null
  * }, 6000);
  * ```
  */
@@ -70,7 +71,7 @@ export class ExpiresPlugin<
     }
   }
 
-  protected override _doSetting(params: ISettingParams<T>): boolean {
+  protected override _doSetting(params: ISettingParams<T>): void {
     let expires = params.options?.expires;
     switch (typeof expires) {
       case 'number':
@@ -83,7 +84,7 @@ export class ExpiresPlugin<
 
     if (isDate(expires)) {
       if (expires >= new Date()) {
-        return this._storage.set(params.key, expires.getTime().toString());
+        this._storage.set(params.key, expires.getTime().toString());
       } else {
         // 已过期，移除存储项
         params.parent.remove(params.key);
@@ -92,7 +93,5 @@ export class ExpiresPlugin<
       // 不是合法的过期时间，按无过期时间处理
       this.remove(params.key);
     }
-
-    return true;
   }
 }
