@@ -1,8 +1,9 @@
 /**
- * 提供包装过的 localStorage、sessionStorage。
+ * 调用入口。
  * @packageDocumentation
  */
 import { StorageWrap } from './storage-wrap';
+export { ItemValue, IStorage, IStorageOptions, StorageType, IActionParams, IGettingParams, ISettingParams, IRemovingParams } from './types';
 export { StorageWrap };
 /**
  * sessionStorage 的封装（通过 StorageWrap 包装了 sessionStorage）。
@@ -27,5 +28,4 @@ export declare const session: Readonly<StorageWrap<object>>;
  * ```
  */
 export declare const local: Readonly<StorageWrap<object>>;
-export { IActionParams, IGettingParams, ISettingParams, IRemovingParams } from './storage-wrap';
 export { ExpiresPlugin } from './expires-plugin';

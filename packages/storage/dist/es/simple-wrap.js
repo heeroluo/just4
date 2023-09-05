@@ -1,0 +1,1 @@
+export class SimpleWrap{constructor(e,t){this.__storage=e,this.__keyPrefix=null!=t?t:""}getRealKey(e){return this.__keyPrefix+e}get(e){return this.__storage.getItem(this.getRealKey(e))}set(e,t){try{this.__storage.setItem(this.getRealKey(e),t)}catch(e){console.warn(e)}}remove(e){this.__storage.removeItem(this.getRealKey(e))}}
