@@ -1,13 +1,13 @@
 # 虚拟滚动列表
 
-本模块提供基于原生 DOM 操作的高性能虚拟滚动列表框架，适用于无限上拉/下拉数据列表、聊天记录等场景。
+本模块提供基于原生 DOM 操作的高性能虚拟滚动列表框架，适用于无限上拉/下拉数据列表、聊天记录等功能场景。
 
 ## 使用
 
 ### 安装
 
 ```bash
-npm install @just4/virtual-list
+npm i @just4/virtual-list
 ```
 
 ### 调用
@@ -32,21 +32,20 @@ const virtualList = new VirtualList({
 | dataSource | Object | 数据源（详见下文说明）。 |
 | renderer | Object | 渲染器（详见下文说明）。 |
 
-### 关于数据源（dataSource）
+### 数据源（dataSource）
 
-实际项目中的数据分页方式有很多种，比如根据页码分页、根据数据的 key 属性值分页等。模块内部无法适配这么多的情况，所以提供了 `dataSource` 参数。
+`VirtualList` 对象会调用数据源去加载所需的数据，包括初始数据、下一页数据和上一页数据。因此，数据源应包含以下**异步方法**：
 
-`dataSource` 是一个包含以下**异步方法**的对象：
-- `loadInitialData`：加载初始数据。
+- `loadInitialData()`：加载初始数据。
 - `loadNextData(ref)`：加载下一页数据，其中 ref 是当前最后一条数据的 key 值。
 - `loadPreviousData(ref)`：加载上一页数据，其中 ref 是当前第一条数据的 key 值。
 
 以下为数据源对象的示例：
 
 ```javascript
-// 数据
+// 假设 allData 中包含所有数据
 const allData = [
-  // 数据...
+  // ...
 ];
 
 // 分页的页大小
@@ -67,7 +66,7 @@ const dataSource = {
     });
   },
 
-  loadNextData(ref: unknown) {
+  loadNextData(ref) {
     return new Promise((resolve) => {
       setTimeout(function() {
         for (let i = 0; i < allData.length; i++) {
@@ -81,7 +80,7 @@ const dataSource = {
     });
   },
 
-  loadPreviousData(ref: unknown) {
+  loadPreviousData(ref) {
     return new Promise((resolve) => {
       setTimeout(function() {
         for (let i = 0; i < allData.length; i++) {
@@ -97,50 +96,21 @@ const dataSource = {
 };
 ```
 
-**如果返回的是空数组，则表示数据已到达边界，不会在该方向上继续加载**。
-
-可见，`dataSource` 是按数据 key 值去分页的，如果你的项目是按页码分页，只需要在 `loadPreviousData` 和 `loadNextData` 中做一次“转换”即可。例如：
-
-```javascript
-{
-  async loadNextData(ref: unknown) {
-    // ref 是最后一条数据时，要加载下一页
-    if (ref === allData[allData.length - 1].id) {
-      // 加载下一页数据
-      const nextData = await getData(page + 1);
-      if (nextData && nextData.length) {
-        allData = allData.concat(nextData);
-        return nextData;
-      } else {
-        return [];
-      }
-    }
-
-    for (let i = 0; i < allData.length; i++) {
-      if (allData[i].id === ref) {
-        return allData.slice(i + 1, i + 1 + PAGE_SIZE);
-      }
-    }
-
-    return [];
-  },
-
-  // ...
-}
-```
+**如果返回的是空数组，则表示数据已到达边界，不会在该方向上继续加载**。特别地，如果 `loadInitialData` 返回的是空数组，则表示当前没有数据，不会再触发 `loadNextData` 和 `loadPreviousData`。
 
 ### 渲染器（renderer）
 
 模块内部会把数据传入渲染器，并把渲染器返回的 DOM 节点渲染到容器内，渲染器是一个包含以下方法的对象：
+
 - `renderItems`：渲染数据项，需返回一个 DOM 节点的**类数组或数组**；
 - `renderLoading`：渲染加载中界面，需返回 DOM 节点；
 - `renderError`：渲染加载异常界面，需返回 DOM 节点；
 - `renderBoundary`：渲染数据边界界面，需返回 DOM 节点；
 - `renderEmpty`：渲染空数据提示，需返回 DOM 节点。
 
-其中 `renderLoading`、`renderError`、`renderBoundary` 的第一个参数为渲染位置、第二个参数为虚拟滚动列表的实例：
+其中 `renderLoading`、`renderError`、`renderBoundary` 的第一个参数为渲染位置、第二个参数为虚拟滚动列表的实例。渲染位置包括：
 
-- `RenderPosition.Main`：主位置，指的是没有数据项时的状态；
+- `RenderPosition.Main`：主位置，指的是没有数据时的状态；
 - `RenderPosition.Head`：开头位置。
 - `RenderPosition.Foot`：结尾位置。
 
@@ -170,7 +140,7 @@ const renderer = {
 
 所有可用事件都在 `VirtualListEvent` 这个枚举类型中：
 
-```
+```javascript
 import { VirtualListEvent } from '@just4/virtual-list/events';
 ```
 
@@ -184,7 +154,6 @@ virtualList.on(VirtualListEvent.ITEM_CLICK, function(args) {
 
 args 为点击数据项事件的事件参数，类型说明见[文档](https://heeroluo.github.io/just4/virtual-list/interfaces/events.ItemClickEvent.html)。
 
-
 #### 更新数据项
 
 ```javascript
@@ -194,7 +163,6 @@ virtualList.on(VirtualListEvent.ITEM_UPDATE, function(args) {
 ```
 
 args 为数据项更新事件的事件参数，类型说明见[文档](https://heeroluo.github.io/just4/virtual-list/interfaces/events.ItemUpdateEvent.html)。
-
 
 #### 移除数据项
 
@@ -211,12 +179,18 @@ virtualList.on(VirtualListEvent.ITEM_REMOVE, function(args) {
 
 args 为数据项移除事件的事件参数，类型说明见[文档](https://heeroluo.github.io/just4/virtual-list/interfaces/events.ItemsRemoveEvent.html)。
 
-
 ### 异常重试
 
-如果在加载数据的过程中出现异常（Promise 返回已拒绝状态），那么在该方向上的滚动加载将会停止。此时可以通过界面上的交互引导用户手动点击重试。在重试操作中调用 `retryFetch` 这个方法。
+如果在加载数据的过程中出现异常（Promise 返回 rejected 状态），那么在该方向上的滚动加载将会停止。此时可以通过界面上的交互引导用户手动点击重试。在重试操作中调用 `retryFetch` 这个方法。
 
-注意：如果在加载异常和到达边界以外的状态下调用 `retryFetch` 方法，将不会执行任何操作。
+注意：`retryFetch` 方法仅在加载异常和到达边界两种状态下可用，其他状态下将不会执行任何操作。
 
 ## 其他
+
 - [API 文档](https://heeroluo.github.io/just4/virtual-list/index.html)
+
+## Changelog
+
+### v0.11.0
+
+- 优化位置检查逻辑的触发时机和频率。
