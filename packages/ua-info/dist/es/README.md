@@ -2,13 +2,11 @@
 
 根据 **用户代理（user agent）** 字符串分析运行环境，支持设备品牌、操作系统、浏览器内核以及客户端的识别。
 
-
 ## 安装
 
 ```bash
 npm i @just4/ua-info
 ```
-
 
 ## 使用
 
@@ -35,7 +33,7 @@ uaInfo.os.isAndroid; // 是否安卓
 
 ### 设备品牌信息
 
-主要针对便携设备，支持以下品牌的识别：
+适用于便携设备（绝大部分 PC 设备都没有品牌和型号标识，无法识别），支持以下品牌的识别：
 
 ```javascript
 import { UAInfo } from '@just4/ua-info';
@@ -112,7 +110,6 @@ uaInfo.browser.version.gt('49'); // true
 uaInfo.browser.version.lt('40'); // false
 ```
 
-
 ## 其他说明
 
 ### 获取当前运行环境的实例
@@ -126,7 +123,7 @@ const uaInfo = getCurrentUAInfo();
 
 ### iPad or MacBook? iOS or macOS?
 
-在 iOS 13 之后，iPad Air 与 iPad Pro 的用户代理变更为 MacBook 的用户代理。针对这种情况，可以传入特性信息进行修正（当前运行环境的 `UAInfo` 实例已经做了这个操作）：
+在 iOS 13 之后，iPad Air 与 iPad Pro 的用户代理变更为 MacBook 的用户代理。针对这种情况，可以传入特性信息辅助识别（当前运行环境的 `UAInfo` 实例已经做了这个操作）：
 
 ```javascript
 // 假设浏览器 user agent 为：
@@ -186,4 +183,11 @@ uaInfoOfNewEdge.client.isEdge; // true
 
 
 ## 相关文档
+
 - [API 文档](https://heeroluo.github.io/just4/ua-info/modules/index.html)
+
+## Changelog
+
+### v1.1.0
+
+- 更新两条小米手机的识别规则。
