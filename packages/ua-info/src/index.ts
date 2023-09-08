@@ -21,9 +21,9 @@ let currentUAInfo: Readonly<UAInfo>;
 export function getCurrentUAInfo(): Readonly<UAInfo> {
   if (!currentUAInfo) {
     currentUAInfo = Object.freeze(
-      typeof window !== 'undefined' ?
-        new UAInfo(window.navigator.userAgent, window.navigator) :
-        new UAInfo('')
+      typeof window !== 'undefined'
+        ? new UAInfo(window.navigator.userAgent, window.navigator)
+        : new UAInfo('')
     );
   }
   return currentUAInfo;
