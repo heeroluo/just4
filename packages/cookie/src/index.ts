@@ -5,19 +5,19 @@
 
 import { assignProps } from '@just4/util/object';
 import { isDate } from '@just4/util/type';
-import { addToDate } from './time-unit';
+import { addRelativeTime } from '@just4/util/date';
 import { ICookieGetterOptions, ICookieSetterOptions } from './interfaces';
 
 
 /**
  * 读取 cookie。
  * @example
- * ```typescript
- * import { getCookie } from '@just4/cookie/index';
+ * ```javascript
+ * import { getCookie } from '@just4/cookie';
  * getCookie('test');
  * ```
  * @param key cookie 名。
- * @param options 选项。
+ * @param options 操作选项。
  * @returns cookie 值（cookie 不存在时返回空字符串）。
  */
 export function getCookie(
@@ -44,17 +44,17 @@ export function getCookie(
 /**
  * 写入 cookie。
  * @example
- * ```typescript
- * import { setCookie } from '@just4/cookie/index';
+ * ```javascript
+ * import { setCookie } from '@just4/cookie';
  * setCookie('test', 1, {
  *   domain: 'abc.com',
  *   path: '/',
- *   expires: '30days'
+ *   expires: '30 days'
  * });
  * ```
  * @param key cookie 名。
  * @param value cookie 值。
- * @param options 选项。
+ * @param options 操作选项。
  */
 export function setCookie(
   key: string,
@@ -69,7 +69,7 @@ export function setCookie(
     content += '; expires=' + (
       isDate(opts.expires)
         ? opts.expires
-        : addToDate(new Date(), opts.expires)
+        : addRelativeTime(new Date(), opts.expires)
     ).toUTCString();
   }
   if (opts.path) { content += '; path=' + opts.path; }
@@ -86,10 +86,13 @@ const shouldSetEmptyBeforeRemove: boolean = (function() {
   // 兼容 Node 端引入（主要针对同构应用）
   if (typeof document === 'undefined') { return false; }
 
-  const TEST_KEY = '__just4__test__cookie__';
-  document.cookie = TEST_KEY + '=1';
-  document.cookie = TEST_KEY + '=;expires=Thu, 01 Jan 1970 00:00:00 GMT';
-  return !!getCookie(TEST_KEY);
+  let testKey = 'test__expired';
+  while (document.cookie.indexOf(testKey + '=') !== -1) {
+    testKey = '_' + testKey;
+  }
+  document.cookie = testKey + '=1';
+  document.cookie = testKey + '=;expires=Thu, 01 Jan 1970 00:00:00 GMT';
+  return !!getCookie(testKey);
 })();
 
 /**
@@ -100,7 +103,7 @@ const shouldSetEmptyBeforeRemove: boolean = (function() {
  * removeCookie('test');
  * ```
  * @param key cookie 名。
- * @param options 选项。
+ * @param options 操作选项。
  */
 export function removeCookie(
   key: string, options?: Readonly<ICookieSetterOptions>

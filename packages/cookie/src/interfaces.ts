@@ -1,5 +1,5 @@
 /**
- * 选项参数接口。
+ * 接口和类型。
  * @packageDocumentation
  */
 
@@ -11,7 +11,7 @@ export interface ICookieGetterOptions {
   /**
    *  Cookie 名的编码方式，默认为 encodeURIComponent。
    */
-  encode?: (content: string | number | boolean) => string,
+  encode?: (content: string | number | boolean) => string
   /**
    * Cookie 名和值的解码方式，默认为 decodeURIComponent。
    */
@@ -25,25 +25,25 @@ export interface ICookieSetterOptions {
   /**
    * 所在域。
    */
-  domain?: string,
+  domain?: string
   /**
    * 所在路径。
    */
-  path?: string,
+  path?: string
   /**
    * 过期时间：
    * - 为日期类型时表示绝对时间；
-   * - 为数字或字符串时表示相对时间（当前时间+相对值），支持格式同 [[time-unit.parse]] 的 `timespan` 参数。
+   * - 为字符串时表示相对时间，详见 @just4/util 中 addRelativeTime 的说明。
    */
-  expires?: Date | number | string,
+  expires?: Date | string
   /**
    * 是否只在 https 连接中有效。
    */
-  secure?: boolean,
+  secure?: boolean
   /**
    * 访问限制：lax、strict 或 none。
    */
-  sameSite?: 'none' | 'lax' | 'strict',
+  sameSite?: 'none' | 'lax' | 'strict'
   /**
    *  Cookie 名和值的编码方式，默认为 encodeURIComponent。
    */
