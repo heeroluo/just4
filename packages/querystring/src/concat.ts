@@ -10,6 +10,7 @@ import { splitURL, joinURL } from './internal/util';
 
 /**
  * 把指定数据序列化为查询字符串后，拼接到指定的 URL 或路径。
+ * @since 2.0.0
  * @param url 指定的 URL 或路径，可以包含查询字符串。
  * @param data 指定的数据。
  * @param options 序列化选项。

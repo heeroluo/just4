@@ -12,6 +12,7 @@ import { stringify } from './stringify';
 
 /**
  * 替换查询字符串中指定参数的值。
+ * @since 2.0.0
  * @param url 包含查询字符串的 URL 或路径。
  * @param newData 要替换的参数及其替换后的值，以键值对方式传参。
  * @param options 操作选项。
