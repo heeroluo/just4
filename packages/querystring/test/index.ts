@@ -1,5 +1,5 @@
 import 'core-js';
-import { parse, stringify, appendToURL } from '@/index';
+import { parse, stringify, concat, replace } from '@/index';
 
 
 const QUnit = (<any>window).QUnit;
@@ -15,8 +15,14 @@ const obj2 = {
   str: 'hello',
   empty: ''
 };
+const obj3 = {
+  id: '1',
+  str: 'hello1',
+  error: {}
+};
 const str1 = 'id=0&str=hello';
 const str2 = 'id=0&str=hello&empty=';
+const str3 = 'id=1&str=hello1&error=';
 const options = {
   ignoreEmpty: true
 };
@@ -35,33 +41,47 @@ QUnit.test('stringify', function(assert: any) {
     str1,
     '忽略空值'
   );
+  assert.strictEqual(stringify(obj3), str3, '不处理引用类型');
 });
 
-QUnit.test('append', function(assert: any) {
+QUnit.test('concat', function(assert: any) {
   const url1 = 'https://mrluo.life/';
   const url2 = 'https://mrluo.life/?author=Heero.Law';
 
   assert.strictEqual(
-    appendToURL(url1, obj1),
+    concat(url1, obj1),
     url1 + '?id=0&str=hello',
     '无参数URL'
   );
 
   assert.strictEqual(
-    appendToURL(url2, obj1),
+    concat(url2, obj1),
     url2 + '&id=0&str=hello',
     '带参数URL'
   );
 
   assert.strictEqual(
-    appendToURL(url1, { a: null, b: undefined }, { ignoreEmpty: true }),
+    concat(url1, { a: null, b: undefined }, { ignoreEmpty: true }),
     url1,
     '忽略空'
   );
 
   assert.strictEqual(
-    appendToURL(url2, { a: null, b: '' }, { ignoreEmpty: true }),
+    concat(url2, { a: null, b: '' }, { ignoreEmpty: true }),
     url2,
     '忽略空'
+  );
+});
+
+QUnit.test('replace', function(assert: any) {
+  assert.strictEqual(
+    replace('abc?a=1&b=2', { a: 2 }),
+    'abc?a=2&b=2',
+    '存在要替换的参数'
+  );
+  assert.strictEqual(
+    replace('abc?a=1&b=2', { c: 3 }),
+    'abc?a=1&b=2',
+    '不存在要替换的参数'
   );
 });
