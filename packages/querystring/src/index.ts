@@ -17,5 +17,9 @@ export {
 } from './stringify';
 
 export {
-  appendToURL
-} from './append';
+  concat
+} from './concat';
+
+export {
+  replace
+} from './replace';
