@@ -1,5 +1,5 @@
 /**
- * 选项参数接口。
+ * 接口。
  * @packageDocumentation
  */
 
@@ -26,4 +26,13 @@ export interface IQSStringifyOptions {
    * 序列化参数时是否忽略空值（null、undefined、空字符串）参数，默认为 false。
    */
   ignoreEmpty?: boolean
+}
+
+/**
+ * 替换查询字符串的选项。
+ */
+export interface IQSReplaceOptions extends
+  IQSParseOptions,
+  IQSStringifyOptions
+{
 }
