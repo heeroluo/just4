@@ -2,6 +2,8 @@
 
 提供基于 XMLHTTPRequest 的 AJAX 请求接口。
 
+注意，本程序包只能在浏览器环境下运行，如果要兼容微信小程序，请移步 [@just4/request](https://www.npmjs.com/package/@just4/request)。
+
 ## 特性
 
 - 封装了 XMLHTTPRequest 对象创建、请求发起、请求响应的全流程，并支持取消请求。
