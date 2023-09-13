@@ -3,6 +3,7 @@
 提供封装了 HTTP 请求流程的 Promise 化接口。
 
 ## 特性
+
 - 具备 Promise 化的接口，并支持中断请求。
 - 带有 TypeScript 类型声明。
 - 支持**浏览器**和**微信小程序**两种运行环境，并提供了一致的外部接口。
@@ -22,7 +23,7 @@
 ## 安装
 
 ```bash
-npm install @just4/request
+npm i @just4/request
 ```
 
 ## 调用
@@ -189,4 +190,11 @@ try {
 ```
 
 ## API 文档
+
 - [API 文档](https://heeroluo.github.io/just4/request/index.html)
+
+## Changelog
+
+### v0.4.0
+
+- 升级依赖包版本并对应调整相关 API 的调用。
