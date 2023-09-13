@@ -48,4 +48,11 @@ const res = await jsonp('a jsonp url', {
 - 调用 `jsonp` 方法时，该方法会按照特定规则生成回调函数名，并确保该名字对应的全局变量没有被占用。如果你希望指定回调函数名，可以使用 `callbackName` 选项进行控制，但是这种情况下请自行确保 `callbackName` 对应的全局变量没有被占用。
 
 ## 相关文档
+
 - [API 文档](https://heeroluo.github.io/just4/load-script/modules/index.html)
+
+## Changelog
+
+### v1.1.0
+
+- 升级依赖包版本并对应调整相关 API 的调用。

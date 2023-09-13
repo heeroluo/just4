@@ -1,6 +1,6 @@
 {
   "name": "@just4/load-script",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Just for script loading in browser.",
   "keywords": [
     "script",
@@ -8,8 +8,8 @@
     "jsonp"
   ],
   "dependencies": {
-    "@just4/util": "^1.0.0",
-    "@just4/querystring": "^1.0.0"
+    "@just4/util": "^1.1.0",
+    "@just4/querystring": "^2.0.0"
   },
   "repository": {
     "type": "git",
@@ -27,5 +27,6 @@
   "homepage": "https://github.com/heeroluo/just4#readme",
   "engines": {
     "node": ">=10.0.0"
-  }
+  },
+  "main": "index.js"
 }
