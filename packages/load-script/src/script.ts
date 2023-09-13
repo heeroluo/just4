@@ -4,7 +4,7 @@
  */
 
 import { assignProps } from '@just4/util/index';
-import { appendToURL } from '@just4/querystring/index';
+import { concat } from '@just4/querystring/index';
 import { ILoadScriptOptions } from './interfaces';
 
 
@@ -59,9 +59,9 @@ export function loadScript(
       props: { async: true }
     }, options);
 
-    if (opts.data) { url = appendToURL(url, opts.data); }
+    if (opts.data) { url = concat(url, opts.data); }
     // 增加时间戳参数防止本地缓存
-    if (opts.preventCaching) { url = appendToURL(url, { _: Date.now() }); }
+    if (opts.preventCaching) { url = concat(url, { _: Date.now() }); }
 
     script = createScript(opts.props);
     script.onload = function() {

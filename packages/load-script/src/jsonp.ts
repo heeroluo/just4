@@ -3,7 +3,7 @@
  * @packageDocumentation
  */
 
-import { appendToURL } from '@just4/querystring/index';
+import { concat } from '@just4/querystring/index';
 import { IJSONPOptions } from './interfaces';
 import { loadScript } from './script';
 
@@ -60,7 +60,7 @@ export function jsonp(
 ): Promise<unknown> {
   return new Promise<unknown>(function(resolve, reject) {
     const callbackName = options?.callbackName || genCallbackName(url);
-    url = appendToURL(url, { callback: callbackName });
+    url = concat(url, { callback: callbackName });
 
     function destroy() {
       (<any>window)[callbackName] = undefined;
