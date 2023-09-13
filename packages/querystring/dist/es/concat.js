@@ -1,0 +1,1 @@
+import{stringify}from"./stringify";import{splitURL,joinURL}from"./internal/util";export function concat(i,r,t){if(i=String(i),null==r)return i;if(!(r="string"==typeof r?r.replace(/^[?&]/,""):stringify(r,t)))return i;const n=splitURL(i);let e=n.search||"";return e&&"&"!==e.slice(-1)&&(e+="&"),e+=r,n.search=e,joinURL(n)}

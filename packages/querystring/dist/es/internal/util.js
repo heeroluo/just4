@@ -1,0 +1,1 @@
+export function splitURL(e){const t={leftContext:""};let n=e.indexOf("#");return-1!==n&&(t.hash=e.slice(n+1),e=e.slice(0,n)),n=e.indexOf("?"),-1!==n&&(t.search=e.slice(n+1),e=e.slice(0,n)),t.leftContext=e,t}export function joinURL(e){let t=e.leftContext;return null!=e.search&&(t+="?"+e.search),null!=e.hash&&(t+="#"+e.hash),t}

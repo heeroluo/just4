@@ -5,4 +5,5 @@
 export { IQSParseOptions, IQSStringifyOptions } from './interfaces';
 export { parse } from './parse';
 export { stringify } from './stringify';
-export { appendToURL } from './append';
+export { concat } from './concat';
+export { replace } from './replace';

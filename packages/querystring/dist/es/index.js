@@ -1,1 +1,1 @@
-export{parse}from"./parse";export{stringify}from"./stringify";export{appendToURL}from"./append";
+export{parse}from"./parse";export{stringify}from"./stringify";export{concat}from"./concat";export{replace}from"./replace";

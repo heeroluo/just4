@@ -1,1 +1,0 @@
-import{stringify}from"./stringify";export function appendToURL(n,r,t){if(null==n||null==r)return n;const i=(n=String(n)).indexOf("#");let e="";return-1!==i&&(e=n.substring(i,n.length),n=n.substring(0,i)),(n=n.replace(/[?&]$/,""))+((r="string"!=typeof r?stringify(r,t):r.replace(/^[?&]/,""))?(-1!==n.indexOf("?")?"&":"?")+r:"")+e}
