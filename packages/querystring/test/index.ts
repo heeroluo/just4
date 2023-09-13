@@ -61,6 +61,24 @@ QUnit.test('concat', function(assert: any) {
   );
 
   assert.strictEqual(
+    concat(url2 + '&', obj1),
+    url2 + '&id=0&str=hello',
+    '带参数URL（以 & 结尾）'
+  );
+
+  assert.strictEqual(
+    concat(url2 + '#abc', obj1),
+    url2 + '&id=0&str=hello#abc',
+    '带参数URL（有锚点）'
+  );
+
+  assert.strictEqual(
+    concat(url1 + '?'),
+    url1 + '?',
+    '问号结尾'
+  );
+
+  assert.strictEqual(
     concat(url1, { a: null, b: undefined }, { ignoreEmpty: true }),
     url1,
     '忽略空'
@@ -79,6 +97,13 @@ QUnit.test('replace', function(assert: any) {
     'abc?a=2&b=2',
     '存在要替换的参数'
   );
+
+  assert.strictEqual(
+    replace('abc?a=1&b=2#abc', { a: 2 }),
+    'abc?a=2&b=2#abc',
+    '存在要替换的参数（带锚点）'
+  );
+
   assert.strictEqual(
     replace('abc?a=1&b=2', { c: 3 }),
     'abc?a=1&b=2',
