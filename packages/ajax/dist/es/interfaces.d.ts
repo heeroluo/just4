@@ -5,19 +5,19 @@
 /**
  * 请求方法。
  */
-export declare type RequestMethod = 'get' | 'post' | 'put' | 'delete' | 'patch';
+export type RequestMethod = 'get' | 'post' | 'put' | 'delete' | 'patch';
 /**
  * 请求格式。
  */
-export declare type RequestType = '' | 'form' | 'json';
+export type RequestType = '' | 'form' | 'json';
 /**
  * 请求主体（xhr.send 可以直接发送的类型）。
  */
-export declare type BodyType = string | FormData | Blob | ArrayBuffer;
+export type BodyType = string | FormData | Blob | ArrayBuffer;
 /**
  * 响应格式。
  */
-export declare type ResponseType = 'json' | 'xml' | 'text' | 'blob' | 'arraybuffer';
+export type ResponseType = 'json' | 'xml' | 'text' | 'blob' | 'arraybuffer';
 /**
  * AJAX 请求选项。
  */

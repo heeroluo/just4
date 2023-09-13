@@ -3,11 +3,12 @@
 提供基于 XMLHTTPRequest 的 AJAX 请求接口。
 
 ## 特性
+
 - 封装了 XMLHTTPRequest 对象创建、请求发起、请求响应的全流程，并支持取消请求。
 - 支持常用的请求方式：get、post、put、delete 和 patch。
 - 支持发送常用的数据类型：文本、对象、FormData、Blob 和 ArrayBuffer。
 - 支持把数据序列化为 `application/json` 或 `application/x-www-form-urlencoded` 的请求体。
-- 根据参数设置把响应内容解析为 JSON、XML、文本、Blob 或 ArrayBuffer。
+- 根据选项设置把响应内容解析为 JSON、XML、文本、Blob 或 ArrayBuffer。
 - 支持文件上传和下载场景下的进度响应（`onDownloadProgress`、`onUploadProgress`）。
 - 具备 Promise 化的接口。
 - 带有 TypeScript 类型声明。
@@ -17,7 +18,7 @@
 ## 安装
 
 ```bash
-npm install @just4/ajax
+npm i @just4/ajax
 ```
 
 ## 调用
@@ -28,12 +29,12 @@ npm install @just4/ajax
 import { send, cancel } from '@just4/ajax/ajax';
 
 const res = await send(url, {
-  // 参数说明见下文和 API 文档
+  // 选项说明见下文和 API 文档
 });
 
 res.data; // data 是响应的数据
 res.xhr; // xhr 是发送请求的 XMLHttpRequest 对象
-res.options; // options 是发送请求的参数
+res.options; // options 是发送请求的选项
 ```
 
 ### GET 请求
@@ -48,7 +49,7 @@ await send('/detail', {
 
 ### POST 请求
 
-把 `method` 参数的值设为 `post`，就可以发送 POST 请求。
+把 `method` 选项的值设为 `post`，就可以发送 POST 请求。
 
 ```typescript
 await send('/login', {
@@ -60,7 +61,7 @@ await send('/login', {
 });
 ```
 
-如果 POST 请求的部分数据是以 URL 参数的形式传输，仍然可以放到 `params` 参数中：
+如果 POST 请求的部分数据是以 URL 参数的形式传输，仍然可以放到 `params` 选项中：
 
 ```typescript
 await send('/login', {
@@ -93,7 +94,7 @@ await send('/login', {
 
 ### 防止缓存
 
-设置 `preventCaching` 参数为 `true` 后，`send` 方法会在请求的 URL 后拼接时间戳参数（任何请求方式都有效）。
+设置 `preventCaching` 选项为 `true` 后，`send` 方法会在请求的 URL 后拼接时间戳参数（任何请求方式都有效）。
 
 ```typescript
 // 实际请求的地址类似于 /detail?id=12345&_=1672712809951
@@ -154,4 +155,11 @@ try {
 ```
 
 ## API 文档
+
 - [API 文档](https://heeroluo.github.io/just4/ajax/index.html)
+
+## Changelog
+
+### v1.1.0
+
+- 升级依赖包版本并对应调整相关 API 的调用。
