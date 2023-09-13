@@ -57,9 +57,9 @@ function createXhr(
     !withCredentials &&
     isEmpty(headers);
 
-  return useXDomainRequest ?
-    new (<any>window).XDomainRequest() :
-    new window.XMLHttpRequest();
+  return useXDomainRequest
+    ? new (<any>window).XDomainRequest()
+    : new window.XMLHttpRequest();
 }
 
 // 设置 XMLHttpRequest 实例的属性和请求头
@@ -105,9 +105,9 @@ function handleRequestBody(
     body = typeof data === 'string' ? data : JSON.stringify(data);
     contentType = 'application/json; charset=utf-8';
   } else {
-    body = isObject(data) ?
-      stringify(data, { ignoreEmpty: false }) :
-      <BodyType>data;
+    body = isObject(data)
+      ? stringify(data, { ignoreEmpty: false })
+      : <BodyType>data;
     if (typeof body === 'string') {
       contentType = 'application/x-www-form-urlencoded; charset=utf-8';
     }

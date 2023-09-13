@@ -1,6 +1,6 @@
 {
   "name": "@just4/request",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "Just for making request easier to use in browser and miniprogram.",
   "keywords": ["ajax", "XMLHttpRequest", "XDomainRequest", "小程序", "wx.request"],
   "scripts": {
@@ -12,8 +12,8 @@
     "gen-doc": "typedoc --options ../typedoc.js --tsconfig ./src/tsconfig.json"
   },
   "dependencies": {
-    "@just4/util": "^1.0.1",
-    "@just4/querystring": "^1.0.1"
+    "@just4/util": "^1.1.0",
+    "@just4/querystring": "^2.0.0"
   },
   "peerDependencies": {
     "miniprogram-api-typings": "^3.9.1"

@@ -8,7 +8,7 @@ import type {
   IRequestResult
 } from '../types';
 import { RequestWith } from '../types';
-import { appendToURL } from '@just4/querystring/index';
+import { concat } from '@just4/querystring/index';
 
 
 /**
@@ -122,9 +122,9 @@ export function concatURLParams(
   params?: object | string,
   preventCaching?: boolean
 ): string {
-  url = appendToURL(url, params, { ignoreEmpty: false });
+  url = concat(url, params, { ignoreEmpty: false });
   // 在 URL 上增加时间戳参数以防止缓存
-  if (preventCaching) { url = appendToURL(url, { _: Date.now() }); }
+  if (preventCaching) { url = concat(url, { _: Date.now() }); }
 
   return url;
 }
