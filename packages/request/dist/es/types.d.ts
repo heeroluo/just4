@@ -5,19 +5,19 @@
 /**
  * 请求方法。
  */
-export declare type RequestMethod = 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH';
+export type RequestMethod = 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH';
 /**
  * 请求格式。
  */
-export declare type RequestType = '' | 'form' | 'json';
+export type RequestType = '' | 'form' | 'json';
 /**
  * 请求体。
  */
-export declare type BodyType = string | FormData | Blob | ArrayBuffer;
+export type BodyType = string | FormData | Blob | ArrayBuffer;
 /**
  * 响应格式。
  */
-export declare type ResponseType = 'json' | 'xml' | 'text' | 'blob' | 'arraybuffer';
+export type ResponseType = 'json' | 'xml' | 'text' | 'blob' | 'arraybuffer';
 /**
  * 请求选项。
  */
@@ -121,11 +121,11 @@ export interface IRequestResult {
      */
     requestWith?: RequestWith;
 }
-declare type RequiredRequestOptions = 'method' | 'requestType' | 'responseType' | 'headers';
+type RequiredRequestOptions = 'method' | 'requestType' | 'responseType' | 'headers';
 /**
  * 请求适配器的初始化选项。
  */
-export declare type RequestAdapterOptions = Required<Pick<IRequestOptions, RequiredRequestOptions>> & Pick<IRequestOptions, Exclude<keyof IRequestOptions, RequiredRequestOptions>> & {
+export type RequestAdapterOptions = Required<Pick<IRequestOptions, RequiredRequestOptions>> & Pick<IRequestOptions, Exclude<keyof IRequestOptions, RequiredRequestOptions>> & {
     /**
      * 完整的请求地址。
      */
