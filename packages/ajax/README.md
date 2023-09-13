@@ -3,6 +3,7 @@
 提供基于 XMLHTTPRequest 的 AJAX 请求接口。
 
 ## 特性
+
 - 封装了 XMLHTTPRequest 对象创建、请求发起、请求响应的全流程，并支持取消请求。
 - 支持常用的请求方式：get、post、put、delete 和 patch。
 - 支持发送常用的数据类型：文本、对象、FormData、Blob 和 ArrayBuffer。
@@ -17,7 +18,7 @@
 ## 安装
 
 ```bash
-npm install @just4/ajax
+npm i @just4/ajax
 ```
 
 ## 调用
@@ -154,4 +155,11 @@ try {
 ```
 
 ## API 文档
+
 - [API 文档](https://heeroluo.github.io/just4/ajax/index.html)
+
+## Changelog
+
+### v1.1.0
+
+- 升级依赖包版本并对应调整相关 API 的调用。

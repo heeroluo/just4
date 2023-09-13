@@ -83,7 +83,7 @@ QUnit.test('请求错误', function(assert: any) {
   );
 });
 
-QUnit.test('请求图片', function(assert: any) {
+QUnit.test('请求图片（不支持 IE）', function(assert: any) {
   assert.expect(1);
   const done = assert.async();
 

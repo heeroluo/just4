@@ -5,7 +5,7 @@
 
 import { assignProps, isEmpty } from '@just4/util/object';
 import { isObject } from '@just4/util/type';
-import { stringify, appendToURL } from '@just4/querystring/index';
+import { stringify, concat } from '@just4/querystring/index';
 import { isOldIE, isCrossDomain } from './internal/util';
 import {
   createAJAXRecord,
@@ -38,9 +38,9 @@ function createXhr(
     !withCredentials &&
     isEmpty(headers);
 
-  return useXDomainRequest ?
-    new (<any>window).XDomainRequest() :
-    new window.XMLHttpRequest();
+  return useXDomainRequest
+    ? new (<any>window).XDomainRequest()
+    : new window.XMLHttpRequest();
 }
 
 // 拼接出最终请求的 URL
@@ -49,9 +49,9 @@ function handleURL(
   params?: object | string,
   preventCaching?: boolean
 ): string {
-  url = appendToURL(url, params, { ignoreEmpty: false });
+  url = concat(url, params, { ignoreEmpty: false });
   // 在 URL 上增加时间戳参数以防止缓存
-  if (preventCaching) { url = appendToURL(url, { _: Date.now() }); }
+  if (preventCaching) { url = concat(url, { _: Date.now() }); }
 
   return url;
 }
@@ -71,9 +71,9 @@ function handleRequestBody(
     body = typeof data === 'string' ? data : JSON.stringify(data);
     contentType = 'application/json; charset=utf-8';
   } else {
-    body = isObject(data) ?
-      stringify(data, { ignoreEmpty: false }) :
-      <BodyType>data;
+    body = isObject(data)
+      ? stringify(data, { ignoreEmpty: false })
+      : <BodyType>data;
     if (typeof body === 'string') {
       contentType = 'application/x-www-form-urlencoded; charset=utf-8';
     }
