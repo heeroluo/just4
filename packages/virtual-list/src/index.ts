@@ -471,8 +471,11 @@ export class VirtualList<ItemType extends object, ItemKey extends keyof ItemType
 
     const container = <HTMLElement>(this._container.get(0));
 
-    // 容器不可见时，获取到的位置信息是 0，无法处理
-    if (!container.offsetParent) { return; }
+    // 容器不可见时，无法获取当前位置，也就无法保持当前位置
+    if (!container.offsetParent) {
+      render();
+      return;
+    }
 
     const origScrollTop = container.scrollTop;
     const containerTop = container.getBoundingClientRect().top;

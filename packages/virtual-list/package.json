@@ -1,6 +1,6 @@
 {
   "name": "@just4/virtual-list",
-  "version": "0.11.0",
+  "version": "0.12.0-beta.1",
   "description": "Just for making scrollable list rendering more efficiently.",
   "keywords": ["virtual", "scroll", "list", "infinite"],
   "scripts": {
