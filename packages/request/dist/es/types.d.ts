@@ -90,6 +90,10 @@ export interface IRequestOptions {
      * 下载进度变化时触发的回调，仅在 XMLHttpRequest 请求方式下有效。
      */
     onDownloadProgress?: (evt: ProgressEvent) => void;
+    /**
+     * 额外的选项。
+     */
+    extra?: unknown;
 }
 /**
  * 请求方式。

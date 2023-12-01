@@ -64,7 +64,7 @@ const xhrRequest = new Request(xhrAdapter, {
   preventCaching: false
 });
 
-// 合并后的选项为 { preventCaching: true, responseType: 'json' }
+// 合并后的选项为 { responseType: 'json', preventCaching: true }
 xhrRequest.send(url, {
   preventCaching: true
 });
@@ -194,6 +194,10 @@ try {
 - [API 文档](https://heeroluo.github.io/just4/request/index.html)
 
 ## Changelog
+
+### v0.5.0
+
+- 请求选项新增 `extra` 字段，可用于传入自定义选项。
 
 ### v0.4.0
 
