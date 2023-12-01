@@ -102,7 +102,8 @@ export class Request {
         beforeXhrSend: opts.beforeXhrSend,
         receiveTaskId: opts.receiveTaskId,
         onUploadProgress: opts.onUploadProgress,
-        onDownloadProgress: opts.onDownloadProgress
+        onDownloadProgress: opts.onDownloadProgress,
+        extra: opts.extra
       })
     );
   }

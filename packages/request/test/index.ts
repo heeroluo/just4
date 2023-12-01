@@ -9,11 +9,18 @@ const QUnit = (<any>window).QUnit;
 QUnit.start();
 
 QUnit.test('返回文本', function(assert: any) {
-  assert.expect(2);
+  assert.expect(3);
   const done = assert.async();
+  const extra = { a: 1, b: 2 };
 
   Promise.all([
-    request.send('text', { method: 'GET', responseType: 'text', params: { num: 100 } }),
+    request.send('text', {
+      method: 'GET',
+      responseType: 'text',
+      params: { num: 100 },
+      beforeSend(opts) { assert.strictEqual(opts?.extra, extra); },
+      extra
+    }),
     request.send('text', { method: 'POST', responseType: 'text', data: { num: 200 } })
   ]).then(([res1, res2]) => {
     assert.strictEqual(res1.data, '100');
