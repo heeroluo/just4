@@ -22,7 +22,7 @@ export interface IEventHandler {
 }
 
 /**
- * 表示页面中的位置。
+ * 表示元素在页面中的位置。
  */
 export interface IPosition {
   /**
