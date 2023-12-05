@@ -19,7 +19,7 @@ import { DOMWrap } from './dom-wrap';
 // 根据选择器以及上下文查找节点
 function querySelector(
   selector: string,
-  context: HTMLElement | HTMLDocument | Array<HTMLElement | HTMLDocument>
+  context: HTMLElement | Document | Array<HTMLElement | Document>
 ): ArrayLike<HTMLElement> {
   if (Array.isArray(context)) {
     const result: HTMLElement[] = [];
@@ -52,7 +52,7 @@ function querySelector(
  */
 function $(
   selector: string,
-  context?: HTMLElement | HTMLDocument | Array<HTMLElement | HTMLDocument>
+  context?: HTMLElement | Document | Array<HTMLElement | Document>
 ): DOMWrap;
 /**
  * 根据 HTML 字符串创建元素（注意 HTML 最外层不能包含非元素节点）。
@@ -65,7 +65,7 @@ function $(
  * @param ownerDocument 创建元素的文档对象，默认为当前页面的 document 对象。
  * @returns 包含所创建元素的 DOMWrap 对象。
  */
-function $(html: string, ownerDocument?: HTMLDocument): DOMWrap;
+function $(html: string, ownerDocument?: Document): DOMWrap;
 /**
  * 创建包含指定元素的 DOMWrap 对象。
  * @example
