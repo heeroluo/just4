@@ -1,6 +1,6 @@
 {
   "name": "@just4/dom",
-  "version": "0.3.0-beta.2",
+  "version": "1.0.0",
   "description": "Just for making dom manipulation much more easier in browser.",
   "keywords": ["dom", "manipulation", "jquery"],
   "scripts": {
@@ -12,7 +12,7 @@
     "gen-doc": "typedoc --options ../typedoc.js --tsconfig ./src/tsconfig.json"
   },
   "dependencies": {
-    "@just4/util": "^0.2.0-beta.1"
+    "@just4/util": "^1.1.0"
   },
   "private": true,
   "devPort": 8604
