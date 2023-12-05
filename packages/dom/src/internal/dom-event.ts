@@ -53,8 +53,9 @@ const fixEventType = (function() {
   });
 
   return function(type: string): string {
-    return type != null && vendorEventTypes[type] ?
-      vendorEventTypes[type] : type;
+    return type != null && vendorEventTypes[type]
+      ? vendorEventTypes[type]
+      : type;
   };
 })();
 

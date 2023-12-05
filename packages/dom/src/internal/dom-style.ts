@@ -73,8 +73,9 @@ const cssNumber: { [key: string]: boolean } = {
 // 修正样式值
 function fixStyleValue(name: string, val: number | string): string {
   // 数字默认加上px单位（如果该样式能以px为单位）
-  return hasOwnProp(cssNumber, name) || val === '' || isNaN(Number(val)) ?
-    val.toString() : val + 'px';
+  return hasOwnProp(cssNumber, name) || val === '' || isNaN(Number(val))
+    ? val.toString()
+    : val + 'px';
 }
 
 

@@ -203,9 +203,9 @@ export class DOMWrap implements ArrayLike<DOMWrapMember> {
       uniqueSort(
         mergeArray(
           this.toArray(),
-          isArrayLike(selector) ?
-            <ArrayLike<DOMWrapMember>>selector :
-            querySelectorAll(<string>selector, context)
+          isArrayLike(selector)
+            ? <ArrayLike<DOMWrapMember>>selector
+            : querySelectorAll(<string>selector, context)
         )
       )
     );

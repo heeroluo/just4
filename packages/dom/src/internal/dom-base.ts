@@ -162,14 +162,14 @@ export function access<T>(
         nodes,
         nodes[i],
         key,
-        isExec ?
-          value.call(
+        isExec
+          ? value.call(
             nodes[i],
             nodes[i],
             accessor.get.call(nodes, nodes[i], key),
             i
-          ) :
-          value
+          )
+          : value
       );
     }
 

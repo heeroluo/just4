@@ -89,9 +89,9 @@ function parseNodes(
 ): Node | undefined {
   if (!target || isNode(target)) { return <Node>target; }
 
-  const nodes: ArrayLike<DOMWrapMember> = typeof target === 'string' ?
-    htmlToNodes(<string>target, ownerDocument) :
-    <ArrayLike<DOMWrapMember>>target;
+  const nodes: ArrayLike<DOMWrapMember> = typeof target === 'string'
+    ? htmlToNodes(<string>target, ownerDocument)
+    : <ArrayLike<DOMWrapMember>>target;
 
   if (nodes.length === 1) {
     if (isNode(nodes[0])) { return <Node>nodes[0]; }
