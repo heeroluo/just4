@@ -4,7 +4,7 @@
  * @internal
  */
 import { DOMWrapMember } from '../types';
-export declare type ScrollDistanceType = 'scrollTop' | 'scrollLeft';
+export type ScrollDistanceType = 'scrollTop' | 'scrollLeft';
 /**
  * 获取指定节点的滚动距离。
  * @param node 指定节点。

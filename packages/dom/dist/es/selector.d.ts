@@ -8,7 +8,7 @@
  * @param context 上下文。
  * @returns 匹配到的元素。
  */
-export declare function querySelectorAll(selector: string, context?: HTMLElement | HTMLDocument): ArrayLike<HTMLElement>;
+export declare function querySelectorAll(selector: string, context?: HTMLElement | Document): ArrayLike<HTMLElement>;
 /**
  * 检查指定节点能否匹配指定选择器。
  * @param node 指定节点。

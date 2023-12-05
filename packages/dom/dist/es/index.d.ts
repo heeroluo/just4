@@ -16,7 +16,7 @@ import { DOMWrap } from './dom-wrap';
  * @param context 上下文元素，默认为当前页面的 document 对象。
  * @returns 包含匹配到的元素的 DOMWrap 对象。
  */
-declare function $(selector: string, context?: HTMLElement | HTMLDocument | Array<HTMLElement | HTMLDocument>): DOMWrap;
+declare function $(selector: string, context?: HTMLElement | Document | Array<HTMLElement | Document>): DOMWrap;
 /**
  * 根据 HTML 字符串创建元素（注意 HTML 最外层不能包含非元素节点）。
  * @example
@@ -28,7 +28,7 @@ declare function $(selector: string, context?: HTMLElement | HTMLDocument | Arra
  * @param ownerDocument 创建元素的文档对象，默认为当前页面的 document 对象。
  * @returns 包含所创建元素的 DOMWrap 对象。
  */
-declare function $(html: string, ownerDocument?: HTMLDocument): DOMWrap;
+declare function $(html: string, ownerDocument?: Document): DOMWrap;
 /**
  * 创建包含指定元素的 DOMWrap 对象。
  * @example

@@ -19,7 +19,7 @@ export declare function htmlToNodes(html: string, ownerDocument: Document | unde
  * @returns 节点的副本。
  */
 export declare function cloneNode(node: Node, withData?: boolean, deepWithData?: boolean): Node;
-export declare type InsertTarget = string | DOMWrapMember | ArrayLike<DOMWrapMember>;
+export type InsertTarget = string | DOMWrapMember | ArrayLike<DOMWrapMember>;
 export declare function insertToRefs(target: InsertTarget, refs: ArrayLike<DOMWrapMember>, howToInsert: (target: Node, ref: Node) => void, condition?: (node: Node) => boolean): void;
 export declare function insertRefsTo(target: InsertTarget, refs: ArrayLike<DOMWrapMember>, howToInsert: (target: Node, ref: Node) => void, condition?: (node: Node) => boolean): Node[];
 export declare function hasParent(node: Node): boolean;

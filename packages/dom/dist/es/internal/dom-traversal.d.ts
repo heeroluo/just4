@@ -10,7 +10,7 @@ import { DOMWrapMember, TraversalUntil } from '../types';
  * @returns 由上下文节点及其所有后代节点组成的数组。
  */
 export declare function selfAndDescendants(ctx: Node): Array<Node>;
-declare type DOMPosition = 'nextElementSibling' | 'previousElementSibling' | 'parentNode' | 'firstElementChild';
+type DOMPosition = 'nextElementSibling' | 'previousElementSibling' | 'parentNode' | 'firstElementChild';
 /**
  * 按照上下文元素的相对位置查找元素，直到遇到符合特定规则的元素为止。
  * @param ctxNodes 上下文节点。
