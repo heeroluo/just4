@@ -10,7 +10,10 @@ const uaList = [
   'Mozilla/5.0 (Linux; U; Android 4.1.2; en-us; HUAWEI G730-C00 Build/HuaweiG730-C00) AppleWebKit/533.1 (KHTML, like Gecko)Version/4.0 MQQBrowser/4.2 Mobile Safari/533.1',
   'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.114 Safari/537.36 Edg/89.0.774.68',
   'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.140 Safari/537.36 Edge/18.17763',
-  'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4651.0 Safari/537.36'
+  'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4651.0 Safari/537.36',
+  'Mozilla/5.0 (X11; CrOS x86_64 14541.0.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36',
+  'Mozilla/5.0 (X11; OpenBSD amd64; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.139 Safari/537.36',
+  'Mozilla/5.0 (X11; Linux i386) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.70 Safari/537.36'
 ];
 const uaInfoList = uaList.map(function(ua) {
   return new UAInfo(ua);
@@ -63,6 +66,10 @@ QUnit.test('main', function(assert: any) {
   assert.ok(uaInfoList[4].browser.version.eq('4.0'));
   assert.ok(uaInfoList[4].client.isQQBrowser);
   assert.ok(uaInfoList[4].isPortable);
+
+  assert.ok(!uaInfoList[8].isPortable, 'Chrome OS');
+  assert.ok(!uaInfoList[9].isPortable, 'OpenBSD');
+  assert.ok(!uaInfoList[10].isPortable, 'Linux');
 });
 
 QUnit.test('edge', function(assert: any) {

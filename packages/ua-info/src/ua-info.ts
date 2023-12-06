@@ -47,7 +47,7 @@ export class UAInfo {
     this.client = Object.freeze(new ClientInfo(ua));
 
     // 粗略判定是否便携设备
-    this.isPortable = /mobile|android/i.test(ua) || !/\b(Windows\sNT|Macintosh|Linux)\b/.test(ua);
+    this.isPortable = /mobile|android/i.test(ua) || !/\b(Windows\sNT|Macintosh|x86(_(32|64))?|amd64|i[356]86)\b/.test(ua);
     // 结合操作系统信息进一步精确判定
     if (this.os.isIOS || this.os.isAndroid) { this.isPortable = true; }
   }
