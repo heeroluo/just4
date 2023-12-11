@@ -169,7 +169,7 @@ args 为数据项更新事件的事件参数，类型说明见[文档](https://h
 以下两种情况都会触发数据项的移除：
 
 - 数据量超出 `maxItemCount`；
-- 调用 `removeItem` 移除数据。
+- 调用 `removeItem` 或 `removeItems` 移除数据。
 
 ```javascript
 virtualList.on(VirtualListEvent.ITEM_REMOVE, function(args) {
@@ -190,6 +190,13 @@ args 为数据项移除事件的事件参数，类型说明见[文档](https://h
 - [API 文档](https://heeroluo.github.io/just4/virtual-list/index.html)
 
 ## Changelog
+
+### v1.0.0-beta.1
+
+- 新增 `removeItems` 方法。
+- `DataSource` 的 `loadNextData` 和 `loadPreviousData` 方法新增第二个参数，返回数据项的拷贝。
+- 执行 `resetBoundaryState` 时，在重置状态之后，会检查当前是否处于预加载的范围内。
+- 数据类型的优化。
 
 ### v0.12.0
 

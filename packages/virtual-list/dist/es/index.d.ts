@@ -52,13 +52,13 @@ export declare class VirtualList<ItemType extends object, ItemKey extends keyof 
      * 状态记录。
      */
     protected _stateFlags: {
-        [key in Exclude<keyof Renderer<ItemType>, 'renderItems'>]: boolean[];
+        [key in Exclude<keyof Renderer<ItemType, ItemKey>, 'renderItems'>]: boolean[];
     };
     /**
      * 状态节点。
      */
     protected _stateNodes: {
-        [key in Exclude<keyof Renderer<ItemType>, 'renderItems'>]: (HTMLElement | null | undefined)[];
+        [key in Exclude<keyof Renderer<ItemType, ItemKey>, 'renderItems'>]: (HTMLElement | null | undefined)[];
     };
     /**
      * 是否正在加载数据。
@@ -172,7 +172,7 @@ export declare class VirtualList<ItemType extends object, ItemKey extends keyof 
      * @param position 渲染位置。
      * @param extra 用于渲染的额外数据。
      */
-    protected _setAndRenderState(renderFn: Exclude<keyof Renderer<ItemType>, 'renderItems'>, state: boolean, position: RenderPosition, extra?: unknown): void;
+    protected _setAndRenderState(renderFn: Exclude<keyof Renderer<ItemType, ItemKey>, 'renderItems'>, state: boolean, position: RenderPosition, extra?: unknown): void;
     /**
      * 在渲染前后，保持当前可视区域不变。
      * @param render 渲染函数。返回值为 true 时保持当前可视区域不变。
@@ -228,11 +228,24 @@ export declare class VirtualList<ItemType extends object, ItemKey extends keyof 
      */
     updateItem(newData: ItemType, keyValue?: ItemType[ItemKey]): boolean;
     /**
-     * 移除数据项。
+     * 执行删除操作。
+     * @param itemList 要删除的数据项列表。
+     * @param itemNodes 要删除的数据节点列表。
+     */
+    protected _doRemoval(itemList: ItemType[], itemNodes: DOMWrap): void;
+    /**
+     * 移除单个数据项。
      * @param keyValue 要移除的数据项的 id。
-     * @returns 被移除的数据项。如果数据项不存在，则返回 undefined。
+     * @returns 被移除的数据项。如果没有数据项被移除，则返回 undefined。
      */
     removeItem(keyValue: ItemType[ItemKey]): ItemType | undefined;
+    /**
+     * 移除多个数据项。
+     * @since 1.0.0-beta.1
+     * @param keyValues 要移除的数据项的 id 列表。
+     * @returns 被移除的数据项。如果没有数据项被移除，则返回 undefined。
+     */
+    removeItems(keyValues: ItemType[ItemKey][]): ItemType[] | undefined;
     /**
      * 判定当前是否应保持默认视图位置（最顶或最底）。
      * @returns 判定结果。
