@@ -822,6 +822,7 @@ export class VirtualList<ItemType extends object, ItemKey extends keyof ItemType
 
   /**
    * 移除多个数据项。
+   * @since 1.0.0-beta.1
    * @param keyValues 要移除的数据项的 id 列表。
    * @returns 被移除的数据项。如果没有数据项被移除，则返回 undefined。
    */
@@ -947,6 +948,7 @@ export class VirtualList<ItemType extends object, ItemKey extends keyof ItemType
     this._keepView(() => {
       this._setAndRenderState('renderBoundary', false, position);
     });
+    this._checkPosition(false);
   }
 
   /**
