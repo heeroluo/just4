@@ -32,7 +32,7 @@ const PAGE_SIZE = 20;
 
 let doNotRender = false;
 
-const dataSource: DataSource<ItemData> = {
+const dataSource: DataSource<ItemData, 'id'> = {
   loadInitialData() {
     return new Promise((resolve) => {
       setTimeout(function() {
@@ -84,7 +84,7 @@ const dataSource: DataSource<ItemData> = {
 };
 
 
-const renderer: Renderer<ItemData> = {
+const renderer: Renderer<ItemData, 'id'> = {
   renderItems(data: ItemData[]) {
     let html = '';
     data.forEach((item) => {
@@ -166,12 +166,12 @@ setTimeout(function() {
   console.log('last item id: ' + virtualList.items.last()?.id);
 }, 3000);
 
-// setTimeout(function() {
-//   if (!virtualList) { return; }
-//   // virtualList.removeItem(190);
-//   virtualList.resetBoundaryState(RenderPosition.Foot);
-//   virtualList.checkPosition();
-// }, 5000);
+setTimeout(function() {
+  if (!virtualList) { return; }
+  virtualList.removeItems([190, 189, 30, 20, 60, 170]);
+  // virtualList.resetBoundaryState(RenderPosition.Foot);
+  // virtualList.checkPosition();
+}, 5000);
 
 // setInterval(() => {
 //   virtualList?.updateItem({

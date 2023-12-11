@@ -785,24 +785,14 @@ export class VirtualList<ItemType extends object, ItemKey extends keyof ItemType
   }
 
   /**
-   * 移除数据项。
-   * @param keyValue 要移除的数据项的 id。
-   * @returns 被移除的数据项。如果数据项不存在，则返回 undefined。
+   * 执行删除操作。
+   * @param itemList 要删除的数据项列表。
+   * @param itemNodes 要删除的数据节点列表。
    */
-  public removeItem(keyValue: ItemType[ItemKey]): ItemType | undefined {
-    const index = this._findItemIndex(keyValue);
-    if (index !== -1) {
-      const itemList = this._itemList.splice(index, 1);
-      const itemNodes = $(this._itemNodes.splice(index, 1));
-      this._keepView(() => {
-        itemNodes.remove();
-      });
-
-      if (this._itemList.length) {
-        setTimeout(() => { this._checkPosition(false); }, 0);
-      } else {
-        this._setEmpty(true);
-      }
+  protected _doRemoval(itemList: ItemType[], itemNodes: DOMWrap): void {
+    if (itemList.length) {
+      this._keepView(() => { itemNodes.remove(); });
+      setTimeout(() => { this._checkPosition(false); }, 0);
 
       // 触发数据移除事件
       const args: ItemsRemoveEvent<ItemType> = {
@@ -810,9 +800,46 @@ export class VirtualList<ItemType extends object, ItemKey extends keyof ItemType
         itemNodes
       };
       this._eventEmitter.emit(VirtualListEvent.ITEM_REMOVE, args);
+    }
 
+    if (!this._itemList.length) { this._setEmpty(true); }
+  }
+
+  /**
+   * 移除单个数据项。
+   * @param keyValue 要移除的数据项的 id。
+   * @returns 被移除的数据项。如果没有数据项被移除，则返回 undefined。
+   */
+  public removeItem(keyValue: ItemType[ItemKey]): ItemType | undefined {
+    const index = this._findItemIndex(keyValue);
+    if (index !== -1) {
+      const itemList = this._itemList.splice(index, 1);
+      const itemNodes = $(this._itemNodes.splice(index, 1));
+      this._doRemoval(itemList, itemNodes);
       return itemList[0];
     }
+  }
+
+  /**
+   * 移除多个数据项。
+   * @param keyValues 要移除的数据项的 id 列表。
+   * @returns 被移除的数据项。如果没有数据项被移除，则返回 undefined。
+   */
+  public removeItems(keyValues: ItemType[ItemKey][]): ItemType[] | undefined {
+    const itemList: ItemType[] = [];
+    const itemNodes: HTMLElement[] = [];
+
+    keyValues.forEach((value) => {
+      const index = this._findItemIndex(value);
+      if (index === -1) { return; }
+
+      itemList.push(this._itemList.splice(index, 1)[0]);
+      itemNodes.push(this._itemNodes.splice(index, 1)[0]);
+    });
+
+    this._doRemoval(itemList, $(itemNodes));
+
+    return itemList.length ? itemList : undefined;
   }
 
   /**
