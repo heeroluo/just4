@@ -71,7 +71,7 @@ export class VirtualList<ItemType extends object, ItemKey extends keyof ItemType
    * 状态记录。
    */
   protected _stateFlags: {
-    [key in Exclude<keyof Renderer<ItemType>, 'renderItems'>]: boolean[]
+    [key in Exclude<keyof Renderer<ItemType, ItemKey>, 'renderItems'>]: boolean[]
   } = {
       renderBoundary: [],
       renderEmpty: [],
@@ -82,7 +82,7 @@ export class VirtualList<ItemType extends object, ItemKey extends keyof ItemType
    * 状态节点。
    */
   protected _stateNodes: {
-    [key in Exclude<keyof Renderer<ItemType>, 'renderItems'>]: (HTMLElement | null | undefined)[]
+    [key in Exclude<keyof Renderer<ItemType, ItemKey>, 'renderItems'>]: (HTMLElement | null | undefined)[]
   } = {
       renderBoundary: [],
       renderEmpty: [],
@@ -296,7 +296,7 @@ export class VirtualList<ItemType extends object, ItemKey extends keyof ItemType
     this._itemList = [];
     this._itemNodes = [];
 
-    let key: Exclude<keyof Renderer<ItemType>, 'renderItems'>;
+    let key: Exclude<keyof Renderer<ItemType, ItemKey>, 'renderItems'>;
     for (key in this._stateFlags) {
       this._stateFlags[key] = [];
       this._stateNodes[key] = [];
@@ -428,7 +428,7 @@ export class VirtualList<ItemType extends object, ItemKey extends keyof ItemType
    * @param extra 用于渲染的额外数据。
    */
   protected _setAndRenderState(
-    renderFn: Exclude<keyof Renderer<ItemType>, 'renderItems'>,
+    renderFn: Exclude<keyof Renderer<ItemType, ItemKey>, 'renderItems'>,
     state: boolean,
     position: RenderPosition,
     extra?: unknown
@@ -649,9 +649,15 @@ export class VirtualList<ItemType extends object, ItemKey extends keyof ItemType
       RenderPosition.Head,
       () => {
         const firstItem = this._itemList[0];
-        return this._options.dataSource.loadPreviousData(
-          firstItem ? firstItem[this._options.itemKey] : null
-        );
+        if (firstItem) {
+          const firstItemCopy = assignProps({}, firstItem);
+          return this._options.dataSource.loadPreviousData(
+            firstItemCopy[this._options.itemKey],
+            firstItemCopy
+          );
+        } else {
+          return this._options.dataSource.loadPreviousData(null, null);
+        }
       },
       this._updateAndRenderPrevious.bind(this)
     );
@@ -712,9 +718,15 @@ export class VirtualList<ItemType extends object, ItemKey extends keyof ItemType
       RenderPosition.Foot,
       () => {
         const lastItem = this._itemList[this._itemList.length - 1];
-        return this._options.dataSource.loadNextData(
-          lastItem ? lastItem[this._options.itemKey] : null
-        );
+        if (lastItem) {
+          const lastItemCopy = assignProps({}, lastItem);
+          return this._options.dataSource.loadNextData(
+            lastItemCopy[this._options.itemKey],
+            lastItemCopy
+          );
+        } else {
+          return this._options.dataSource.loadNextData(null, null);
+        }
       },
       this._updateAndRenderNext.bind(this)
     );

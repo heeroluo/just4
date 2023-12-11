@@ -27,7 +27,10 @@ export interface InitialResponse<ItemType extends object> {
 /**
  * 数据源。
  */
-export interface DataSource<ItemType extends object> {
+export interface DataSource<
+  ItemType extends object,
+  ItemKey extends keyof ItemType
+> {
   /**
    * 获取初始数据。
    */
@@ -35,11 +38,11 @@ export interface DataSource<ItemType extends object> {
   /**
    * 获取下一页数据。
    */
-  loadNextData: (ref: unknown) => Promise<ItemType[] | null | undefined>
+  loadNextData: (ref: ItemType[ItemKey] | null, refItem: ItemType | null) => Promise<ItemType[] | null | undefined>
   /**
    * 获取上一页数据。
    */
-  loadPreviousData: (ref: unknown) => Promise<ItemType[] | null | undefined>
+  loadPreviousData: (ref: ItemType[ItemKey] | null, refItem: ItemType | null) => Promise<ItemType[] | null | undefined>
 }
 
 /**
@@ -63,27 +66,30 @@ export enum RenderPosition {
 /**
  * 渲染器。
  */
-export interface Renderer<ItemType extends object> {
+export interface Renderer<
+  ItemType extends object,
+  ItemKey extends keyof ItemType
+> {
   /**
    * 渲染数据项。
    */
   renderItems: (
     data: ItemType[],
-    instance: VirtualList<ItemType>
+    instance: VirtualList<ItemType, ItemKey>
   ) => ArrayLike<HTMLElement>
   /**
    * 渲染“加载中”。
    */
   renderLoading?: (
     type: RenderPosition,
-    instance: VirtualList<ItemType>
+    instance: VirtualList<ItemType, ItemKey>
   ) => HTMLElement | undefined | null
   /**
    * 渲染错误提示。
    */
   renderError?: (
     type: RenderPosition,
-    instance: VirtualList<ItemType>,
+    instance: VirtualList<ItemType, ItemKey>,
     error: unknown
   ) => HTMLElement | undefined | null
   /**
@@ -91,14 +97,14 @@ export interface Renderer<ItemType extends object> {
    */
   renderEmpty?: (
     type: RenderPosition,
-    instance: VirtualList<ItemType>
+    instance: VirtualList<ItemType, ItemKey>
   ) => HTMLElement | undefined | null,
   /**
    * 渲染数据边界。
    */
   renderBoundary?: (
     type: RenderPosition,
-    instance: VirtualList<ItemType>
+    instance: VirtualList<ItemType, ItemKey>
   ) => HTMLElement | undefined | null
 }
 
@@ -116,7 +122,7 @@ export interface VirtualListOptions<
   /**
    * 数据源。
    */
-  dataSource: DataSource<ItemType>
+  dataSource: DataSource<ItemType, ItemKey>
   /**
    * 数据项中可作为唯一标识的属性名。
    */
@@ -124,7 +130,7 @@ export interface VirtualListOptions<
   /**
    * 渲染器。
    */
-  renderer: Renderer<ItemType>
+  renderer: Renderer<ItemType, ItemKey>
   /**
    * 最大渲染的数据项节点数。默认为 100。
    */
