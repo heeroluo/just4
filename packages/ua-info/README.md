@@ -188,6 +188,10 @@ uaInfoOfNewEdge.client.isEdge; // true
 
 ## Changelog
 
+### v1.2.0
+
+- 优化 `isPortable` 的判定，主要是完善 ChromeOS 和 Linux 的匹配。
+
 ### v1.1.0
 
 - 更新两条小米手机的识别规则。
