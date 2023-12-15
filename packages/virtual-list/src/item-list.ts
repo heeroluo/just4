@@ -45,7 +45,7 @@ export class ItemList<ItemType extends object> {
    */
   get(i: number): ItemType | undefined {
     const item = this._getItem(i);
-    return assignProps<ItemType>({}, item);
+    return item ? assignProps<ItemType>({}, item) : undefined;
   }
 
   /**

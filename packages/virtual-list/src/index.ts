@@ -39,7 +39,7 @@ export class VirtualList<ItemType extends object, ItemKey extends keyof ItemType
   /**
    * 绑定到容器 scroll 事件的监听函数。
    */
-  protected _onScrollFn?: IEventHandler;
+  protected _onScrollFn?: () => void;
   /**
    * 绑定到容器 click 事件的监听函数。
    */
@@ -91,19 +91,18 @@ export class VirtualList<ItemType extends object, ItemKey extends keyof ItemType
     };
   /**
    * 是否正在加载数据。
-   * 由于性能上的考虑，除非数据加载完，否则不会移除 loading 的状态和节点，
+   * 出于性能上的考虑，除非数据加载完，否则不会移除 loading 的状态和节点，
    * 所以需要有一个字段记录是否确实正在加载数据。
    */
   private __isLoading?: boolean;
-
-  /**
-   * 记录 _fetch 调用 _checkPosition 的累计次数。
-   */
-  private __checkPositionCounter = 0;
   /**
    * 重置 __checkPositionCounter 的计时器 id。
    */
-  private __checkPositionCounterResetTimer?: number;
+  private __checkPositionTimer?: number | null;
+  /**
+   * 记录最后执行 _checkPosition 的时间。
+   */
+  private __lastCheckPositionTime = 0;
 
   /**
    * 事件监听/触发器。
@@ -167,7 +166,12 @@ export class VirtualList<ItemType extends object, ItemKey extends keyof ItemType
   public destroy(): void {
     this._removeEventListeners();
     this._eventEmitter.removeAllListeners();
+    if (this.__checkPositionTimer) {
+      clearTimeout(this.__checkPositionTimer);
+    }
     this._container.empty();
+    this._itemList = [];
+    this._itemNodes = [];
     this.__destroyed = true;
   }
 
@@ -190,7 +194,9 @@ export class VirtualList<ItemType extends object, ItemKey extends keyof ItemType
    * 移除所有事件监听。
    */
   protected _removeEventListeners(): void {
-    if (this._onScrollFn) { this._container.off('scroll', this._onScrollFn); }
+    if (this._onScrollFn) {
+      this._container.get(0).removeEventListener('scroll', this._onScrollFn, false);
+    }
     if (this._onClickFn) { this._container.off('click', this._onClickFn); }
   }
 
@@ -235,7 +241,7 @@ export class VirtualList<ItemType extends object, ItemKey extends keyof ItemType
     // 加载初始数据，显示主位置 loading
     this._setAndRenderState('renderLoading', true, RenderPosition.Main);
 
-    let res: InitialResponse<ItemType> | null = null;
+    let res: InitialResponse<ItemType> | null | undefined;
     let error: unknown;
     try {
       res = await this._options.dataSource.loadInitialData();
@@ -276,11 +282,12 @@ export class VirtualList<ItemType extends object, ItemKey extends keyof ItemType
           this._setAndRenderState('renderBoundary', true, RenderPosition.Head);
         });
       }
+
+      if (this._options.defaultView === 'foot') { this.scrollToFoot(); }
+
       if (reachedFootBoundary === true) {
         this._setAndRenderState('renderBoundary', true, RenderPosition.Foot);
       }
-
-      if (this._options.defaultView === 'foot') { this.scrollToFoot(); }
 
       setTimeout(() => {
         this._emitRenderedEvent(RenderPosition.Main, data, newItemNodes);
@@ -315,7 +322,7 @@ export class VirtualList<ItemType extends object, ItemKey extends keyof ItemType
   }
 
   /**
-   * 清空所有数据项，进入当前无数据的状态。
+   * 清空所有数据项，进入无数据状态。
    */
   public async clear() {
     this._reset();
@@ -324,22 +331,9 @@ export class VirtualList<ItemType extends object, ItemKey extends keyof ItemType
 
   /**
    * 检查当前滚动位置，如果在数据预读区间，则加载数据。
-   * @param fromFetch 是否来自 _fetch 的调用。
    */
-  protected _checkPosition(fromFetch: boolean): void {
-    if (fromFetch) {
-      // 加载并渲染数据后，会再次调用 _checkPosition 检查是否已经到达预读区间
-      // 为了防止 _fetch => _checkPosition => _fetch 的无限循环调用导致页面卡死
-      // 增加来自 _fetch 的调用频率限制，200 毫秒内最多调用 1 次
-      if (this.__checkPositionCounterResetTimer) {
-        clearTimeout(this.__checkPositionCounterResetTimer);
-      }
-      this.__checkPositionCounterResetTimer = window.setTimeout(() => {
-        this.__checkPositionCounter = 0;
-        this._checkPosition(fromFetch);
-      }, 200);
-      if (this.__checkPositionCounter++ > 1) { return; }
-    }
+  protected _checkPosition(): void {
+    this.__lastCheckPositionTime = Date.now();
 
     const container = this._container;
     // 元素不可见时（offsetParent 不存在），不处理
@@ -359,9 +353,23 @@ export class VirtualList<ItemType extends object, ItemKey extends keyof ItemType
 
   /**
    * 检查当前滚动位置，如果在数据预读区间，则加载数据。
+   * 检查操作在 0.5s 内最多执行一次。
    */
   public checkPosition(): void {
-    this._checkPosition(false);
+    if (this.__destroyed) { return; }
+
+    const MIN_INTERVAL = 500;
+    const interval = Date.now() - this.__lastCheckPositionTime;
+    if (interval >= MIN_INTERVAL) {
+      this._checkPosition();
+    } else if (this.__checkPositionTimer) {
+      return;
+    } else {
+      this.__checkPositionTimer = window.setTimeout(() => {
+        this.__checkPositionTimer = null;
+        this._checkPosition();
+      }, MIN_INTERVAL - interval);
+    }
   }
 
   /**
@@ -369,7 +377,9 @@ export class VirtualList<ItemType extends object, ItemKey extends keyof ItemType
    */
   protected _listenScroll(): void {
     this._onScrollFn = this._onScrollFn ?? debounce(this.checkPosition.bind(this), 100);
-    this._container.on('scroll', this._onScrollFn);
+    // 由于 scroll 的触发较为频繁，且不需要用到事件参数，
+    // 所以用浏览器原生接口进行事件监听，避免 DOMWrap 触发事件时的长链路
+    this._container.get(0).addEventListener('scroll', this._onScrollFn, false);
     this.checkPosition();
   }
 
@@ -566,7 +576,7 @@ export class VirtualList<ItemType extends object, ItemKey extends keyof ItemType
 
     updateAndRenderData(data);
 
-    setTimeout(() => { this._checkPosition(true); }, 0);
+    setTimeout(() => { this.checkPosition(); }, 0);
   }
 
   /**
@@ -648,12 +658,11 @@ export class VirtualList<ItemType extends object, ItemKey extends keyof ItemType
     return this._fetch(
       RenderPosition.Head,
       () => {
-        const firstItem = this._itemList[0];
+        const firstItem = this.items.first();
         if (firstItem) {
-          const firstItemCopy = assignProps({}, firstItem);
           return this._options.dataSource.loadPreviousData(
-            firstItemCopy[this._options.itemKey],
-            firstItemCopy
+            firstItem[this._options.itemKey],
+            firstItem
           );
         } else {
           return this._options.dataSource.loadPreviousData(null, null);
@@ -717,12 +726,11 @@ export class VirtualList<ItemType extends object, ItemKey extends keyof ItemType
     return this._fetch(
       RenderPosition.Foot,
       () => {
-        const lastItem = this._itemList[this._itemList.length - 1];
+        const lastItem = this.items.last();
         if (lastItem) {
-          const lastItemCopy = assignProps({}, lastItem);
           return this._options.dataSource.loadNextData(
-            lastItemCopy[this._options.itemKey],
-            lastItemCopy
+            lastItem[this._options.itemKey],
+            lastItem
           );
         } else {
           return this._options.dataSource.loadNextData(null, null);
@@ -770,7 +778,7 @@ export class VirtualList<ItemType extends object, ItemKey extends keyof ItemType
     this._itemNodes[index] = newNode;
 
     // 数据更新可能导致尺寸变化，要检查一次是否要加载数据
-    setTimeout(() => { this._checkPosition(false); }, 0);
+    setTimeout(() => { this.checkPosition(); }, 0);
 
     // 触发数据更新事件
     const args: ItemUpdateEvent<ItemType> = {
@@ -792,7 +800,7 @@ export class VirtualList<ItemType extends object, ItemKey extends keyof ItemType
   protected _doRemoval(itemList: ItemType[], itemNodes: DOMWrap): void {
     if (itemList.length) {
       this._keepView(() => { itemNodes.remove(); });
-      setTimeout(() => { this._checkPosition(false); }, 0);
+      setTimeout(() => { this.checkPosition(); }, 0);
 
       // 触发数据移除事件
       const args: ItemsRemoveEvent<ItemType> = {
@@ -948,7 +956,7 @@ export class VirtualList<ItemType extends object, ItemKey extends keyof ItemType
     this._keepView(() => {
       this._setAndRenderState('renderBoundary', false, position);
     });
-    this._checkPosition(false);
+    this.checkPosition();
   }
 
   /**
