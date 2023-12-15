@@ -191,6 +191,10 @@ args 为数据项移除事件的事件参数，类型说明见[文档](https://h
 
 ## Changelog
 
+### v1.0.0-beta.2
+
+- 性能优化。
+
 ### v1.0.0-beta.1
 
 - 新增 `removeItems` 方法。

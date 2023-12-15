@@ -24,7 +24,7 @@ export declare class VirtualList<ItemType extends object, ItemKey extends keyof 
     /**
      * 绑定到容器 scroll 事件的监听函数。
      */
-    protected _onScrollFn?: IEventHandler;
+    protected _onScrollFn?: () => void;
     /**
      * 绑定到容器 click 事件的监听函数。
      */
@@ -62,18 +62,18 @@ export declare class VirtualList<ItemType extends object, ItemKey extends keyof 
     };
     /**
      * 是否正在加载数据。
-     * 由于性能上的考虑，除非数据加载完，否则不会移除 loading 的状态和节点，
+     * 出于性能上的考虑，除非数据加载完，否则不会移除 loading 的状态和节点，
      * 所以需要有一个字段记录是否确实正在加载数据。
      */
     private __isLoading?;
     /**
-     * 记录 _fetch 调用 _checkPosition 的累计次数。
-     */
-    private __checkPositionCounter;
-    /**
      * 重置 __checkPositionCounter 的计时器 id。
      */
-    private __checkPositionCounterResetTimer?;
+    private __checkPositionTimer?;
+    /**
+     * 记录最后执行 _checkPosition 的时间。
+     */
+    private __lastCheckPositionTime;
     /**
      * 事件监听/触发器。
      */
@@ -140,16 +140,16 @@ export declare class VirtualList<ItemType extends object, ItemKey extends keyof 
      */
     refresh(): Promise<void>;
     /**
-     * 清空所有数据项，进入当前无数据的状态。
+     * 清空所有数据项，进入无数据状态。
      */
     clear(): Promise<void>;
     /**
      * 检查当前滚动位置，如果在数据预读区间，则加载数据。
-     * @param fromFetch 是否来自 _fetch 的调用。
      */
-    protected _checkPosition(fromFetch: boolean): void;
+    protected _checkPosition(): void;
     /**
      * 检查当前滚动位置，如果在数据预读区间，则加载数据。
+     * 检查操作在 0.5s 内最多执行一次。
      */
     checkPosition(): void;
     /**

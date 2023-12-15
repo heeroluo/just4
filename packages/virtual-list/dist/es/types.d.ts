@@ -27,7 +27,7 @@ export interface DataSource<ItemType extends object, ItemKey extends keyof ItemT
     /**
      * 获取初始数据。
      */
-    loadInitialData: () => Promise<InitialResponse<ItemType>>;
+    loadInitialData: () => Promise<InitialResponse<ItemType>> | null | undefined;
     /**
      * 获取下一页数据。
      */
