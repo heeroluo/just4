@@ -810,7 +810,12 @@ export class VirtualList<ItemType extends object, ItemKey extends keyof ItemType
       this._eventEmitter.emit(VirtualListEvent.ITEM_REMOVE, args);
     }
 
-    if (!this._itemList.length) { this._setEmpty(true); }
+    if (this._itemList.length) {
+      // 数据移除会导致位置变化，要检查一次是否要加载数据
+      setTimeout(() => { this.checkPosition(); }, 0);
+    } else {
+      this._setEmpty(true);
+    }
   }
 
   /**
