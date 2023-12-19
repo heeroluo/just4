@@ -954,14 +954,18 @@ export class VirtualList<ItemType extends object, ItemKey extends keyof ItemType
   }
 
   /**
-   * 重置边界状态。
+   * 重置边界状态。如果当前状态为空，则执行数据刷新操作。
    * @param position 位置。
    */
   public resetBoundaryState(position: RenderPosition): void {
-    this._keepView(() => {
-      this._setAndRenderState('renderBoundary', false, position);
-    });
-    this.checkPosition();
+    if (this.isEmpty()) {
+      this.refresh();
+    } else {
+      this._keepView(() => {
+        this._setAndRenderState('renderBoundary', false, position);
+      });
+      this.checkPosition();
+    }
   }
 
   /**
