@@ -266,7 +266,7 @@ export declare class VirtualList<ItemType extends object, ItemKey extends keyof 
      */
     addBoundaryItems(data: ItemType[], position: RenderPosition, keepDefaultView?: boolean): boolean;
     /**
-     * 重置边界状态。
+     * 重置边界状态。如果当前状态为空，则执行数据刷新操作。
      * @param position 位置。
      */
     resetBoundaryState(position: RenderPosition): void;
