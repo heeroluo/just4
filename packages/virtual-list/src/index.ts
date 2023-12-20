@@ -140,9 +140,6 @@ export class VirtualList<ItemType extends object, ItemKey extends keyof ItemType
     if (key === 'container') {
       throw new Error('Container cannot be changed.');
     }
-    if (key === 'defaultView') {
-      throw new Error('Default view cannot be changed.');
-    }
     this._options[key] = value;
   }
 
@@ -356,7 +353,7 @@ export class VirtualList<ItemType extends object, ItemKey extends keyof ItemType
    * 检查操作在 0.5s 内最多执行一次。
    */
   public checkPosition(): void {
-    if (this.__destroyed) { return; }
+    if (this.__destroyed || this.isEmpty()) { return; }
 
     const MIN_INTERVAL = 500;
     const interval = Date.now() - this.__lastCheckPositionTime;
@@ -531,6 +528,7 @@ export class VirtualList<ItemType extends object, ItemKey extends keyof ItemType
   ): Promise<void> {
     const stateFlags = this._stateFlags;
     if (this.__isLoading ||
+      this.isEmpty() ||
       this.reachedBoundary(position) ||
       stateFlags.renderError[position]
     ) { return; }
@@ -767,7 +765,7 @@ export class VirtualList<ItemType extends object, ItemKey extends keyof ItemType
     const index = this._findItemIndex(keyValue ?? newData[this._options.itemKey]);
     if (index === -1) { return false; }
 
-    const oldData: ItemType = this._itemList[index];
+    const oldData = this._itemList[index];
     const oldNode = $(this._itemNodes[index]);
 
     this._itemList[index] = newData;
