@@ -214,7 +214,6 @@ export class VirtualList<ItemType extends object, ItemKey extends keyof ItemType
     if (exceptState && node && lastElementChild !== node) {
       scrollTop -= $(lastElementChild).outerHeight(true);
     }
-
     this._container.scrollTop(scrollTop);
   }
 
@@ -842,7 +841,8 @@ export class VirtualList<ItemType extends object, ItemKey extends keyof ItemType
       // 数据移除会导致位置变化，要检查一次是否要加载数据
       setTimeout(() => { this.checkPosition(); }, 0);
     } else {
-      this._setEmpty(true);
+      // 所有数据项都被移除后，无法确认是否处于空状态，故刷新
+      this.refresh();
     }
   }
 
@@ -1010,8 +1010,8 @@ export class VirtualList<ItemType extends object, ItemKey extends keyof ItemType
     }
 
     if (
-      !this._stateFlags.renderBoundary[position] &&
-      !this._stateFlags.renderError[position]
+      !stateFlags.renderBoundary[position] &&
+      !stateFlags.renderError[position]
     ) {
       return;
     }
