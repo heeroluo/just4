@@ -110,7 +110,7 @@ const dataSource = {
 
 其中 `renderLoading`、`renderError`、`renderBoundary` 的第一个参数为渲染位置、第二个参数为虚拟滚动列表的实例。渲染位置包括：
 
-- `RenderPosition.Main`：主位置，指的是没有数据时的状态；
+- `RenderPosition.Main`：主位置，指的是没有数据时的状态。
 - `RenderPosition.Head`：开头位置。
 - `RenderPosition.Foot`：结尾位置。
 
@@ -179,6 +179,21 @@ virtualList.on(VirtualListEvent.ITEM_REMOVE, function(args) {
 
 args 为数据项移除事件的事件参数，类型说明见[文档](https://heeroluo.github.io/just4/virtual-list/interfaces/events.ItemsRemoveEvent.html)。
 
+### 获取当前数据项
+
+可通过 `items` 属性获取当前数据项的集合。
+
+```javascript
+// 第一个数据项
+virtualList.items.first();
+// 最后一个数据项
+virtualList.items.last();
+// 遍历所有数据项
+for (let i = 0; i < virtualList.items.length; i++) {
+  console.dir(virtualList.items.get(i));
+}
+```
+
 ### 异常重试
 
 如果在加载数据的过程中出现异常（Promise 返回 rejected 状态），那么在该方向上的滚动加载将会停止。此时可以通过界面上的交互引导用户手动点击重试。在重试操作中调用 `retryFetch` 这个方法。
@@ -191,13 +206,19 @@ args 为数据项移除事件的事件参数，类型说明见[文档](https://h
 
 ## Changelog
 
+### v1.0.0-beta.3
+
+- 移除数据项后，会检查当前是否处于预加载的范围内。
+- 在空状态情况下，调用 `resetBoundaryState` 会触发数据刷新，重新请求初始数据。
+
 ### v1.0.0-beta.2
 
-- 性能优化。
+- 优化预加载范围检查的执行频率。
+- 使用原生接口监听 `scroll` 事件，更为高效。
 
 ### v1.0.0-beta.1
 
-- 新增 `removeItems` 方法。
+- 新增 `removeItems` 方法，用于移除多个数据项。
 - `DataSource` 的 `loadNextData` 和 `loadPreviousData` 方法新增第二个参数，返回数据项的拷贝。
 - 执行 `resetBoundaryState` 时，在重置状态之后，会检查当前是否处于预加载的范围内。
 - 数据类型的优化。
