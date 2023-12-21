@@ -185,10 +185,15 @@ export class VirtualList<ItemType extends object, ItemKey extends keyof ItemType
    * @param exceptState 是否排除头部的状态节点。
    */
   public scrollToHead(exceptState = false): void {
+    if (!this.isVisible) { return; }
+
     const node = this._itemNodes[0];
-    if (exceptState && this.isVisible && node) {
+    const container = <HTMLElement>(this._container.get(0));
+    const firstElementChild = <HTMLElement>container.firstElementChild;
+
+    if (exceptState && node && node !== firstElementChild) {
       this._container.scrollTop(
-        node.getBoundingClientRect().top
+        $(firstElementChild).outerHeight()
       );
     } else {
       this._container.scrollTop(0);
@@ -203,10 +208,11 @@ export class VirtualList<ItemType extends object, ItemKey extends keyof ItemType
 
     const node = this._itemNodes[this._itemNodes.length - 1];
     const container = <HTMLElement>(this._container.get(0));
+    const lastElementChild = <HTMLElement>container.lastElementChild;
 
     let scrollTop = container.scrollHeight - container.clientHeight;
-    if (exceptState && node && container.lastElementChild !== node) {
-      scrollTop -= $(<HTMLElement>container.lastElementChild).outerHeight(true);
+    if (exceptState && node && lastElementChild !== node) {
+      scrollTop -= $(lastElementChild).outerHeight(true);
     }
 
     this._container.scrollTop(scrollTop);
