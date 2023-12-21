@@ -206,6 +206,12 @@ for (let i = 0; i < virtualList.items.length; i++) {
 
 ## Changelog
 
+### v1.0.0-beta.4
+
+- 允许通过 `setOptions` 去更改 `defaultView` 选项。
+- `scrollToHead` 和 `scrollToFoot` 方法新增一个参数，可用于指定是否排除状态节点。
+- 如果所有数据项都被清空，会调用 `refresh` 去刷新，而不是显示空状态。
+
 ### v1.0.0-beta.3
 
 - 移除数据项后，会检查当前是否处于预加载的范围内。
