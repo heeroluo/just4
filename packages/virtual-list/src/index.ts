@@ -158,6 +158,14 @@ export class VirtualList<ItemType extends object, ItemKey extends keyof ItemType
   }
 
   /**
+   * 滚动区域是否可见。
+   */
+  public get isVisible() {
+    // 元素不可见时，offsetParent 不存在
+    return (<HTMLElement>(this._container.get(0))).offsetParent != null;
+  }
+
+  /**
    * 销毁组件。
    */
   public destroy(): void {
@@ -174,17 +182,34 @@ export class VirtualList<ItemType extends object, ItemKey extends keyof ItemType
 
   /**
    * 滚动到列表头部。
+   * @param exceptState 是否排除头部的状态节点。
    */
-  public scrollToHead(): void {
-    this._container.scrollTop(0);
+  public scrollToHead(exceptState = false): void {
+    const node = this._itemNodes[0];
+    if (exceptState && this.isVisible && node) {
+      this._container.scrollTop(
+        node.getBoundingClientRect().top
+      );
+    } else {
+      this._container.scrollTop(0);
+    }
   }
 
   /**
    * 滚动到列表尾部。
    */
-  public scrollToFoot(): void {
+  public scrollToFoot(exceptState = false): void {
+    if (!this.isVisible) { return; }
+
+    const node = this._itemNodes[this._itemNodes.length - 1];
     const container = <HTMLElement>(this._container.get(0));
-    this._container.scrollTop(container.scrollHeight - container.clientHeight);
+
+    let scrollTop = container.scrollHeight - container.clientHeight;
+    if (exceptState && node && container.lastElementChild !== node) {
+      scrollTop -= $(<HTMLElement>container.lastElementChild).outerHeight(true);
+    }
+
+    this._container.scrollTop(scrollTop);
   }
 
   /**
@@ -333,8 +358,7 @@ export class VirtualList<ItemType extends object, ItemKey extends keyof ItemType
     this.__lastCheckPositionTime = Date.now();
 
     const container = this._container;
-    // 元素不可见时（offsetParent 不存在），不处理
-    if (!container.prop('offsetParent')) { return; }
+    if (!this.isVisible) { return; }
 
     const scrollTop = container.scrollTop();
     const scrollHeight = <number>container.prop('scrollHeight');
@@ -479,7 +503,7 @@ export class VirtualList<ItemType extends object, ItemKey extends keyof ItemType
     const container = <HTMLElement>(this._container.get(0));
 
     // 容器不可见时，无法获取当前位置，也就无法保持当前位置
-    if (!container.offsetParent) {
+    if (!this.isVisible) {
       render();
       return;
     }
@@ -863,7 +887,7 @@ export class VirtualList<ItemType extends object, ItemKey extends keyof ItemType
 
     const container = <HTMLElement>(this._container.get(0));
     // 容器不可见时，获取到的位置信息是 0，无法处理
-    if (!container.offsetParent) { return false; }
+    if (!this.isVisible) { return false; }
 
     const containerTop = container.getBoundingClientRect().top;
     const containerHeight = container.clientHeight;
@@ -932,11 +956,11 @@ export class VirtualList<ItemType extends object, ItemKey extends keyof ItemType
       if (keepDefaultView && shouldKeepDefaultView) {
         switch (this._options.defaultView) {
           case 'head':
-            this.scrollToHead();
+            this.scrollToHead(true);
             break;
 
           case 'foot':
-            this.scrollToFoot();
+            this.scrollToFoot(true);
             break;
         }
       }
