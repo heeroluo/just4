@@ -101,17 +101,22 @@ export declare class VirtualList<ItemType extends object, ItemKey extends keyof 
     */
     protected get _maxItemCount(): number;
     /**
+     * 滚动区域是否可见。
+     */
+    get isVisible(): boolean;
+    /**
      * 销毁组件。
      */
     destroy(): void;
     /**
      * 滚动到列表头部。
+     * @param exceptState 是否排除头部的状态节点。
      */
-    scrollToHead(): void;
+    scrollToHead(exceptState?: boolean): void;
     /**
      * 滚动到列表尾部。
      */
-    scrollToFoot(): void;
+    scrollToFoot(exceptState?: boolean): void;
     /**
      * 移除所有事件监听。
      */
