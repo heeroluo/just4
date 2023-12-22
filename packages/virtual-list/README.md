@@ -206,6 +206,11 @@ for (let i = 0; i < virtualList.items.length; i++) {
 
 ## Changelog
 
+### v1.0.0-beta.5
+
+- 组件内的数据项列表为空时，不调用 `loadNextData` 和 `loadPreviousData`，而不是传入 `null` 去调用它们。
+- 少量代码优化。
+
 ### v1.0.0-beta.4
 
 - 允许通过 `setOptions` 去更改 `defaultView` 选项。
