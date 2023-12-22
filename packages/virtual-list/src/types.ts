@@ -38,11 +38,11 @@ export interface DataSource<
   /**
    * 获取下一页数据。
    */
-  loadNextData: (ref: ItemType[ItemKey] | null, refItem: ItemType | null) => Promise<ItemType[] | null | undefined>
+  loadNextData: (ref: ItemType[ItemKey], refItem: ItemType) => Promise<ItemType[] | null | undefined>
   /**
    * 获取上一页数据。
    */
-  loadPreviousData: (ref: ItemType[ItemKey] | null, refItem: ItemType | null) => Promise<ItemType[] | null | undefined>
+  loadPreviousData: (ref: ItemType[ItemKey], refItem: ItemType) => Promise<ItemType[] | null | undefined>
 }
 
 /**

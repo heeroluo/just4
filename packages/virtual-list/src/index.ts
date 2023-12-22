@@ -270,11 +270,14 @@ export class VirtualList<ItemType extends object, ItemKey extends keyof ItemType
 
     let res: InitialResponse<ItemType> | null | undefined;
     let error: unknown;
+
+    this.__isLoading = true;
     try {
       res = await this._options.dataSource.loadInitialData();
     } catch (e) {
       error = e;
     } finally {
+      this.__isLoading = false;
       // 加载完成后（不管成功、失败），都要移除 loading
       this._setAndRenderState('renderLoading', false, RenderPosition.Main);
     }
@@ -363,8 +366,6 @@ export class VirtualList<ItemType extends object, ItemKey extends keyof ItemType
     this.__lastCheckPositionTime = Date.now();
 
     const container = this._container;
-    if (!this.isVisible) { return; }
-
     const scrollTop = container.scrollTop();
     const scrollHeight = <number>container.prop('scrollHeight');
     const size = <number>container.prop('clientHeight');
@@ -382,7 +383,11 @@ export class VirtualList<ItemType extends object, ItemKey extends keyof ItemType
    * 检查操作在 0.5s 内最多执行一次。
    */
   public checkPosition(): void {
-    if (this.__destroyed || this.isEmpty()) { return; }
+    if (this.__destroyed ||
+      this.__isLoading ||
+      this.isEmpty() ||
+      !this.isVisible
+    ) { return; }
 
     const MIN_INTERVAL = 500;
     const interval = Date.now() - this.__lastCheckPositionTime;
@@ -402,7 +407,7 @@ export class VirtualList<ItemType extends object, ItemKey extends keyof ItemType
    * 监听滚动事件。
    */
   protected _listenScroll(): void {
-    this._onScrollFn = this._onScrollFn ?? debounce(this.checkPosition.bind(this), 100);
+    this._onScrollFn = this._onScrollFn ?? debounce(this.checkPosition.bind(this), 80);
     // 由于 scroll 的触发较为频繁，且不需要用到事件参数，
     // 所以用浏览器原生接口进行事件监听，避免 DOMWrap 触发事件时的长链路
     this._container.get(0).addEventListener('scroll', this._onScrollFn, false);
@@ -692,7 +697,7 @@ export class VirtualList<ItemType extends object, ItemKey extends keyof ItemType
             firstItem
           );
         } else {
-          return this._options.dataSource.loadPreviousData(null, null);
+          return Promise.resolve(undefined);
         }
       },
       this._updateAndRenderPrevious.bind(this)
@@ -760,7 +765,7 @@ export class VirtualList<ItemType extends object, ItemKey extends keyof ItemType
             lastItem
           );
         } else {
-          return this._options.dataSource.loadNextData(null, null);
+          return Promise.resolve(undefined);
         }
       },
       this._updateAndRenderNext.bind(this)
