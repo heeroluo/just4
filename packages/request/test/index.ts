@@ -1,5 +1,6 @@
 import 'core-js';
-import { Request, xhrAdapter, RequestErrorType } from '@/index';
+import { Request, RequestErrorType } from '@/index';
+import { xhrAdapter } from '@/adapter/xhr';
 
 const request = new Request(xhrAdapter, {
   baseURL: '/api/'

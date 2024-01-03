@@ -17,8 +17,6 @@ import {
 import { joinURL, concatURLParams } from './internal/util';
 
 
-export { xhrAdapter, IXhrRequestResult } from './adapter/xhr';
-export { wxRequestAdapter, IWxRequestResult } from './adapter/wx-request';
 export { RequestError, RequestErrorType } from './request-error';
 
 

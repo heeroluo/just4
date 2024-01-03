@@ -3,8 +3,6 @@
  * @packageDocumentation
  */
 import type { IRequestOptions, IRequestAdapter, IRequestResult } from './types';
-export { xhrAdapter, IXhrRequestResult } from './adapter/xhr';
-export { wxRequestAdapter, IWxRequestResult } from './adapter/wx-request';
 export { RequestError, RequestErrorType } from './request-error';
 /**
  * 请求类。
