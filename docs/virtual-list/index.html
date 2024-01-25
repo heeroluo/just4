@@ -114,28 +114,18 @@
 <a id="md:其他" class="tsd-anchor"></a><h2><a href="#md:其他">其他</a></h2><ul>
 <li><a href="https://heeroluo.github.io/just4/virtual-list/index.html">API 文档</a></li>
 </ul>
-<a id="md:changelog" class="tsd-anchor"></a><h2><a href="#md:changelog">Changelog</a></h2><a id="md:v100-beta5" class="tsd-anchor"></a><h3><a href="#md:v100-beta5">v1.0.0-beta.5</a></h3><ul>
+<a id="md:changelog" class="tsd-anchor"></a><h2><a href="#md:changelog">Changelog</a></h2><a id="md:v100" class="tsd-anchor"></a><h3><a href="#md:v100">v1.0.0</a></h3><ul>
+<li>允许通过 <code>setOptions</code> 更改 <code>defaultView</code> 选项。</li>
+<li><code>loadNextData</code> 和 <code>loadPreviousData</code> 新增第二个参数，返回数据项的拷贝。</li>
 <li>组件内的数据项列表为空时，不调用 <code>loadNextData</code> 和 <code>loadPreviousData</code>，而不是传入 <code>null</code> 去调用它们。</li>
-<li>少量代码优化。</li>
-</ul>
-<a id="md:v100-beta4" class="tsd-anchor"></a><h3><a href="#md:v100-beta4">v1.0.0-beta.4</a></h3><ul>
-<li>允许通过 <code>setOptions</code> 去更改 <code>defaultView</code> 选项。</li>
-<li><code>scrollToHead</code> 和 <code>scrollToFoot</code> 方法新增一个参数，可用于指定是否排除状态节点。</li>
-<li>如果所有数据项都被清空，会调用 <code>refresh</code> 去刷新，而不是显示空状态。</li>
-</ul>
-<a id="md:v100-beta3" class="tsd-anchor"></a><h3><a href="#md:v100-beta3">v1.0.0-beta.3</a></h3><ul>
-<li>移除数据项后，会检查当前是否处于预加载的范围内。</li>
-<li>在空状态情况下，调用 <code>resetBoundaryState</code> 会触发数据刷新，重新请求初始数据。</li>
-</ul>
-<a id="md:v100-beta2" class="tsd-anchor"></a><h3><a href="#md:v100-beta2">v1.0.0-beta.2</a></h3><ul>
-<li>优化预加载范围检查的执行频率。</li>
-<li>使用原生接口监听 <code>scroll</code> 事件，更为高效。</li>
-</ul>
-<a id="md:v100-beta1" class="tsd-anchor"></a><h3><a href="#md:v100-beta1">v1.0.0-beta.1</a></h3><ul>
+<li><code>scrollToHead</code> 和 <code>scrollToFoot</code> 新增 <code>exceptState</code> 参数，用于指定是否排除状态节点。</li>
 <li>新增 <code>removeItems</code> 方法，用于移除多个数据项。</li>
-<li><code>DataSource</code> 的 <code>loadNextData</code> 和 <code>loadPreviousData</code> 方法新增第二个参数，返回数据项的拷贝。</li>
-<li>执行 <code>resetBoundaryState</code> 时，在重置状态之后，会检查当前是否处于预加载的范围内。</li>
-<li>数据类型的优化。</li>
+<li>移除数据项后，会检查当前是否处于预加载的范围内。</li>
+<li>如果所有数据项都被清空，会先触发刷新，而不是直接显示空状态。</li>
+<li>在空状态下，调用 <code>resetBoundaryState</code> 会触发刷新，重新请求初始数据。</li>
+<li>执行 <code>resetBoundaryState</code> 重置状态之后，会检查当前是否处于预加载的范围内。</li>
+<li>优化预加载范围检查的执行频率。</li>
+<li>其他代码优化。</li>
 </ul>
 <a id="md:v0120" class="tsd-anchor"></a><h3><a href="#md:v0120">v0.12.0</a></h3><ul>
 <li>修复容器不可见时节点不会被渲染的问题。</li>
@@ -186,11 +176,7 @@
 <li><a href="#md:changelog"><span>Changelog</span></a></li>
 <li>
 <ul>
-<li><a href="#md:v100-beta5"><span>v1.0.0-<wbr/>beta.5</span></a></li>
-<li><a href="#md:v100-beta4"><span>v1.0.0-<wbr/>beta.4</span></a></li>
-<li><a href="#md:v100-beta3"><span>v1.0.0-<wbr/>beta.3</span></a></li>
-<li><a href="#md:v100-beta2"><span>v1.0.0-<wbr/>beta.2</span></a></li>
-<li><a href="#md:v100-beta1"><span>v1.0.0-<wbr/>beta.1</span></a></li>
+<li><a href="#md:v100"><span>v1.0.0</span></a></li>
 <li><a href="#md:v0120"><span>v0.12.0</span></a></li>
 <li><a href="#md:v0110"><span>v0.11.0</span></a></li></ul></li></ul></li></ul></li></ul></div></details></div>
 <div class="site-menu">

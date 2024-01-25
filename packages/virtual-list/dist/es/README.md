@@ -206,33 +206,19 @@ for (let i = 0; i < virtualList.items.length; i++) {
 
 ## Changelog
 
-### v1.0.0-beta.5
+### v1.0.0
 
+- 允许通过 `setOptions` 更改 `defaultView` 选项。
+- `loadNextData` 和 `loadPreviousData` 新增第二个参数，返回数据项的拷贝。
 - 组件内的数据项列表为空时，不调用 `loadNextData` 和 `loadPreviousData`，而不是传入 `null` 去调用它们。
-- 少量代码优化。
-
-### v1.0.0-beta.4
-
-- 允许通过 `setOptions` 去更改 `defaultView` 选项。
-- `scrollToHead` 和 `scrollToFoot` 方法新增一个参数，可用于指定是否排除状态节点。
-- 如果所有数据项都被清空，会调用 `refresh` 去刷新，而不是显示空状态。
-
-### v1.0.0-beta.3
-
-- 移除数据项后，会检查当前是否处于预加载的范围内。
-- 在空状态情况下，调用 `resetBoundaryState` 会触发数据刷新，重新请求初始数据。
-
-### v1.0.0-beta.2
-
-- 优化预加载范围检查的执行频率。
-- 使用原生接口监听 `scroll` 事件，更为高效。
-
-### v1.0.0-beta.1
-
+- `scrollToHead` 和 `scrollToFoot` 新增 `exceptState` 参数，用于指定是否排除状态节点。
 - 新增 `removeItems` 方法，用于移除多个数据项。
-- `DataSource` 的 `loadNextData` 和 `loadPreviousData` 方法新增第二个参数，返回数据项的拷贝。
-- 执行 `resetBoundaryState` 时，在重置状态之后，会检查当前是否处于预加载的范围内。
-- 数据类型的优化。
+- 移除数据项后，会检查当前是否处于预加载的范围内。
+- 如果所有数据项都被清空，会先触发刷新，而不是直接显示空状态。
+- 在空状态下，调用 `resetBoundaryState` 会触发刷新，重新请求初始数据。
+- 执行 `resetBoundaryState` 重置状态之后，会检查当前是否处于预加载的范围内。
+- 优化预加载范围检查的执行频率。
+- 其他代码优化。
 
 ### v0.12.0
 
