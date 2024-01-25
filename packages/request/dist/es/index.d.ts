@@ -34,21 +34,21 @@ export declare class Request {
      * @param options 请求选项。
      * @returns 发送请求的 promise 实例。
      */
-    send(url: string, options: IRequestOptions): Promise<Readonly<IRequestResult>>;
+    send(url: string, options?: IRequestOptions): Promise<Readonly<IRequestResult>>;
     /**
      * 发送 GET 请求。
      * @param url 请求地址。
      * @param options 请求选项。
      * @returns 发送请求的 promise 实例。
      */
-    get(url: string, options: IRequestOptions): Promise<Readonly<IRequestResult>>;
+    get(url: string, options?: IRequestOptions): Promise<Readonly<IRequestResult>>;
     /**
      * 发送 POST 请求。
      * @param url 请求地址。
      * @param options 请求选项。
      * @returns 发送请求的 promise 实例。
      */
-    post(url: string, options: IRequestOptions): Promise<Readonly<IRequestResult>>;
+    post(url: string, options?: IRequestOptions): Promise<Readonly<IRequestResult>>;
     /**
      * 中断请求。
      * @param id 请求编号。

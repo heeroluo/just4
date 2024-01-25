@@ -64,7 +64,7 @@ export class Request {
    */
   send(
     url: string,
-    options: IRequestOptions
+    options?: IRequestOptions
   ): Promise<Readonly<IRequestResult>> {
     let opts = assignProps(
       Object.create(null),
@@ -113,7 +113,7 @@ export class Request {
    * @returns 发送请求的 promise 实例。
    */
   get(
-    url: string, options: IRequestOptions
+    url: string, options?: IRequestOptions
   ): Promise<Readonly<IRequestResult>> {
     const opts = assignProps(Object.create(null), options);
     opts.method = 'GET';
@@ -127,7 +127,7 @@ export class Request {
    * @returns 发送请求的 promise 实例。
    */
   post(
-    url: string, options: IRequestOptions
+    url: string, options?: IRequestOptions
   ): Promise<Readonly<IRequestResult>> {
     const opts = assignProps(Object.create(null), options);
     opts.method = 'POST';
