@@ -30,11 +30,22 @@ npm i @just4/request
 
 ### 适配不同运行环境
 
-```javascript
-import { Request, xhrAdapter, wxRequestAdapter } from '@just4/request';
+#### 浏览器端
 
-// 用于浏览器端
+```javascript
+import { Request } from '@just4/request';
+import { xhrAdapter } from '@just4/request/adapter/xhr';
+
 const xhrRequest = new Request(xhrAdapter);
+```
+
+#### 微信小程序端
+
+需先安装 `miniprogram-api-typings`。
+
+```javascript
+import { Request } from '@just4/request';
+import { wxRequestAdapter } from '@just4/request/adapter/xhr';
 
 // 用于微信小程序端
 const wxRequest = new Request(wxRequestAdapter);
@@ -142,7 +153,7 @@ await xhrRequest.send('/detail', {
 可以通过 `timeout` 指定请求的超时时间（毫秒）。如果请求超时，将会返回拒绝状态的 promise 实例。
 
 ```javascript
-import { RequestErrorType } from '@just4/request/request-error';
+import { RequestErrorType } from '@just4/request';
 
 try {
   await xhrRequeset.send('/login', {
@@ -194,6 +205,11 @@ try {
 - [API 文档](https://heeroluo.github.io/just4/request/index.html)
 
 ## Changelog
+
+### v0.6.0
+
+- 为保证调用上的灵活性，`@just4/request/index` 不再导出适配器。
+- `Request` 类的 `send`、`get` 和 `post` 都允许不传 `options` 参数。
 
 ### v0.5.0
 
