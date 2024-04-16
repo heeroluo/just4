@@ -78,6 +78,7 @@ import { UAInfo } from '@just4/ua-info';
 const uaInfo = new UAInfo('an user agent string, such as navigator.userAgent');
 uaInfo.client.isWxWork; // 是否企业微信
 uaInfo.client.isWx; // 是否微信
+uaInfo.client.isWxMiniProgram; // 是否微信小程序
 uaInfo.client.isDing; // 是否钉钉
 uaInfo.client.isQQ; // 是否 QQ
 uaInfo.client.isWeibo; // 是否微博
@@ -187,6 +188,10 @@ uaInfoOfNewEdge.client.isEdge; // true
 - [API 文档](https://heeroluo.github.io/just4/ua-info/modules/index.html)
 
 ## Changelog
+
+### v1.3.0
+
+- 增加对微信小程序 WebView 的识别。
 
 ### v1.2.0
 
