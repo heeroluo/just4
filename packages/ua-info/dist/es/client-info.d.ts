@@ -16,6 +16,10 @@ export declare class ClientInfo {
      */
     readonly isWx: boolean;
     /**
+     * 是否微信小程序 WebView。
+     */
+    readonly isWxMiniProgram: boolean;
+    /**
      * 是否钉钉。
      */
     readonly isDing: boolean;
