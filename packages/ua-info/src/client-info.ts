@@ -44,6 +44,10 @@ export class ClientInfo {
    */
   public readonly isWx: boolean = false;
   /**
+   * 是否微信小程序 WebView。
+   */
+  public readonly isWxMiniProgram: boolean = false;
+  /**
    * 是否钉钉。
    */
   public readonly isDing: boolean = false;
@@ -125,5 +129,8 @@ export class ClientInfo {
       this.version = new Version('');
     }
     Object.freeze(this.version);
+
+    this.isWxMiniProgram = (this.isWx || this.isWxWork) &&
+      /\bMiniProgramEnv\b/.test(ua);
   }
 }
