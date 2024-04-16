@@ -13,7 +13,8 @@ const uaList = [
   'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4651.0 Safari/537.36',
   'Mozilla/5.0 (X11; CrOS x86_64 14541.0.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36',
   'Mozilla/5.0 (X11; OpenBSD amd64; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.139 Safari/537.36',
-  'Mozilla/5.0 (X11; Linux i386) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.70 Safari/537.36'
+  'Mozilla/5.0 (X11; Linux i386) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.70 Safari/537.36',
+  'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36 MicroMessenger/7.0.20.1781(0x6700143B) NetType/WIFI MiniProgramEnv/Windows WindowsWechat/WMPF WindowsWechat(0x6309098f) XWEB/9105'
 ];
 const uaInfoList = uaList.map(function(ua) {
   return new UAInfo(ua);
@@ -70,6 +71,9 @@ QUnit.test('main', function(assert: any) {
   assert.ok(!uaInfoList[8].isPortable, 'Chrome OS');
   assert.ok(!uaInfoList[9].isPortable, 'OpenBSD');
   assert.ok(!uaInfoList[10].isPortable, 'Linux');
+
+  assert.ok(uaInfoList[11].client.isWx, 'Weixin');
+  assert.ok(uaInfoList[11].client.isWxMiniProgram, 'Weixin MiniProgram WebView');
 });
 
 QUnit.test('edge', function(assert: any) {
