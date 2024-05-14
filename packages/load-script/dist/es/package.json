@@ -1,6 +1,6 @@
 {
   "name": "@just4/load-script",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Just for script loading in browser.",
   "keywords": [
     "script",

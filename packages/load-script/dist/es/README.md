@@ -42,6 +42,18 @@ const res = await jsonp('a jsonp url', {
 });
 ```
 
+### 备用请求
+
+无论是加载脚本还是 jsonp，都支持通过 `backupURL` 指定请求的备用地址。指定了备用地址时，如果原 URL 加载失败，就会加载备用 URL。
+
+```javascript
+import { loadScript } from '@just4/load-script';
+await loadScript('https://code.jquery.com/jquery-1.12.4.min.js', {
+  backupURL: 'https://ajax.aspnetcdn.com/ajax/jquery/jquery-1.12.4.min.js'
+});
+const $ = window.jQuery;
+```
+
 ### 注意事项
 
 - 慎用 `preventCaching` 选项。设为 `true` 时，会给请求的 url 加上时间戳参数，这可能会导致后端服务缓存穿透。
@@ -52,6 +64,10 @@ const res = await jsonp('a jsonp url', {
 - [API 文档](https://heeroluo.github.io/just4/load-script/modules/index.html)
 
 ## Changelog
+
+### v1.2.0
+
+- 支持备用 URL 的加载。
 
 ### v1.1.0
 
