@@ -24,6 +24,9 @@
 <a id="md:jsonp-请求" class="tsd-anchor"></a><h3><a href="#md:jsonp-请求">JSONP 请求</a></h3><p>JSONP 本质上是通过动态加载脚本文件的方式来加载数据，调用示例如下：</p>
 <pre><code class="language-javascript"><span class="hl-3">import</span><span class="hl-1"> { </span><span class="hl-4">jsonp</span><span class="hl-1"> } </span><span class="hl-3">from</span><span class="hl-1"> </span><span class="hl-2">&#39;@just4/load-script&#39;</span><span class="hl-1">;</span><br/><span class="hl-5">const</span><span class="hl-1"> </span><span class="hl-6">res</span><span class="hl-1"> = </span><span class="hl-3">await</span><span class="hl-1"> </span><span class="hl-0">jsonp</span><span class="hl-1">(</span><span class="hl-2">&#39;a jsonp url&#39;</span><span class="hl-1">, {</span><br/><span class="hl-1">  </span><span class="hl-4">data:</span><span class="hl-1"> { </span><span class="hl-4">id:</span><span class="hl-1"> </span><span class="hl-7">1</span><span class="hl-1"> },</span><br/><span class="hl-1">  </span><span class="hl-4">timeout:</span><span class="hl-1"> </span><span class="hl-7">5</span><span class="hl-1"> * </span><span class="hl-7">1000</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-4">preventCaching:</span><span class="hl-1"> </span><span class="hl-5">true</span><br/><span class="hl-1">});</span>
 </code><button>Copy</button></pre>
+<a id="md:备用请求" class="tsd-anchor"></a><h3><a href="#md:备用请求">备用请求</a></h3><p>无论是加载脚本还是 jsonp，都支持通过 <code>backupURL</code> 指定请求的备用地址。指定了备用地址时，如果原 URL 加载失败，就会加载备用 URL。</p>
+<pre><code class="language-javascript"><span class="hl-3">import</span><span class="hl-1"> { </span><span class="hl-4">loadScript</span><span class="hl-1"> } </span><span class="hl-3">from</span><span class="hl-1"> </span><span class="hl-2">&#39;@just4/load-script&#39;</span><span class="hl-1">;</span><br/><span class="hl-3">await</span><span class="hl-1"> </span><span class="hl-0">loadScript</span><span class="hl-1">(</span><span class="hl-2">&#39;https://code.jquery.com/jquery-1.12.4.min.js&#39;</span><span class="hl-1">, {</span><br/><span class="hl-1">  </span><span class="hl-4">backupURL:</span><span class="hl-1"> </span><span class="hl-2">&#39;https://ajax.aspnetcdn.com/ajax/jquery/jquery-1.12.4.min.js&#39;</span><br/><span class="hl-1">});</span><br/><span class="hl-5">const</span><span class="hl-1"> </span><span class="hl-6">$</span><span class="hl-1"> = </span><span class="hl-4">window</span><span class="hl-1">.</span><span class="hl-4">jQuery</span><span class="hl-1">;</span>
+</code><button>Copy</button></pre>
 <a id="md:注意事项" class="tsd-anchor"></a><h3><a href="#md:注意事项">注意事项</a></h3><ul>
 <li>慎用 <code>preventCaching</code> 选项。设为 <code>true</code> 时，会给请求的 url 加上时间戳参数，这可能会导致后端服务缓存穿透。</li>
 <li>调用 <code>jsonp</code> 方法时，该方法会按照特定规则生成回调函数名，并确保该名字对应的全局变量没有被占用。如果你希望指定回调函数名，可以使用 <code>callbackName</code> 选项进行控制，但是这种情况下请自行确保 <code>callbackName</code> 对应的全局变量没有被占用。</li>
@@ -31,7 +34,10 @@
 <a id="md:相关文档" class="tsd-anchor"></a><h2><a href="#md:相关文档">相关文档</a></h2><ul>
 <li><a href="https://heeroluo.github.io/just4/load-script/modules/index.html">API 文档</a></li>
 </ul>
-<a id="md:changelog" class="tsd-anchor"></a><h2><a href="#md:changelog">Changelog</a></h2><a id="md:v110" class="tsd-anchor"></a><h3><a href="#md:v110">v1.1.0</a></h3><ul>
+<a id="md:changelog" class="tsd-anchor"></a><h2><a href="#md:changelog">Changelog</a></h2><a id="md:v120" class="tsd-anchor"></a><h3><a href="#md:v120">v1.2.0</a></h3><ul>
+<li>支持备用 URL 的加载。</li>
+</ul>
+<a id="md:v110" class="tsd-anchor"></a><h3><a href="#md:v110">v1.1.0</a></h3><ul>
 <li>升级依赖包版本并对应调整相关 API 的调用。</li>
 </ul>
 </div></div>
@@ -64,11 +70,13 @@
 <ul>
 <li><a href="#md:动态加载脚本文件"><span>动态加载脚本文件</span></a></li>
 <li><a href="#md:jsonp-请求"><span>JSONP 请求</span></a></li>
+<li><a href="#md:备用请求"><span>备用请求</span></a></li>
 <li><a href="#md:注意事项"><span>注意事项</span></a></li></ul></li>
 <li><a href="#md:相关文档"><span>相关文档</span></a></li>
 <li><a href="#md:changelog"><span>Changelog</span></a></li>
 <li>
 <ul>
+<li><a href="#md:v120"><span>v1.2.0</span></a></li>
 <li><a href="#md:v110"><span>v1.1.0</span></a></li></ul></li></ul></li></ul></li></ul></div></details></div>
 <div class="site-menu">
 <nav class="tsd-navigation"><a href="index.html" class="current"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><g id="icon-4"><rect fill="var(--color-icon-background)" stroke="var(--color-ts-namespace)" stroke-width="1.5" x="1" y="1" width="22" height="22" rx="6"></rect><path d="M9.33 16V7.24H10.77L13.446 14.74C13.43 14.54 13.41 14.296 13.386 14.008C13.37 13.712 13.354 13.404 13.338 13.084C13.33 12.756 13.326 12.448 13.326 12.16V7.24H14.37V16H12.93L10.266 8.5C10.282 8.692 10.298 8.936 10.314 9.232C10.33 9.52 10.342 9.828 10.35 10.156C10.366 10.476 10.374 10.784 10.374 11.08V16H9.33Z" fill="var(--color-text)"></path></g></svg><span>@just4/load-<wbr/>script</span></a>
