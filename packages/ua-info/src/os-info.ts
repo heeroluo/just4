@@ -20,6 +20,7 @@ const propMap: Record<string, Exclude<keyof OSInfo, 'version'>> = {
 
 // platform 转为 os 名
 function platformToOS(platform: string): (keyof typeof propMap) | undefined {
+  // https://stackoverflow.com/questions/19877924/what-is-the-list-of-possible-values-for-navigator-platform-as-of-today
   switch (platform) {
     case 'Android':
       return 'android';
