@@ -41,3 +41,42 @@ QUnit.test('加载异常', function(assert: any) {
     done();
   });
 });
+
+QUnit.test('备用地址', function(assert: any) {
+  assert.expect(3);
+  const done = assert.async(3);
+
+  loadScript('/api/script/error', {
+    backupURL: '/api/script',
+    data: { 'var': 'globalNum4', num: 400 }
+  }).then(function() {
+    assert.strictEqual((<any>window).globalNum4, 400);
+    done();
+  }, function() {
+    assert.ok(false);
+    done();
+  });
+
+  loadScript('/api/script/error', {
+    backupURL: '/api/script/error',
+    data: { error: 1 }
+  }).then(function() {
+    assert.ok(false);
+    done();
+  }, function() {
+    assert.ok(true);
+    done();
+  });
+
+  loadScript('/api/script/timeout', {
+    backupURL: '/api/script',
+    data: { 'var': 'globalNum5', num: 500 },
+    timeout: 2000
+  }).then(function() {
+    assert.strictEqual((<any>window).globalNum5, 500);
+    done();
+  }, function() {
+    assert.ok(false);
+    done();
+  });
+});

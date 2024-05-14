@@ -9,6 +9,10 @@
  */
 export interface ILoadScriptOptions {
   /**
+   * 备用 URL。
+   */
+  backupURL?: string,
+  /**
    * URL 参数（查询字符串）。
    */
   data?: string | object,

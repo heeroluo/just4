@@ -63,6 +63,17 @@ export function loadScript(
     // 增加时间戳参数防止本地缓存
     if (opts.preventCaching) { url = concat(url, { _: Date.now() }); }
 
+    function tryBackup(backupURL: string) {
+      resolve(
+        loadScript(backupURL, {
+          data: opts.data,
+          preventCaching: opts.preventCaching,
+          props: opts.props,
+          timeout: opts.timeout
+        })
+      );
+    }
+
     script = createScript(opts.props);
     script.onload = function() {
       destroy();
@@ -70,7 +81,11 @@ export function loadScript(
     };
     script.onerror = function() {
       destroy();
-      reject(new Error('Fail to load "' + url + '"'));
+      if (opts.backupURL) {
+        tryBackup(opts.backupURL);
+      } else {
+        reject(new Error('Fail to load "' + url + '"'));
+      }
     };
     script.src = url;
     document.head.appendChild(script);
@@ -80,7 +95,11 @@ export function loadScript(
     if (timeout > 0) {
       timeoutTimer = window.setTimeout(function() {
         destroy();
-        reject(new Error('Request "' + url + '" timeout'));
+        if (opts.backupURL) {
+          tryBackup(opts.backupURL);
+        } else {
+          reject(new Error('Request "' + url + '" timeout'));
+        }
       }, timeout);
     }
   });
