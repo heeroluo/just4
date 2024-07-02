@@ -32,6 +32,10 @@ export declare class UAInfo {
      */
     readonly isPortable: boolean;
     /**
+     * 是否平板设备。
+     */
+    readonly isTablet: boolean;
+    /**
      * 设备信息类构造函数。
      * @param ua User agent 字符串。
      * @param featureInfo 设备特性信息。
