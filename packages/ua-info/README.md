@@ -17,6 +17,7 @@ import { UAInfo } from '@just4/ua-info';
 
 const uaInfo = new UAInfo('an user agent string, such as navigator.userAgent');
 uaInfo.isPortable; // 是否便携设备
+uaInfo.isTablet; // 是否平板设备
 ```
 
 ### 操作系统信息
@@ -60,7 +61,7 @@ uaInfo.brand.isOnePlus; // 是否一加设备
 import { UAInfo } from '@just4/ua-info';
 
 const uaInfo = new UAInfo('an user agent string, such as navigator.userAgent');
-uaInfo.borwser.isIE; // 是否 IE 内核
+uaInfo.browser.isIE; // 是否 IE 内核
 uaInfo.browser.isChrome; // 是否 Chrome 内核
 uaInfo.browser.isSafari; // 是否 Safari 内核
 uaInfo.browser.isEdge; // 是否 Edge(EdgeHTML) 内核
@@ -189,9 +190,14 @@ uaInfoOfNewEdge.client.isEdge; // true
 
 ## Changelog
 
+### v1.4.0
+
+- 优化华为设备的优化规则。
+- 增加对平板设备的识别（`uaInfo.isTablet`）。
+
 ### v1.3.0
 
-- 增加对微信小程序 WebView 的识别。
+- 增加对微信小程序 WebView 的识别（`uaInfo.client.isWxMiniProgram`）。
 
 ### v1.2.0
 
