@@ -34,6 +34,10 @@ export class UAInfo {
    * 是否便携设备。
    */
   public readonly isPortable: boolean;
+  /**
+   * 是否平板设备。
+   */
+  public readonly isTablet: boolean;
 
   /**
    * 设备信息类构造函数。
@@ -51,5 +55,9 @@ export class UAInfo {
       !/\b(Windows\sNT|Macintosh|x86(_(32|64))?|amd64|i[1-6]86)\b/.test(ua);
     // 结合操作系统信息进一步精确判定
     if (this.os.isIOS || this.os.isAndroid) { this.isPortable = true; }
+
+    this.isTablet = this.brand.isIPad ||
+      /\bTablet\b/i.test(ua) ||
+      (this.os.isAndroid && !/\bMobile\b/i.test(ua));
   }
 }
