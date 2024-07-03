@@ -183,12 +183,15 @@ uaInfoOfNewEdge.client.isEdge; // true
 
 考虑到代码体积和性能，本项目仅支持主流操作系统、浏览器内核、客户端以及常见品牌的识别，如果您需要范围更广的识别，请使用 [uadetector](https://www.npmjs.com/package/uadetector)（本项目的识别规则也来自 uadetector）。
 
-
 ## 相关文档
 
 - [API 文档](https://heeroluo.github.io/just4/ua-info/modules/index.html)
 
 ## Changelog
+
+### v1.5.0
+
+- 优化设备品牌匹配规则。
 
 ### v1.4.0
 
