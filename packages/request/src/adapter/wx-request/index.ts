@@ -3,7 +3,6 @@
  * @packageDocumentation
  */
 
-import 'miniprogram-api-typings';
 import {
   IRequestAdapter,
   IRequestResult,

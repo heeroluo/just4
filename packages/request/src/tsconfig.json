@@ -7,6 +7,7 @@
       "@just4/util/*": ["../util/dist/es/*"],
       "@just4/querystring/*": ["../querystring/dist/es/*"]
     },
+    "types": ["miniprogram-api-typings"],
     "skipLibCheck": true
   }
 }
