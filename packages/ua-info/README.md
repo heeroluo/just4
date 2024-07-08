@@ -195,7 +195,7 @@ uaInfoOfNewEdge.client.isEdge; // true
 
 ### v1.4.0
 
-- 优化华为设备的优化规则。
+- 优化华为品牌的匹配规则。
 - 增加对平板设备的识别（`uaInfo.isTablet`）。
 
 ### v1.3.0
