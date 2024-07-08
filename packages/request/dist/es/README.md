@@ -45,7 +45,7 @@ const xhrRequest = new Request(xhrAdapter);
 
 ```javascript
 import { Request } from '@just4/request';
-import { wxRequestAdapter } from '@just4/request/adapter/xhr';
+import { wxRequestAdapter } from '@just4/request/adapter/wx-request';
 
 // 用于微信小程序端
 const wxRequest = new Request(wxRequestAdapter);

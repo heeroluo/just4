@@ -2,7 +2,6 @@
  * 提供微信小程序网络请求适配器。
  * @packageDocumentation
  */
-import 'miniprogram-api-typings';
 import { IRequestAdapter, IRequestResult } from '../../types';
 /**
  * 微信小程序网络请求的结果。
