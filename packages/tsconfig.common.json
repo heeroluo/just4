@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "moduleResolution": "node",
-    "strict": true
+    "strict": true,
+    "skipLibCheck": true
   }
 }
