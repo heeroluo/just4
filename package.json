@@ -40,6 +40,7 @@
     "html-webpack-plugin": "^4.5.2",
     "miniprogram-api-typings": "^3.9.1",
     "rimraf": "^6.0.1",
+    "sockjs-client": "~1.5.2",
     "terser": "^5.31.3",
     "ts-loader": "^8.3.0",
     "tsconfig-paths-webpack-plugin": "^3.5.2",
