@@ -3,7 +3,7 @@
  */
 
 const fs = require('fs');
-const glob = require('glob');
+const { globSync } = require('glob');
 const terser = require('terser');
 
 function readFile(file) {
@@ -40,9 +40,7 @@ async function compress(file) {
   await writeFile(file, result.code);
 }
 
-glob('dist/es/**/*.js', {
+globSync('dist/es/**/*.js', {
   cwd: process.cwd(),
   absolute: true
-}, function(err, files) {
-  files.forEach(compress);
-});
+}).forEach(compress);

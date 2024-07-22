@@ -25,6 +25,7 @@ delete pkgJSON.devDependencies;
 delete pkgJSON.scripts;
 delete pkgJSON.private;
 delete pkgJSON.devPort;
+delete pkgJSON.engines;
 
 fs.writeFileSync(
   path.join(pkgDir, 'dist', 'es', 'package.json'),

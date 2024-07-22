@@ -119,18 +119,18 @@ module.exports = {
     'unicorn/prefer-includes': 0,
 
     // Sonarjs
-    'sonarjs/cognitive-complexity': ['error', 18],
-    'sonarjs/no-duplicate-string': ['error', 5],
+    'sonarjs/cognitive-complexity': ['error', 20],
+    'sonarjs/no-duplicate-string': ['error', { threshold: 5 }],
     'sonarjs/no-collection-size-mischeck': 0,
     'sonarjs/no-identical-functions': [devWarnProdError],
 
     // TypeScript
+    '@typescript-eslint/no-explicit-any': 'warn',
     '@typescript-eslint/semi': ['error', 'always'],
     '@typescript-eslint/indent': ['error', 2, {
       'SwitchCase': 1
     }],
     '@typescript-eslint/comma-spacing': ['error'],
-    '@typescript-eslint/no-duplicate-imports': ['error'],
     '@typescript-eslint/type-annotation-spacing': ['error', {
       after: true,
       before: false,
