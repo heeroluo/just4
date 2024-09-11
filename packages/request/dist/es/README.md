@@ -206,6 +206,10 @@ try {
 
 ## Changelog
 
+### v0.7.0
+
+- 不再引入 `miniprogram-api-typings`，而是在 `tsconfig.json` 中指定。
+
 ### v0.6.0
 
 - 为保证调用上的灵活性，`@just4/request/index` 不再导出适配器。
