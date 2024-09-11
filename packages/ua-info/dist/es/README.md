@@ -30,6 +30,8 @@ uaInfo.os.isWindows; // 是否 Windows（NT 内核，即 Windows 2000 及以上�
 uaInfo.os.isMacOS; // 是否苹果 macOS 或 OSX
 uaInfo.os.isIOS; // 是否苹果 iOS
 uaInfo.os.isAndroid; // 是否安卓
+uaInfo.os.isHarmonyOS; // 是否鸿蒙
+uaInfo.os.isOpenHarmony; // 是否 OpenHarmony（HarmonyOS Next）
 ```
 
 ### 设备品牌信息
@@ -189,13 +191,17 @@ uaInfoOfNewEdge.client.isEdge; // true
 
 ## Changelog
 
+### v1.6.0
+
+- 增加对 HarmonyOS 和 OpenHarmony（HarmonyOS Next）的识别。
+
 ### v1.5.0
 
 - 优化设备品牌匹配规则。
 
 ### v1.4.0
 
-- 优化华为设备的优化规则。
+- 优化华为品牌的匹配规则。
 - 增加对平板设备的识别（`uaInfo.isTablet`）。
 
 ### v1.3.0

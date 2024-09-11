@@ -30,6 +30,8 @@ uaInfo.os.isWindows; // 是否 Windows（NT 内核，即 Windows 2000 及以上�
 uaInfo.os.isMacOS; // 是否苹果 macOS 或 OSX
 uaInfo.os.isIOS; // 是否苹果 iOS
 uaInfo.os.isAndroid; // 是否安卓
+uaInfo.os.isHarmonyOS; // 是否鸿蒙
+uaInfo.os.isOpenHarmony; // 是否 OpenHarmony（HarmonyOS Next）
 ```
 
 ### 设备品牌信息
@@ -188,6 +190,10 @@ uaInfoOfNewEdge.client.isEdge; // true
 - [API 文档](https://heeroluo.github.io/just4/ua-info/modules/index.html)
 
 ## Changelog
+
+### v1.6.0
+
+- 增加对 HarmonyOS 和 OpenHarmony（HarmonyOS Next）的识别。
 
 ### v1.5.0
 

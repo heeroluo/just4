@@ -15,7 +15,9 @@ const uaList = [
   'Mozilla/5.0 (X11; OpenBSD amd64; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.139 Safari/537.36',
   'Mozilla/5.0 (X11; Linux i386) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.70 Safari/537.36',
   'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36 MicroMessenger/7.0.20.1781(0x6700143B) NetType/WIFI MiniProgramEnv/Windows WindowsWechat/WMPF WindowsWechat(0x6309098f) XWEB/9105',
-  'Mozilla/5.0 (Linux; Android 12; A9000 Build/SP1A.210812.016; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/122.0.6261.120 Safari/537.36 XWEB/1220099 MMWEBSDK/20230303 MMWEBID/8049 MicroMessenger/8.0.34.2340(0x2800225D) WeChat/arm64 Weixin Android Tablet NetType/WIFI Language/zh_CN ABI/arm64'
+  'Mozilla/5.0 (Linux; Android 12; A9000 Build/SP1A.210812.016; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/122.0.6261.120 Safari/537.36 XWEB/1220099 MMWEBSDK/20230303 MMWEBID/8049 MicroMessenger/8.0.34.2340(0x2800225D) WeChat/arm64 Weixin Android Tablet NetType/WIFI Language/zh_CN ABI/arm64',
+  'Mozilla/5.0 (Linux; Android 12; HarmonyOS; DCO-AL00; HMSCore 6.14.0.302) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.5735.196 HuaweiBrowser/15.0.6.301 Mobile Safari/537.36',
+  'Mozilla/5.0 (Phone; OpenHarmony 5.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36  ArkWeb/4.1.6.1 Mobile'
 ];
 const uaInfoList = uaList.map(function(ua) {
   return new UAInfo(ua);
@@ -92,6 +94,14 @@ QUnit.test('edge', function(assert: any) {
   assert.ok(uaInfoList[6].browser.version.gt('18'));
   assert.ok(uaInfoList[6].client.isEdge);
   assert.ok(uaInfoList[6].client.version.gt('18'));
+});
+
+QUnit.test('harmony', function(assert: any) {
+  assert.ok(uaInfoList[13].os.isAndroid);
+  assert.ok(uaInfoList[13].os.isHarmonyOS);
+  assert.ok(uaInfoList[14].os.isOpenHarmony);
+  assert.ok(!uaInfoList[14].os.isHarmonyOS);
+  assert.ok(uaInfoList[14].os.version.eq('5'));
 });
 
 QUnit.test('three-digit-version', function(assert: any) {

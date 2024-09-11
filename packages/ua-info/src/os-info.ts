@@ -13,6 +13,7 @@ import type { IMatchResult } from './internal/types';
 // UA 分析结果与类属性的对应关系
 const propMap: Record<string, Exclude<keyof OSInfo, 'version'>> = {
   'ios': 'isIOS',
+  'openharmony': 'isOpenHarmony',
   'android': 'isAndroid',
   'windows': 'isWindows',
   'macos': 'isMacOS'
@@ -47,6 +48,14 @@ export class OSInfo {
    * 是否安卓。
    */
   public readonly isAndroid: boolean = false;
+  /**
+   * 是否鸿蒙。
+   */
+  public readonly isHarmonyOS: boolean = false;
+  /**
+   * 是否 OpenHarmony。
+   */
+  public readonly isOpenHarmony: boolean = false;
   /**
    * 是否微软 Windows。
    */
@@ -99,5 +108,9 @@ export class OSInfo {
 
     this[propMap[result.name]] = true;
     this.version = Object.freeze(new Version(result.version));
+
+    if (this.isAndroid && /\bHarmonyOS\b/.test(ua)) {
+      this.isHarmonyOS = true;
+    }
   }
 }

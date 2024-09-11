@@ -17,6 +17,14 @@ export declare class OSInfo {
      */
     readonly isAndroid: boolean;
     /**
+     * 是否鸿蒙。
+     */
+    readonly isHarmonyOS: boolean;
+    /**
+     * 是否 OpenHarmony。
+     */
+    readonly isOpenHarmony: boolean;
+    /**
      * 是否微软 Windows。
      */
     readonly isWindows: boolean;

@@ -86,7 +86,7 @@ export class BrandInfo {
     } else if (os.isMacOS) {
       this.isMac = true;
       this.isApple = true;
-    } else if (os.isAndroid) {
+    } else if (os.isAndroid || os.isOpenHarmony) {
       rules = androidRules;
     }
 
