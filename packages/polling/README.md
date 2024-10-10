@@ -10,6 +10,12 @@ npm i @just4/polling
 
 ## 调用
 
+### 调用入口
+
+```javascript
+import { Polling } from '@just4/polling';
+```
+
 ### 基本调用
 
 ```javascript
@@ -24,7 +30,26 @@ const polling = new Polling(() => {
   // 2 秒执行一次
   interval: 2000
 });
-// 调用 start 后会马上执行一次操作函数
+// 开始轮询（调用 start 后会马上执行一次操作函数）
+polling.start();
+// 停止轮询
+polling.stop();
+```
+
+### 通过钩子函数停止轮询
+
+可以通过传入 `shouldContinue` 钩子函数控制是否继续轮询：
+
+```javascript
+let i = 0;
+const polling = new Polling(() => {
+  return new Promise<void>((resolve) => {
+    i += 1;
+  });
+}, {
+  // 返回值为 false 时停止轮询
+  shouldContinue() { return i < 3; }
+});
 polling.start();
 ```
 
@@ -35,6 +60,7 @@ polling.start();
 ```javascript
 const polling = new Polling(() => {
   return new Promise((resolve, reject) => {
+    // 模拟出错的情况
     setTimeout(() => {
       if (Math.random < 0.5) {
         resolve();
@@ -56,19 +82,18 @@ polling.start();
 
 ```javascript
 const polling = new Polling(() => {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      polling.updateOptions({
-        interval: Math.random() < 0.5 ? 5000 : 2000
-      });
-      resolve();
-    }, 1000);
-  });
+  console.log('executed');
 }, {
   interval: 2000,
   breakOnError: true
 });
 polling.start();
+
+setTimeout(() => {
+  polling.updateOptions({
+    interval: 1000
+  });
+}, 3000);
 ```
 
 ### 轮询过程中立刻执行一次操作函数
@@ -94,6 +119,33 @@ setTimeout(() => {
 }, 3000);
 ```
 
+### 监听事件
+
+```javascript
+import { PollingEvent } from '@/events';
+
+let i = 0;
+const polling = new Polling(() => {
+  return new Promise<void>((resolve) => {
+    i += 1;
+  });
+}, {
+  shouldContinue() { return i < 3; }
+});
+polling.on(PollingEvent.START, () => {
+  console.log('start');
+});
+polling.on(PollingEvent.STOP, () => {
+  console.log('stop');
+});
+polling.start();
+```
+
 ## 相关文档
 
 - [API 文档](https://heeroluo.github.io/just4/polling/modules/index.html)
+
+## Changelog
+
+- 增加事件触发机制，支持轮询开始和轮询结束两个事件。
+- 增加 `shouldContinue` 选项，用于传入一个决定是否停止轮询的函数。

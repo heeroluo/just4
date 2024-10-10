@@ -3,7 +3,9 @@
  * @packageDocumentation
  */
 
+import { EventEmitter } from 'eventemitter3';
 import { IPollingOptions, Executor } from './types';
+import { PollingEvent } from './events';
 
 
 /**
@@ -12,7 +14,7 @@ import { IPollingOptions, Executor } from './types';
 let theGlobal: typeof globalThis;
 if (typeof window !== 'undefined') {
   theGlobal = window;
-} else if (typeof global !== undefined) {
+} else if (typeof global !== 'undefined') {
   theGlobal = global;
 }
 
@@ -49,14 +51,11 @@ export class Polling {
   /**
    * 轮询选项。
    */
-  protected readonly _options: IPollingOptions = {
-    interval: 1000,
-    breakOnError: false
-  };
+  protected readonly _options: IPollingOptions = {};
   /**
    * 轮询对应的 setTimeout 的计时器。
    */
-  private _timer: number | NodeJS.Timer | undefined;
+  private _timer: number | NodeJS.Timeout | undefined;
   /**
    * 轮询是否已启动。
    */
@@ -69,6 +68,11 @@ export class Polling {
    * 是否要在当前执行结束后马上运行执行函数。
    */
   private _shouldImmediate = false;
+
+  /**
+   * 事件监听/触发器。
+   */
+  protected readonly _eventEmitter = new EventEmitter();
 
   /**
    * 停止所有轮询任务。
@@ -94,10 +98,7 @@ export class Polling {
    * @param options 轮询选项。
    */
   updateOptions(options?: Readonly<IPollingOptions>): void {
-    if (options) {
-      this._options.interval = options.interval ?? this._options.interval;
-      this._options.breakOnError = options.breakOnError ?? this._options.breakOnError;
-    }
+    if (options) { Object.assign(this._options, options); }
   }
 
   /**
@@ -124,7 +125,7 @@ export class Polling {
         this._next();
       }, (e: unknown) => {
         this._isExecuting = false;
-        if (this._options.breakOnError) {
+        if (this._options.breakOnError === true) {
           this.stop();
         } else {
           this._next();
@@ -147,10 +148,19 @@ export class Polling {
       this._exec();
 
     } else if (this._started) {
+      if (
+        typeof this._options.shouldContinue === 'function' &&
+        this._options.shouldContinue.call(theGlobal) === false
+      ) {
+        this.stop();
+        return;
+      }
+
       // 进入下一次轮询
-      this._timer = setTimeout(() => {
-        this._exec();
-      }, this._options.interval);
+      this._timer = setTimeout(
+        () => { this._exec(); },
+        Number(this._options.interval) || 1000
+      );
     }
   }
 
@@ -190,22 +200,55 @@ export class Polling {
    */
   public start(): void {
     if (this._started) { return; }
+
     this._started = true;
-    pollingTasks.push(this);
+    if (pollingTasks.indexOf(this) === -1) {
+      pollingTasks.push(this);
+    }
+    this._eventEmitter.emit(PollingEvent.START);
+
     this._exec();
   }
 
   /**
    * 停止轮询。
    */
-  stop(): void {
+  public stop(): void {
+    if (!this._started) { return; }
+
     this._clearTimeout();
     this._started = false;
-    for (let i = pollingTasks.length - 1; i >= 0; i--) {
-      if (pollingTasks[i] === this) {
-        pollingTasks.splice(i, 1);
-        break;
-      }
-    }
+    const i = pollingTasks.indexOf(this);
+    if (i !== -1) { pollingTasks.splice(i, 1); }
+
+    this._eventEmitter.emit(PollingEvent.STOP);
+  }
+
+  /**
+   * 添加事件监听器。
+   * @param type 事件类型。
+   * @param cb 监听函数。
+   * @param context 调用监听函数的上下文。
+   */
+  public on(
+    type: PollingEvent,
+    cb: (...args: unknown[]) => void,
+    context?: unknown
+  ): void {
+    this._eventEmitter.on(type, cb, context);
+  }
+
+  /**
+   * 移除事件监听器。
+   * @param type 仅移除指定事件类型。
+   * @param cb 仅移除指定监听函数。
+   * @param context 仅移除指定上下文。
+   */
+  public off(
+    type: PollingEvent,
+    cb?: (...args: unknown[]) => void,
+    context?: unknown
+  ): void {
+    this._eventEmitter.off(type, cb, context);
   }
 }
