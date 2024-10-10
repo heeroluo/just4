@@ -1,0 +1,1 @@
+export var PollingEvent;!function(n){n.START="start",n.STOP="stop"}(PollingEvent||(PollingEvent={}));

@@ -14,6 +14,10 @@ export interface IPollingOptions {
      * 出错时是否中断，默认为 false。
      */
     breakOnError?: boolean;
+    /**
+     * 判断是否继续执行轮询操作的函数，返回值为 false 时停止轮询。
+     */
+    shouldContinue?: () => boolean;
 }
 /**
  * 轮询的执行函数原型。

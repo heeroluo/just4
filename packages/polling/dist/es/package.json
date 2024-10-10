@@ -1,12 +1,15 @@
 {
   "name": "@just4/polling",
-  "version": "0.1.0-beta.1",
+  "version": "0.2.0",
   "description": "Just for making polling task easier to create.",
   "keywords": [
     "polling",
     "setTimeout",
     "setInterval"
   ],
+  "dependencies": {
+    "eventemitter3": "^4.0.7"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/heeroluo/just4"
@@ -21,8 +24,5 @@
     "url": "https://github.com/heeroluo/just4/issues"
   },
   "homepage": "https://github.com/heeroluo/just4#readme",
-  "engines": {
-    "node": ">=10.0.0"
-  },
-  "dependencies": {}
+  "main": "index.js"
 }
