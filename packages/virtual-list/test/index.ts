@@ -1,13 +1,11 @@
 import 'core-js';
 import { VirtualList } from '@/index';
 import { DataSource, Renderer, RenderPosition } from '@/types';
-import { VirtualListEvent } from '@/events';
 
 const imgs = [
   'https://p4.itc.cn/images01/20210608/219fddbc66e64db8a4be54b45cefd8ea.png',
   'https://p0.itc.cn/images01/20210608/831b4a3d73d146a0ba895d58a2d99ab1.png',
   'https://p5.itc.cn/images01/20210608/3f4b0865ce2f4fc79ccf4c21a7a657ee.png',
-  // 'https://c-ssl.duitang.com/uploads/item/202003/03/20200303200943_rsqsf.jpg',
 ];
 
 interface ItemData {
@@ -143,19 +141,19 @@ const virtualList = (<any>window).virtualList = new VirtualList<ItemData, 'id'>(
   defaultView: 'foot',
   prefetchDistance: 1
 });
-virtualList.on(VirtualListEvent.ITEM_CLICK, (args: unknown) => {
+virtualList.on('item-click', (args) => {
   console.log('数据点击');
   console.dir(args);
 });
-virtualList.on(VirtualListEvent.ITEM_UPDATE, (args: unknown) => {
+virtualList.on('item-update', (args) => {
   console.log('数据更新');
   console.dir(args);
 });
-virtualList.on(VirtualListEvent.ITEM_REMOVE, (args: unknown) => {
+virtualList.on('item-remove', (args) => {
   console.log('数据移除');
   console.dir(args);
 });
-virtualList.on(VirtualListEvent.RENDERED, (args: unknown) => {
+virtualList.on('rendered', (args) => {
   console.log('单次渲染');
   console.dir(args);
 });

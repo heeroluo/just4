@@ -9,24 +9,18 @@ import { DOMWrap } from '@just4/dom/dom-wrap';
 import type { IEventHandler } from '@just4/dom/interfaces';
 import { EventWrap } from '@just4/dom/event-wrap';
 import { $ } from '@just4/dom/index';
-import { EventEmitter } from 'eventemitter3';
+import { PubSub } from '@just4/util/event';
 import { debounce } from './internal/util';
 import { RenderPosition } from './types';
 import { ItemList } from './item-list';
-import {
-  VirtualListEvent,
-  ItemClickEvent,
-  ItemUpdateEvent,
-  ItemsRemoveEvent,
-  RenderedEvent
-} from './events';
+import type { VirtualListEvent } from './events';
 import type { VirtualListOptions, Renderer, InitialResponse } from './types';
 
 
 /**
  * 虚拟列表组件。
  */
-export class VirtualList<ItemType extends object, ItemKey extends keyof ItemType = keyof ItemType> {
+export class VirtualList<ItemType extends object, ItemKey extends keyof ItemType = keyof ItemType> extends PubSub<VirtualListEvent<ItemType>> {
   /**
    * 组件选项。
    */
@@ -105,11 +99,6 @@ export class VirtualList<ItemType extends object, ItemKey extends keyof ItemType
   private __lastCheckPositionTime = 0;
 
   /**
-   * 事件监听/触发器。
-   */
-  protected readonly _eventEmitter = new EventEmitter();
-
-  /**
    * 内部数据项的访问器。
    */
   public readonly items: ItemList<ItemType>;
@@ -120,6 +109,7 @@ export class VirtualList<ItemType extends object, ItemKey extends keyof ItemType
    * @param options 选项。
    */
   constructor(options: VirtualListOptions<ItemType, ItemKey>) {
+    super();
     this._container = $(options.container);
     this._options = assignProps({}, options);
     this.items = new ItemList<ItemType>(
@@ -170,7 +160,7 @@ export class VirtualList<ItemType extends object, ItemKey extends keyof ItemType
    */
   public destroy(): void {
     this._removeEventListeners();
-    this._eventEmitter.removeAllListeners();
+    this._eventEmitter.all.clear();
     if (this.__checkPositionTimer) {
       clearTimeout(this.__checkPositionTimer);
     }
@@ -444,12 +434,11 @@ export class VirtualList<ItemType extends object, ItemKey extends keyof ItemType
 
     if (itemIndex !== -1) {
       // 触发数据项点击事件
-      const args: ItemClickEvent<ItemType> = {
+      this._eventEmitter.emit('item-click', {
         domEvent: e,
         itemNode: this._itemNodes[itemIndex],
         itemData: assignProps({}, this._itemList[itemIndex])
-      };
-      this._eventEmitter.emit(VirtualListEvent.ITEM_CLICK, args);
+      });
     }
   }
 
@@ -622,13 +611,12 @@ export class VirtualList<ItemType extends object, ItemKey extends keyof ItemType
     data: ItemType[],
     nodes: ArrayLike<HTMLElement>
   ): void {
-    const args: RenderedEvent<ItemType> = {
+    // 触发单次渲染完成事件
+    this._eventEmitter.emit('rendered', {
       position,
       itemList: data.slice(),
       itemNodes: new DOMWrap(nodes)
-    };
-    // 触发单次渲染完成事件
-    this._eventEmitter.emit(VirtualListEvent.RENDERED, args);
+    });
   }
 
   /**
@@ -654,11 +642,10 @@ export class VirtualList<ItemType extends object, ItemKey extends keyof ItemType
       )).remove();
 
       // 触发数据移除事件
-      const args: ItemsRemoveEvent<ItemType> = {
+      this._eventEmitter.emit('item-remove', {
         itemList: overflowItems,
         itemNodes: overflowNodes
-      };
-      this._eventEmitter.emit(VirtualListEvent.ITEM_REMOVE, args);
+      });
 
       // 因为裁掉了尾部的数据，尾部必然没到边界，要更新状态
       this._setAndRenderState('renderBoundary', false, RenderPosition.Foot);
@@ -725,11 +712,10 @@ export class VirtualList<ItemType extends object, ItemKey extends keyof ItemType
       });
 
       // 触发数据移除事件
-      const args: ItemsRemoveEvent<ItemType> = {
+      this._eventEmitter.emit('item-remove', {
         itemList: overflowItems,
         itemNodes: overflowNodes
-      };
-      this._eventEmitter.emit(VirtualListEvent.ITEM_REMOVE, args);
+      });
     }
 
     mergeArray(this._itemList, data);
@@ -813,13 +799,12 @@ export class VirtualList<ItemType extends object, ItemKey extends keyof ItemType
     setTimeout(() => { this.checkPosition(); }, 0);
 
     // 触发数据更新事件
-    const args: ItemUpdateEvent<ItemType> = {
+    this._eventEmitter.emit('item-update', {
       oldData,
       oldNode,
       newData,
       newNode: $(newNode)
-    };
-    this._eventEmitter.emit(VirtualListEvent.ITEM_UPDATE, args);
+    });
 
     return true;
   }
@@ -835,11 +820,10 @@ export class VirtualList<ItemType extends object, ItemKey extends keyof ItemType
       setTimeout(() => { this.checkPosition(); }, 0);
 
       // 触发数据移除事件
-      const args: ItemsRemoveEvent<ItemType> = {
+      this._eventEmitter.emit('item-remove', {
         itemList,
         itemNodes
-      };
-      this._eventEmitter.emit(VirtualListEvent.ITEM_REMOVE, args);
+      });
     }
 
     if (this._itemList.length) {
@@ -1032,33 +1016,5 @@ export class VirtualList<ItemType extends object, ItemKey extends keyof ItemType
     } else if (position === RenderPosition.Foot) {
       this._fetchNext();
     }
-  }
-
-  /**
-   * 添加事件监听器。
-   * @param type 事件类型。
-   * @param cb 监听函数。
-   * @param context 调用监听函数的上下文。
-   */
-  public on(
-    type: VirtualListEvent,
-    cb: (...args: unknown[]) => void,
-    context?: unknown
-  ): void {
-    this._eventEmitter.on(type, cb, context);
-  }
-
-  /**
-   * 移除事件监听器。
-   * @param type 仅移除指定事件类型。
-   * @param cb 仅移除指定监听函数。
-   * @param context 仅移除指定上下文。
-   */
-  public off(
-    type: VirtualListEvent,
-    cb?: (...args: unknown[]) => void,
-    context?: unknown
-  ): void {
-    this._eventEmitter.off(type, cb, context);
   }
 }
