@@ -121,7 +121,8 @@ export class VirtualList<ItemType extends object, ItemKey extends keyof ItemType
 
   /**
    * 修改组件选项（容器和默认视图不可修改）。
-   * @param options 需要修改的选项。
+   * @param key 选项名。
+   * @param value 选项值。
    */
   setOption<K extends keyof VirtualListOptions<ItemType, ItemKey>>(
     key: K,
@@ -493,7 +494,6 @@ export class VirtualList<ItemType extends object, ItemKey extends keyof ItemType
   /**
    * 在渲染前后，保持当前可视区域不变。
    * @param render 渲染函数。返回值为 true 时保持当前可视区域不变。
-   * @param position 渲染位置。
    */
   protected _keepView(render: () => void): void {
     // 对比渲染前首个在可视区域内的数据项节点，在渲染前后位置的变化
