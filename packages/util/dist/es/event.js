@@ -1,0 +1,1 @@
+import mitt from"mitt";export class PubSub{constructor(){this._eventEmitter=mitt()}on(t,e){this._eventEmitter.on(t,e)}off(t,e){this._eventEmitter.off(t,e)}}
