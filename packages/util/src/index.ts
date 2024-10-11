@@ -24,3 +24,7 @@ export {
 export {
   addRelativeTime
 } from './date';
+
+export {
+  PubSub
+} from './event';
