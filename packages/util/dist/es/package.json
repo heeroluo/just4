@@ -6,6 +6,9 @@
     "utility",
     "util"
   ],
+  "dependencies": {
+    "mitt": "^3.0.1"
+  },
   "miniprogram": "./",
   "repository": {
     "type": "git",
