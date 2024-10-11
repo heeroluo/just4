@@ -2,6 +2,7 @@
  * 调用入口。
  * @packageDocumentation
  */
+import { PubSub } from '@just4/util/event';
 import { IPollingOptions, Executor } from './types';
 import { PollingEvent } from './events';
 /**
@@ -22,7 +23,7 @@ import { PollingEvent } from './events';
  * polling.start();
  * ```
  */
-export declare class Polling {
+export declare class Polling extends PubSub<PollingEvent> {
     /**
      * 执行函数。
      */
@@ -47,10 +48,6 @@ export declare class Polling {
      * 是否要在当前执行结束后马上运行执行函数。
      */
     private _shouldImmediate;
-    /**
-     * 事件监听/触发器。
-     */
-    protected readonly _eventEmitter: import("eventemitter3")<string | symbol, any>;
     /**
      * 停止所有轮询任务。
      */
@@ -90,18 +87,4 @@ export declare class Polling {
      * 停止轮询。
      */
     stop(): void;
-    /**
-     * 添加事件监听器。
-     * @param type 事件类型。
-     * @param cb 监听函数。
-     * @param context 调用监听函数的上下文。
-     */
-    on(type: PollingEvent, cb: (...args: unknown[]) => void, context?: unknown): void;
-    /**
-     * 移除事件监听器。
-     * @param type 仅移除指定事件类型。
-     * @param cb 仅移除指定监听函数。
-     * @param context 仅移除指定上下文。
-     */
-    off(type: PollingEvent, cb?: (...args: unknown[]) => void, context?: unknown): void;
 }
