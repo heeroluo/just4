@@ -3,7 +3,7 @@
  * @packageDocumentation
  */
 
-import { EventEmitter } from 'eventemitter3';
+import { PubSub } from '@just4/util/event';
 import { IPollingOptions, Executor } from './types';
 import { PollingEvent } from './events';
 
@@ -43,7 +43,7 @@ const pollingTasks: Polling[] = [];
  * polling.start();
  * ```
  */
-export class Polling {
+export class Polling extends PubSub<PollingEvent> {
   /**
    * 执行函数。
    */
@@ -70,11 +70,6 @@ export class Polling {
   private _shouldImmediate = false;
 
   /**
-   * 事件监听/触发器。
-   */
-  protected readonly _eventEmitter = new EventEmitter();
-
-  /**
    * 停止所有轮询任务。
    */
   public static stopAll(): void {
@@ -89,6 +84,7 @@ export class Polling {
    * @param options 轮询选项。
    */
   constructor(executor: Executor, options?: Readonly<IPollingOptions>) {
+    super();
     this._executor = executor;
     this.updateOptions(options);
   }
@@ -205,7 +201,7 @@ export class Polling {
     if (pollingTasks.indexOf(this) === -1) {
       pollingTasks.push(this);
     }
-    this._eventEmitter.emit(PollingEvent.START);
+    this._eventEmitter.emit('start');
 
     this._exec();
   }
@@ -221,34 +217,6 @@ export class Polling {
     const i = pollingTasks.indexOf(this);
     if (i !== -1) { pollingTasks.splice(i, 1); }
 
-    this._eventEmitter.emit(PollingEvent.STOP);
-  }
-
-  /**
-   * 添加事件监听器。
-   * @param type 事件类型。
-   * @param cb 监听函数。
-   * @param context 调用监听函数的上下文。
-   */
-  public on(
-    type: PollingEvent,
-    cb: (...args: unknown[]) => void,
-    context?: unknown
-  ): void {
-    this._eventEmitter.on(type, cb, context);
-  }
-
-  /**
-   * 移除事件监听器。
-   * @param type 仅移除指定事件类型。
-   * @param cb 仅移除指定监听函数。
-   * @param context 仅移除指定上下文。
-   */
-  public off(
-    type: PollingEvent,
-    cb?: (...args: unknown[]) => void,
-    context?: unknown
-  ): void {
-    this._eventEmitter.off(type, cb, context);
+    this._eventEmitter.emit('stop');
   }
 }

@@ -5,15 +5,15 @@
 
 
 /**
- * 所有事件类型的枚举。
+ * 轮询相关的事件
  */
-export enum PollingEvent {
+export type PollingEvent = {
   /**
    * 轮询开始时触发。
    */
-  START = 'start',
+  start: undefined
   /**
    * 轮询结束后触发。
    */
-  STOP = 'stop'
-}
+  stop: undefined
+};

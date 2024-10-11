@@ -12,7 +12,7 @@
     "gen-doc": "typedoc --options ../typedoc.js --tsconfig ./src/tsconfig.json"
   },
   "dependencies": {
-    "eventemitter3": "^4.0.7"
+    "@just4/util": "^2.0.0"
   },
   "private": true,
   "devPort": 8609

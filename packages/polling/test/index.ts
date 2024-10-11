@@ -1,6 +1,5 @@
 import 'core-js';
 import { Polling } from '@/index';
-import { PollingEvent } from '@/events';
 
 const QUnit = (<any>window).QUnit;
 
@@ -69,8 +68,8 @@ QUnit.test('events', (assert: any) => {
   const polling = new Polling(() => {
     console.log(Date.now());
   });
-  polling.on(PollingEvent.START, () => { assert.ok(true); });
-  polling.on(PollingEvent.STOP, () => { assert.ok(true); });
+  polling.on('start', () => { assert.ok(true); });
+  polling.on('stop', () => { assert.ok(true); });
 
   polling.start();
   polling.stop();
