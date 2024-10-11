@@ -1,6 +1,6 @@
 # 虚拟滚动列表
 
-本模块提供基于原生 DOM 操作的高性能虚拟滚动列表框架，适用于无限上拉/下拉数据列表、聊天记录等功能场景。
+本模块提供基于原生 DOM 操作的高性能虚拟滚动列表工作流，适用于无限上拉/下拉数据列表、聊天记录等功能场景。
 
 ## 使用
 
@@ -34,7 +34,7 @@ const virtualList = new VirtualList({
 
 ### 数据源（dataSource）
 
-`VirtualList` 对象会调用数据源去加载所需的数据，包括初始数据、下一页数据和上一页数据。因此，数据源应包含以下**异步方法**：
+`VirtualList` 对象会调用数据源去加载所需的数据，包括初始数据、下一页数据和上一页数据。数据源应包含以下**异步方法**：
 
 - `loadInitialData()`：加载初始数据。
 - `loadNextData(ref)`：加载下一页数据，其中 ref 是当前最后一条数据的 key 值。
@@ -54,6 +54,7 @@ const PAGE_SIZE = 50;
 const dataSource = {
   loadInitialData() {
     return new Promise((resolve) => {
+      // setTimeout 用于模拟数据加载的延迟
       setTimeout(function() {
         resolve(
           {
@@ -138,31 +139,35 @@ const renderer = {
 
 ### 事件
 
-所有可用事件都在 `VirtualListEvent` 这个枚举类型中：
+#### 单次渲染完成
 
 ```javascript
-import { VirtualListEvent } from '@just4/virtual-list/events';
+virtualList.on('rendered', function(args) {
+  console.dir(args);
+});
 ```
+
+args 的类型说明见[文档](https://heeroluo.github.io/just4/virtual-list/interfaces/events.ItemClickEvent.html)。
 
 #### 点击数据项节点
 
 ```javascript
-virtualList.on(VirtualListEvent.ITEM_CLICK, function(args) {
+virtualList.on('item-click', function(args) {
   console.dir(args);
 });
 ```
 
-args 为点击数据项事件的事件参数，类型说明见[文档](https://heeroluo.github.io/just4/virtual-list/interfaces/events.ItemClickEvent.html)。
+args 的类型说明见[文档](https://heeroluo.github.io/just4/virtual-list/interfaces/events.RenderedEvent.html)。
 
 #### 更新数据项
 
 ```javascript
-virtualList.on(VirtualListEvent.ITEM_UPDATE, function(args) {
+virtualList.on('item-update', function(args) {
   console.dir(args);
 });
 ```
 
-args 为数据项更新事件的事件参数，类型说明见[文档](https://heeroluo.github.io/just4/virtual-list/interfaces/events.ItemUpdateEvent.html)。
+args 的类型说明见[文档](https://heeroluo.github.io/just4/virtual-list/interfaces/events.ItemUpdateEvent.html)。
 
 #### 移除数据项
 
@@ -172,12 +177,12 @@ args 为数据项更新事件的事件参数，类型说明见[文档](https://h
 - 调用 `removeItem` 或 `removeItems` 移除数据。
 
 ```javascript
-virtualList.on(VirtualListEvent.ITEM_REMOVE, function(args) {
+virtualList.on('item-remove', function(args) {
   console.dir(args);
 });
 ```
 
-args 为数据项移除事件的事件参数，类型说明见[文档](https://heeroluo.github.io/just4/virtual-list/interfaces/events.ItemsRemoveEvent.html)。
+args 的类型说明见[文档](https://heeroluo.github.io/just4/virtual-list/interfaces/events.ItemsRemoveEvent.html)。
 
 ### 获取当前数据项
 
@@ -205,6 +210,11 @@ for (let i = 0; i < virtualList.items.length; i++) {
 - [API 文档](https://heeroluo.github.io/just4/virtual-list/index.html)
 
 ## Changelog
+
+### v2.0.0
+
+- 事件发布/订阅机制更换为通过 `@just4/util/event` 中的 `PubSub` 实现。
+- `VirtualListEvent` 不再是枚举类型，事件名通过字符串指定即可。
 
 ### v1.0.0
 

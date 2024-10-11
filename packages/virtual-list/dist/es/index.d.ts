@@ -2,17 +2,18 @@
  * 调用入口。
  * @packageDocumentation
  */
+import { PubSub } from '@just4/util/event';
 import { DOMWrap } from '@just4/dom/dom-wrap';
 import type { IEventHandler } from '@just4/dom/interfaces';
 import { EventWrap } from '@just4/dom/event-wrap';
 import { RenderPosition } from './types';
 import { ItemList } from './item-list';
-import { VirtualListEvent } from './events';
+import type { VirtualListEvent } from './events';
 import type { VirtualListOptions, Renderer } from './types';
 /**
  * 虚拟列表组件。
  */
-export declare class VirtualList<ItemType extends object, ItemKey extends keyof ItemType = keyof ItemType> {
+export declare class VirtualList<ItemType extends object, ItemKey extends keyof ItemType = keyof ItemType> extends PubSub<VirtualListEvent<ItemType>> {
     /**
      * 组件选项。
      */
@@ -74,10 +75,6 @@ export declare class VirtualList<ItemType extends object, ItemKey extends keyof 
      * 记录最后执行 _checkPosition 的时间。
      */
     private __lastCheckPositionTime;
-    /**
-     * 事件监听/触发器。
-     */
-    protected readonly _eventEmitter: import("eventemitter3")<string | symbol, any>;
     /**
      * 内部数据项的访问器。
      */
@@ -280,18 +277,4 @@ export declare class VirtualList<ItemType extends object, ItemKey extends keyof 
      * @param position 位置。
      */
     retryFetch(position: RenderPosition): void;
-    /**
-     * 添加事件监听器。
-     * @param type 事件类型。
-     * @param cb 监听函数。
-     * @param context 调用监听函数的上下文。
-     */
-    on(type: VirtualListEvent, cb: (...args: unknown[]) => void, context?: unknown): void;
-    /**
-     * 移除事件监听器。
-     * @param type 仅移除指定事件类型。
-     * @param cb 仅移除指定监听函数。
-     * @param context 仅移除指定上下文。
-     */
-    off(type: VirtualListEvent, cb?: (...args: unknown[]) => void, context?: unknown): void;
 }
