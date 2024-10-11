@@ -132,10 +132,10 @@ const polling = new Polling(() => {
 }, {
   shouldContinue() { return i < 3; }
 });
-polling.on(PollingEvent.START, () => {
+polling.on('start', () => {
   console.log('start');
 });
-polling.on(PollingEvent.STOP, () => {
+polling.on('stop', () => {
   console.log('stop');
 });
 polling.start();
@@ -146,6 +146,13 @@ polling.start();
 - [API 文档](https://heeroluo.github.io/just4/polling/modules/index.html)
 
 ## Changelog
+
+### v0.3.0
+
+- 事件发布/订阅机制更换为通过 `@just4/util/event` 中的 `PubSub` 实现。
+- `PollingEvent` 不再是枚举类型，事件名通过字符串指定即可。
+
+### v0.2.0
 
 - 增加事件触发机制，支持轮询开始和轮询结束两个事件。
 - 增加 `shouldContinue` 选项，用于传入一个决定是否停止轮询的函数。
