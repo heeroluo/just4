@@ -1,8 +1,8 @@
 {
   "name": "@just4/util",
   "version": "2.0.0",
-  "description": "Utility functions.",
-  "keywords": ["utility", "function", "array", "object", "type"],
+  "description": "Utility functions and classes.",
+  "keywords": ["utility", "util"],
   "scripts": {
     "link-deps": "ln -s ../../node_modules ./node_modules",
     "dev": "webpack-dev-server --config ../../build/webpack.dev.config.js",
