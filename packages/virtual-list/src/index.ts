@@ -5,11 +5,11 @@
 
 import { assignProps } from '@just4/util/object';
 import { toArray, mergeArray } from '@just4/util/array';
+import { PubSub } from '@just4/util/event';
 import { DOMWrap } from '@just4/dom/dom-wrap';
 import type { IEventHandler } from '@just4/dom/interfaces';
 import { EventWrap } from '@just4/dom/event-wrap';
 import { $ } from '@just4/dom/index';
-import { PubSub } from '@just4/util/event';
 import { debounce } from './internal/util';
 import { RenderPosition } from './types';
 import { ItemList } from './item-list';
