@@ -57,5 +57,6 @@ export const androidRules: IRule[] = [
   { name: 'oppo', modelRegExp: /^(?:CPH|OPD|iPA)\d{4}$/ },
   { name: 'oppo', modelRegExp: /^OPG\d{2}$/ },
   { name: 'oppo', modelRegExp: /^A10[1-9]OP$/ },
-  { name: 'oneplus', modelRegExp: /^(?:KB|HD|IN|GM|NE|LE|MT)\d{4}$/ }
+  { name: 'oneplus', modelRegExp: /^(?:KB|HD|IN|GM|NE|LE|MT)\d{4}$/ },
+  { name: 'vivo', modelRegExp: /^V[12]\d{3}[A-Z]{0,2}$/ }
 ];
