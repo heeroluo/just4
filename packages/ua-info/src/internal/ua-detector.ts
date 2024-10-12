@@ -40,7 +40,7 @@ function canMatchKeywords(ua: string, keywords: string[]): boolean {
  */
 function canMatchModelRule(ua: string, modelRule: RegExp): boolean {
   // 匹配出 user agent 中的型号
-  const reModelRule = /;\s*([^;]*?)(?:\s+Build\/|\))/;
+  const reModelRule = /;\s*([^;)]*?)(?:\s+Build\/[^;)]+)?(?:;(?:\s*wv)?)?\)/;
 
   return reModelRule.test(ua) ? modelRule.test(RegExp.$1) : false;
 }
