@@ -191,6 +191,11 @@ uaInfoOfNewEdge.client.isEdge; // true
 
 ## Changelog
 
+### v2.0.0
+
+- 优化识别机型的正则表达式。
+- 新增一条 vivo 设备的识别规则。
+
 ### v1.6.0
 
 - 增加对 HarmonyOS 和 OpenHarmony（HarmonyOS Next）的识别。
