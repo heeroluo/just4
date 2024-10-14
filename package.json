@@ -37,7 +37,7 @@
     "eslint-webpack-plugin": "^2.7.0",
     "glob": "^11.0.0",
     "html-webpack-plugin": "^4.5.2",
-    "miniprogram-api-typings": "^3.9.1",
+    "miniprogram-api-typings": "^4.0.1",
     "mitt": "^3.0.1",
     "rimraf": "^6.0.1",
     "sockjs-client": "~1.5.2",
