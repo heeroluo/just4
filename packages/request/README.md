@@ -179,7 +179,7 @@ try {
 let taskId = 0;
 
 setTimeout(() => {
-  cancel(requestId);
+  cancel(taskId);
 }, 5000);
 
 try {
