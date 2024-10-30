@@ -44,7 +44,7 @@ export const androidRules: IRule[] = [
   { name: 'mi', modelRegExp: /^MI\s?(?:\d|CC|Note|MAX|PLAY|PAD)/i },
   { name: 'mi', modelRegExp: /^(?:AWM|SKR|SKW|DLT)-/ },
   { name: 'mi', modelRegExp: /^XIG\d{2}$/ },
-  { name: 'mi', modelRegExp: /^M\d{4}[A-Z]\d{1,2}[A-Z]{1,2}$/ },
+  { name: 'mi', modelRegExp: /^M\d{4}[A-Z]\d{1,2}[A-Z]{1,3}$/ },
   { name: 'mi', modelRegExp: /^2\d{3}[A-Z0-9]{6}$/ },
   { name: 'mi', modelRegExp: /^2\d{5}[0-9A-Z]{2}[A-Z]$/ },
   { name: 'mi', modelRegExp: /^2\d{6}[A-Z]$/ },
