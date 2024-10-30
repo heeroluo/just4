@@ -16,7 +16,7 @@
     "@just4/querystring": "^2.0.0"
   },
   "peerDependencies": {
-    "miniprogram-api-typings": "^3.9.1"
+    "miniprogram-api-typings": "^4.0.1"
   },
   "miniprogram": "./",
   "private": true,
