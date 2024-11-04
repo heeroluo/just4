@@ -62,5 +62,7 @@ export class UAInfo {
     this.isTablet = this.brand.isIPad ||
       /\bTablet\b/i.test(ua) ||
       (this.os.isAndroid && !/\bMobile\b/i.test(ua));
+
+    Object.freeze(this);
   }
 }
