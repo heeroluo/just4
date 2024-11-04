@@ -107,10 +107,12 @@ export class OSInfo {
     }
 
     this[propMap[result.name]] = true;
-    this.version = Object.freeze(new Version(result.version));
+    this.version = new Version(result.version);
 
     if (this.isAndroid && /\bHarmonyOS\b/.test(ua)) {
       this.isHarmonyOS = true;
     }
+
+    Object.freeze(this);
   }
 }

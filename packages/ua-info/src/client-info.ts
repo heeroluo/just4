@@ -128,9 +128,10 @@ export class ClientInfo {
     } else {
       this.version = new Version('');
     }
-    Object.freeze(this.version);
 
     this.isWxMiniProgram = (this.isWx || this.isWxWork) &&
       /\bMiniProgramEnv\b/.test(ua);
+
+    Object.freeze(this);
   }
 }

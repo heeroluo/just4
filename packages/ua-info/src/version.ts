@@ -44,6 +44,8 @@ export class Version {
       .replace(/_/g, '.')
       // 移除结尾多余的点号
       .replace(/\.+$/, '');
+
+    Object.freeze(this);
   }
 
   /**

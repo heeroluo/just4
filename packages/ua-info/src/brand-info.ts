@@ -100,5 +100,7 @@ export class BrandInfo {
         this.isIPad = true;
       }
     }
+
+    Object.freeze(this);
   }
 }

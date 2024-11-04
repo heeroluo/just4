@@ -57,12 +57,14 @@ export class BrowserInfo {
    */
   constructor(ua: string) {
     const result = execRules(ua, browserRules);
+
     if (result) {
       this[propMap[result.name]] = true;
       this.version = new Version(result.version);
     } else {
       this.version = new Version('');
     }
-    Object.freeze(this.version);
+
+    Object.freeze(this);
   }
 }
