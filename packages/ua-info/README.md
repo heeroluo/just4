@@ -191,6 +191,12 @@ uaInfoOfNewEdge.client.isEdge; // true
 
 ## Changelog
 
+### v3.0.0
+
+- 各类型的构造函数都调用 `Object.freeze` 冻结自身，避免意外改动。
+- 更新小米设备的识别规则。
+- 优化是否便携设备的判断。
+
 ### v2.0.0
 
 - 优化识别机型的正则表达式。
