@@ -50,11 +50,14 @@ export class UAInfo {
     this.browser = Object.freeze(new BrowserInfo(ua));
     this.client = Object.freeze(new ClientInfo(ua));
 
-    // 粗略判定是否便携设备
-    this.isPortable = /mobile|android/i.test(ua) ||
-      !/\b(Windows\sNT|Macintosh|x86(_(32|64))?|amd64|i[1-6]86)\b/.test(ua);
-    // 结合操作系统信息进一步精确判定
-    if (this.os.isIOS || this.os.isAndroid) { this.isPortable = true; }
+    // 是否便携设备
+    if (this.os.isIOS || this.os.isAndroid) {
+      this.isPortable = true;
+    } else if (/\(X11[;)]/i.test(ua) || /\b(Windows\sNT|Macintosh)\b/.test(ua)) {
+      this.isPortable = false;
+    } else {
+      this.isPortable = /mobile|android/i.test(ua);
+    }
 
     this.isTablet = this.brand.isIPad ||
       /\bTablet\b/i.test(ua) ||
