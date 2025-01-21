@@ -191,6 +191,10 @@ uaInfoOfNewEdge.client.isEdge; // true
 
 ## Changelog
 
+### v3.1.0
+
+- 修复在鸿蒙平板设备上 `isPortable` 为 `false` 的问题。
+
 ### v3.0.0
 
 - 各类型的构造函数都调用 `Object.freeze` 冻结自身，避免意外改动。
