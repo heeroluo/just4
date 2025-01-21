@@ -18,7 +18,8 @@ const uaList = [
   'Mozilla/5.0 (Linux; Android 12; A9000 Build/SP1A.210812.016; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/122.0.6261.120 Safari/537.36 XWEB/1220099 MMWEBSDK/20230303 MMWEBID/8049 MicroMessenger/8.0.34.2340(0x2800225D) WeChat/arm64 Weixin Android Tablet NetType/WIFI Language/zh_CN ABI/arm64',
   'Mozilla/5.0 (Linux; Android 12; HarmonyOS; DCO-AL00; HMSCore 6.14.0.302) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.5735.196 HuaweiBrowser/15.0.6.301 Mobile Safari/537.36',
   'Mozilla/5.0 (Phone; OpenHarmony 5.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36  ArkWeb/4.1.6.1 Mobile',
-  'Mozilla/5.0 (Linux; Android 13; V2278A Build/TP1A.220624.014; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/126.0.6478.188 Mobile Safari/537.36 XWEB/1260117 MMWEBSDK/20240801 MMWEBID/1703 MicroMessenger/8.0.51.2720(0x28003339) WeChat/arm64 Weixin NetType/WIFI Language/zh_CN ABI/arm64'
+  'Mozilla/5.0 (Linux; Android 13; V2278A Build/TP1A.220624.014; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/126.0.6478.188 Mobile Safari/537.36 XWEB/1260117 MMWEBSDK/20240801 MMWEBID/1703 MicroMessenger/8.0.51.2720(0x28003339) WeChat/arm64 Weixin NetType/WIFI Language/zh_CN ABI/arm64',
+  'Mozilla/5.0 (Tablet; OpenHarmony 5.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36  ArkWeb/4.1.6.1  ytkyapp/5.0.0'
 ];
 const uaInfoList = uaList.map(function(ua) {
   return new UAInfo(ua);
@@ -83,6 +84,7 @@ QUnit.test('main', function(assert: any) {
   assert.ok(uaInfoList[11].client.isWxMiniProgram, 'Weixin MiniProgram WebView');
 
   assert.ok(uaInfoList[12].isTablet, 'Tablet');
+  assert.ok(uaInfoList[12].isPortable, 'Tablet & Portable');
 });
 
 QUnit.test('edge', function(assert: any) {
@@ -104,7 +106,10 @@ QUnit.test('harmony', function(assert: any) {
   assert.ok(uaInfoList[13].os.isHarmonyOS);
   assert.ok(uaInfoList[14].os.isOpenHarmony);
   assert.ok(!uaInfoList[14].os.isHarmonyOS);
+  assert.ok(uaInfoList[14].isPortable);
   assert.ok(uaInfoList[14].os.version.eq('5'));
+  assert.ok(uaInfoList[16].isTablet, 'Tablet');
+  assert.ok(uaInfoList[16].isPortable, 'Tablet & Portable');
 });
 
 QUnit.test('three-digit-version', function(assert: any) {
