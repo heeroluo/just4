@@ -85,8 +85,6 @@ QUnit.test('main', function(assert: any) {
 
   assert.ok(uaInfoList[12].isTablet, 'Tablet');
   assert.ok(uaInfoList[12].isPortable, 'Tablet & Portable');
-  assert.ok(uaInfoList[16].isTablet, 'Tablet');
-  assert.ok(uaInfoList[16].isPortable, 'Tablet & Portable');
 });
 
 QUnit.test('edge', function(assert: any) {
@@ -108,7 +106,10 @@ QUnit.test('harmony', function(assert: any) {
   assert.ok(uaInfoList[13].os.isHarmonyOS);
   assert.ok(uaInfoList[14].os.isOpenHarmony);
   assert.ok(!uaInfoList[14].os.isHarmonyOS);
+  assert.ok(uaInfoList[14].isPortable);
   assert.ok(uaInfoList[14].os.version.eq('5'));
+  assert.ok(uaInfoList[16].isTablet, 'Tablet');
+  assert.ok(uaInfoList[16].isPortable, 'Tablet & Portable');
 });
 
 QUnit.test('three-digit-version', function(assert: any) {
