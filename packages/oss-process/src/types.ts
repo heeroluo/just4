@@ -66,7 +66,6 @@ export abstract class ProcessingItem {
   public abstract toString(): string;
 }
 
-
 /**
  * 处理类型。
  */
