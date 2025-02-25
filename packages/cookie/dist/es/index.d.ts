@@ -14,7 +14,7 @@ import { ICookieGetterOptions, ICookieSetterOptions } from './interfaces';
  * @param options 操作选项。
  * @returns cookie 值（cookie 不存在时返回空字符串）。
  */
-export declare function getCookie(key: string, options?: Readonly<ICookieGetterOptions>): string;
+export declare function getCookie(key: string, options?: Readonly<ICookieGetterOptions>): string | null;
 /**
  * 写入 cookie。
  * @example
