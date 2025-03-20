@@ -143,6 +143,10 @@ removeCookie('nickname');
 
 ## Changelog
 
+### v2.1.0
+
+- 获取 cookie 时，区分无 cookie 和 cookie 值为空字符串这两种情况。
+
 ### v2.0.0
 
 - 设置 cookie 有效时间时，对相对时间的处理修改为通过 [@just4/util](https://www.npmjs.com/package/@just4/util) 中的 `addRelativeTime` 实现，因此：

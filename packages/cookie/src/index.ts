@@ -22,7 +22,7 @@ import { ICookieGetterOptions, ICookieSetterOptions } from './interfaces';
  */
 export function getCookie(
   key: string, options?: Readonly<ICookieGetterOptions>
-): string {
+): string | null {
   const opts: ICookieGetterOptions = assignProps({}, options);
   opts.encode = opts.encode || encodeURIComponent;
   opts.decode = opts.decode || decodeURIComponent;
@@ -31,7 +31,7 @@ export function getCookie(
   const cookie = '; ' + document.cookie;
 
   let beginPos = cookie.indexOf(key);
-  if (beginPos === -1) { return ''; }
+  if (beginPos === -1) { return null; }
   beginPos += key.length;
 
   let endPos = cookie.indexOf(';', beginPos);
