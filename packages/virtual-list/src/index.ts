@@ -48,6 +48,10 @@ export class VirtualList<ItemType extends object, ItemKey extends keyof ItemType
   private __batchId = Date.now();
 
   /**
+   * 是否已初始化。
+   */
+  private __inited = false;
+  /**
    * 是否已销毁，销毁后不能再次初始化。
    */
   private __destroyed = false;
@@ -132,6 +136,13 @@ export class VirtualList<ItemType extends object, ItemKey extends keyof ItemType
       throw new Error('Container cannot be changed.');
     }
     this._options[key] = value;
+  }
+
+  /**
+   * 获取当前是否已初始化（完成首批数据的加载和渲染）。
+   */
+  public get inited() {
+    return this.__inited;
   }
 
   /**
@@ -273,15 +284,20 @@ export class VirtualList<ItemType extends object, ItemKey extends keyof ItemType
       this._setAndRenderState('renderLoading', false, RenderPosition.Main);
     }
 
-    if (this.__destroyed) { return; }
+    if (this.__destroyed) {
+      this.__inited = true;
+      return;
+    }
 
     if (error) {
+      this.__inited = true;
       // 加载异常，渲染错误界面
       this._setAndRenderState('renderError', true, RenderPosition.Main, error);
       return;
     }
 
     if (res == null || res.data == null || !res.data.length) {
+      this.__inited = true;
       // 初始数据为空，则认为无数据，渲染空数据界面
       this._setEmpty(true);
       return;
@@ -309,6 +325,8 @@ export class VirtualList<ItemType extends object, ItemKey extends keyof ItemType
       if (reachedFootBoundary === true) {
         this._setAndRenderState('renderBoundary', true, RenderPosition.Foot);
       }
+
+      this.__inited = true;
 
       setTimeout(() => {
         this._emitRenderedEvent(RenderPosition.Main, data, newItemNodes);

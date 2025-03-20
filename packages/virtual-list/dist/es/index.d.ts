@@ -38,6 +38,10 @@ export declare class VirtualList<ItemType extends object, ItemKey extends keyof 
      */
     private __batchId;
     /**
+     * 是否已初始化。
+     */
+    private __inited;
+    /**
      * 是否已销毁，销毁后不能再次初始化。
      */
     private __destroyed;
@@ -90,6 +94,10 @@ export declare class VirtualList<ItemType extends object, ItemKey extends keyof 
      * @param value 选项值。
      */
     setOption<K extends keyof VirtualListOptions<ItemType, ItemKey>>(key: K, value: VirtualListOptions<ItemType, ItemKey>[K]): void;
+    /**
+     * 获取当前是否已初始化（完成首批数据的加载和渲染）。
+     */
+    get inited(): boolean;
     /**
      * 预读距离。
      */
