@@ -63,11 +63,11 @@ export interface ImageProcessingOptions {
   /**
    * 格式转换选项。
    */
-  format: ImageFormatOptions,
+  format: ImageFormatOptions
   /**
    * 质量转换选项。
    */
-  quality: ImageQualityOptions,
+  quality: ImageQualityOptions
   /**
    * 图片缩放选项。
    */

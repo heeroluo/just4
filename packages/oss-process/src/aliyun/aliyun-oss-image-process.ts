@@ -1,42 +1,41 @@
-import { IProcessingParams } from '../types';
+import { IProcessingItem, OSSProcess } from '../types';
 import { ImageProcessingOptions } from '../image-types';
-import { AliyunProcessingItem, AliyunOSSProcess } from './aliyun-oss-process';
+import { AliyunOSSProcess } from './aliyun-oss-process';
 
-export function createImageProcessing(options: ImageProcessingOptions): string {
-  const processingItems: AliyunProcessingItem[] = [];
+export function createOSSImageProcess(options: ImageProcessingOptions): OSSProcess {
+  const processingItems: IProcessingItem[] = [];
+
+  if (options.resize) {
+    const item: IProcessingItem = { func: 'resize' };
+    if (options.resize.p) {
+      item.params = options.resize.p.toString();
+    } else {
+      const params: string[] = [];
+      if (options.resize.w) { params.push(`w_${options.resize.w}`); }
+      if (options.resize.h) { params.push(`w_${options.resize.h}`); }
+      item.params = params.join(',');
+    }
+    if (item.params) { processingItems.push(item); }
+  }
 
   if (options.format) {
     processingItems.push(
-      new AliyunProcessingItem('format', { '': options.format.format })
+      { func: 'format', params: options.format.format }
     );
   }
 
   if (options.quality) {
-    if (options.quality.q) {
+    const item = { func: 'quality' };
+    if (options.quality.Q) {
       processingItems.push(
-        new AliyunProcessingItem('quality', { q: options.quality.q })
+        { key: 'quality', params: `Q_${options.quality.Q}` }
       );
-    } else if (options.quality.Q) {
+    } else if (options.quality.q) {
       processingItems.push(
-        new AliyunProcessingItem('quality', { Q: options.quality.Q })
+        { key: 'quality', params: `q_${options.quality.q}` }
       );
     }
   }
 
-  if (options.resize) {
-    let params: IProcessingParams;
-    if (options.resize.p) {
-      params = { p: options.resize.p };
-      processingItems.push(
-        new AliyunProcessingItem('resize', { p: options.resize.p })
-      );
-    } else {
-      params = {};
-      if (options.resize.w) { params.w = options.resize.w; }
-      if (options.resize.h) { params.h = options.resize.h; }
-    }
-    processingItems.push(new AliyunProcessingItem('resize', params));
-  }
-
-  return (new AliyunOSSProcess('image', processingItems)).toString();
+  return new AliyunOSSProcess('image', processingItems);
 }
