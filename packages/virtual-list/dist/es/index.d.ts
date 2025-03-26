@@ -139,6 +139,10 @@ export declare class VirtualList<ItemType extends object, ItemKey extends keyof 
      */
     protected _setEmpty(state: boolean, onAfterSet?: () => void): void;
     /**
+     * 设为已初始化状态。
+     */
+    protected _setInited(): void;
+    /**
      * 加载并渲染初始数据。
      */
     protected _init(): Promise<void>;

@@ -260,6 +260,14 @@ export class VirtualList<ItemType extends object, ItemKey extends keyof ItemType
   }
 
   /**
+   * 设为已初始化状态。
+   */
+  protected _setInited(): void {
+    this.__inited = true;
+    this._eventEmitter.emit('inited');
+  }
+
+  /**
    * 加载并渲染初始数据。
    */
   protected async _init(): Promise<void> {
@@ -285,19 +293,19 @@ export class VirtualList<ItemType extends object, ItemKey extends keyof ItemType
     }
 
     if (this.__destroyed) {
-      this.__inited = true;
+      this._setInited();
       return;
     }
 
     if (error) {
-      this.__inited = true;
+      this._setInited();
       // 加载异常，渲染错误界面
       this._setAndRenderState('renderError', true, RenderPosition.Main, error);
       return;
     }
 
     if (res == null || res.data == null || !res.data.length) {
-      this.__inited = true;
+      this._setInited();
       // 初始数据为空，则认为无数据，渲染空数据界面
       this._setEmpty(true);
       return;
@@ -326,11 +334,8 @@ export class VirtualList<ItemType extends object, ItemKey extends keyof ItemType
         this._setAndRenderState('renderBoundary', true, RenderPosition.Foot);
       }
 
-      this.__inited = true;
-
-      setTimeout(() => {
-        this._emitRenderedEvent(RenderPosition.Main, data, newItemNodes);
-      }, 0);
+      this._emitRenderedEvent(RenderPosition.Main, data, newItemNodes);
+      this._setInited();
     });
   }
 

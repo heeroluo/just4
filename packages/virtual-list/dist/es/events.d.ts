@@ -93,4 +93,8 @@ export type VirtualListEvent<ItemType extends object> = {
      * 单次渲染完成。
      */
     'rendered': RenderedEvent<ItemType>;
+    /**
+     * 初次渲染完成。
+     */
+    'inited': undefined;
 };

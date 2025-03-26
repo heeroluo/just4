@@ -157,6 +157,10 @@ virtualList.on('rendered', (args) => {
   console.log('单次渲染');
   console.dir(args);
 });
+virtualList.on('inited', (args) => {
+  console.log('已初始化');
+  console.dir(args);
+});
 
 setTimeout(function() {
   console.log('itemList length: ' + virtualList.items.length);
