@@ -238,6 +238,16 @@ export class VirtualList<ItemType extends object, ItemKey extends keyof ItemType
   }
 
   /**
+   * 设为已初始化状态。
+   */
+  protected _setInited(): void {
+    if (!this.__inited) {
+      this.__inited = true;
+      this._eventEmitter.emit('inited');
+    }
+  }
+
+  /**
    * 设置无数据状态。
    * @param state 是否为无数据状态。
    * @param onAfterSet 进行事件操作前执行的函数。
@@ -257,14 +267,8 @@ export class VirtualList<ItemType extends object, ItemKey extends keyof ItemType
       this._listenScroll();
       this._listenClick();
     }
-  }
 
-  /**
-   * 设为已初始化状态。
-   */
-  protected _setInited(): void {
-    this.__inited = true;
-    this._eventEmitter.emit('inited');
+    this._setInited();
   }
 
   /**
@@ -293,19 +297,17 @@ export class VirtualList<ItemType extends object, ItemKey extends keyof ItemType
     }
 
     if (this.__destroyed) {
-      this._setInited();
       return;
     }
 
     if (error) {
-      this._setInited();
       // 加载异常，渲染错误界面
       this._setAndRenderState('renderError', true, RenderPosition.Main, error);
+      this._setInited();
       return;
     }
 
     if (res == null || res.data == null || !res.data.length) {
-      this._setInited();
       // 初始数据为空，则认为无数据，渲染空数据界面
       this._setEmpty(true);
       return;
@@ -335,7 +337,6 @@ export class VirtualList<ItemType extends object, ItemKey extends keyof ItemType
       }
 
       this._emitRenderedEvent(RenderPosition.Main, data, newItemNodes);
-      this._setInited();
     });
   }
 
@@ -687,9 +688,7 @@ export class VirtualList<ItemType extends object, ItemKey extends keyof ItemType
     // 记录节点进行后续维护
     this._itemNodes = toArray(newItemNodes).concat(this._itemNodes);
 
-    setTimeout(() => {
-      this._emitRenderedEvent(RenderPosition.Head, data, newItemNodes);
-    }, 0);
+    this._emitRenderedEvent(RenderPosition.Head, data, newItemNodes);
   }
 
   /**
@@ -754,9 +753,7 @@ export class VirtualList<ItemType extends object, ItemKey extends keyof ItemType
     // 记录节点进行后续维护
     mergeArray(this._itemNodes, newItemNodes);
 
-    setTimeout(() => {
-      this._emitRenderedEvent(RenderPosition.Foot, data, newItemNodes);
-    }, 0);
+    this._emitRenderedEvent(RenderPosition.Foot, data, newItemNodes);
   }
 
   /**

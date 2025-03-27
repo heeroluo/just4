@@ -133,15 +133,15 @@ export declare class VirtualList<ItemType extends object, ItemKey extends keyof 
      */
     isEmpty(): boolean;
     /**
+     * 设为已初始化状态。
+     */
+    protected _setInited(): void;
+    /**
      * 设置无数据状态。
      * @param state 是否为无数据状态。
      * @param onAfterSet 进行事件操作前执行的函数。
      */
     protected _setEmpty(state: boolean, onAfterSet?: () => void): void;
-    /**
-     * 设为已初始化状态。
-     */
-    protected _setInited(): void;
     /**
      * 加载并渲染初始数据。
      */
