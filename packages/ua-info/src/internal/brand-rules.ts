@@ -25,19 +25,19 @@ export const androidRules: IRule[] = [
   { name: 'huawei', keywords: ['ideahub', 'figi'] },
   { name: 'vivo', keywords: ['vivo'] },
   { name: 'oppo', keywords: ['oppo'] },
-  { name: 'mi', keywords: ['redmi', 'hongmi', 'shark', 'Mi', 'MIX', 'POCO'] },
+  { name: 'mi', keywords: ['redmi', 'hongmi', 'shark', 'Mi', 'MIX', 'POCO', 'POCOPHONE'] },
   { name: 'mi', regExp: /\bxiaomi/i },
   { name: 'samsung', keywords: ['samsung', 'galaxy'] },
   { name: 'oneplus', keywords: ['oneplus', 'one'] },
 
   // 型号规则
   { name: 'huawei', modelRegExp: /^Mate\s*\d{2}/i },
-  { name: 'huawei', modelRegExp: /^MatePad/i },
   { name: 'huawei', modelRegExp: /^Nova\s\d$/ },
+  { name: 'huawei', regExp: /\b(?:Hi)?MatePad/i },
   { name: 'huawei', regExp: /\b(?:Liantong|UNICOMVSENS)VP\d{3}\b/ },
   { name: 'huawei', regExp: /\bCMDCSP\d{3}\b/ },
   { name: 'huawei', regExp: /\bTDTECH/i },
-  { name: 'huawei', modelRegExp: /^[A-Z]{3}\d?-W[0-3]9[A-Z]*$/ },
+  { name: 'huawei', modelRegExp: /^[A-Z]{3}\d?-W[0-5]9[A-Z]*$/ },
   { name: 'huawei', modelRegExp: /^[A-Z][A-Za-z]{2,3}-(?:AN|BD|BX|AL|TL)\d{2}[A-Za-z]*$/ },
   { name: 'huawei', modelRegExp: /^TYH\d+[A-Z]?$/ },
   { name: 'huawei', modelRegExp: /^H60-L0[12]$/ },
@@ -56,7 +56,7 @@ export const androidRules: IRule[] = [
   { name: 'samsung', modelRegExp: /^GT[-_][A-Z][A-Z0-9]{3,}$/i },
   { name: 'oppo', modelRegExp: /^(?:CPH|OPD|iPA)\d{4}$/ },
   { name: 'oppo', modelRegExp: /^OPG\d{2}$/ },
-  { name: 'oppo', modelRegExp: /^A10[1-9]OP$/ },
+  { name: 'oppo', modelRegExp: /^A[1-5]0[1-9]OP$/ },
   { name: 'oneplus', modelRegExp: /^(?:KB|HD|IN|GM|NE|LE|MT)\d{4}$/ },
   { name: 'vivo', modelRegExp: /^V[12]\d{3}[A-Z]{0,2}$/ }
 ];

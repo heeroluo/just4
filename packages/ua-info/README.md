@@ -191,6 +191,12 @@ uaInfoOfNewEdge.client.isEdge; // true
 
 ## Changelog
 
+### v3.2.0
+
+- 优化小米设备的识别规则。
+- 优化华为设备的识别规则。
+- 优化 OPPO 设备的识别规则。
+
 ### v3.1.0
 
 - 修复在鸿蒙平板设备上 `isPortable` 为 `false` 的问题。

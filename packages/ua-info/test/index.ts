@@ -112,6 +112,11 @@ QUnit.test('harmony', function(assert: any) {
   assert.ok(uaInfoList[16].isPortable, 'Tablet & Portable');
 });
 
+QUnit.test('brand', function(assert: any) {
+  assert.ok(uaInfoList[3].brand.isOppo);
+  assert.ok(uaInfoList[13].brand.isHuawei);
+});
+
 QUnit.test('three-digit-version', function(assert: any) {
   assert.ok(uaInfoList[7].browser.isChrome);
   assert.ok(!uaInfoList[7].browser.version.lte('100'));
