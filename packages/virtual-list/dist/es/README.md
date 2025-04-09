@@ -211,6 +211,11 @@ for (let i = 0; i < virtualList.items.length; i++) {
 
 ## Changelog
 
+### v2.1.0
+
+- 新增 `inited` 事件，在初始化结束后触发。
+- 新增 `inited` getter，用于获取当前是否已初始化。
+
 ### v2.0.0
 
 - 事件发布/订阅机制更换为通过 `@just4/util/event` 中的 `PubSub` 实现。
