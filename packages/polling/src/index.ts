@@ -68,6 +68,10 @@ export class Polling extends PubSub<PollingEvent> {
    * 是否要在当前执行结束后马上运行执行函数。
    */
   private _shouldImmediate = false;
+  /**
+   * 当前轮询的间隔。
+   */
+  protected _currentInterval?: number;
 
   /**
    * 停止所有轮询任务。
@@ -155,7 +159,7 @@ export class Polling extends PubSub<PollingEvent> {
       // 进入下一次轮询
       this._timer = setTimeout(
         () => { this._exec(); },
-        Number(this._options.interval) || 1000
+        this._getInterval()
       );
     }
   }
@@ -176,6 +180,21 @@ export class Polling extends PubSub<PollingEvent> {
   }
 
   /**
+   * 获取轮询间隔。
+   * @returns 轮询间隔。
+   */
+  protected _getInterval(): number {
+    const interval = this._options.interval;
+    this._currentInterval = (
+      typeof interval === 'function'
+        ? Number(interval(this._currentInterval))
+        : Number(interval)
+    ) || 1000;
+
+    return this._currentInterval;
+  }
+
+  /**
    * 在当前轮询结束后马上执行一次执行函数。
    */
   public execImmediately(): void {
@@ -193,8 +212,9 @@ export class Polling extends PubSub<PollingEvent> {
 
   /**
    * 启动轮询。
+   * @param [immediately=true] 是否马上执行一次执行函数。
    */
-  public start(): void {
+  public start(immediately = true): void {
     if (this._started) { return; }
 
     this._started = true;
@@ -203,7 +223,11 @@ export class Polling extends PubSub<PollingEvent> {
     }
     this._eventEmitter.emit('start');
 
-    this._exec();
+    if (immediately) {
+      this._exec();
+    } else {
+      this._next();
+    }
   }
 
   /**
@@ -220,3 +244,10 @@ export class Polling extends PubSub<PollingEvent> {
     this._eventEmitter.emit('stop');
   }
 }
+
+export {
+  IPollingOptions,
+  Executor
+} from './types';
+
+export * as breakBy from './break-by';

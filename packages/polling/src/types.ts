@@ -9,9 +9,9 @@
  */
 export interface IPollingOptions {
   /**
-   * 轮询间隔（毫秒），默认为 1000 毫秒。
+   * 轮询间隔（毫秒），可传入数值或返回数值的函数。默认为 1000 毫秒。
    */
-  interval?: number
+  interval?: number | ((lastInterval?: number) => number)
   /**
    * 出错时是否中断，默认为 false。
    */

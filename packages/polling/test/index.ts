@@ -1,5 +1,6 @@
 import 'core-js';
 import { Polling } from '@/index';
+import { breakBy } from '@/index';
 
 const QUnit = (<any>window).QUnit;
 
@@ -8,7 +9,7 @@ QUnit.start();
 QUnit.test('polling', (assert: any) => {
   const done = assert.async();
 
-  let i = 0;
+  let i = 1;
   const polling = new Polling(() => {
     return new Promise<void>((resolve) => {
       setTimeout(() => {
@@ -17,10 +18,10 @@ QUnit.test('polling', (assert: any) => {
       }, 0);
     });
   }, {
-    interval: 2000
+    interval: () => 2000
   });
 
-  polling.start();
+  polling.start(false);
 
   setTimeout(() => {
     polling.stop();
@@ -43,14 +44,14 @@ QUnit.test('shouldContinue', (assert: any) => {
   let i = 0;
   const polling = new Polling(() => {
     return new Promise<void>((resolve) => {
+      i++;
       setTimeout(() => {
-        i += 1;
         resolve();
       }, 0);
     });
   }, {
     interval: 2000,
-    shouldContinue() { return i < 3; }
+    shouldContinue: breakBy.maxTimes(3)
   });
   polling.start();
 
