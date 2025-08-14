@@ -10,25 +10,21 @@ npm i @just4/polling
 
 ## 调用
 
-### 调用入口
-
-```javascript
-import { Polling } from '@just4/polling';
-```
-
 ### 基本调用
 
 ```javascript
+import { Polling } from '@just4/polling';
+
 const polling = new Polling(() => {
   return new Promise((resolve) => {
     setTimeout(() => {
       console.log('executed');
       resolve();
-    }, 1000);
+    }, 500);
   });
 }, {
-  // 2 秒执行一次
-  interval: 2000
+  // 1 秒执行一次
+  interval: 1000
 });
 // 开始轮询
 polling.start();
@@ -46,12 +42,7 @@ polling.start(false);
 
 ```javascript
 const polling = new Polling(() => {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      console.log('executed');
-      resolve();
-    }, 1000);
-  });
+  // ...
 }, {
   // 越来越短的轮询间隔
   interval: function(lastInterval) {
@@ -65,18 +56,17 @@ polling.start();
 
 ### 通过钩子函数停止轮询
 
-可以通过传入 `shouldContinue` 钩子函数控制是否继续轮询（返回值为 `false` 时停止轮询），可结合中断方式函数去使用：
+可以通过传入 `shouldContinue` 钩子函数控制是否继续轮询（返回值为 `false` 时停止轮询），可结合终止控制函数去使用：
 
 ```javascript
-import { Polling, intr } from '@just4/polling';
+import { Polling, breakBy } from '@just4/polling';
 
 const polling = new Polling(() => {
-  return new Promise<void>((resolve) => {
-    // ...
-  });
+  // ...
 }, {
+  interval: 1000,
   // 轮询 3 次停止
-  shouldContinue: intr.maxTimes(3)
+  shouldContinue: breakBy.maxTimes(3)
 });
 polling.start();
 ```
@@ -110,13 +100,14 @@ polling.start();
 
 ```javascript
 const polling = new Polling(() => {
-  console.log('executed');
+  // ...
 }, {
   interval: 2000,
   breakOnError: true
 });
 polling.start();
 
+// 3 秒后轮询间隔改为 1 秒
 setTimeout(() => {
   polling.updateOptions({
     interval: 1000
@@ -128,12 +119,7 @@ setTimeout(() => {
 
 ```javascript
 const polling = new Polling(() => {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      console.log('executed');
-      resolve();
-    }, 1000);
-  });
+  // ...
 }, {
   interval: 2000,
   breakOnError: true
@@ -150,15 +136,12 @@ setTimeout(() => {
 ### 监听事件
 
 ```javascript
-import { PollingEvent } from '@/events';
-
-let i = 0;
+import { Polling, breakBy } from '@just4/polling';
 const polling = new Polling(() => {
-  return new Promise<void>((resolve) => {
-    i += 1;
-  });
+  // ...
 }, {
-  shouldContinue() { return i < 3; }
+  interval: 1000,
+  shouldContinue: breakBy.maxTimes(3)
 });
 polling.on('start', () => {
   console.log('start');
@@ -174,6 +157,12 @@ polling.start();
 - [API 文档](https://heeroluo.github.io/just4/polling/modules/index.html)
 
 ## Changelog
+
+### v1.0.0(beta)
+
+- `interval` 选项支持传入函数，从而实现动态的轮询间隔。
+- 增加终止控制函数（目前仅有 `maxTimes` 这个函数）。
+- `start` 函数增加是否马上执行一次执行函数的参数，默认为马上执行。
 
 ### v0.3.0
 
