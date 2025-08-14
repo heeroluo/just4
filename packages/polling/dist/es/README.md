@@ -30,25 +30,53 @@ const polling = new Polling(() => {
   // 2 秒执行一次
   interval: 2000
 });
-// 开始轮询（调用 start 后会马上执行一次操作函数）
+// 开始轮询
 polling.start();
 // 停止轮询
 polling.stop();
 ```
 
-### 通过钩子函数停止轮询
-
-可以通过传入 `shouldContinue` 钩子函数控制是否继续轮询：
+调用 `start` 后会马上执行一次操作函数，如果不希望马上执行，可以传入参数 `false`：
 
 ```javascript
-let i = 0;
+polling.start(false);
+```
+
+### 动态轮询间隔
+
+```javascript
 const polling = new Polling(() => {
-  return new Promise<void>((resolve) => {
-    i += 1;
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      console.log('executed');
+      resolve();
+    }, 1000);
   });
 }, {
-  // 返回值为 false 时停止轮询
-  shouldContinue() { return i < 3; }
+  // 越来越短的轮询间隔
+  interval: function(lastInterval) {
+    return lastInterval == null
+      ? 10000
+      : Math.max(1000, lastInterval - 200);
+  }
+});
+polling.start();
+```
+
+### 通过钩子函数停止轮询
+
+可以通过传入 `shouldContinue` 钩子函数控制是否继续轮询（返回值为 `false` 时停止轮询），可结合中断方式函数去使用：
+
+```javascript
+import { Polling, intr } from '@just4/polling';
+
+const polling = new Polling(() => {
+  return new Promise<void>((resolve) => {
+    // ...
+  });
+}, {
+  // 轮询 3 次停止
+  shouldContinue: intr.maxTimes(3)
 });
 polling.start();
 ```

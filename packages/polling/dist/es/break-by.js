@@ -1,0 +1,1 @@
+export function maxTimes(n){return function(){return--n>0}}

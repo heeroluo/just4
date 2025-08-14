@@ -49,6 +49,10 @@ export declare class Polling extends PubSub<PollingEvent> {
      */
     private _shouldImmediate;
     /**
+     * 当前轮询的间隔。
+     */
+    protected _currentInterval?: number;
+    /**
      * 停止所有轮询任务。
      */
     static stopAll(): void;
@@ -76,15 +80,23 @@ export declare class Polling extends PubSub<PollingEvent> {
      */
     protected _clearTimeout(): void;
     /**
+     * 获取轮询间隔。
+     * @returns 轮询间隔。
+     */
+    protected _getInterval(): number;
+    /**
      * 在当前轮询结束后马上执行一次执行函数。
      */
     execImmediately(): void;
     /**
      * 启动轮询。
+     * @param [immediately=true] 是否马上执行一次执行函数。
      */
-    start(): void;
+    start(immediately?: boolean): void;
     /**
      * 停止轮询。
      */
     stop(): void;
 }
+export { IPollingOptions, Executor } from './types';
+export * as breakBy from './break-by';
