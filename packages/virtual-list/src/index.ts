@@ -904,8 +904,9 @@ export class VirtualList<ItemType extends object, ItemKey extends keyof ItemType
     // 容器不可见时，获取到的位置信息是 0，无法处理
     if (!this.isVisible) { return false; }
 
-    const containerTop = container.getBoundingClientRect().top;
-    const containerHeight = container.clientHeight;
+    const containerRect = container.getBoundingClientRect();
+    const containerTop = containerRect.top;
+    const containerHeight = containerRect.height;
     if (this._options.defaultView === 'head') {
       const node = this._itemNodes[0];
       const top = node.getBoundingClientRect().top - containerTop;
