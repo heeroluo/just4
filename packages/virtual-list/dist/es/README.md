@@ -211,6 +211,10 @@ for (let i = 0; i < virtualList.items.length; i++) {
 
 ## Changelog
 
+### v2.2.0
+
+- 优化保持默认视图位置的计算方式，兼容容器被 CSS 的 transform 和 zoom 放大的情况。
+
 ### v2.1.0
 
 - 新增 `inited` 事件，在初始化结束后触发。
