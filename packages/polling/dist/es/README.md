@@ -158,7 +158,7 @@ polling.start();
 
 ## Changelog
 
-### v1.0.0(beta)
+### v1.0.0
 
 - `interval` 选项支持传入函数，从而实现动态的轮询间隔。
 - 增加终止控制函数（目前仅有 `maxTimes` 这个函数）。
