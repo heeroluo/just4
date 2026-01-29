@@ -154,3 +154,19 @@ QUnit.test('maxTouchPoint & platform', function(assert: any) {
   assert.ok(!uaInfo.brand.isMac);
   assert.ok(uaInfo.isPortable);
 });
+
+QUnit.test('isTabletLike', function(assert: any) {
+  const uaInfo1 = new UAInfo(uaList[12], {
+    screenWidth: 1024,
+    screenHeight: 768,
+    dpr: 2
+  });
+  assert.ok(uaInfo1.isTabletLike);
+
+  const uaInfo2 = new UAInfo(uaList[12], {
+    screenWidth: 1024,
+    screenHeight: 768,
+    dpr: 1
+  });
+  assert.ok(uaInfo2.isTabletLike);
+});

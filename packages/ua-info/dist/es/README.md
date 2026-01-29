@@ -1,6 +1,6 @@
 # @just4/ua-info
 
-根据 **用户代理（user agent）** 字符串分析运行环境，支持设备品牌、操作系统、浏览器内核以及客户端的识别。
+根据 **用户代理（user agent）** 字符串和特定特征信息分析运行环境，支持**设备品牌**、**操作系统**、**浏览器内核**以及**客户端**的识别。
 
 ## 安装
 
@@ -10,17 +10,17 @@ npm i @just4/ua-info
 
 ## 使用
 
-### 是否便携设备
+### 设备类型
 
 ```javascript
 import { UAInfo } from '@just4/ua-info';
 
-const uaInfo = new UAInfo('an user agent string, such as navigator.userAgent');
+const uaInfo = new UAInfo('an user agent string, such as navigator.userAgent';
 uaInfo.isPortable; // 是否便携设备
 uaInfo.isTablet; // 是否平板设备
 ```
 
-### 操作系统信息
+### 操作系统
 
 ```javascript
 import { UAInfo } from '@just4/ua-info';
@@ -34,7 +34,7 @@ uaInfo.os.isHarmonyOS; // 是否鸿蒙
 uaInfo.os.isOpenHarmony; // 是否 OpenHarmony（HarmonyOS Next）
 ```
 
-### 设备品牌信息
+### 设备品牌
 
 适用于便携设备（绝大部分 PC 设备都没有品牌和型号标识，无法识别），支持以下品牌的识别：
 
@@ -55,7 +55,7 @@ uaInfo.brand.isSamsung; // 是否三星设备
 uaInfo.brand.isOnePlus; // 是否一加设备
 ```
 
-### 浏览器内核信息
+### 浏览器内核
 
 支持以下浏览器内核的识别：
 
@@ -71,7 +71,7 @@ uaInfo.browser.isFirefox; // 是否 Firefox 内核
 uaInfo.browser.isPrestoOpera; // 是否 Opera(Presto) 内核
 ```
 
-### 客户端（浏览器）信息
+### 客户端（浏览器）
 
 支持以下客户端或浏览器的识别：
 
@@ -102,7 +102,7 @@ uaInfo.client.isFirefox; // 是否 Firefox 浏览器
 
 ### 版本号属性
 
-部分信息项，包括操作系统、浏览器内核和客户端，都有对应的版本号属性（version），该属性的值是一个 `Version` 对象。该对象可以进行版本号的对比：
+部分信息项，包括操作系统、浏览器内核和客户端，都有版本号属性（version），该属性的值是一个 `Version` 对象。该对象可以进行版本号对比：
 
 ```javascript
 import { UAInfo } from '@just4/ua-info';
@@ -110,52 +110,15 @@ import { UAInfo } from '@just4/ua-info';
 const uaInfo = new UAInfo('Mozilla/5.0 (Macintosh; Intel Mac OS X 10_6_8) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.112 Safari/537.36');
 uaInfo.browser.isChrome; // true
 uaInfo.browser.version.toString(); // "49.0.2623.112"
-uaInfo.browser.version.gt('49'); // true
+uaInfo.browser.version.gte('49'); // true
 uaInfo.browser.version.lt('40'); // false
 ```
 
-## 其他说明
-
-### 获取当前运行环境的实例
-
-通过 `getCurrentUAInfo` 函数可以获取当前运行环境的 `UAInfo` 实例。注意，该函数返回的实例经过 `Object.freeze` 处理。
-
-```javascript
-import { getCurrentUAInfo } from '@just4/ua-info';
-const uaInfo = getCurrentUAInfo();
-```
-
-### iPad or MacBook? iOS or macOS?
-
-在 iOS 13 之后，iPad Air 与 iPad Pro 的用户代理变更为 MacBook 的用户代理。针对这种情况，可以传入特性信息辅助识别（当前运行环境的 `UAInfo` 实例已经做了这个操作）：
-
-```javascript
-// 假设浏览器 user agent 为：
-// Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_4) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.1.1 Safari/605.1.15
-
-import { UAInfo, getCurrentUAInfo } from '@just4/ua-info';
-
-// 当前运行环境的 UAInfo 实例
-getCurrentUAInfo().os.isIOS; // true
-getCurrentUAInfo().brand.isIPad; // true
-getCurrentUAInfo().brand.isMac; // false
-
-const uaInfo1 = new UAInfo(navigator.userAgent, {
-  maxTouchPoints: navigator.maxTouchPoints
-});
-uaInfo1.os.isIOS; // true
-uaInfo1.brand.isIPad; // true
-uaInfo1.brand.isMac; // false
-
-const uaInfo2 = new UAInfo(navigator.userAgent);
-uaInfo2.os.isIOS; // false
-uaInfo2.brand.isIPad; // false
-uaInfo2.brand.isMac; // true
-```
+## 其他
 
 ### 浏览器内核与客户端
 
-这两个概念比较容易混淆。举个例子，Edge 浏览器原来使用的是自身的浏览器内核，但后来改成了使用 Chrome 的内核。
+这是两个容易混淆的概念。举个例子，Edge 浏览器原来使用的是自身的浏览器内核，但后来改成了使用 Chrome 的内核。
 
 对于旧版 Edge 浏览器而言，它的浏览器内核以及客户端都是 Edge；对于新版 Edge 浏览器而言，它的浏览器内核是 Chrome，客户端是 Edge。例如：
 
@@ -175,11 +138,65 @@ uaInfoOfNewEdge.browser.isEdge; // false
 uaInfoOfNewEdge.client.isEdge; // true
 ```
 
-### Chrome 与 Safari 的识别问题
+### Chrome 与 Safari
 
 由于大量浏览器使用的都是 Chrome 内核，无法一一枚举排除，部分甚至没有在用户代理字符串上增加独立的标识（例如 PC 端的 360 浏览器）。因此，客户端信息的 `isChrome` 为 `true` 时，不一定是 Chrome 浏览器。
 
 而对于移动端浏览器以及 WebView 而言，它们的用户代理字符串中有可能包含 Safari 浏览器的关键字，所以即使客户端信息的 `isSafari` 为 `true`，也不一定是 Safari 浏览器。
+
+### 获取当前运行环境的实例
+
+通过 `getCurrentUAInfo` 函数可以获取当前运行环境的 `UAInfo` 实例。注意，该函数返回的实例经过 `Object.freeze` 处理。
+
+```javascript
+import { getCurrentUAInfo } from '@just4/ua-info';
+const uaInfo = getCurrentUAInfo();
+```
+
+### iPad or MacBook? iOS or macOS?
+
+在 iOS 13 之后，iPad Air 与 iPad Pro 的用户代理变更为 MacBook 的用户代理。针对这种情况，可以传入特性信息辅助识别（`getCurrentUAInfo()` 返回的实例基于这些特性信息识别）：
+
+```javascript
+// 假设浏览器 user agent 为：
+// Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_4) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.1.1 Safari/605.1.15
+
+import { UAInfo, getCurrentUAInfo } from '@just4/ua-info';
+
+// 当前运行环境的 UAInfo 实例
+getCurrentUAInfo().os.isIOS; // true
+getCurrentUAInfo().brand.isIPad; // true
+getCurrentUAInfo().brand.isMac; // false
+
+const uaInfo1 = new UAInfo(navigator.userAgent, {
+  maxTouchPoints: navigator.maxTouchPoints
+});
+uaInfo1.os.isIOS; // maxTouchPoints > 0 时为 true，否则为 false
+uaInfo1.brand.isIPad; // maxTouchPoints > 0 时为 true，否则为 false
+uaInfo1.brand.isMac; // false
+
+const uaInfo2 = new UAInfo(navigator.userAgent);
+uaInfo2.os.isIOS; // false
+uaInfo2.brand.isIPad; // false
+uaInfo2.brand.isMac; // true
+```
+
+### 类平板设备
+
+- 部分安卓平板设备浏览器的用户代理字符串中没有平板设备的特征，无法识别为平板设备。
+- 折叠屏手机在展开状态下，犹如平板设备，但使用的仍为手机设备的用户代理字符串，不会被识别为平板设备。
+
+针对上述情况，可以传入设备的分辨率信息（`getCurrentUAInfo()` 返回的实例基于这些特性信息识别）。在符合平板分辨率特征的情况下，`isTabletLike` 将为 `true`：
+
+```javascript
+const uaInfo = new UAInfo(navigator.userAgent, {
+  screenWidth: window.screen.width,
+  screenHeight: window.screen.height,
+  dpr: window.devicePixelRatio
+});
+
+uaInfo.isTabletLike;
+```
 
 ### 识别范围
 
@@ -190,6 +207,10 @@ uaInfoOfNewEdge.client.isEdge; // true
 - [API 文档](https://heeroluo.github.io/just4/ua-info/modules/index.html)
 
 ## Changelog
+
+### v4.0.0-beta.1
+
+- 增加类平板设备（`isTabletLike`）的识别。
 
 ### v3.2.0
 

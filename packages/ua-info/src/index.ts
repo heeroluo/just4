@@ -22,7 +22,16 @@ export function getCurrentUAInfo(): Readonly<UAInfo> {
   if (!currentUAInfo) {
     currentUAInfo = Object.freeze(
       typeof window !== 'undefined'
-        ? new UAInfo(window.navigator.userAgent, window.navigator)
+        ? new UAInfo(
+          window.navigator.userAgent,
+          {
+            maxTouchPoints: window.navigator.maxTouchPoints,
+            platform: window.navigator.platform,
+            screenWidth: window.screen.width,
+            screenHeight: window.screen.height,
+            dpr: window.devicePixelRatio
+          }
+        )
         : new UAInfo('')
     );
   }

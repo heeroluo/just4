@@ -38,6 +38,10 @@ export class UAInfo {
    * 是否平板设备。
    */
   public readonly isTablet: boolean;
+  /**
+   * 是否为类平板设备。
+   */
+  public readonly isTabletLike: boolean;
 
   /**
    * 设备信息类构造函数。
@@ -50,9 +54,21 @@ export class UAInfo {
     this.browser = Object.freeze(new BrowserInfo(ua));
     this.client = Object.freeze(new ClientInfo(ua));
 
-    this.isTablet = this.brand.isIPad ||
+    this.isTabletLike = this.isTablet = this.brand.isIPad ||
       /\bTablet\b/i.test(ua) ||
       (this.os.isAndroid && !/\bMobile\b/i.test(ua));
+
+    if (!this.isTabletLike && this.os.isAndroid && featureInfo) {
+      // 通过屏幕比例判断是否为类平板设备：屏幕长边/屏幕短边<1.8 且 短边的物理像素>=1200
+      const screenWidth = featureInfo.screenWidth ?? 0;
+      const screenHeight = featureInfo.screenHeight ?? 0;
+      const dpr = featureInfo.dpr ?? 0;
+      if (screenWidth > 0 && screenHeight > 0 && dpr > 0) {
+        const long = Math.max(screenWidth, screenHeight);
+        const short = Math.min(screenWidth, screenHeight);
+        this.isTabletLike = long / short < 1.8 && short * dpr >= 1200;
+      }
+    }
 
     // 是否便携设备
     if (this.os.isIOS || this.os.isAndroid || this.isTablet) {
