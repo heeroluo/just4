@@ -1,6 +1,8 @@
 import 'core-js';
-import { UAInfo } from '@/index';
+import { UAInfo, getCurrentUAInfo } from '@/index';
 const QUnit = (<any>window).QUnit;
+
+console.dir(getCurrentUAInfo());
 
 const uaList = [
   'Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Trident/4.0; WOW64; Trident/5.0; .NET CLR 3.5.30729; .NET CLR 3.0.30729; .NET CLR 2.0.50727; Media Center PC 6.0; Maxthon 2.0)',
@@ -131,26 +133,6 @@ QUnit.test('maxTouchPoint', function(assert: any) {
   assert.ok(uaInfo.os.isIOS);
   assert.ok(uaInfo.brand.isIPad);
   assert.ok(uaInfo.isTablet);
-  assert.ok(!uaInfo.brand.isMac);
-  assert.ok(uaInfo.isPortable);
-});
-
-QUnit.test('platform', function(assert: any) {
-  const uaInfo = new UAInfo(uaList[7], {
-    platform: 'Android'
-  });
-  assert.ok(uaInfo.os.isAndroid);
-  assert.ok(!uaInfo.os.isWindows);
-  assert.ok(uaInfo.isPortable);
-});
-
-QUnit.test('maxTouchPoint & platform', function(assert: any) {
-  const uaInfo = new UAInfo(uaList[2], {
-    maxTouchPoints: 5,
-    platform: 'MacIntel'
-  });
-  assert.ok(uaInfo.os.isIOS);
-  assert.ok(uaInfo.brand.isIPad);
   assert.ok(!uaInfo.brand.isMac);
   assert.ok(uaInfo.isPortable);
 });

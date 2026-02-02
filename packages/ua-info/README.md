@@ -211,6 +211,7 @@ uaInfo.isTabletLike;
 ### v4.0.0-beta.1
 
 - 增加类平板设备（`isTabletLike`）的识别。
+- 鉴于 navigator.platform 已经废弃，移除特性信息中的 platform 参数。
 
 ### v3.2.0
 

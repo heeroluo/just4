@@ -12,10 +12,6 @@ export interface IFeatureInfo {
    */
   maxTouchPoints?: number | undefined
   /**
-   * 浏览器运行平台，可传入 navigator.platform。
-   */
-  platform?: string
-  /**
    * 屏幕宽度，可传入 window.screen.width
    */
   screenWidth?: number

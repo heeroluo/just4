@@ -1,6 +1,6 @@
 {
   "name": "@just4/ua-info",
-  "version": "4.0.0-beta.1",
+  "version": "4.0.0-beta.2",
   "description": "Just for user agent analysing.",
   "keywords": ["useragent"],
   "scripts": {

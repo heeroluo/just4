@@ -58,7 +58,7 @@ export class UAInfo {
       /\bTablet\b/i.test(ua) ||
       (this.os.isAndroid && !/\bMobile\b/i.test(ua));
 
-    if (!this.isTabletLike && this.os.isAndroid && featureInfo) {
+    if (!this.isTabletLike && (this.os.isAndroid || this.os.isOpenHarmony) && featureInfo) {
       // 通过屏幕比例判断是否为类平板设备：屏幕长边/屏幕短边<1.8 且 短边的物理像素>=1200
       const screenWidth = featureInfo.screenWidth ?? 0;
       const screenHeight = featureInfo.screenHeight ?? 0;
@@ -73,7 +73,7 @@ export class UAInfo {
     // 是否便携设备
     if (this.os.isIOS || this.os.isAndroid || this.isTablet) {
       this.isPortable = true;
-    } else if (/\(X11[;)]/i.test(ua) || /\b(Windows\sNT|Macintosh)\b/.test(ua)) {
+    } else if (/\(X11[;)]/i.test(ua) || this.os.isWindows || this.os.isMacOS) {
       this.isPortable = false;
     } else {
       this.isPortable = /mobile|android/i.test(ua);

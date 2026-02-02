@@ -7,7 +7,6 @@ import { execRules } from './internal/ua-detector';
 import { osRules } from './internal/os-rules';
 import { Version } from './version';
 import type { IFeatureInfo } from './types';
-import type { IMatchResult } from './internal/types';
 
 
 // UA 分析结果与类属性的对应关系
@@ -18,23 +17,6 @@ const propMap: Record<string, Exclude<keyof OSInfo, 'version'>> = {
   'windows': 'isWindows',
   'macos': 'isMacOS'
 };
-
-// platform 转为 os 名
-function platformToOS(platform: string): (keyof typeof propMap) | undefined {
-  // https://stackoverflow.com/questions/19877924/what-is-the-list-of-possible-values-for-navigator-platform-as-of-today
-  switch (platform) {
-    case 'Android':
-      return 'android';
-    case 'iPad':
-    case 'iPhone':
-    case 'iPod':
-      return 'ios';
-    case 'MacIntel':
-      return 'macos';
-    case 'Win32':
-      return 'windows';
-  }
-}
 
 /**
  * 操作系统信息类。
@@ -75,26 +57,10 @@ export class OSInfo {
    * @param featureInfo 设备特性信息。
    */
   constructor(ua: string, featureInfo?: Readonly<IFeatureInfo>) {
-    let platformResult: IMatchResult | undefined;
-    if (featureInfo?.platform) {
-      const name = platformToOS(featureInfo.platform);
-      if (name !== undefined) {
-        platformResult = {
-          name,
-          version: ''
-        };
-      }
-    }
-
-    let result = execRules(ua, osRules) ?? platformResult;
+    const result = execRules(ua, osRules);
     if (!result) {
-      this.version = Object.freeze(new Version(''));
+      this.version = new Version('');
       return;
-    }
-
-    // 对比 User-Agent 分析结果和 platform 分析结果，后者优先
-    if (platformResult && platformResult.name !== result.name) {
-      result = platformResult;
     }
 
     // iOS >= 13 的 iPad Pro 与 iPad Air，

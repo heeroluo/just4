@@ -26,7 +26,6 @@ export function getCurrentUAInfo(): Readonly<UAInfo> {
           window.navigator.userAgent,
           {
             maxTouchPoints: window.navigator.maxTouchPoints,
-            platform: window.navigator.platform,
             screenWidth: window.screen.width,
             screenHeight: window.screen.height,
             dpr: window.devicePixelRatio
