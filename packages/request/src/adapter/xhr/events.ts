@@ -15,7 +15,10 @@ import {
 import {
   MSG_HTTP_ERROR,
   MSG_NETWORK_ERROR,
-  MSG_TIMEOUT
+  MSG_TIMEOUT,
+  MSG_INVALID_JSON,
+  MSG_INVALID_XML,
+  genMsg
 } from '../../internal/message';
 import type { IXhrRequestResult } from './types';
 
@@ -41,7 +44,7 @@ function createOnLoad(
           data = JSON.parse(xhr.responseText);
         } catch (e) {
           errType = RequestErrorType.PARSE_ERROR;
-          errMsg = 'Invalid JSON structure';
+          errMsg = genMsg(MSG_INVALID_JSON, options);
         }
         break;
 
@@ -49,7 +52,7 @@ function createOnLoad(
         data = xhr.responseXML;
         if (!data || !(<Document>data).documentElement) {
           errType = RequestErrorType.PARSE_ERROR;
-          errMsg = 'Invalid XML format';
+          errMsg = genMsg(MSG_INVALID_XML, options);
         }
         break;
 
@@ -71,7 +74,9 @@ function createOnLoad(
     let error: RequestError | undefined;
     if (isErrorStatus(status)) {
       error = new RequestError({
-        message: MSG_HTTP_ERROR.replace('${status}', status.toString()),
+        message: genMsg(MSG_HTTP_ERROR, options, {
+          status
+        }),
         type: RequestErrorType.HTTP_ERROR,
         code: status,
         result
@@ -132,14 +137,14 @@ export function createXhrEventListeners(
     xhr,
     options,
     reject,
-    MSG_TIMEOUT,
+    genMsg(MSG_TIMEOUT, options),
     RequestErrorType.TIMEOUT
   );
   xhr.onerror = createOnError(
     xhr,
     options,
     reject,
-    MSG_NETWORK_ERROR,
+    genMsg(MSG_NETWORK_ERROR, options),
     RequestErrorType.NETWORK_ERROR
   );
 

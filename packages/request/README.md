@@ -13,8 +13,7 @@
   - 支持把数据序列化为 `application/json` 或 `application/x-www-form-urlencoded` 的请求体。
   - 根据选项设置把响应内容解析为 JSON、XML、文本、Blob 或 ArrayBuffer。
   - 支持文件上传和下载场景下的进度响应（`onDownloadProgress`、`onUploadProgress`）。
-  - 支持 PC 和移动端所有主流浏览器（其中 IE 浏览器的最低兼容版本是 9）。
-    - 在 IE 9 中，符合特定条件的情况下，通过 XDomainRequest 发起跨域请求。
+  - 支持 PC 和移动端所有主流浏览器（其中 IE 浏览器的最低兼容版本是 10）。
 - 在微信小程序环境下：
   - 基于 wx.request 进行封装。
   - 支持发送的数据类型包括：文本、对象和 ArrayBuffer。
@@ -205,6 +204,11 @@ try {
 - [API 文档](https://heeroluo.github.io/just4/request/index.html)
 
 ## Changelog
+
+### v1.0.0-beta.1
+
+- 请求失败时，输出包含请求 URL 的错误信息。
+- 不再支持 IE 9 浏览器下的跨域请求。
 
 ### v0.7.0
 

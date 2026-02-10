@@ -10,7 +10,13 @@ import {
   RequestWith,
 } from '../../types';
 import { isErrorStatus, handleRequestResult, setHeader } from '../../internal/util';
-import { MSG_HTTP_ERROR, MSG_TIMEOUT, MSG_ABORTED, MSG_NETWORK_ERROR } from '../../internal/message';
+import {
+  MSG_HTTP_ERROR,
+  MSG_TIMEOUT,
+  MSG_ABORTED,
+  MSG_NETWORK_ERROR,
+  genMsg
+} from '../../internal/message';
 import { TaskManager } from '../../internal/task-manager';
 import { RequestErrorType, RequestError } from '../../request-error';
 
@@ -67,7 +73,7 @@ export const wxRequestAdapter: IRequestAdapter = {
       }
 
       const task = wx.request({
-        url: opts.url,
+        url: opts.fullURL,
         data: opts.data,
         header: opts.headers,
         timeout: opts.timeout,
@@ -86,7 +92,7 @@ export const wxRequestAdapter: IRequestAdapter = {
           let error: RequestError | undefined;
           if (isErrorStatus(res.statusCode)) {
             error = new RequestError({
-              message: MSG_HTTP_ERROR.replace('${status}', res.statusCode.toString()),
+              message: genMsg(MSG_HTTP_ERROR, opts, { status: res.statusCode }),
               type: RequestErrorType.HTTP_ERROR,
               code: res.statusCode,
               result
@@ -105,17 +111,17 @@ export const wxRequestAdapter: IRequestAdapter = {
           let errType: RequestErrorType;
           switch (err.errMsg) {
             case 'request:fail timeout':
-              errMsg = MSG_TIMEOUT;
+              errMsg = genMsg(MSG_TIMEOUT, opts);
               errType = RequestErrorType.TIMEOUT;
               break;
 
             case 'request:fail abort':
-              errMsg = MSG_ABORTED;
+              errMsg = genMsg(MSG_ABORTED, opts);
               errType = RequestErrorType.ABORTED;
               break;
 
             default:
-              errMsg = MSG_NETWORK_ERROR;
+              errMsg = genMsg(MSG_NETWORK_ERROR, opts);
               errType = RequestErrorType.NETWORK_ERROR;
           }
 
@@ -162,5 +168,14 @@ export const wxRequestAdapter: IRequestAdapter = {
       return true;
     }
     return false;
+  },
+
+  /**
+   * 转换为完整的 URL。
+   * @param url 相对路径或完整的 URL。
+   * @returns 完整的 URL。
+   */
+  toFullURL(url: string): string {
+    return url;
   }
 };

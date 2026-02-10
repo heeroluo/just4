@@ -51,6 +51,7 @@ QUnit.test('超时', function(assert: any) {
   request.send('timeout', { timeout: 2000 }).then(
     null,
     function(error) {
+      console.error(error.message);
       assert.deepEqual(error.type, RequestErrorType.TIMEOUT);
       done();
     }
@@ -68,6 +69,7 @@ QUnit.test('取消', function(assert: any) {
   }).then(
     null,
     function(error) {
+      console.error(error.message);
       assert.deepEqual(error.type, RequestErrorType.ABORTED);
       done();
     }
@@ -87,6 +89,7 @@ QUnit.test('请求错误', function(assert: any) {
   }).then(
     null,
     function(error) {
+      console.error(error.message);
       assert.strictEqual(error.code, 500);
       assert.deepEqual(error.result.data, { num: '100' });
       done();

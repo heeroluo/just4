@@ -77,12 +77,17 @@ export class Request {
       opts = beforeSend(opts) ?? opts;
     }
 
-    if (opts.baseURL) { url = joinURL(opts.baseURL, url); }
-    // 拼接 GET 参数
-    url = concatURLParams(url, opts.params, opts.preventCaching);
+    const fullURL = concatURLParams(
+      opts.baseURL
+        ? joinURL(opts.baseURL, url)
+        : url,
+      opts.params,
+      opts.preventCaching
+    );
 
     return this._adapter.send(
       Object.freeze({
+        fullURL: this._adapter.toFullURL(fullURL),
         url,
         baseURL: opts.baseURL,
         params: opts.params,

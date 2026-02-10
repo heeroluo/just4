@@ -3,7 +3,6 @@
  * @packageDocumentation
  */
 
-import { isEmpty } from '@just4/util/object';
 import { isObject } from '@just4/util/type';
 import { stringify } from '@just4/querystring/index';
 import type {
@@ -15,13 +14,13 @@ import type {
 import { RequestWith } from '../../types';
 import { RequestError, RequestErrorType } from '../../request-error';
 import {
-  isOldIE,
-  isCrossDomain,
+  getFullURLInBrowser,
+  isCrossOrigin,
   handleRequestResult,
   setHeader
 } from '../../internal/util';
 import { TaskManager } from '../../internal/task-manager';
-import { MSG_ABORTED } from '../../internal/message';
+import { MSG_ABORTED, genMsg } from '../../internal/message';
 import type { IXhrRequestResult } from './types';
 import { createXhrEventListeners } from './events';
 
@@ -40,27 +39,6 @@ interface IRequestTask {
 
 const taskManager = new TaskManager<IRequestTask>();
 
-
-// 创建 XMLHttpRequest 实例（老 IE 且跨域时创建的是 XDomainRequest）
-function createXhr(
-  isCross: boolean,
-  method: string,
-  requestType: string,
-  headers: object,
-  withCredentials?: boolean
-): XMLHttpRequest {
-  const useXDomainRequest = isCross &&
-    isOldIE() &&
-    (<any>window).XDomainRequest &&
-    (method === 'get' || method === 'post') &&
-    !requestType &&
-    !withCredentials &&
-    isEmpty(headers);
-
-  return useXDomainRequest
-    ? new (<any>window).XDomainRequest()
-    : new window.XMLHttpRequest();
-}
 
 // 设置 XMLHttpRequest 实例的属性和请求头
 function setXhrPropsAndHeaders(
@@ -134,14 +112,9 @@ export const xhrAdapter: IRequestAdapter = {
     return new Promise((resolve, reject) => {
       let taskId = 0;
 
-      const isCross = isCrossDomain(opts.url);
-      const xhr = createXhr(
-        isCross,
-        opts.method,
-        opts.requestType,
-        opts.headers,
-        opts.withCredentials
-      );
+      const isCross = isCrossOrigin(opts.fullURL, location.href);
+
+      const xhr = new XMLHttpRequest();
 
       createXhrEventListeners(
         xhr,
@@ -168,7 +141,7 @@ export const xhrAdapter: IRequestAdapter = {
 
       xhr.open(
         opts.method,
-        opts.url,
+        opts.fullURL,
         true,
         opts.username,
         opts.password
@@ -209,7 +182,7 @@ export const xhrAdapter: IRequestAdapter = {
       const reject = task.reject;
       reject(
         new RequestError({
-          message: MSG_ABORTED,
+          message: genMsg(MSG_ABORTED, task.options),
           type: RequestErrorType.ABORTED,
           result: handleRequestResult({
             xhr: task.xhr,
@@ -220,5 +193,14 @@ export const xhrAdapter: IRequestAdapter = {
       return true;
     }
     return false;
+  },
+
+  /**
+   * 转换为完整的 URL。
+   * @param url 相对路径或完整的 URL。
+   * @returns 完整的 URL。
+   */
+  toFullURL(url: string): string {
+    return getFullURLInBrowser(url);
   }
 };
