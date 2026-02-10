@@ -1,6 +1,6 @@
 {
   "name": "@just4/request",
-  "version": "0.7.0",
+  "version": "1.0.0-beta.1",
   "description": "Just for making request easier to use in browser and miniprogram.",
   "keywords": [
     "ajax",
@@ -10,11 +10,11 @@
     "wx.request"
   ],
   "dependencies": {
-    "@just4/util": "^1.1.0",
+    "@just4/util": "^2.0.0",
     "@just4/querystring": "^2.0.0"
   },
   "peerDependencies": {
-    "miniprogram-api-typings": "^3.9.1"
+    "miniprogram-api-typings": "^4.0.1"
   },
   "miniprogram": "./",
   "repository": {

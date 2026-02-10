@@ -131,9 +131,13 @@ type RequiredRequestOptions = 'method' | 'requestType' | 'responseType' | 'heade
  */
 export type RequestAdapterOptions = Required<Pick<IRequestOptions, RequiredRequestOptions>> & Pick<IRequestOptions, Exclude<keyof IRequestOptions, RequiredRequestOptions>> & {
     /**
-     * 完整的请求地址。
+     * 请求地址。
      */
     url: string;
+    /**
+     * 完整的请求 URL。
+     */
+    fullURL: string;
 };
 /**
  * 请求适配器。
@@ -152,5 +156,11 @@ export interface IRequestAdapter {
      * @returns 中断请求操作是否有被执行。
      */
     abort: (id: number) => boolean;
+    /**
+     * 转换为完整的 URL。
+     * @param url 相对路径或完整的 URL。
+     * @returns 完整的 URL。
+     */
+    toFullURL: (url: string) => string;
 }
 export {};

@@ -6,16 +6,18 @@
 import type { IRequestResult } from '../types';
 import { RequestWith } from '../types';
 /**
- * 检查指定 URL 与当前页是否跨域。
- * @param url 指定 URL。
- * @returns 指定 URL 与当前页是否跨域。
+ * 在浏览器环境中获取完整的 URL。
+ * @param url 相对路径或完整的 URL。
+ * @returns 完整的 URL。
  */
-export declare function isCrossDomain(url: string): boolean;
+export declare function getFullURLInBrowser(url: string): string;
 /**
- * 判断当前浏览器是否旧版本 IE（< 10）。
- * @returns 当前浏览器是否旧版本 IE。
+ * 检查两个 URL 是否不同源。
+ * @param urlA URL A。
+ * @param urlB URL B。
+ * @returns 两个 URL 是否不同源。
  */
-export declare function isOldIE(): boolean;
+export declare function isCrossOrigin(urlA: string, urlB: string): boolean;
 /**
  * 根据 Content-Type 解析出数据类型。
  * @param contentType Content-Type 字符串。
