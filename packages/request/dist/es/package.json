@@ -5,7 +5,6 @@
   "keywords": [
     "ajax",
     "XMLHttpRequest",
-    "XDomainRequest",
     "小程序",
     "wx.request"
   ],
