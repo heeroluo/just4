@@ -1,6 +1,6 @@
 {
   "name": "@just4/request",
-  "version": "1.0.0-beta.1",
+  "version": "1.0.0-beta.2",
   "description": "Just for making request easier to use in browser and miniprogram.",
   "keywords": ["ajax", "XMLHttpRequest", "小程序", "wx.request"],
   "scripts": {
@@ -17,6 +17,11 @@
   },
   "peerDependencies": {
     "miniprogram-api-typings": "^4.0.1"
+  },
+  "peerDependenciesMeta": {
+    "miniprogram-api-typings": {
+      "optional": true
+    }
   },
   "miniprogram": "./",
   "private": true,
